@@ -248,6 +248,20 @@ angular.module('app').controller('appCourseListCtrl', function ($scope, appCache
   $scope.sortOptions = [{value: 'title', text: 'Sort by Title'},
     {vaue: 'published', text: 'Sort by Publish Date'}];
   $scope.sortOrder = $scope.sortOptions[0].value;
-});;angular.module('app').controller('appMainCtrl', function ($scope, appCachedCourse) {
-  $scope.courses = appCachedCourse.query();
+});;angular.module('app').controller('appMainCtrl', function ($scope, $http) {
+
+  $scope.links = [];
+  $scope.searching = false;
+
+  $scope.triggerSearch = function () {
+    if (!$scope.searchText) return;
+    $scope.searching = true;
+
+    $http
+      .post('/search', {searchText: $scope.searchText})
+      .then(function (res) {
+        $scope.links = res.data.links;
+        $scope.searching = false;
+      });
+  };
 });

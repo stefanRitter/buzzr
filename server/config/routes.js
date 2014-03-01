@@ -2,20 +2,21 @@
 
 var auth = require('./auth.js'),
     users = require('../controllers/users.js'),
-    courses = require('../controllers/courses.js');
+    courses = require('../controllers/courses.js'),
+    twitter = require('../controllers/twitter.js');
 
 
 module.exports = function (app) {
   // ROOT
-  app.get('/', function (req, res) {
+  app.get('/', twitter.getRoot);
+  app.post('/search', twitter.search);
+
+  /*app.get('/', function (req, res) {
     res.render('index', {
       bootstrappedUser: req.user
     });
-  });
-  
-  app.get('/twttr', function (req, res) {
-    res.render('twitter');
-  });
+  });*/
+
 
   // API
   app.get('/api/users', auth.requiresRole('admin'), users.getUser);

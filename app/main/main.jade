@@ -1,10 +1,16 @@
-.container
-  .jumbotron
-    h1 MEAN app
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor tempus bibendum.
+h1 Buzzr Search
+form(ng-hide="searching")
+  input(ng-model="searchText", placeholder="Search for a topic")
+  button(ng-click="triggerSearch()") Generate Buzzr
 
-  .row
-    .col-md-6
-      div(ng-include="'/partials/main/featured-courses'")
-    .col-md-6
-      div(ng-include="'/partials/main/new-courses'")
+h4 Results
+table
+  thead
+    tr
+      th Link
+      th Popularity
+  tbody
+    tr(ng-repeat="link in links")
+      td
+        a(href="{{link.url}}") {{link.url}} 
+      td {{link.popularity}}
