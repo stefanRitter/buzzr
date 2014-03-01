@@ -13,6 +13,9 @@ module.exports = function (app) {
     });
   });
   
+  app.get('/twttr', function (req, res) {
+    res.render('twitter');
+  });
 
   // API
   app.get('/api/users', auth.requiresRole('admin'), users.getUser);

@@ -1,4 +1,4 @@
-cvgraph
+graphr
 =============
 
 work in progress
