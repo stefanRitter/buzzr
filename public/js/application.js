@@ -1,0 +1,253 @@
+angular.module('app', ['ngResource', 'ngRoute']);
+
+angular.module('app').config(function ($routeProvider, $locationProvider) {
+  var routeRoleChecks = {
+    admin: {
+      auth: function (appAuth) {
+        return appAuth.authorizeCurrentUserForRoute('admin');
+      }
+    },
+    user: {
+      auth: function (appAuth) {
+        return appAuth.authorizeLeggedInUserForRoute();
+      }
+    }
+  };
+
+  $locationProvider.html5Mode(true);
+
+  $routeProvider
+    .when('/', {templateUrl: '/partials/main/main', controller: 'appMainCtrl'})
+    .when('/signup', {templateUrl: '/partials/account/signup', controller: 'appSignupCtrl'})
+    .when('/profile', {templateUrl: '/partials/account/profile',
+      controller: 'appProfileCtrl', resolve: routeRoleChecks.user})
+    .when('/courses', {templateUrl: '/partials/courses/course-list',
+      controller: 'appCourseListCtrl'})
+    .when('/courses/:id', {templateUrl: '/partials/courses/course-details',
+      controller: 'appCourseDetailCtrl'})
+    .when('/admin/users', {templateUrl: '/partials/admin/users',
+      controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin});
+});
+
+
+angular.module('app').run(function ($rootScope, $location) {
+  $rootScope.$on('$routeChangeError', function (event, current, previous, rejectionReason) {
+    if (rejectionReason === 'not authorized') {
+      $location.path('/');
+    }
+  });
+});
+;
+angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUser) {
+  return {
+    authenticateUser: function (username, password) {
+      var dfd = $q.defer();
+
+      $http
+        .post('/login', {username: username, password: password})
+        .then(function (res) {
+          if (res.data.success) {
+            var user = new appUser();
+            angular.extend(user, res.data.user);
+            appIdentity.currentUser = user;
+            dfd.resolve(true);
+          } else {
+            dfd.resolve(false);
+          }
+        });
+
+      return dfd.promise;
+    },
+
+    createUser: function (newUserData) {
+      var newUser = new appUser(newUserData);
+      var dfd = $q.defer();
+
+      newUser.$save().then(function () {
+        appIdentity.currentUser = newUser;
+        dfd.resolve(true);
+      }, function (response) {
+        dfd.reject(response.data.reason);
+      });
+
+      return dfd.promise;
+    },
+
+    updateCurrentUser: function (updatedUser) {
+      var dfd = $q.defer();
+
+      updatedUser.$update().then(function () {
+        appIdentity.currentUser = updatedUser;
+        dfd.resolve(true);
+      }, function (response) {
+        dfd.reject(response.data.reason);
+      });
+
+      return dfd.promise;
+    },
+
+    logoutUser: function () {
+      var dfd = $q.defer();
+
+      $http
+        .post('/logout', {logout: true})
+        .then(function (res) {
+          appIdentity.currentUser = undefined;
+          dfd.resolve(true);
+        });
+
+      return dfd.promise;
+    },
+
+    authorizeCurrentUserForRoute: function (role) {
+      if (appIdentity.isAuthorized('admin')) {
+        return true;
+      }
+      return $q.reject('not authorized');
+    },
+
+    authorizeLeggedInUserForRoute: function () {
+      if (appIdentity.isAuthenticated()) {
+        return true;
+      }
+      return $q.reject('not authorized');
+    }
+  };
+});;angular.module('app').factory('appIdentity', function ($window, appUser) {
+  var currentUser;
+  
+  if (!!$window.bootstrappedUser) {
+    currentUser = new appUser();
+    angular.extend(currentUser, $window.bootstrappedUser);
+  }
+
+  return {
+    currentUser: currentUser,
+    isAuthenticated: function () {
+      return !!this.currentUser;
+    },
+    isAuthorized: function (role) {
+      return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
+    }
+  };
+});
+;
+angular.module('app').controller('appNavBarLoginCtrl', function ($scope, $location, appAuth, appNotifier, appIdentity) {
+  
+  $scope.identity = appIdentity;
+
+  $scope.signin = function (username, password) {
+    
+    appAuth
+      .authenticateUser(username, password)
+      .then(function (success) {
+        if (success) {
+          appNotifier.notify('You have successfully logged in!');
+        } else {
+          appNotifier.notify('username/password combination incorrect');
+        }
+      });
+  };
+
+  $scope.signout = function () {
+    appAuth.logoutUser().then(function() {
+      $scope.username = $scope.password = '';
+      appNotifier.notify('You are now logged out!');
+      $location.path('/');
+    });
+  };
+});
+;
+angular.module('app').controller('appProfileCtrl', function ($scope, appAuth, appIdentity, appNotifier) {
+  $scope.currentUser = angular.copy(appIdentity.currentUser);
+
+  $scope.update = function () {
+    appAuth.updateCurrentUser($scope.currentUser).then(function () {
+      appNotifier.notify('Your account has been updated');
+    }, function (reason) {
+      appNotifier.error(reason);
+    });
+  };
+});;angular.module('app').controller('appSignupCtrl', function ($scope, $location, appUser, appAuth, appNotifier) {
+
+  $scope.signup = function () {
+    var newUserData = {
+      username: $scope.email,
+      password: $scope.password,
+      firstName: $scope.fname,
+      lastName: $scope.lname
+    };
+
+    appAuth.createUser(newUserData).then(function () {
+      appNotifier.notify('User account created');
+      $location.path('/');
+    }, function (reason) {
+      appNotifier.error(reason);
+    });
+  };
+});;angular.module('app').factory('appUser', function ($resource) {
+  var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
+    update: { method: 'PUT', isArray: false }
+  });
+
+  UserResource.prototype.isAdmin = function () {
+    return this.roles && this.roles.indexOf('admin') > -1;
+  };
+
+  return UserResource;
+});;
+angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
+  $scope.users = appUser.query();
+});;angular.module('app').value('appToastr', {
+  success: function () {},
+  error: function() {}
+});
+
+angular.module('app').factory('appNotifier', function (appToastr) {
+  return {
+    notify: function (msg) {
+      appToastr.success(msg);
+      console.log(msg);
+    },
+    error: function (msg) {
+      appToastr.error(msg);
+      console.log(msg);
+    }
+  };
+});
+;angular.module('app').factory('appCachedCourse', function (appCourse) {
+  var courseList = [];
+
+  return {
+    query: function () {
+      if (courseList.length === 0) {
+        courseList = appCourse.query();
+      }
+      return courseList;
+    },
+    
+    get: function (obj) {
+      var course;
+      courseList.forEach(function (crs) {
+        if (crs._id === obj.id) {
+          course = crs;
+        }
+      });
+      return !course ? appCourse.get({id: obj.id}) : course;
+    }
+  };
+});;angular.module('app').factory('appCourse', function ($resource) {
+  var courseResource = $resource('/api/courses/:id', {_id: "@id"});
+  return courseResource;
+});;angular.module('app').controller('appCourseDetailCtrl', function ($scope, $routeParams, appCachedCourse) {
+  $scope.course = appCachedCourse.get({id: $routeParams.id});
+});;
+angular.module('app').controller('appCourseListCtrl', function ($scope, appCachedCourse) {
+  $scope.courses = appCachedCourse.query();
+
+  $scope.sortOptions = [{value: 'title', text: 'Sort by Title'},
+    {vaue: 'published', text: 'Sort by Publish Date'}];
+  $scope.sortOrder = $scope.sortOptions[0].value;
+});;angular.module('app').controller('appMainCtrl', function ($scope, appCachedCourse) {
+  $scope.courses = appCachedCourse.query();
+});
