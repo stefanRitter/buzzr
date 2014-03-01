@@ -19,21 +19,43 @@ exports.getRoot = function (req, res) {
 
 
 exports.search = function (req, res) {
-  var searchText = encodeURI(req.body.searchText),
-      query = '%23' + searchText +
-              ' since:' + oneYearAgo + ' filter:links';
-
-  console.log(searchText);
+  var searchText = req.body.searchText,
+      query = searchText; // +
+              //' since:' + oneYearAgo + ' filter:links';
 
   T.get('search/tweets', {
     q: query,
-    result_type: 'popular',
     include_entities: true,
     count: 100 
   },
+  
   function(err, reply) {
+    var links = [];
+
+    if (err) { 
+      return res.json({
+        links: links,
+        err: err.toString()
+      });
+    }
+
+    console.log(reply.statuses.length);
+
+    reply.statuses.forEach( function (tweet) {
+      tweet.entities.urls.forEach( function (link) {
+        var url = link.expanded_url || link.url,
+            pop = tweet.favourites_count || tweet.retweet_count || 0;
+        
+        links.push({
+          url: url,
+          popularity: pop
+        });
+      });
+    });
+
     res.json({
-      links: [{url: 'test', popularity: 7}]
+      links: links
     });
   });
 };
+

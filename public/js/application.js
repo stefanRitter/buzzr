@@ -260,6 +260,8 @@ angular.module('app').controller('appCourseListCtrl', function ($scope, appCache
     $http
       .post('/search', {searchText: $scope.searchText})
       .then(function (res) {
+        if (res.data.err) { alert(res.data.err); }
+        
         $scope.links = res.data.links;
         $scope.searching = false;
       });

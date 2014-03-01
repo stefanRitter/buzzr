@@ -10,7 +10,7 @@ table
       th Link
       th Popularity
   tbody
-    tr(ng-repeat="link in links")
+    tr(ng-repeat="link in links | orderBy:'popularity':'true'")
       td
-        a(href="{{link.url}}") {{link.url}} 
+        a(href="{{link.url}}", target="_blank") {{link.url}} 
       td {{link.popularity}}
