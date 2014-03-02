@@ -24,8 +24,7 @@
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
     "twit": "^1.1.12",
-    "urlexpand": "0.0.2",
-    "grunt-contrib-watch": "^0.5.3"
+    "urlexpand": "0.0.2"
   },
   "devDependencies": {
     "bower": "~1.2.8",
@@ -45,6 +44,7 @@
     "grunt": "^0.4.2",
     "grunt-contrib-stylus": "^0.13.1",
     "load-grunt-tasks": "^0.4.0",
-    "grunt-contrib-concat": "^0.3.0"
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-watch": "^0.5.3"
   }
 }
