@@ -13,7 +13,7 @@ module.exports = function (app, config) {
     app.set('view engine', 'jade');
 
     app.use(express.logger('dev'));
-    
+
     app.use(express.cookieParser());
     app.use(express.bodyParser());
     app.use(express.session({secret: process.env.SESSION_SECRET || 'dev secret'}));

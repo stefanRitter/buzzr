@@ -15,10 +15,16 @@ var Twit = require('twit'),
       'vine.co': true
     };
 
+var urlexpand = require('urlexpand');
+/*
 // mock URL expander
-var urlexpand = function (url, cb) {
+function (url, cb) {
+  // todo: get real url
+  // get H1 or titel
+  // get one img
+  
   cb(null, {url: url});
-}; //require('urlexpand'),
+}; */
 
 
 
@@ -43,18 +49,27 @@ exports.search = function (req, res) {
 
     var links = {},
         linksArray = [],
-        count = reply.statuses.length;
-
-    console.log(count);
+        count = 0,
+        current = 0;
 
     reply.statuses.forEach(processTweet);
 
-    for (var l in links) {
-      linksArray.push(links[l]);
+
+    function done() {
+      current += 1;
+      if (current >= count) {
+        for (var l in links) {
+          linksArray.push(links[l]);
+        }
+
+        console.log('found tweets: ' + reply.statuses.length);
+        console.log('fount links: ' + linksArray.length);
+        
+        res.json({
+          links: linksArray
+        });
+      }
     }
-    res.json({
-      links: linksArray
-    });
 
     function processTweet(tweet) {
 
@@ -62,6 +77,8 @@ exports.search = function (req, res) {
         var link = tweet.entities.urls[0],
             url = link.expanded_url || link.url;
         
+        count += 1;
+        console.log('count: ' + current + '/' + count);
         urlexpand(url, prepareUrl);
       }
 
@@ -74,23 +91,29 @@ exports.search = function (req, res) {
             domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
         
         if (!excludedDomains[domain]){
-          pushLink(expandedUrl);
+          pushLink(data);
         }
+        done();
       }
     
-      function pushLink (newUrl) {
+      function pushLink (data) {
+        var newUrl = data.url;
+        
         if (!links[newUrl]) {
           links[newUrl] = {
             url: newUrl,
-            popularity: calcPopularity(tweet)
+            title: data.title,
+            rank: calcRank(tweet)
           }
+        } else {
+          links[newUrl].rank += 1;
         }
       }
     }
   });
 };
 
-function calcPopularity(tweet) {
+function calcRank(tweet) {
   var favs = tweet.favourites_count || 0,
       retweets = tweet.retweet_count || 0;
 
