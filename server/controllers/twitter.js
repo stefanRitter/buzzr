@@ -1,5 +1,3 @@
-'use strict';
-
 var Twit = require('twit'),
     T = new Twit({
       consumer_key:         process.env.TWIT_KEY,
@@ -7,8 +5,21 @@ var Twit = require('twit'),
       access_token:         process.env.TWIT_TOKEN,
       access_token_secret:  process.env.TWIT_TOKEN_SECRET
     }),
+
     now = new Date(),
-    oneYearAgo = (now.getFullYear()-1) + "-" + now.getMonth() + "-" + now.getDate();
+    timeAgo = (now.getFullYear()-1) + "-" + now.getMonth() + "-" + now.getDate(),
+    excludedDomains = {
+      'pinterest.com': true,
+      'instagram.com': true,
+      'ask.fm': true,
+      'vine.co': true
+    };
+
+// mock URL expander
+var urlexpand = function (url, cb) {
+  cb(null, {url: url});
+}; //require('urlexpand'),
+
 
 
 exports.getRoot = function (req, res) {
@@ -17,11 +28,9 @@ exports.getRoot = function (req, res) {
   });
 };
 
-
 exports.search = function (req, res) {
   var searchText = req.body.searchText,
-      query = searchText; // +
-              //' since:' + oneYearAgo + ' filter:links';
+      query = searchText + ' filter:links' + ' since:' + timeAgo;
 
   T.get('search/tweets', {
     q: query,
@@ -30,32 +39,62 @@ exports.search = function (req, res) {
   },
   
   function(err, reply) {
-    var links = [];
+    if (err) { return res.json({err: err}); }
 
-    if (err) { 
-      return res.json({
-        links: links,
-        err: err.toString()
-      });
+    var links = {},
+        linksArray = [],
+        count = reply.statuses.length;
+
+    console.log(count);
+
+    reply.statuses.forEach(processTweet);
+
+    for (var l in links) {
+      linksArray.push(links[l]);
     }
-
-    console.log(reply.statuses.length);
-
-    reply.statuses.forEach( function (tweet) {
-      tweet.entities.urls.forEach( function (link) {
-        var url = link.expanded_url || link.url,
-            pop = tweet.favourites_count || tweet.retweet_count || 0;
-        
-        links.push({
-          url: url,
-          popularity: pop
-        });
-      });
-    });
-
     res.json({
-      links: links
+      links: linksArray
     });
+
+    function processTweet(tweet) {
+
+      if (tweet.entities.urls && tweet.entities.urls.length > 0) {
+        var link = tweet.entities.urls[0],
+            url = link.expanded_url || link.url;
+        
+        urlexpand(url, prepareUrl);
+      }
+
+
+      function prepareUrl(err, data) {
+        // data.url: 'http://instagram.com/p/QhLtWhB_A1/'
+        // data.title: 'Photo by sofishlin &bull; Instagram'
+        
+        var expandedUrl = data.url,
+            domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1];
+        
+        if (!excludedDomains[domain]){
+          pushLink(expandedUrl);
+        }
+      }
+    
+      function pushLink (newUrl) {
+        if (!links[newUrl]) {
+          links[newUrl] = {
+            url: newUrl,
+            popularity: calcPopularity(tweet)
+          }
+        } else {
+          links[newUrl].popularity += 2;
+        }
+      }
+    }
   });
 };
 
+function calcPopularity(tweet) {
+  var favs = tweet.favourites_count || 0,
+      retweets = tweet.retweet_count || 0;
+
+  return Math.round(favs + retweets * 1.5);
+}
