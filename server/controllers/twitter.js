@@ -71,7 +71,7 @@ exports.search = function (req, res) {
         // data.title: 'Photo by sofishlin &bull; Instagram'
         
         var expandedUrl = data.url,
-            domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1];
+            domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
         
         if (!excludedDomains[domain]){
           pushLink(expandedUrl);
@@ -84,8 +84,6 @@ exports.search = function (req, res) {
             url: newUrl,
             popularity: calcPopularity(tweet)
           }
-        } else {
-          links[newUrl].popularity += 2;
         }
       }
     }
