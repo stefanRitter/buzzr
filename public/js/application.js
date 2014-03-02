@@ -19,6 +19,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {templateUrl: '/partials/main/main', controller: 'appMainCtrl'})
     .when('/signup', {templateUrl: '/partials/account/signup', controller: 'appSignupCtrl'})
+    .when('/login', {templateUrl: '/partials/account/login', controller: 'appLoginCtrl'})
     .when('/profile', {templateUrl: '/partials/account/profile',
       controller: 'appProfileCtrl', resolve: routeRoleChecks.user})
     .when('/admin/users', {templateUrl: '/partials/admin/users',
@@ -128,11 +129,8 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
     }
   };
 });
-;
-angular.module('app').controller('appNavBarLoginCtrl', function ($scope, $location, appAuth, appNotifier, appIdentity) {
+;angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
   
-  $scope.identity = appIdentity;
-
   $scope.signin = function (username, password) {
     
     appAuth
@@ -140,18 +138,11 @@ angular.module('app').controller('appNavBarLoginCtrl', function ($scope, $locati
       .then(function (success) {
         if (success) {
           appNotifier.notify('You have successfully logged in!');
+          $location.path('/');
         } else {
-          appNotifier.notify('username/password combination incorrect');
+          appNotifier.error('username/password combination incorrect');
         }
       });
-  };
-
-  $scope.signout = function () {
-    appAuth.logoutUser().then(function() {
-      $scope.username = $scope.password = '';
-      appNotifier.notify('You are now logged out!');
-      $location.path('/');
-    });
   };
 });
 ;
@@ -195,7 +186,19 @@ angular.module('app').controller('appProfileCtrl', function ($scope, appAuth, ap
 });;
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
   $scope.users = appUser.query();
-});;angular.module('app').value('appToastr', {
+});;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, appAuth, appNotifier, appIdentity) {
+  
+  $scope.identity = appIdentity;
+
+  $scope.signout = function () {
+    appAuth.logoutUser().then(function() {
+      $scope.username = $scope.password = '';
+      appNotifier.notify('You are now logged out!');
+      $location.path('/');
+    });
+  };
+});
+;angular.module('app').value('appToastr', {
   success: function () {},
   error: function() {}
 });
@@ -212,40 +215,7 @@ angular.module('app').factory('appNotifier', function (appToastr) {
     }
   };
 });
-;angular.module('app').factory('appCachedCourse', function (appCourse) {
-  var courseList = [];
-
-  return {
-    query: function () {
-      if (courseList.length === 0) {
-        courseList = appCourse.query();
-      }
-      return courseList;
-    },
-    
-    get: function (obj) {
-      var course;
-      courseList.forEach(function (crs) {
-        if (crs._id === obj.id) {
-          course = crs;
-        }
-      });
-      return !course ? appCourse.get({id: obj.id}) : course;
-    }
-  };
-});;angular.module('app').factory('appCourse', function ($resource) {
-  var courseResource = $resource('/api/courses/:id', {_id: "@id"});
-  return courseResource;
-});;angular.module('app').controller('appCourseDetailCtrl', function ($scope, $routeParams, appCachedCourse) {
-  $scope.course = appCachedCourse.get({id: $routeParams.id});
-});;
-angular.module('app').controller('appCourseListCtrl', function ($scope, appCachedCourse) {
-  $scope.courses = appCachedCourse.query();
-
-  $scope.sortOptions = [{value: 'title', text: 'Sort by Title'},
-    {vaue: 'published', text: 'Sort by Publish Date'}];
-  $scope.sortOrder = $scope.sortOptions[0].value;
-});;angular.module('app').controller('appMainCtrl', function ($scope, $http) {
+;angular.module('app').controller('appMainCtrl', function ($scope, $http) {
 
   $scope.links = [];
   $scope.searching = false;

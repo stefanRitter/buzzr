@@ -1,0 +1,22 @@
+header.header(ng-controller="appHeaderCtrl")
+  .header-loggedout-menu(ng-hide="identity.isAuthenticated()")
+    a(href="/signup") Join
+    a(href="/login") Login
+
+  .header-sidebar
+    .header-loggedin-menu(ng-show="identity.isAuthenticated()")
+      ul
+        li.dropdown
+          a.dropdown-toggle(href="", data-toggle="dropdown")
+            | {{ identity.currentUser.firstName + ' ' + identity.currentUser.lastName}}
+            b.caret
+          ul.dropdown-menu
+            li(ng-show="identity.currentUser.isAdmin()")
+              a(href="/admin/users") User admin
+            li
+              a(href="/profile") Profile
+            li
+              a(href="", ng-click="signout()") Sign Out
+
+    a(href="/about") About us
+    p &copy; 2014 Buzzr, made in London

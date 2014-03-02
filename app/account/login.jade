@@ -1,0 +1,10 @@
+form.form
+  a(href="/signup") New user? Sign up here.
+  
+  .form-group
+    input(placeholder="Email", ng-model="username")
+  
+  .form-group
+    input(placeholder="Password", type="password", ng-model="password")
+  
+  button(ng-click="signin(username, password)") Sign In
