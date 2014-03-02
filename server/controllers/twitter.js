@@ -63,7 +63,7 @@ exports.search = function (req, res) {
         }
 
         console.log('found tweets: ' + reply.statuses.length);
-        console.log('fount links: ' + linksArray.length);
+        console.log('found links: ' + linksArray.length);
         
         res.json({
           links: linksArray
@@ -77,8 +77,7 @@ exports.search = function (req, res) {
         var link = tweet.entities.urls[0],
             url = link.expanded_url || link.url;
         
-        count += 1;
-        console.log('count: ' + current + '/' + count);
+        count += 1;;
         urlexpand(url, prepareUrl);
       }
 
@@ -93,6 +92,7 @@ exports.search = function (req, res) {
         if (!excludedDomains[domain]){
           pushLink(data);
         }
+        console.log('found: ' + data.url);
         done();
       }
     
