@@ -1,10 +1,11 @@
-h1 Buzzr Search
+
 form(ng-hide="searching")
   input(ng-model="searchText", placeholder="Search for a topic")
   button(ng-click="triggerSearch()") Generate Buzzr
 
 h2(ng-show="searching") ... buzzing the interweb for &quot;{{searchText}}&quot; ...
 
+hr
 h4 Results
 table
   thead

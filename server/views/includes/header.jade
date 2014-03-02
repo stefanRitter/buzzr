@@ -1,4 +1,7 @@
 header.header(ng-controller="appHeaderCtrl")
+  h1.header-heading-logo Buzzr
+  h2.header-heading-subtitle Your personal content feed made easy.
+  
   .header-loggedout-menu(ng-hide="identity.isAuthenticated()")
     a(href="/signup") Join
     a(href="/login") Login
@@ -19,4 +22,4 @@ header.header(ng-controller="appHeaderCtrl")
               a(href="", ng-click="signout()") Sign Out
 
     a(href="/about") About us
-    p &copy; 2014 Buzzr, made in London
+    p &copy; 2014 Buzzr, built in London
