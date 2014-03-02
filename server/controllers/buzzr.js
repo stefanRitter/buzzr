@@ -16,23 +16,16 @@ var Twit = require('twit'),
     };
 
 var urlexpand = require('urlexpand');
-/*
-// mock URL expander
-function (url, cb) {
-  // todo: get real url
-  // get H1 or titel
-  // get one img
-  
-  cb(null, {url: url});
-}; */
 
 
 
 exports.getRoot = function (req, res) {
-  res.render('twitter', {
-    bootstrappedUser: req.user
+  res.render('buzzr', {
+    bootstrappedUser: req.user,
+    bootstrappedBuzzr: req.params.id
   });
 };
+
 
 exports.search = function (req, res) {
   var searchText = req.body.searchText,
