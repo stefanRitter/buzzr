@@ -23,8 +23,10 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/login', {templateUrl: '/partials/account/login', controller: 'appLoginCtrl'})
     .when('/profile', {templateUrl: '/partials/account/profile',
       controller: 'appProfileCtrl', resolve: routeRoleChecks.user})
+    
     .when('/admin/users', {templateUrl: '/partials/admin/users',
       controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin})
+    
     .when('/:id', {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
 });
 

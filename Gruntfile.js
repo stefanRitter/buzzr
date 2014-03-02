@@ -36,11 +36,27 @@ module.exports = function (grunt) {
         src: ['app/app.js', 'app/*/*.js'],
         dest: 'public/js/application.js'
       }
+    },
+
+    watch: {
+      scripts: {
+        files: [
+          'app/**/*.js'
+        ],
+        tasks: ['concat']
+      },
+      styles: {
+        files: [
+          'styles/**/*.styl'
+        ],
+        tasks: ['stylus']
+      }
     }
   });
 
   grunt.registerTask('default', [
     'stylus',
-    'concat'
+    'concat',
+    'watch'
   ]);
 };
