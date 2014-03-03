@@ -24,8 +24,8 @@ a{text-decoration:none;color:inherit}
 .inline-block{display:inline-block}
 .list-horizontal li{display:inline-block;margin:0 .5em}
 .home-box{background:#56a5e2;background:-moz-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(15%,#56a5e2),color-stop(100%,#7db9e8));background:-webkit-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:-o-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:-ms-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:linear-gradient(to bottom,#56a5e2 15%,#7db9e8 100%);width:320px;height:480px;margin:5%;text-align:center;position:relative;}
-.home-box .appstore-logo{position:relative;top:-3px;margin-right:1em}
-.home-box .signup-btn{background:Black;color:White;padding:15px 71px;margin:15px;font-size:18px;border-radius:4px;display:inline-block}
+.home-box .appstore-logo{position:relative;top:-3px;margin-right:5px}
+.home-box .signup-btn{background:Black;color:White;padding:15px 66px;margin:15px;font-size:18px;border-radius:4px;display:inline-block}
 .home-box p{margin-top:65px}
 .home-heading-logo{width:260px;padding:55px 0 0 0;margin:50px auto 5px auto;height:0;background:url("/img/logo.png") no-repeat;overflow:hidden}
 .home-heading-subtitle{font-family:Garamond,serif;font-size:16px}
