@@ -1,4 +1,7 @@
 extend includes/layout
 
 block main-content
-  include ../../app/main/main
+  if !!bootstrappedUser
+    include ../../app/main/main
+  else
+    include ../../app/pages/home

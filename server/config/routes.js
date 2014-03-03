@@ -9,6 +9,7 @@ var auth = require('./auth.js'),
 module.exports = function (app) {
   // APP
   app.get('/',        pages.getRoot);
+  app.get('/home',    pages.getRoot);
   app.get('/login',   pages.getLogin);
   app.get('/join',    pages.getJoin);
   app.get('/about',   pages.getAbout);

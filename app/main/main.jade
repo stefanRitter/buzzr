@@ -1,4 +1,18 @@
-if !!bootstrappedUser
-  include buzzr
-else
-  include ../pages/home
+form(ng-hide="searching")
+  input(ng-model="searchText", placeholder="What are you interested in?")
+  button(ng-click="triggerSearch()") Generate Buzzr
+
+h2(ng-show="searching") ... buzzing the interweb for &quot;{{searchText}}&quot; ...
+
+hr
+h4 Results
+table
+  thead
+    tr
+      th Link
+      th Rank
+  tbody
+    tr(ng-repeat="link in links | orderBy:'rank':'true'")
+        td
+          a(href="{{link.url}}", target="_blank") {{link.title}} 
+        td {{link.rank}}
