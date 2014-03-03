@@ -1,5 +1,4 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $http) {
-
+angular.module('app').controller('appMainCtrl', function ($scope, $http, appIdentity) {
   $scope.links = [];
   $scope.searching = false;
 

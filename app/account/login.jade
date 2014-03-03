@@ -1,10 +1,18 @@
-form.form
-  a(href="/signup") New user? Sign up here.
-  
-  .form-group
-    input(placeholder="Email", ng-model="username")
-  
-  .form-group
-    input(placeholder="Password", type="password", ng-model="password")
-  
-  button(ng-click="signin(username, password)") Sign In
+.home-box.table
+  a(href="/")
+    h1.home-heading-logo Buzzr
+    h2.home-heading-subtitle Your personal content feed made easy.
+
+  form.form
+    a.underline(href="/join") New user? Sign up here.
+    
+    .form-group
+      input(placeholder="Email", ng-model="username")
+    
+    .form-group
+      input(placeholder="Password", type="password", ng-model="password")
+    
+    button(ng-click="signin(username, password)") Sign In
+
+include ../pages/footer
+

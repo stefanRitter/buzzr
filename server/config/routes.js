@@ -2,7 +2,6 @@
 
 var auth = require('./auth.js'),
     users = require('../controllers/users.js'),
-    admin = require('../controllers/admin.js'),
     pages = require('../controllers/pages.js'),
     buzzr = require('../controllers/buzzr.js');
 
@@ -15,8 +14,6 @@ module.exports = function (app) {
   app.get('/about',   pages.getAbout);
   app.get('/terms',   pages.getTerms);
   app.get('/later',   pages.getReadLater);
-  app.get('/admin',   admin.get);
-  app.get('/admin/*', admin.get);
   app.get('/:id',     pages.getRoot);
 
   // VIEW PARTIALS

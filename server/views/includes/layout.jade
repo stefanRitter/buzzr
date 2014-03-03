@@ -5,6 +5,8 @@ html
     link(rel="stylesheet", href="/css/application.css")
 
   body(ng-app="app")
-    block main-content
+    include header
+    div(ng-view)
+      block main-content
     include bootstrapData
     include scripts

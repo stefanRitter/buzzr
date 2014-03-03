@@ -8,28 +8,28 @@ exports.getRoot = function (req, res) {
 };
 
 exports.getLogin = function (req, res) {
-  res.render('index', {
+  res.render('login', {
     bootstrappedUser: req.user,
     bootstrappedBuzzr: req.params.id
   });
 };
 
 exports.getJoin = function (req, res) {
-  res.render('index', {
+  res.render('join', {
     bootstrappedUser: req.user,
     bootstrappedBuzzr: req.params.id
   });
 };
 
 exports.getAbout = function (req, res) {
-  res.render('index', {
+  res.render('about', {
     bootstrappedUser: req.user,
     bootstrappedBuzzr: req.params.id
   });
 };
 
 exports.getTerms = function (req, res) {
-  res.render('index', {
+  res.render('terms', {
     bootstrappedUser: req.user,
     bootstrappedBuzzr: req.params.id
   });
