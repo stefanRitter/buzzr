@@ -9,7 +9,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     },
     user: {
       auth: function (appAuth) {
-        return appAuth.authorizeLeggedInUserForRoute();
+        return appAuth.authorizeLoggedInUserForRoute();
       }
     }
   };
@@ -17,17 +17,17 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
-    .when('/', {templateUrl: '/partials/main/main', controller: 'appMainCtrl'})
-    .when('/about', {templateUrl: '/partials/main/about', controller: 'appMainCtrl'})
-    .when('/signup', {templateUrl: '/partials/account/signup', controller: 'appSignupCtrl'})
-    .when('/login', {templateUrl: '/partials/account/login', controller: 'appLoginCtrl'})
-    .when('/profile', {templateUrl: '/partials/account/profile',
-      controller: 'appProfileCtrl', resolve: routeRoleChecks.user})
-    
-    .when('/admin/users', {templateUrl: '/partials/admin/users',
-      controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin})
-    
-    .when('/:id', {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
+    .when('/',        {templateUrl: '/partials/main/main', controller: 'appMainCtrl'})
+    .when('/login',   {templateUrl: '/partials/account/login', controller: 'appLoginCtrl'})
+    .when('/join',    {templateUrl: '/partials/account/signup', controller: 'appSignupCtrl'})
+    .when('/about',   {templateUrl: '/partials/main/about', controller: 'appMainCtrl'})
+    .when('/terms',   {templateUrl: '/partials/main/about', controller: 'appMainCtrl'})
+    .when('/profile', {templateUrl: '/partials/account/profile', controller: 'appProfileCtrl',
+                        resolve: routeRoleChecks.user})
+    .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl'})
+
+    .when('/admin/users', {templateUrl: '/partials/admin/users', controller: 'appAdminUsersCtrl',
+      resolve: routeRoleChecks.admin});
 });
 
 

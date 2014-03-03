@@ -18,15 +18,6 @@ var Twit = require('twit'),
 var urlexpand = require('urlexpand');
 
 
-
-exports.getRoot = function (req, res) {
-  res.render('buzzr', {
-    bootstrappedUser: req.user,
-    bootstrappedBuzzr: req.params.id
-  });
-};
-
-
 exports.search = function (req, res) {
   var searchText = req.body.searchText,
       query = searchText + ' filter:links' + ' since:' + timeAgo;

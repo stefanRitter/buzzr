@@ -67,7 +67,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
       return $q.reject('not authorized');
     },
 
-    authorizeLeggedInUserForRoute: function () {
+    authorizeLoggedInUserForRoute: function () {
       if (appIdentity.isAuthenticated()) {
         return true;
       }
