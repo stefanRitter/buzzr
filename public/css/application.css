@@ -26,13 +26,14 @@ a{text-decoration:none;color:inherit}
 .right{text-align:right}
 .justify{text-align:justify}
 .inline-block{display:inline-block}
+.margin{margin:1em}
 .header{display:block;position:absolute;left:-290px;top:0;width:320px;height:100%;transition:left .5s;}
 .header:hover{left:0}
 .header-content-left{float:left;width:20px;height:100%}
 .header-content-center{float:left;width:270px;height:100%}
 .header-content-right{float:left;width:30px;height:100%}
 .list-horizontal li{display:inline-block;margin:0 .5em}
-.home-box{background:#56a5e2;background:-moz-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(15%,#56a5e2),color-stop(100%,#7db9e8));background:-webkit-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:-o-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:-ms-linear-gradient(top,#56a5e2 15%,#7db9e8 100%);background:linear-gradient(to bottom,#56a5e2 15%,#7db9e8 100%);width:320px;height:480px;margin:0 auto;text-align:center;position:relative;}
+.home-box{width:320px;height:480px;margin:0 auto;text-align:center;position:relative;}
 .home-box .appstore-logo{position:relative;top:-3px;margin-right:5px}
 .home-box .signup-btn{background:Black;color:White;padding:15px 66px;margin:15px;font-size:18px;border-radius:4px;display:inline-block}
 .home-box p{margin-top:65px}
