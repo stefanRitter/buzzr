@@ -1,10 +1,16 @@
 header.header(ng-controller="appHeaderCtrl")
   .header-content-left &nbsp;
+  
   .header-content-center
-    .header-loggedout-menu(ng-hide="identity.isAuthenticated()")
-      a(href="/join") Join
-      a(href="/login") Login
-
+    .header-loggedout-menu(ng-hide="identity.isAuthenticated()") 
+      h3 Welcome to buzzr.
+      p.
+        Sign up to save your personal feeds, 
+        and stay up to date on the topics you care about.
+      p.margin-top
+        a.button-black(href="/join") Join&nbsp;&nbsp;
+        | &nbsp;&nbsp;
+        a.button-white(href="/login") Login
 
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
       ul
@@ -19,8 +25,10 @@ header.header(ng-controller="appHeaderCtrl")
               a(href="/profile") Profile
             li
               a(href="", ng-click="signout()") Sign Out
-
-    a(href="/about") About us
-    p &copy; 2014 Buzzr, built in London
+    
+    .header-footer
+      a(href="/about") About
+      | &copy; 2014, built in London
+  
   .header-content-right 
-    img.margin(src="/img/favicon.png", width="30px")
+    img(src="/img/favicon.png", width="30px")
