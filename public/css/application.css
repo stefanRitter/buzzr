@@ -52,7 +52,7 @@ h2{font-size:1.8em}
 .header.open{-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);transform:translateX(0)}
 .header-content-left,.header-content-center,.header-content-right{float:left;height:100%;padding-top:1em;background:White}
 .header-content-left{width:20px}
-.header-content-center{width:269px;border-right:1px Black solid;position:relative}
+.header-content-center{width:259px;border-right:1px Black solid;padding:1em 5px;position:relative}
 .header-content-right{width:30px;background:transparent;}
 .header-content-right img{margin-left:1em}
 .list-horizontal li{display:inline-block;margin:0 .5em}
