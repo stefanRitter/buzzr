@@ -45,11 +45,11 @@ angular.module('app').run(function ($rootScope, $location) {
 ;
 angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUser) {
   return {
-    authenticateUser: function (username, password) {
+    authenticateUser: function (email, password) {
       var dfd = $q.defer();
 
       $http
-        .post('/login', {username: username, password: password})
+        .post('/login', {email: email, password: password})
         .then(function (res) {
           if (res.data.success) {
             var user = new appUser();
@@ -140,10 +140,8 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
 
   $scope.signup = function () {
     var newUserData = {
-      username: $scope.email,
-      password: $scope.password,
-      firstName: $scope.fname,
-      lastName: $scope.lname
+      email: $scope.email,
+      password: $scope.password
     };
 
     appAuth.createUser(newUserData).then(function () {
@@ -155,16 +153,16 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
   };
 });;angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
   
-  $scope.signin = function (username, password) {
+  $scope.signin = function () {
     
     appAuth
-      .authenticateUser(username, password)
+      .authenticateUser($scope.email, $scope.password)
       .then(function (success) {
         if (success) {
           appNotifier.notify('You have successfully logged in!');
           $location.path('/');
         } else {
-          appNotifier.error('username/password combination incorrect');
+          appNotifier.error('email/password combination incorrect');
         }
       });
   };
@@ -199,9 +197,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.signout = function () {
     appAuth.logoutUser().then(function() {
-      $scope.username = $scope.password = '';
       appNotifier.notify('You are now logged out!');
-      $location.path('/');
+      $location.path('/home');
     });
   };
 

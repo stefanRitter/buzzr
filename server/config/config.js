@@ -4,7 +4,7 @@ var rootPath = path.normalize(__dirname + '/../../');
 
 module.exports = {
   development: {
-    datastoreURI: 'mongodb://localhost/app-test',
+    datastoreURI: 'mongodb://localhost/buzzr-dev',
     rootPath: rootPath,
     port: 3030
   },

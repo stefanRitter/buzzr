@@ -1,11 +1,11 @@
 
 angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUser) {
   return {
-    authenticateUser: function (username, password) {
+    authenticateUser: function (email, password) {
       var dfd = $q.defer();
 
       $http
-        .post('/login', {username: username, password: password})
+        .post('/login', {email: email, password: password})
         .then(function (res) {
           if (res.data.success) {
             var user = new appUser();

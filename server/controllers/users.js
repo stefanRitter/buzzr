@@ -13,7 +13,7 @@ exports.getUser = function (req, res) {
 exports.createUser = function (req, res, next) {
   var userBody = req.body;
   
-  userBody.username = userBody.username.toLowerCase();
+  userBody.email = userBody.email.toLowerCase();
   userBody.salt = encrypt.createSalt();
   userBody.password = encrypt.hashPwd(userBody.salt, userBody.password);
 
@@ -43,9 +43,7 @@ exports.updateUser = function (req, res) {
     return res.end();
   }
 
-  req.user.firstName = userUpdates.firstName;
-  req.user.lastName = userUpdates.lastName;
-  req.user.username = userUpdates.username;
+  req.user.email = userUpdates.email;
   if (userUpdates.password && userUpdates.password.length > 0) {
     req.user.salt = encrypt.createSalt();
     req.user.password = encrypt.hashPwd(req.user.salt, userUpdates.password);

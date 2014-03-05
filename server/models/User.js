@@ -4,9 +4,7 @@ var mongoose = require('mongoose'),
 
 
 userSchema = mongoose.Schema({
-  firstName: {type: String, required: '{PATH} is required!'},
-  lastName: {type: String, required: '{PATH} is required!'},
-  username: {
+  email: {
     type: String,
     required: '{PATH} is required!',
     unique: true
@@ -19,9 +17,7 @@ userSchema = mongoose.Schema({
 // remove sensitive data
 userSchema.methods.safe = function () {
   return {
-    firstName: this.firstName,
-    lastName: this.lastName,
-    username: this.username,
+    email: this.email,
     roles: this.roles
   };
 };
@@ -43,9 +39,9 @@ exports.createDefaultUsers = function () {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'test');
 
-      User.create({firstName: 'Stefan', lastName: 'Ritter', username: 'stef', salt: salt, password: pwd, roles: ['admin']});
-      User.create({firstName: 'Paul', lastName: 'Hammer', username: 'paul', salt: salt, password: pwd, roles: []});
-      User.create({firstName: 'Jakob', lastName: 'Steiner', username: 'jakob', salt: salt, password: pwd});
+      User.create({ email: 'stef@stef.com', salt: salt, password: pwd, roles: ['admin']});
+      User.create({ email: 'jeroen@jeroen.com', salt: salt, password: pwd, roles: []});
+      User.create({ email: 'marius@marius.com', salt: salt, password: pwd});
     }
   });
 };

@@ -4,17 +4,20 @@
       h1 Buzzr
       h2 Your personal content feed made easy.
 
-
-  form.form.center
-    a.underline(href="/join") New user? Sign up here.
+  form.form.center(name="signinForm")
+    .margin-top
+      a.underline(href="/join") New user? Sign up here.
     
     .form-group
-      input(placeholder="Email", ng-model="username")
+      label Email
+      input(name="email", type="email", placeholder="Email", ng-model="email", required)
     
     .form-group
-      input(placeholder="Password", type="password", ng-model="password")
+      label Password
+      input(name="password", type="password", placeholder="Password", ng-model="password", required)
     
-    button(ng-click="signin(username, password)") Sign In
+    .form-group
+      button.button-black(ng-click="signin()", ng-disabled="signinForm.$invalid") Sign in
 
 include ../pages/footer
 

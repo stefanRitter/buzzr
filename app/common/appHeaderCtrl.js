@@ -4,9 +4,8 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, a
 
   $scope.signout = function () {
     appAuth.logoutUser().then(function() {
-      $scope.username = $scope.password = '';
       appNotifier.notify('You are now logged out!');
-      $location.path('/');
+      $location.path('/home');
     });
   };
 

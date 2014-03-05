@@ -2,10 +2,8 @@ angular.module('app').controller('appJoinCtrl', function ($scope, $location, app
 
   $scope.signup = function () {
     var newUserData = {
-      username: $scope.email,
-      password: $scope.password,
-      firstName: $scope.fname,
-      lastName: $scope.lname
+      email: $scope.email,
+      password: $scope.password
     };
 
     appAuth.createUser(newUserData).then(function () {
