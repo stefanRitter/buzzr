@@ -1,5 +1,5 @@
 angular.module('app').controller('appHeaderCtrl', function ($scope, $location, appAuth, appNotifier, appIdentity) {
-  
+  $scope.open = false;
   $scope.identity = appIdentity;
 
   $scope.signout = function () {
@@ -8,5 +8,9 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, a
       appNotifier.notify('You are now logged out!');
       $location.path('/');
     });
+  };
+
+  $scope.toggle = function () {
+    $scope.open = !$scope.open;
   };
 });

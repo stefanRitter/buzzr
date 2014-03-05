@@ -194,7 +194,7 @@ angular.module('app').controller('appProfileCtrl', function ($scope, appAuth, ap
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
   $scope.users = appUser.query();
 });;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, appAuth, appNotifier, appIdentity) {
-  
+  $scope.open = false;
   $scope.identity = appIdentity;
 
   $scope.signout = function () {
@@ -203,6 +203,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       appNotifier.notify('You are now logged out!');
       $location.path('/');
     });
+  };
+
+  $scope.toggle = function () {
+    $scope.open = !$scope.open;
   };
 });
 ;angular.module('app').value('appToastr', {

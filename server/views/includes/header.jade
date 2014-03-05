@@ -1,4 +1,4 @@
-header.header(ng-controller="appHeaderCtrl")
+header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
   .header-content-left &nbsp;
   
   .header-content-center
@@ -27,8 +27,10 @@ header.header(ng-controller="appHeaderCtrl")
               a(href="", ng-click="signout()") Sign Out
     
     .header-footer
-      a(href="/about") About
-      | &copy; 2014, built in London
+      ul.list-horizontal
+        li &copy; 2014 built in London, 
+        li
+          a(href="/about") About
   
-  .header-content-right 
-    img(src="/img/favicon.png", width="30px")
+  .header-content-right
+    img.clickable(src="/img/favicon.png", width="30px", ng-click="toggle()")
