@@ -18,6 +18,7 @@ a{text-decoration:none;color:inherit}
 h1,h2,h3{font-weight:300;line-height:2;margin-top:1em}
 h1{font-size:2.2em}
 h2{font-size:1.8em}
+.composite-layer{-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}
 .clickable{cursor:pointer}
 .table{display:table}
 .table-cell-vertical-middle{display:table-cell;vertical-align:middle}
@@ -35,14 +36,14 @@ h2{font-size:1.8em}
 .margin{margin:1em}
 .margin-top{margin-top:1em}
 .margin-right{margin-right:1em}
-.button-white,.button-black{border-radius:4px;padding:.5em 2em;display:inline-block;border:2px Black solid;min-width:40px;text-align:center}
+.button-white,.button-black{-webkit-border-radius:4px;-moz-border-radius:4px;-o-border-radius:4px;border-radius:4px;padding:.5em 2em;display:inline-block;border:2px Black solid;min-width:40px;text-align:center}
 .button-white{background:White;color:Black}
 .button-black{background:Black;color:White}
 .pages-footer,.header-footer{position:absolute;bottom:15px;left:0;width:100%;text-align:center;font-size:11px;font-weight:bold;color:Gray}
 .header-footer{bottom:31px;left:-20px}
 .footer-spacer{width:100%;height:140px}
-.header{display:block;position:absolute;left:-290px;top:0;width:320px;height:100%;transition:left .5s;z-index:1000;}
-.header.open{left:0}
+.header{display:block;position:absolute;left:0;top:0;width:320px;height:100%;z-index:1000;-webkit-transition:-webkit-transform .5s;-moz-transition:-webkit-transform .5s;-o-transition:-webkit-transform .5s;transition:-webkit-transform .5s;-webkit-transition:transform .5s;-moz-transition:transform .5s;-o-transition:transform .5s;transition:transform .5s;-webkit-transform:translateX(-290px);-moz-transform:translateX(-290px);-o-transform:translateX(-290px);transform:translateX(-290px);}
+.header.open{-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);transform:translateX(0)}
 .header-content-left,.header-content-center,.header-content-right{float:left;height:100%;padding-top:1em;background:White}
 .header-content-left{width:20px}
 .header-content-center{width:269px;border-right:1px Black solid;position:relative}

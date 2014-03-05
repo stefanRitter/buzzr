@@ -1,14 +1,16 @@
 .header
   display block
   position absolute
-  left -290px
+  left 0
   top 0
   width 320px
   height 100%
-  transition left 0.5s
   z-index 1000
+  transition -webkit-transform 0.5s
+  transition transform 0.5s
+  transform translateX(-290px)
   &.open
-    left 0
+    transform translateX(0)
 
 .header-content-left
 .header-content-center
