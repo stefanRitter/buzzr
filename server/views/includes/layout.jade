@@ -3,8 +3,10 @@ html
   head
     title Buzzr
     link(href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,300italic,400italic,600italic,700,700italic", rel="stylesheet", type="text/css")
-    link(rel="stylesheet", href="/css/application.css")
-
+    //- link(rel="stylesheet", href="/css/application.css")
+    | <style type='text/css'>
+    include ../../../public/css/application.css
+    | </style>
   body(ng-app="app")
     include header
     div.app-view(ng-view)
