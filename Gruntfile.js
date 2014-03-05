@@ -26,9 +26,9 @@ module.exports = function (grunt) {
       },
       vendor: {
         src: [
-          'bower_components/angular/angular.min.js',
-          'bower_components/angular-resource/angular-resource.min.js',
-          'bower_components/angular-route/angular-route.min.js'
+          'bower_components/angular/angular.js',
+          'bower_components/angular-resource/angular-resource.js',
+          'bower_components/angular-route/angular-route.js'
         ],
         dest: 'public/js/vendor.js',
       },

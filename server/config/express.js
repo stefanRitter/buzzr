@@ -14,6 +14,7 @@ module.exports = function (app, config) {
 
     app.use(express.logger('dev'));
 
+    app.use(express.compress());
     app.use(express.cookieParser());
     app.use(express.bodyParser());
     app.use(express.session({secret: process.env.SESSION_SECRET || 'dev secret'}));
