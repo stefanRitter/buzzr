@@ -1,0 +1,36 @@
+.feedback-popop
+.feedback-button
+  @extend .composite-layer
+  position fixed
+
+.feedback-button
+  bottom 1em
+  right 1em
+  font-weight 600
+  font-size 20px
+  cursor pointer
+  width 24px
+  height 24px
+  border 2px solid black
+  border-radius 50%
+  span
+    display inline-block
+    position relative
+    left 8px
+    bottom 4px
+
+.feedback-popop
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background rgba(0,0,0,0.5)
+  &.show
+    display block
+
+.feedback-form
+  margin 0 auto
+  background White
+  text-align center
+  width 320px
+  height 480px

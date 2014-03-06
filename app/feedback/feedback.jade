@@ -1,0 +1,32 @@
+.feedback-button
+  span ?
+
+.feedback-popop
+  .feedback-form
+    h1 Feedback / Help
+    form.form(name="feedbackForm")
+      .form-group
+        label Email
+        input(ng-model="email")
+      
+      .form-group
+        label Name
+        input(ng-model="email")
+      
+      .form-group
+        label Choose a topic
+        select
+          option Website issue / bug
+          option Help!
+          option Other
+      
+      .form-group
+        label Your message
+        textarea
+      
+      .form-group.notifier
+        .error {{notifier.error}}
+        .notice {{notifier.notice}}
+      
+      .form-group
+        button.button-black(ng-click="send()") Send

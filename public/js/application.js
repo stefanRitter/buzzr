@@ -201,6 +201,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.toggle = function () {
     $scope.open = !$scope.open;
+    $scope.$apply();
     $document.one('click', function () {
       if ($scope.open) {
         $scope.open = false;
@@ -229,7 +230,15 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     }
   };
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, appIdentity) {
+;angular.module('app').controller('appFeedbackCtrl', function ($scope, appIdentity) {
+
+  //input(type="hidden" value="userAgent" ng-model="userAgent")
+  //input(type="hidden" value="currentPath" ng-model="currentPath")
+
+  // if appIdentity
+  // name = appIdentity.currentUser.name
+  // email = appIdentity.currentUser.email
+});;angular.module('app').controller('appMainCtrl', function ($scope, $http, appIdentity) {
   $scope.links = [];
   $scope.searching = false;
 
