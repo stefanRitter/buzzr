@@ -210,6 +210,27 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     });
   };
 });
+;angular.module('app').factory('appIsMobile', function () {
+  var isMobile = {
+    Android: function() {
+      return navigator.userAgent.match(/Android/i) ? true : false;
+    },
+    BlackBerry: function() {
+      return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+    },
+    iOS: function() {
+      return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+    },
+    Windows: function() {
+      return navigator.userAgent.match(/IEMobile/i) ? true : false;
+    },
+    any: function() {
+      return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+    }
+  };
+  
+  return isMobile;
+});
 ;angular.module('app').factory('appNotifier', function () {
   return {
     notify: function (msg, scope) {
@@ -282,8 +303,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       });
   };
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document) {
-  $document[0].getElementById("focus").focus();
+;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile) {
+  if (!appIsMobile.any()) {
+    $document[0].getElementById("focus").focus();
+  }
 
   $scope.search = function () {
     if (!!$scope.searchTerm) {
