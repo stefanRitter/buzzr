@@ -47,8 +47,7 @@ h2{font-size:1.8em}
 .footer-spacer{width:100%;height:140px}
 .form{width:300px;margin:0 auto;}
 .form label{display:block;font-weight:600;text-align:left}
-.form input,.form select,.form textarea{display:block;width:285px;height:2em;-webkit-animation:none;-moz-animation:none;-o-animation:none;-webkit-animation:none;-moz-animation:none;-o-animation:none;animation:none;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border:1px solid #ccc;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;padding-left:10px;}
-.form input.line,.form select.line,.form textarea.line{border:0;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border-bottom:2px solid Black}
+.form input,.form select,.form textarea{display:block;width:285px;height:2em;-webkit-animation:none;-moz-animation:none;-o-animation:none;-webkit-animation:none;-moz-animation:none;-o-animation:none;animation:none;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border:1px solid #ccc;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;padding-left:10px}
 .form-group{margin-top:1em}
 .header{display:block;position:fixed;left:0;top:0;width:320px;height:100%;z-index:1000;-webkit-transition:all .5s ease 0s;-moz-transition:all .5s ease 0s;-o-transition:all .5s ease 0s;transition:all .5s ease 0s;-webkit-transform:translateX(-290px);-moz-transform:translateX(-290px);-o-transform:translateX(-290px);transform:translateX(-290px);}
 .header.open{-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);transform:translateX(0)}
@@ -64,3 +63,7 @@ h2{font-size:1.8em}
 .notifier{font-weight:600;text-align:center}
 .pages-container{margin:0 auto;padding:0 10px;text-align:left;position:relative;max-width:960px}
 .appstore-logo{height:40px}
+.home-heading{text-align:center;margin-top:2em;font-size:3em}
+.home-form.form{text-align:center;width:100%;margin:0 auto;max-width:400px;}
+.home-form.form input.home-input{display:inline-block;font-size:24px;border:0;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border-bottom:2px solid Black;width:90%;}
+.home-form.form input.home-input:focus{outline:none}

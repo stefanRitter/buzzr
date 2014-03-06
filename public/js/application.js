@@ -26,8 +26,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/terms',   {templateUrl: '/partials/pages/terms', controller: 'appPagesCtrl'})
     .when('/profile', {templateUrl: '/partials/account/profile', controller: 'appProfileCtrl',
                         resolve: routeRoleChecks.user})
-    .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl',
-                        resolve: routeRoleChecks.user});
+    .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
 
   $routeProvider
     .when('/admin/users', {templateUrl: '/partials/admin/users', controller: 'appAdminUsersCtrl',
@@ -248,6 +247,11 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       });
   };
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope) {
-
+;angular.module('app').controller('appPagesCtrl', function ($scope, $location) {
+  $scope.search = function () {
+    if (!!$scope.searchTerm) {
+      var searchTerm = encodeURI($scope.searchTerm.replace(' ', '-'));
+      $location.path(searchTerm);
+    }
+  };
 });

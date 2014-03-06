@@ -1,14 +1,10 @@
 .pages-container
-  .center
-    a.logo-big(href="/")
-      h1 Buzzr
-      h2 Your personal content feed made easy.
+  include ../common/buzzr-logo
   
-  .margin-top &nbsp;
-  h1.center.margin-top What are you interested in?
-  form.form.center.margin-top
-    input.line()
-  
+  h1.home-heading What are you interested in?
+  form.home-form.form(ng-submit="search()")
+    input.home-input(ng-model="searchTerm")
+
   .margin-top &nbsp;
   .margin-top &nbsp;
   p.center.margin-top

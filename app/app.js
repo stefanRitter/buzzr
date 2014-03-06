@@ -26,8 +26,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/terms',   {templateUrl: '/partials/pages/terms', controller: 'appPagesCtrl'})
     .when('/profile', {templateUrl: '/partials/account/profile', controller: 'appProfileCtrl',
                         resolve: routeRoleChecks.user})
-    .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl',
-                        resolve: routeRoleChecks.user});
+    .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
 
   $routeProvider
     .when('/admin/users', {templateUrl: '/partials/admin/users', controller: 'appAdminUsersCtrl',
