@@ -49,7 +49,7 @@ h2{font-size:1.8em}
 .feedback-popop.show{display:block}
 .feedback-form{position:absolute;left:50%;top:0;margin-left:-160px;background:White;text-align:center;width:320px;height:480px;}
 .feedback-form .form textarea{resize:none;width:285px;height:120px}
-.feedback-form .notifier{min-height:3em}
+.feedback-form .notifier{min-height:2em}
 .feedback-close{position:absolute;top:-10px;right:6px;cursor:pointer;font-weight:600;font-size:30px}
 .pages-footer,.header-footer{position:absolute;bottom:15px;left:0;width:100%;text-align:center;font-size:11px;font-weight:bold;color:Gray}
 .header-footer{bottom:40px;left:-20px}
@@ -58,6 +58,7 @@ h2{font-size:1.8em}
 .form label{display:block;font-weight:600;text-align:left}
 .form input,.form select,.form textarea{display:block;width:285px;height:2em;-webkit-animation:none;-moz-animation:none;-o-animation:none;-webkit-animation:none;-moz-animation:none;-o-animation:none;animation:none;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border:1px solid #ccc;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;padding-left:10px}
 .form-group{margin-top:1em}
+.required{font-size:.8em;font-style:italic}
 .header{display:block;position:fixed;left:0;top:0;width:320px;height:100%;z-index:1000;-webkit-transition:all .5s ease 0s;-moz-transition:all .5s ease 0s;-o-transition:all .5s ease 0s;transition:all .5s ease 0s;-webkit-transform:translateX(-290px);-moz-transform:translateX(-290px);-o-transform:translateX(-290px);transform:translateX(-290px);}
 .header.open{-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);transform:translateX(0)}
 .header-content-left,.header-content-center,.header-content-right{float:left;height:100%;padding-top:1em;background:White}

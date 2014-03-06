@@ -3,6 +3,7 @@
 var auth = require('./auth.js'),
     users = require('../controllers/users.js'),
     pages = require('../controllers/pages.js'),
+    feedback = require('../controllers/feedback.js'),
     buzzr = require('../controllers/buzzr.js');
 
 
@@ -27,6 +28,7 @@ module.exports = function (app) {
   app.get( '/api/users', auth.requiresRole('admin'), users.getUser);
   app.post('/api/users', users.createUser);
   app.put( '/api/users', users.updateUser);
+  app.post('/api/feedback', feedback.createFeedback);
   app.all( '/api/*', function (req, res) { res.send(404); });
 
   // AUTH

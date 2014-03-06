@@ -9,15 +9,15 @@
       h1 Feedback / Help
       form.form(name="feedbackForm", ng-hide="success")
         .form-group
-          label Email
+          label Email*
           input(type="email", ng-model="feedback.email", required)
         
         .form-group
-          label Name
+          label Name*
           input(ng-model="feedback.name", required)
         
         .form-group
-          label Your message
+          label Your message*
           textarea(ng-model="feedback.message", required)
         
         .form-group.notifier
@@ -26,6 +26,8 @@
         
         .form-group
           button.button-black(ng-click="send()", ng-disabled="feedbackForm.$invalid") Send
+          br
+          span.required * required
 
       h2.margin-top(ng-show="success")
         strong Thank you!

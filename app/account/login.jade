@@ -6,11 +6,11 @@
       a.underline(href="/join") New user? Sign up here.
     
     .form-group
-      label Email
+      label Email*
       input(name="email", type="email", placeholder="Email", ng-model="email", required)
     
     .form-group
-      label Password
+      label Password*
       input(name="password", type="password", placeholder="Password", ng-model="password", required)
     
     .form-group.notifier
@@ -19,6 +19,7 @@
 
     .form-group
       button.button-black(ng-click="signin()", ng-disabled="signinForm.$invalid") Sign in
+      br
+      span.required * required
 
 include ../pages/footer
-
