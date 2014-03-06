@@ -6,7 +6,7 @@ angular.module('app').factory('appNotifier', function () {
       setTimeout(function () {
         scope.notifier.notice = '';
         scope.$apply();
-      }, 3000);
+      }, 4000);
     },
     error: function (msg, scope) {
       scope.notifier = {};
@@ -14,7 +14,7 @@ angular.module('app').factory('appNotifier', function () {
       setTimeout(function () {
         scope.notifier.error = '';
         scope.$apply();
-      }, 3000);
+      }, 4000);
     }
   };
 });

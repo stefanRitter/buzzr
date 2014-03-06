@@ -1,36 +1,37 @@
 .feedback(ng-controller="appFeedbackCtrl")
-  .feedback-button(ng-click="feedback.toggle()")
+  .feedback-button(ng-click="toggle()")
     span ?
 
-  .feedback-popop(ng-class="{'show': feedback.show}")
+  .feedback-popop(ng-class="{'show': show}")
     .feedback-form
-      .feedback-close(ng-click="feedback.toggle()") &times;
+      .feedback-close(ng-click="toggle()") &times;
       
       h1 Feedback / Help
-      form.form(name="feedbackForm", ng-hide="feedback.success")
+      form.form(name="feedbackForm", ng-hide="success")
         .form-group
           label Email
-          input(ng-model="feedback.email")
+          input(type="email", ng-model="feedback.email", required)
         
         .form-group
           label Name
-          input(ng-model="feedback.name")
+          input(ng-model="feedback.name", required)
         
         .form-group
           label Your message
-          textarea
+          textarea(ng-model="feedback.message", required)
         
         .form-group.notifier
           .error {{notifier.error}}
           .notice {{notifier.notice}}
         
         .form-group
-          button.button-black(ng-click="feedback.send()", ng-disabled="feedbackForm.$invalid") Send
+          button.button-black(ng-click="send()", ng-disabled="feedbackForm.$invalid") Send
 
-      h2.margin-top(ng-show="feedback.success")
+      h2.margin-top(ng-show="success")
         strong Thank you!
         br
         | We aim to reply to all our mail within 24hrs.
+        br
         br
         | Talk soon,
         br
