@@ -1,32 +1,37 @@
-.feedback-button
-  span ?
+.feedback(ng-controller="appFeedbackCtrl")
+  .feedback-button(ng-click="feedback.toggle()")
+    span ?
 
-.feedback-popop
-  .feedback-form
-    h1 Feedback / Help
-    form.form(name="feedbackForm")
-      .form-group
-        label Email
-        input(ng-model="email")
+  .feedback-popop(ng-class="{'show': feedback.show}")
+    .feedback-form
+      .feedback-close(ng-click="feedback.toggle()") &times;
       
-      .form-group
-        label Name
-        input(ng-model="email")
-      
-      .form-group
-        label Choose a topic
-        select
-          option Website issue / bug
-          option Help!
-          option Other
-      
-      .form-group
-        label Your message
-        textarea
-      
-      .form-group.notifier
-        .error {{notifier.error}}
-        .notice {{notifier.notice}}
-      
-      .form-group
-        button.button-black(ng-click="send()") Send
+      h1 Feedback / Help
+      form.form(name="feedbackForm", ng-hide="feedback.success")
+        .form-group
+          label Email
+          input(ng-model="feedback.email")
+        
+        .form-group
+          label Name
+          input(ng-model="feedback.name")
+        
+        .form-group
+          label Your message
+          textarea
+        
+        .form-group.notifier
+          .error {{notifier.error}}
+          .notice {{notifier.notice}}
+        
+        .form-group
+          button.button-black(ng-click="feedback.send()", ng-disabled="feedbackForm.$invalid") Send
+
+      h2.margin-top(ng-show="feedback.success")
+        strong Thank you!
+        br
+        | We aim to reply to all our mail within 24hrs.
+        br
+        | Talk soon,
+        br
+        | Buzzr Team

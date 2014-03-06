@@ -17,7 +17,7 @@ input,select{vertical-align:middle}
 html,body{font-family:'Open Sans',Helvetica,Arial,sans-serif;font-weight:400;font-size:14px;width:100%;height:100%;line-height:1.5;overflow:hidden}
 .app-view{width:100%;height:100%;overflow:auto}
 a{text-decoration:none;color:inherit}
-h1,h2,h3{font-weight:300;line-height:2;margin-top:1em}
+h1,h2,h3{font-weight:300;line-height:2}
 h1{font-size:2.2em}
 h2{font-size:1.8em}
 .composite-layer,.feedback-popop,.feedback-button{-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}
@@ -43,11 +43,14 @@ h2{font-size:1.8em}
 .button-white{background:White;color:Black}
 .button-black{background:Black;color:White}
 .feedback-popop,.feedback-button{position:fixed}
-.feedback-button{bottom:1em;right:1em;font-weight:600;font-size:20px;cursor:pointer;width:24px;height:24px;border:2px solid #000;-webkit-border-radius:50%;-moz-border-radius:50%;-o-border-radius:50%;border-radius:50%;}
+.feedback-button{z-index:1000;bottom:1em;right:1em;font-weight:600;font-size:20px;cursor:pointer;width:24px;height:24px;border:2px solid #000;-webkit-border-radius:50%;-moz-border-radius:50%;-o-border-radius:50%;border-radius:50%;}
 .feedback-button span{display:inline-block;position:relative;left:8px;bottom:4px}
-.feedback-popop{top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);}
+.feedback-popop{display:none;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);}
 .feedback-popop.show{display:block}
-.feedback-form{margin:0 auto;background:White;text-align:center;width:320px;height:480px}
+.feedback-form{position:absolute;left:50%;top:0;margin-left:-160px;background:White;text-align:center;width:320px;height:480px;}
+.feedback-form .form textarea{resize:none;width:285px;height:120px}
+.feedback-form .notifier{min-height:3em}
+.feedback-close{position:absolute;top:-10px;right:6px;cursor:pointer;font-weight:600;font-size:30px}
 .pages-footer,.header-footer{position:absolute;bottom:15px;left:0;width:100%;text-align:center;font-size:11px;font-weight:bold;color:Gray}
 .header-footer{bottom:40px;left:-20px}
 .footer-spacer{width:100%;height:120px}
