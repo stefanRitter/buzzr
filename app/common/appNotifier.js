@@ -1,17 +1,20 @@
-angular.module('app').value('appToastr', {
-  success: function () {},
-  error: function() {}
-});
-
-angular.module('app').factory('appNotifier', function (appToastr) {
+angular.module('app').factory('appNotifier', function () {
   return {
-    notify: function (msg) {
-      appToastr.success(msg);
-      console.log(msg);
+    notify: function (msg, scope) {
+      scope.notifier = {};
+      scope.notifier.notice = msg;
+      setTimeout(function () {
+        scope.notifier.notice = '';
+        scope.$apply();
+      }, 3000);
     },
-    error: function (msg) {
-      appToastr.error(msg);
-      console.log(msg);
+    error: function (msg, scope) {
+      scope.notifier = {};
+      scope.notifier.error = msg;
+      setTimeout(function () {
+        scope.notifier.error = '';
+        scope.$apply();
+      }, 3000);
     }
   };
 });

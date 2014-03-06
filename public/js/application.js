@@ -145,10 +145,9 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
     };
 
     appAuth.createUser(newUserData).then(function () {
-      appNotifier.notify('User account created');
       $location.path('/');
     }, function (reason) {
-      appNotifier.error(reason);
+      appNotifier.error(reason, $scope);
     });
   };
 });;angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
@@ -159,10 +158,9 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
       .authenticateUser($scope.email, $scope.password)
       .then(function (success) {
         if (success) {
-          appNotifier.notify('You have successfully logged in!');
           $location.path('/');
         } else {
-          appNotifier.error('email/password combination incorrect');
+          appNotifier.error('email/password combination incorrect', $scope);
         }
       });
   };
@@ -191,7 +189,7 @@ angular.module('app').controller('appProfileCtrl', function ($scope, appAuth, ap
 });;
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
   $scope.users = appUser.query();
-});;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, appAuth, appNotifier, appIdentity) {
+});;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
   $scope.open = false;
   $scope.identity = appIdentity;
 
@@ -203,23 +201,32 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   };
 
   $scope.toggle = function () {
-    $scope.open = !$scope.open;
+    $scope.open = true;
+    setTimeout(function () {
+      $document.one('click', function () {
+        $scope.open = false;
+        $scope.$apply();
+      });
+    }, 600);
   };
 });
-;angular.module('app').value('appToastr', {
-  success: function () {},
-  error: function() {}
-});
-
-angular.module('app').factory('appNotifier', function (appToastr) {
+;angular.module('app').factory('appNotifier', function () {
   return {
-    notify: function (msg) {
-      appToastr.success(msg);
-      console.log(msg);
+    notify: function (msg, scope) {
+      scope.notifier = {};
+      scope.notifier.notice = msg;
+      setTimeout(function () {
+        scope.notifier.notice = '';
+        scope.$apply();
+      }, 3000);
     },
-    error: function (msg) {
-      appToastr.error(msg);
-      console.log(msg);
+    error: function (msg, scope) {
+      scope.notifier = {};
+      scope.notifier.error = msg;
+      setTimeout(function () {
+        scope.notifier.error = '';
+        scope.$apply();
+      }, 3000);
     }
   };
 });

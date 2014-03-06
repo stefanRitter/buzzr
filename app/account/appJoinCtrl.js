@@ -7,10 +7,9 @@ angular.module('app').controller('appJoinCtrl', function ($scope, $location, app
     };
 
     appAuth.createUser(newUserData).then(function () {
-      appNotifier.notify('User account created');
       $location.path('/');
     }, function (reason) {
-      appNotifier.error(reason);
+      appNotifier.error(reason, $scope);
     });
   };
 });
