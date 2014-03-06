@@ -1,8 +1,7 @@
 .form
   width 300px
   margin 0 auto
-.form-group
-  margin-top 1em
+
   label
     display block
     font-weight 600
@@ -12,7 +11,14 @@
     width 285px
     height 2em
     appearance none
-    border-radius 3px
+    border-radius 0
     border 1px solid #CCC
     box-shadow none
     padding-left 10px
+    &.line
+      border 0
+      border-radius 0
+      border-bottom 2px solid Black
+
+.form-group
+  margin-top 1em
