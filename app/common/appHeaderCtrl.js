@@ -10,12 +10,12 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
   };
 
   $scope.toggle = function () {
-    $scope.open = true;
-    setTimeout(function () {
-      $document.one('click', function () {
+    $scope.open = !$scope.open;
+    $document.one('click', function () {
+      if ($scope.open) {
         $scope.open = false;
         $scope.$apply();
-      });
-    }, 600);
+      }
+    });
   };
 });

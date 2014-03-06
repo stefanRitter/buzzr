@@ -201,13 +201,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   };
 
   $scope.toggle = function () {
-    $scope.open = true;
-    setTimeout(function () {
-      $document.one('click', function () {
+    $scope.open = !$scope.open;
+    $document.one('click', function () {
+      if ($scope.open) {
         $scope.open = false;
         $scope.$apply();
-      });
-    }, 600);
+      }
+    });
   };
 });
 ;angular.module('app').factory('appNotifier', function () {
