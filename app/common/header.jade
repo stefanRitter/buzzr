@@ -34,4 +34,5 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
           a(href="/about") About
   
   .header-content-right
-    img.clickable(src="/img/favicon.png", width="30px", ng-click="toggle(); $event.stopPropagation()")
+    .header-logo(ng-click="toggle(); $event.stopPropagation()")
+      include ../../public/img/logo.svg
