@@ -11,6 +11,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
 
   $scope.toggle = function () {
     $scope.open = !$scope.open;
+    $scope.$apply();
     $document.one('click', function () {
       if ($scope.open) {
         $scope.open = false;
