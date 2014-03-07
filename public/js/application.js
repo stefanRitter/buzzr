@@ -278,7 +278,6 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.signout = function () {
     appAuth.logoutUser().then(function() {
-      appNotifier.notify('You are now logged out!');
       $location.path('/home');
     });
   };
