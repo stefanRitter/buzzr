@@ -282,9 +282,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     });
   };
 
-  $scope.toggle = function () {
+  $scope.toggleOpen = function () {
     $scope.open = !$scope.open;
-    $scope.$digest();
     $document.one('click', function () {
       if ($scope.open) {
         $scope.open = false;

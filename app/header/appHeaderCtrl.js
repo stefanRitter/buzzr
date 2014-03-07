@@ -8,9 +8,8 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
     });
   };
 
-  $scope.toggle = function () {
+  $scope.toggleOpen = function () {
     $scope.open = !$scope.open;
-    $scope.$digest();
     $document.one('click', function () {
       if ($scope.open) {
         $scope.open = false;

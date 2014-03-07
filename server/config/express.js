@@ -2,9 +2,9 @@ var express = require('express'),
     passport = require('passport');
 
 
-module.exports = function (app, config) {
+module.exports = function(app, config) {
 
-  function compile (str, path) {
+  function compile(str, path) {
     return stylus(str).set('filename', path);
   }
 
@@ -19,7 +19,10 @@ module.exports = function (app, config) {
     app.use(express.json());
     app.use(express.urlencoded());
     
-    app.use(express.session({secret: process.env.SESSION_SECRET || 'session secret'}));
+    app.use(express.session({
+      secret: process.env.SESSION_SECRET || 'session secret',
+      cookie: {maxAge:86400000}
+    }));
     
     // setup csrf for angular
     app.use(express.csrf({value: function(req) {
@@ -29,7 +32,6 @@ module.exports = function (app, config) {
       res.cookie('XSRF-TOKEN', req.csrfToken());
       next();
     });
-
 
     app.use(passport.initialize());
     app.use(passport.session());

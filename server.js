@@ -5,12 +5,14 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     config = require('./server/config/config')[env],
     app = express();
 
+// setup datastore
+require('./server/config/mongoose.js')(config);
+
+// setup sessionstore
+require('./server/config/redis.js')(config);
 
 // setup express
 require('./server/config/express.js')(app, config);
-
-// setup datastore
-require('./server/config/mongoose.js')(config);
 
 // setup auth
 require('./server/config/passport.js')();
