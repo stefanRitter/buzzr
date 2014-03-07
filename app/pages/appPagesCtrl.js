@@ -1,6 +1,7 @@
 angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile) {
   if (!appIsMobile.any()) {
-    $document[0].getElementById("focus").focus();
+    var homeInput = $document[0].getElementById("focus");
+    if (homeInput !== null) { homeInput.focus(); }
   }
 
   $scope.search = function () {
