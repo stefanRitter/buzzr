@@ -5,7 +5,7 @@ angular.module('app').factory('appNotifier', function () {
       scope.notifier.notice = msg;
       setTimeout(function () {
         scope.notifier.notice = '';
-        scope.$apply();
+        scope.$digest();
       }, 4000);
     },
     error: function (msg, scope) {
@@ -13,7 +13,7 @@ angular.module('app').factory('appNotifier', function () {
       scope.notifier.error = msg;
       setTimeout(function () {
         scope.notifier.error = '';
-        scope.$apply();
+        scope.$digest();
       }, 4000);
     }
   };

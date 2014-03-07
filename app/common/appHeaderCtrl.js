@@ -11,11 +11,11 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
 
   $scope.toggle = function () {
     $scope.open = !$scope.open;
-    $scope.$apply();
+    $scope.$digest();
     $document.one('click', function () {
       if ($scope.open) {
         $scope.open = false;
-        $scope.$apply();
+        $scope.$digest();
       }
     });
   };

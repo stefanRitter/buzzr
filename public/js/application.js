@@ -201,11 +201,11 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.toggle = function () {
     $scope.open = !$scope.open;
-    $scope.$apply();
+    $scope.$digest();
     $document.one('click', function () {
       if ($scope.open) {
         $scope.open = false;
-        $scope.$apply();
+        $scope.$digest();
       }
     });
   };
@@ -238,7 +238,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       scope.notifier.notice = msg;
       setTimeout(function () {
         scope.notifier.notice = '';
-        scope.$apply();
+        scope.$digest();
       }, 4000);
     },
     error: function (msg, scope) {
@@ -246,7 +246,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       scope.notifier.error = msg;
       setTimeout(function () {
         scope.notifier.error = '';
-        scope.$apply();
+        scope.$digest();
       }, 4000);
     }
   };
