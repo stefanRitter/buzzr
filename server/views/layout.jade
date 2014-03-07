@@ -1,0 +1,37 @@
+doctype
+html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
+  head
+    title(itemprop="name") Buzzr
+    
+    meta(charset="utf-8")
+    meta(content="width=device-width, initial-scale=1.0, minimum-scale=1.0", name="viewport")
+    //meta(content="00000000", property="twitter:account_id")
+    //meta(content="", name="description", itemprop="description")
+    //meta(content="", name="keywords")
+
+    link(href="/img/favicon.ico", rel="icon")
+    link(href="/img/favicon.png", rel="apple-touch-icon", itemprop="image")
+    //link(href="https://plus.google.com/xxx", rel="publisher")
+    link(href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,300italic,400italic", rel="stylesheet", type="text/css")
+    
+    | <style type='text/css'>
+    include ../../public/css/application.css
+    | </style>
+
+
+  body(ng-app="app")
+    include ../../app/header/header
+    div.app-view(ng-view)
+      block main-content
+    include ../../app/feedback/feedback
+
+
+    if !!bootstrappedUser
+      script.
+        window.bootstrappedUser = !{JSON.stringify(bootstrappedUser.safe())}
+    if !!bootstrappedBuzzr
+      script.
+        window.bootstrappedBuzzr = !{JSON.stringify(bootstrappedBuzzr)}
+    script(type="text/javascript", src="/js/vendor.js")
+    script(type="text/javascript", src="/js/application.js")
+
