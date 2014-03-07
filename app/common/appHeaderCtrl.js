@@ -19,4 +19,8 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
       }
     });
   };
+
+  $scope.$on('toggleHeader', function () {
+    $scope.toggle();
+  });
 });
