@@ -20,15 +20,15 @@
           label Your message*
           textarea(ng-model="feedback.message", required)
         
-        .form-group.notifier
-          .error {{notifier.error}}
-          .notice {{notifier.notice}}
-        
         .form-group
           button.button-black(ng-click="send()", ng-disabled="feedbackForm.$invalid") Send
           br
           span.required * required
-
+        
+        .form-group.notifier
+          .error {{notifier.error}}
+          .notice {{notifier.notice}}
+      
       h2.margin-top(ng-show="success")
         strong Thank you!
         br
