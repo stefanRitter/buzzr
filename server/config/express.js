@@ -1,12 +1,10 @@
 var express = require('express'),
-    passport = require('passport');
+    passport = require('passport'),
+    mongoose = require('mongoose'),
+    SessionStore = require('connect-mongo')(express);
 
 
 module.exports = function(app, config) {
-
-  function compile(str, path) {
-    return stylus(str).set('filename', path);
-  }
 
   app.configure(function() {
     app.set('views', config.rootPath + '/server/views');
@@ -21,7 +19,7 @@ module.exports = function(app, config) {
     
     app.use(express.session({
       secret: process.env.SESSION_SECRET || 'session secret',
-      cookie: {maxAge:86400000}
+      store: new SessionStore({ mongoose_connection: mongoose.connection})
     }));
     
     // setup csrf for angular

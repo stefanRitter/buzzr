@@ -8,9 +8,6 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 // setup datastore
 require('./server/config/mongoose.js')(config);
 
-// setup sessionstore
-require('./server/config/redis.js')(config);
-
 // setup express
 require('./server/config/express.js')(app, config);
 
