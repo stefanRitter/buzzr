@@ -43,7 +43,7 @@ module.exports = function (grunt) {
         files: [
           'app/**/*.js'
         ],
-        tasks: ['concat']
+        tasks: ['concat:application']
       },
       styles: {
         files: [
@@ -55,8 +55,6 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
-    'stylus',
-    'concat',
     'watch'
   ]);
 };
