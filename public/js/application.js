@@ -188,42 +188,7 @@ angular.module('app').controller('appProfileCtrl', function ($scope, appAuth, ap
 });;
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
   $scope.users = appUser.query();
-});;angular.module('app').factory('appHeader', function ($rootScope) {
-  var header = {};
-
-  header.toggle = function () {
-    $rootScope.$broadcast('toggleHeader');
-  };
-  
-  return header;
-});
-;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
-  $scope.open = false;
-  $scope.identity = appIdentity;
-
-  $scope.signout = function () {
-    appAuth.logoutUser().then(function() {
-      appNotifier.notify('You are now logged out!');
-      $location.path('/home');
-    });
-  };
-
-  $scope.toggle = function () {
-    $scope.open = !$scope.open;
-    $scope.$digest();
-    $document.one('click', function () {
-      if ($scope.open) {
-        $scope.open = false;
-        $scope.$digest();
-      }
-    });
-  };
-
-  $scope.$on('toggleHeader', function () {
-    $scope.toggle();
-  });
-});
-;angular.module('app').factory('appIsMobile', function () {
+});;angular.module('app').factory('appIsMobile', function () {
   var isMobile = {
     Android: function() {
       return navigator.userAgent.match(/Android/i) ? true : false;
@@ -297,6 +262,41 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   $scope.toggle = function () {
     $scope.show = !$scope.show;
   };
+});
+;angular.module('app').factory('appHeader', function ($rootScope) {
+  var header = {};
+
+  header.toggle = function () {
+    $rootScope.$broadcast('toggleHeader');
+  };
+  
+  return header;
+});
+;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+  $scope.open = false;
+  $scope.identity = appIdentity;
+
+  $scope.signout = function () {
+    appAuth.logoutUser().then(function() {
+      appNotifier.notify('You are now logged out!');
+      $location.path('/home');
+    });
+  };
+
+  $scope.toggle = function () {
+    $scope.open = !$scope.open;
+    $scope.$digest();
+    $document.one('click', function () {
+      if ($scope.open) {
+        $scope.open = false;
+        $scope.$digest();
+      }
+    });
+  };
+
+  $scope.$on('toggleHeader', function () {
+    $scope.toggle();
+  });
 });
 ;angular.module('app').controller('appMainCtrl', function ($scope, $http, appIdentity) {
   $scope.links = [];
