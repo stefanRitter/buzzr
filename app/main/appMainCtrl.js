@@ -1,6 +1,13 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $http, appIdentity) {
+angular.module('app').controller('appMainCtrl', function ($scope, $http, $document, appIdentity, appHeader) {
+  
   $scope.links = [];
   $scope.searching = false;
+
+  if (!appIdentity.isAuthenticated()) {
+    $document.one('click', function() {
+      appHeader.toggle();
+    });
+  }
 
   $scope.triggerSearch = function () {
     if (!$scope.searchText) return;
