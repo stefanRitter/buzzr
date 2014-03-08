@@ -61,32 +61,32 @@ exports.updateUser = function (req, res) {
 
 
 // called from Twitter login
-exports.findOrCreate = function(user, done) {
-  var email = user.profile.screen_name,
+exports.findOrCreate = function(userData, done) {
+  var email = userData.profile.screen_name,
       newUser = {};
   
-  User.findOne({email: email}).exec(function (err, user) {
+  User.findOne({email: email}).exec(function (err, foundUser) {
     if (err) { return done(err, null); }
-    if (user) { return done(null, user); }
+    if (foundUser) { return done(null, foundUser); }
 
     newUser.provider = {
-      token: user.token,
-      secret: user.secret,
-      name: user.profile.provider,
-      providerId: user.profile.id_str
+      token: userData.token,
+      secret: userData.secret,
+      name: userData.profile.provider,
+      providerId: userData.profile.id_str
     };
-    newUser.name = user.profile.name;
-    newUser.location = user.profile.location;
-    newUser.lang = user.profile.lang;
-    newUser.url = user.profile.url;
+    newUser.name = userData.profile.name;
+    newUser.location = userData.profile.location;
+    newUser.lang = userData.profile.lang;
+    newUser.url = userData.profile.url;
 
     newUser.email = email;
     newUser.salt = 'twitter';
     newUser.password = 'twitter';
     
-    User.create(newUser,function (err, user) {
+    User.create(newUser,function (err, createdUser) {
       if (err) { return done(err, null); }
-      done(null, user);
+      done(null, createdUser);
     });
   });
 };
