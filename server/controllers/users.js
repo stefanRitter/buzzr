@@ -62,7 +62,8 @@ exports.updateUser = function (req, res) {
 
 // called from Twitter login
 exports.findOrCreate = function(userData, done) {
-  var email = userData.profile.screen_name,
+  var profile = userData.profile._json,
+      email = profile.screen_name,
       newUser = {};
   
   User.findOne({email: email}).exec(function (err, foundUser) {
@@ -73,18 +74,16 @@ exports.findOrCreate = function(userData, done) {
       token: userData.token,
       secret: userData.secret,
       name: userData.profile.provider,
-      providerId: userData.profile.id_str
+      providerId: profile.id_str
     };
-    newUser.name = userData.profile.name;
-    newUser.location = userData.profile.location;
-    newUser.lang = userData.profile.lang;
-    newUser.url = userData.profile.url;
+    newUser.name = profile.name;
+    newUser.location = profile.location;
+    newUser.lang = profile.lang;
+    newUser.url = profile.url;
 
     newUser.email = email;
     newUser.salt = 'twitter';
     newUser.password = 'twitter';
-    
-    console.log(userData);
 
     User.create(newUser, function (err, createdUser) {
       if (err) { return done(err, null); }
