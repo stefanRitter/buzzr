@@ -1,4 +1,4 @@
-angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile) {
+angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile, appFeedback) {
   
   // auto focus on desktop
   if (!appIsMobile.any()) {
@@ -11,5 +11,9 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $location, $d
       var searchText = encodeURI($scope.searchText);
       $location.path(searchText);
     }
+  };
+
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
   };
 });

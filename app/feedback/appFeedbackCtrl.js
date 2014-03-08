@@ -31,4 +31,8 @@ angular.module('app').controller('appFeedbackCtrl', function ($scope, $location,
   $scope.toggle = function () {
     $scope.show = !$scope.show;
   };
+
+  $scope.$on('toggleFeedback', function() {
+    $scope.toggle();
+  });
 });

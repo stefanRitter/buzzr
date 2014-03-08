@@ -229,6 +229,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     }
   };
 });
+;angular.module('app').factory('appFeedback', function ($rootScope) {
+  return {
+    toggle: function() {
+      $rootScope.$broadcast('toggleFeedback');
+    }
+  };
+});
 ;angular.module('app').controller('appFeedbackCtrl', function ($scope, $location, $window, $http, appIdentity, appNotifier) {
   
   $scope.success = false;
@@ -262,6 +269,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   $scope.toggle = function () {
     $scope.show = !$scope.show;
   };
+
+  $scope.$on('toggleFeedback', function() {
+    $scope.toggle();
+  });
 });
 ;angular.module('app').factory('appHeader', function ($rootScope) {
   var header = {};
@@ -322,7 +333,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     $scope.triggerSearch();
   }
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile) {
+;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile, appFeedback) {
   
   // auto focus on desktop
   if (!appIsMobile.any()) {
@@ -335,5 +346,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       var searchText = encodeURI($scope.searchText);
       $location.path(searchText);
     }
+  };
+
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
   };
 });
