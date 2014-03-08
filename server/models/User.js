@@ -26,7 +26,7 @@ userSchema = mongoose.Schema({
 // remove sensitive data
 userSchema.methods.safe = function() {
   return {
-    name: this.name,
+    name: this.name || this.email,
     email: this.email,
     roles: this.roles
   };

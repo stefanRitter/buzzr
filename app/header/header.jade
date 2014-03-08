@@ -21,7 +21,7 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
       ul
         li.dropdown
           a.dropdown-toggle(href="", data-toggle="dropdown")
-            | {{ identity.currentUser.email }}
+            | {{ identity.currentUser.name }}
             b.caret
           ul.dropdown-menu
             li(ng-show="identity.currentUser.isAdmin()")
