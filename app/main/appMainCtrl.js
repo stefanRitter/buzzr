@@ -1,4 +1,4 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $http, $document, appIdentity, appHeader) {
+angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appHeader) {
   
   $scope.links = [];
   $scope.searching = false;
@@ -18,4 +18,9 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $docume
         $scope.searching = false;
       });
   };
+
+  if (!!$routeParams.id) {
+    $scope.searchText = decodeURI($routeParams.id);
+    $scope.triggerSearch();
+  }
 });

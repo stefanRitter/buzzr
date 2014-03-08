@@ -12,7 +12,8 @@ var Twit = require('twit'),
       'pinterest.com': true,
       'instagram.com': true,
       'ask.fm': true,
-      'vine.co': true
+      'vine.co': true,
+      'facebook.com': true
     };
 
 var urlexpand = require('urlexpand');

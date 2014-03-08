@@ -296,7 +296,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     $scope.toggleOpen();
   });
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, $document, appIdentity, appHeader) {
+;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appHeader) {
   
   $scope.links = [];
   $scope.searching = false;
@@ -316,17 +316,24 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
         $scope.searching = false;
       });
   };
+
+  if (!!$routeParams.id) {
+    $scope.searchText = decodeURI($routeParams.id);
+    $scope.triggerSearch();
+  }
 });
 ;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile) {
+  
+  // auto focus on desktop
   if (!appIsMobile.any()) {
     var homeInput = $document[0].getElementById("focus");
     if (homeInput !== null) { homeInput.focus(); }
   }
 
-  $scope.search = function () {
-    if (!!$scope.searchTerm) {
-      var searchTerm = encodeURI($scope.searchTerm.replace(' ', '-'));
-      $location.path(searchTerm);
+  $scope.search = function() {
+    if (!!$scope.searchText) {
+      var searchText = encodeURI($scope.searchText);
+      $location.path(searchText);
     }
   };
 });
