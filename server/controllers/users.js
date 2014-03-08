@@ -62,6 +62,9 @@ exports.updateUser = function (req, res) {
 
 // called from Twitter login
 exports.findOrCreate = function(user, done) {
+  console.log(user);
+  console.log(user.profile);
+
   var email = user.profile.emails[0].value,
       newUser = {};
   
