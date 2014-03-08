@@ -32,7 +32,7 @@ module.exports = function (app) {
   app.all( '/api/*', function (req, res) { res.send(404); });
 
   // AUTH
-  app.post('/login', auth.authenticate);
+  app.post('/login', auth.authenticateLocal);
   app.post('/logout', function (req, res) {
     req.logout();
     res.end();
@@ -40,7 +40,6 @@ module.exports = function (app) {
   
   // 404
   app.get('*', function (req, res) {
-    res.status(404);
-    pages.getRoot(req, res);
+    res.status(404).redirect('/');
   });
 };
