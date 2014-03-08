@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     encrypt = require('../utils/encryption.js'),
     userSchema, User;
@@ -15,19 +17,23 @@ userSchema = mongoose.Schema({
 });
 
 // remove sensitive data
-userSchema.methods.safe = function () {
+userSchema.methods.safe = function() {
   return {
     email: this.email,
     roles: this.roles
   };
 };
 
-userSchema.methods.hasRole = function (role) {
+userSchema.methods.hasRole = function(role) {
   return this.roles.indexOf(role) > -1;
 };
 
-userSchema.methods.authenticated = function (passwordToMatch) {
+userSchema.methods.authenticated = function(passwordToMatch) {
   return encrypt.hashPwd(this.salt, passwordToMatch) === this.password;
+};
+
+userSchema.methods.findOrCreate = function(user, cb) {
+
 };
 
 User = mongoose.model('User', userSchema);

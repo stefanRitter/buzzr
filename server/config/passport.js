@@ -1,5 +1,6 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    TwitterStrategy = require('passport-twitter').Strategy,
     mongoose = require('mongoose'),
     User = mongoose.model('User');
 
@@ -13,6 +14,24 @@ module.exports = function () {
         } else {
           return done(null, false);
         }
+      });
+    }
+  ));
+
+  passport.use(new TwitterStrategy({
+      consumerKey: process.env.TWIT_KEY,
+      consumerSecret: process.env.TWIT_SECRET,
+      callbackURL: "/auth/twitter/callback"
+    },
+    function(token, tokenSecret, profile, done) {
+      var user = {
+        token: token,
+        tokenSecret: tokenSecret,
+        profile: profile
+      }
+      User.findOrCreate(user, function(err, user) {
+        if (err) { return done(null, false); }
+        done(null, user);
       });
     }
   ));

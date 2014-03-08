@@ -20,7 +20,7 @@ exports.createUser = function (req, res, next) {
   User.create(userBody, function (err, user) {
     if (err) {
       if (err.toString().indexOf('E11000') > -1) {
-        err = new Error('Dublicate Username');
+        err = new Error("User already exists. Please get in touch if you need help logging in!");
       }
       
       res.status(400);
