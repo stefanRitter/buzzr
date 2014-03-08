@@ -2,7 +2,8 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
     mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    users = require('../controllers/users.js');
 
 
 module.exports = function () {
@@ -29,7 +30,7 @@ module.exports = function () {
         secret: tokenSecret,
         profile: profile
       }
-      User.findOrCreate(user, function(err, user) {
+      users.findOrCreate(user, function(err, user) {
         if (err) { return done(err); }
         done(null, user);
       });

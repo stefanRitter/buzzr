@@ -58,3 +58,30 @@ exports.updateUser = function (req, res) {
     res.send(req.user.safe());
   });
 };
+
+
+// called from Twitter login
+exports.findOrCreate = function(user, done) {
+  var email = user.profile.emails[0].value,
+      newUser = {};
+  
+  User.findOne({email: email}).exec(function (err, user) {
+    if (err) { return done(err, null); }
+    if (user) { return done(null, user); }
+
+    newUser.provider = {
+      token: user.token,
+      secret: user.secret,
+      name: user.profile.provider
+    };
+    newUser.name = user.profile.displayName;
+    newUser.email = email;
+    newUser.salt = 'twitter';
+    newUser.password = 'twitter';
+    
+    User.create(newUser,function (err, user) {
+      if (err) { return done(err, null); }
+      done(null, user);
+    });
+  });
+};

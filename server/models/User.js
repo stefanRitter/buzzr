@@ -40,32 +40,6 @@ userSchema.methods.authenticated = function(passwordToMatch) {
   return encrypt.hashPwd(this.salt, passwordToMatch) === this.password;
 };
 
-// called from Twitter login
-userSchema.methods.findOrCreate = function(user, done) {
-  var email = user.profile.emails[0].value,
-      newUser = {};
-  
-  User.findOne({email: email}).exec(function (err, user) {
-    if (err) { return done(err, null); }
-    if (user) { return done(null, user); }
-
-    newUser.provider = {
-      token: user.token,
-      secret: user.secret,
-      name: user.profile.provider
-    };
-    newUser.name = user.profile.displayName;
-    newUser.email = email;
-    newUser.salt = 'twitter';
-    newUser.password = 'twitter';
-    
-    User.create(newUser,function (err, user) {
-      if (err) { return done(err, null); }
-      done(null, user);
-    });
-  });
-};
-
 User = mongoose.model('User', userSchema);
 
 // seed users
