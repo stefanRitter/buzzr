@@ -26,11 +26,11 @@ module.exports = function () {
     function(token, tokenSecret, profile, done) {
       var user = {
         token: token,
-        tokenSecret: tokenSecret,
+        secret: tokenSecret,
         profile: profile
       }
       User.findOrCreate(user, function(err, user) {
-        if (err) { return done(null, false); }
+        if (err) { return done(err); }
         done(null, user);
       });
     }

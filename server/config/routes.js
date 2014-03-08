@@ -25,27 +25,19 @@ module.exports = function (app) {
   });
 
   // API
-  app.post('/search', buzzr.search);
-  app.get( '/api/users', auth.requiresRole('admin'), users.getUser);
-  app.post('/api/users', users.createUser);
-  app.put( '/api/users', users.updateUser);
+  app.post('/search',       buzzr.search);
+  app.get( '/api/users',    auth.requiresRole('admin'), users.getUser);
+  app.post('/api/users',    users.createUser);
+  app.put( '/api/users',    users.updateUser);
   app.post('/api/feedback', feedback.createFeedback);
-  app.all( '/api/*', function (req, res) { res.send(404); });
 
   // AUTH
-  app.post('/login', auth.authenticateLocal);
-  app.get('/auth/twitter', passport.authenticate('twitter'));
-  app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }));
-  app.post('/logout', function (req, res) {
-    req.logout();
-    res.end();
-  });
+  app.post('/login',                  auth.authenticateLocal);
+  app.get( '/auth/twitter',           auth.authenticateTwitter);
+  app.get( '/auth/twitter/callback',  auth.twitterCallback);
+  app.post('/logout',                 auth.logout);
   
   // 404
-  app.get('*', function (req, res) {
-    res.status(404).redirect('/');
-  });
+  app.all('/api/*', function (req, res) { res.send(404); });
+  app.get('*', function (req, res) { res.status(404).redirect('/'); });
 };

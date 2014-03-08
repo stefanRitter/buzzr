@@ -9,16 +9,24 @@ userSchema = mongoose.Schema({
   email: {
     type: String,
     required: '{PATH} is required!',
-    unique: true
+    unique: true,
+    index: true
   },
+  name: {type: String, required: false},
   salt: {type: String, required: '{PATH} is required!'},
   password: {type: String, required: '{PATH} is required!'},
-  roles: [String]
+  roles: [String],
+  provider: {
+    token: {type: String, required: false},
+    secret: {type: String, required: false},
+    name: {type: String, required: false}
+  }
 });
 
 // remove sensitive data
 userSchema.methods.safe = function() {
   return {
+    name: this.name,
     email: this.email,
     roles: this.roles
   };
@@ -32,8 +40,30 @@ userSchema.methods.authenticated = function(passwordToMatch) {
   return encrypt.hashPwd(this.salt, passwordToMatch) === this.password;
 };
 
-userSchema.methods.findOrCreate = function(user, cb) {
+// called from Twitter login
+userSchema.methods.findOrCreate = function(user, done) {
+  var email = user.profile.emails[0].value,
+      newUser = {};
+  
+  User.findOne({email: email}).exec(function (err, user) {
+    if (err) { return done(err, null); }
+    if (user) { return done(null, user); }
 
+    newUser.provider = {
+      token: user.token,
+      secret: user.secret,
+      name: user.profile.provider
+    };
+    newUser.name = user.profile.displayName;
+    newUser.email = email;
+    newUser.salt = 'twitter';
+    newUser.password = 'twitter';
+    
+    User.create(newUser,function (err, user) {
+      if (err) { return done(err, null); }
+      done(null, user);
+    });
+  });
 };
 
 User = mongoose.model('User', userSchema);
@@ -45,9 +75,8 @@ exports.createDefaultUsers = function () {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'test');
 
-      User.create({ email: 'stef@stef.com', salt: salt, password: pwd, roles: ['admin']});
+      User.create({ email: 'stef@stef.com', name: 'stefan', salt: salt, password: pwd, roles: ['admin']});
       User.create({ email: 'jeroen@jeroen.com', salt: salt, password: pwd, roles: []});
-      User.create({ email: 'marius@marius.com', salt: salt, password: pwd});
     }
   });
 };

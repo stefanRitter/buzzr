@@ -23,3 +23,15 @@ exports.requiresRole = function (role) {
     res.end();
   }; 
 };
+
+exports.authenticateTwitter = passport.authenticate('twitter');
+
+exports.twitterCallback = passport.authenticate('twitter', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+});
+
+exports.logout = function(req, res) {
+  req.logout();
+  res.end();
+};
