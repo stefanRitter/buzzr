@@ -4,7 +4,8 @@ var auth = require('./auth.js'),
     users = require('../controllers/users.js'),
     pages = require('../controllers/pages.js'),
     feedback = require('../controllers/feedback.js'),
-    buzzr = require('../controllers/buzzr.js');
+    buzzr = require('../controllers/buzzr.js'),
+    passport = require('passport');
 
 
 module.exports = function (app) {
@@ -33,6 +34,11 @@ module.exports = function (app) {
 
   // AUTH
   app.post('/login', auth.authenticateLocal);
+  app.get('/auth/twitter', passport.authenticate('twitter'));
+  app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
   app.post('/logout', function (req, res) {
     req.logout();
     res.end();

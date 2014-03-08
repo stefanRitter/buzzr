@@ -2,8 +2,13 @@
   include ../common/buzzr-logo
 
   form.form.center(name="signinForm")
-    .margin-top
-      a.underline(href="/join") New user? Sign up here.
+
+    a.button-twitter.margin(href="/auth/twitter", target="_self")
+      .svg
+        include ../../public/img/twitter.svg
+      | Sign in with Twitter
+
+    p.italic or
     
     .form-group
       label Email*
@@ -21,5 +26,8 @@
     .form-group.notifier
       .error {{notifier.error}}
       .notice {{notifier.notice}}
+
+     .margin-big
+      a.underline(href="/join") New user? Sign up here.
 
 include ../common/footer
