@@ -289,9 +289,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {
-      setTimeout(function() {
-        $location.path('/home');
-      }, 500);
+      $location.path('/home');
     });
   };
 
