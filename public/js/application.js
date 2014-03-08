@@ -266,13 +266,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 ;angular.module('app').factory('appHeader', function ($rootScope) {
   var header = {};
 
-  header.toggle = function () {
+  header.toggle = function() {
     $rootScope.$broadcast('toggleHeader');
   };
   
   return header;
 });
-;angular.module('app').controller('appHeaderCtrl', function($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
   $scope.open = false;
   $scope.identity = appIdentity;
 
@@ -293,19 +293,15 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   }
 
   $scope.$on('toggleHeader', function() {
-    $scope.$apply($scope.toggleOpen());
+    $scope.toggleOpen();
   });
 });
 ;angular.module('app').controller('appMainCtrl', function ($scope, $http, $document, appIdentity, appHeader) {
   
   $scope.links = [];
   $scope.searching = false;
-
-  if (!appIdentity.isAuthenticated()) {
-    $document.one('click', function() {
-      appHeader.toggle();
-    });
-  }
+  $scope.identity = appIdentity;
+  $scope.header = appHeader;
 
   $scope.triggerSearch = function () {
     if (!$scope.searchText) return;

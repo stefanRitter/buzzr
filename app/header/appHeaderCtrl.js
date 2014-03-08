@@ -1,4 +1,4 @@
-angular.module('app').controller('appHeaderCtrl', function($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
   $scope.open = false;
   $scope.identity = appIdentity;
 
@@ -19,6 +19,6 @@ angular.module('app').controller('appHeaderCtrl', function($scope, $location, $d
   }
 
   $scope.$on('toggleHeader', function() {
-    $scope.$apply($scope.toggleOpen());
+    $scope.toggleOpen();
   });
 });

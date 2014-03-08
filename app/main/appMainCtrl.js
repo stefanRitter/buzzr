@@ -2,12 +2,8 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $docume
   
   $scope.links = [];
   $scope.searching = false;
-
-  if (!appIdentity.isAuthenticated()) {
-    $document.one('click', function() {
-      appHeader.toggle();
-    });
-  }
+  $scope.identity = appIdentity;
+  $scope.header = appHeader;
 
   $scope.triggerSearch = function () {
     if (!$scope.searchText) return;
