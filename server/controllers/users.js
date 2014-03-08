@@ -81,10 +81,14 @@ exports.findOrCreate = function(userData, done) {
     newUser.url = userData.profile.url;
 
     newUser.email = email;
+    console.log('screenname', userData.profile.screen_name);
+    console.log('email', email, 'newUser.email', newUser.email);
     newUser.salt = 'twitter';
     newUser.password = 'twitter';
     
-    User.create(newUser,function (err, createdUser) {
+    console.log(newUser);
+    
+    User.create(newUser, function (err, createdUser) {
       if (err) { return done(err, null); }
       done(null, createdUser);
     });
