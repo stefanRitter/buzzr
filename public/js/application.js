@@ -312,7 +312,6 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   $scope.links = [];
   $scope.searching = false;
   $scope.identity = appIdentity;
-  $scope.header = appHeader;
 
   $scope.triggerSearch = function () {
     if (!$scope.searchText) return;
@@ -328,9 +327,15 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       });
   };
 
+  $scope.toggleHeader = function() {
+    appHeader.toggle();
+  };
+
   if (!!$routeParams.id) {
     $scope.searchText = decodeURI($routeParams.id);
     $scope.triggerSearch();
+  } else {
+    $scope.toggleHeader();
   }
 });
 ;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile, appFeedback) {
