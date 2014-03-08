@@ -30,7 +30,6 @@ module.exports = function () {
         secret: tokenSecret,
         profile: profile
       }
-      console.log(profile);
       users.findOrCreate(user, function(err, user) {
         if (err) { return done(err); }
         done(null, user);

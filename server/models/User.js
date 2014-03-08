@@ -12,14 +12,20 @@ userSchema = mongoose.Schema({
     unique: true,
     index: true
   },
+  
   name: {type: String, required: false},
+  location: {type: String, required: false},
+  lang: {type: String, required: false},
+  url: {type: String, required: false},
+  
   salt: {type: String, required: '{PATH} is required!'},
   password: {type: String, required: '{PATH} is required!'},
   roles: [String],
   provider: {
     token: {type: String, required: false},
     secret: {type: String, required: false},
-    name: {type: String, required: false}
+    name: {type: String, required: false},
+    providerId: {type: String, required: false}
   }
 });
 
