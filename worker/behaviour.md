@@ -1,6 +1,5 @@
-
-algo
-=====
+main algo
+=========
 - get link from twitter
 - if link is already processed +1 it
 - else goto urlencoder
@@ -13,32 +12,43 @@ algo
 
 
 
+pro veriosn: realtime
+======================
 - socket.io: send link by link
 - non blocking http calls to get urls
 
 
 
-- sources:
+
+sources
+=======
 - twitter
 - delicious
 - facebook
 - google alerts?
 - feedly?
 - digg
+- users can add sources!!!
 
 
 
+improvments
+===========
 - get language from google translate api
-- inlcude language param in search
 
 
 
 
 rich content:
+=============
 check for schema.org - image, title, primaryContent, primaryImage
 check for facebook opengraph
 check for RSS feed
 get one flickr img
+PDFs ?
+
+
 
 tech:
-feedly uses Apache HBase
+=====
+- Feedly uses Apache HBase

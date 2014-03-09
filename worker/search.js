@@ -14,7 +14,7 @@ var Twit = require('twit'),
 function buildQuery(topic, sinceId, beforeId) {
   var now = new Date(),
       timeAgo = (now.getFullYear()-1) + "-" + now.getMonth() + "-" + now.getDate(),
-      query = topic + ' filter:links' + ' since:' + timeAgo;
+      query = topic + ' filter:links' + ' since:' + timeAgo + ' lang:en';
 
   if (!!sinceId) {
     // query += ...
@@ -22,14 +22,12 @@ function buildQuery(topic, sinceId, beforeId) {
   if (!!beforeId) {
     // query += ...
   }
-  console.log('query: ' + query);
+
   return query;
 }
 
 
 exports.get = function(buzzr) {
-  console.log('searching: ', buzzr);
-
   var query = buildQuery(buzzr.topic),
       tweetProcessor = TweetProcessor(buzzr);
 

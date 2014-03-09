@@ -9,23 +9,26 @@ userSchema = mongoose.Schema({
   email: {
     type: String,
     required: '{PATH} is required!',
+    trim: true,
+    lowercase: true,
     unique: true,
     index: true
   },
   
-  name: {type: String, required: false},
-  location: {type: String, required: false},
-  lang: {type: String, required: false},
-  url: {type: String, required: false},
+  name:     {type: String, trim: true, required: false},
+  location: {type: String, trim: true, required: false},
+  lang:     {type: String, trim: true, required: false},
+  url:      {type: String, trim: true, required: false},
   
-  salt: {type: String, required: '{PATH} is required!'},
+  salt:     {type: String, required: '{PATH} is required!'},
   password: {type: String, required: '{PATH} is required!'},
-  roles: [String],
+  roles:    [String],
+  
   provider: {
-    token: {type: String, required: false},
+    token:  {type: String, required: false},
     secret: {type: String, required: false},
-    name: {type: String, required: false},
-    providerId: {type: String, required: false}
+    name:   {type: String, required: false},
+    provId: {type: String, required: false}
   }
 });
 

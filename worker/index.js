@@ -26,6 +26,18 @@ function start(req, res, next) {
 
 module.exports = function(app, config, topic) {
   
+  app.get('/all', function(req, res) {
+    Buzzr.find().exec(function (err, collection) {
+      res.send(collection);
+    });
+  });
+
+  app.get('/xxx', function(req, res) {
+    Buzzr.findOne({topic: 'javapscript'}).exec(function (err, buzzr) {
+      res.send(buzzr.passiveLinks);
+    });
+  });
+
   app.get( '/:id', start);
 
   app.listen(config.port+1);

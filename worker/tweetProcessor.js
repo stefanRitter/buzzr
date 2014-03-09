@@ -1,10 +1,14 @@
 'use strict';
 
+var urlexpand = require('urlexpand'),
+    processLink = require('./linkProcessor.js');
+
+
 
 function calcRank(tweet) {
   var favs = tweet.favorite_count || 0,
       retweets = tweet.retweet_count || 0,
-      rank = Math.round(favs + retweets * 1.5);
+      rank = favs + retweets;
 
   if (!!tweet.in_reply_to_status_id) {
     rank += 1;
@@ -13,13 +17,15 @@ function calcRank(tweet) {
   return rank;
 }
 
-
 function processTweet(tweet, buzzr) {
-  var rank = calcRank(tweet);
+  if (tweet.entities.urls && tweet.entities.urls.length > 0) {
+    var link = tweet.entities.urls[0],
+        url = link.expanded_url || link.url,
+        rank = calcRank(tweet);
 
-  console.log('rank: ' + rank);
+    urlexpand(url, processLink(rank, buzzr));
+  }
 }
-
 
 module.exports = function(buzzr) {
   return function(tweet) {
