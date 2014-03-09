@@ -8,6 +8,6 @@ exports.getByTopic = function (req, res) {
 
   Buzzr.findOne({topic: topic}).exec(function (err, obj) {
     if (err) { return res.json({err: err}); }
-    res.send(obj);
+    res.send({links: obj.activeLinks});
   });
 };
