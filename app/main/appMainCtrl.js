@@ -4,15 +4,23 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
   $scope.searching = false;
   $scope.identity = appIdentity;
 
-  $scope.triggerSearch = function () {
+  $scope.triggerSearch = function() {
     if (!$scope.searchText) return;
     $scope.searching = true;
 
     $http
-      .post('/search', {searchText: $scope.searchText.trim()})
-      .then(function (res) {
-        if (res.data.err) { alert(res.data.err); }
+      .get('/api/buzzrs/' + $scope.searchText.trim())
+      .then(function(res) {
+        var links = res.data.links;
+
+        if (res.data.err) { 
+          return alert('Error ' + res.data.err);
+        }
         
+        if (!links || links.length === 0) {
+          return alert('empty');
+        }
+
         $scope.links = res.data.links;
         $scope.searching = false;
       });
