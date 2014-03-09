@@ -1,14 +1,4 @@
-var Twit = require('twit'),
-    T = new Twit({
-      consumer_key:         process.env.TWIT_KEY,
-      consumer_secret:      process.env.TWIT_SECRET,
-      access_token:         process.env.TWIT_TOKEN,
-      access_token_secret:  process.env.TWIT_TOKEN_SECRET
-    }),
-
-    now = new Date(),
-    timeAgo = (now.getFullYear()-1) + "-" + now.getMonth() + "-" + now.getDate(),
-    excludedDomains = {
+var excludedDomains = {
       'pinterest.com': true,
       'instagram.com': true,
       'ask.fm': true,
@@ -20,9 +10,9 @@ var Twit = require('twit'),
 var urlexpand = require('urlexpand');
 
 
-exports.search = function (req, res) {
-  var searchText = req.body.searchText,
-      query = searchText + ' filter:links' + ' since:' + timeAgo;
+exports.search = function (searchText, res) {
+
+  var query = searchText + ' filter:links' + ' since:' + timeAgo;
 
   T.get('search/tweets', {
     q: query,
@@ -63,7 +53,7 @@ exports.search = function (req, res) {
         var link = tweet.entities.urls[0],
             url = link.expanded_url || link.url;
         
-        count += 1;;
+        count += 1;
         urlexpand(url, prepareUrl);
       }
 
@@ -99,9 +89,4 @@ exports.search = function (req, res) {
   });
 };
 
-function calcRank(tweet) {
-  var favs = tweet.favourites_count || 0,
-      retweets = tweet.retweet_count || 0;
 
-  return Math.round(favs + retweets * 1.5);
-}

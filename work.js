@@ -1,18 +1,21 @@
 #!/usr/bin/env node
-
 'use strict';
 
-var args = process.argv.slice(2),
-    dotenv = require('dotenv');
+var express = require('express'),
+    args = process.argv.slice(2),
+    dotenv = require('dotenv').load();
 
-dotenv.load();
 
-console.log(args);
-console.log(process.env.MONGOLAB_URI);
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+    config = require('./server/config/config')[env],
+    app = express();
 
-process.on('SIGINT', function () {
-  console.log('Got a SIGINT. Shutting down...');
-  process.exit(0);
-});
+// setup datastore
+require('./server/config/mongoose.js')(config);
 
-process.exit(0);
+// setup express
+require('./server/config/express.js')(app, config);
+
+// setup worker
+require('./worker/')(app, config);
+
