@@ -8,8 +8,8 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $location, $d
 
   $scope.search = function() {
     if (!!$scope.searchText) {
-      var searchText = encodeURI($scope.searchText);
-      $location.path(searchText);
+      var searchText = encodeURI($scope.searchText.trim());
+      $location.path('/' + searchText);
     }
   };
 

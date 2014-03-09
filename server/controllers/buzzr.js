@@ -13,7 +13,8 @@ var Twit = require('twit'),
       'instagram.com': true,
       'ask.fm': true,
       'vine.co': true,
-      'facebook.com': true
+      'facebook.com': true,
+      'amazon.com': true
     };
 
 var urlexpand = require('urlexpand');

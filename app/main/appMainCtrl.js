@@ -9,7 +9,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
     $scope.searching = true;
 
     $http
-      .post('/search', {searchText: $scope.searchText})
+      .post('/search', {searchText: $scope.searchText.trim()})
       .then(function (res) {
         if (res.data.err) { alert(res.data.err); }
         
