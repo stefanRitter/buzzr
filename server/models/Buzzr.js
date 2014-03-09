@@ -48,7 +48,6 @@ buzzrSchema.methods.pushLink = function(data) {
     return link.url === data.url || link.title === data.title;
   });
 
-  // delete and move to active
   if (pI > -1) {
     var newRank = this.passiveLinks[pI].rank + data.rank;
 
@@ -76,12 +75,17 @@ buzzrSchema.methods.pushLink = function(data) {
 
   
   // this link is new
-  this.passiveLinks.push({
+  var newLink = {
     url: data.url,
     title: data.title,
     rank: data.rank,
     updated: Date.now()
-  });
+  };
+  if (newLink.rank > 0) {
+    this.activeLinks.push(newLink);
+  } else {
+    this.passiveLinks.push(newLink); 
+  }
   this.save();
 };
 

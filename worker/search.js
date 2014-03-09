@@ -26,11 +26,7 @@ function buildQuery(topic, sinceId, beforeId) {
   return query;
 }
 
-
-exports.get = function(buzzr) {
-  var query = buildQuery(buzzr.topic),
-      tweetProcessor = TweetProcessor(buzzr);
-
+function callTwitter(query, tweetProcessor) {
   T.get('search/tweets', {
     q: query,
     include_entities: true,
@@ -41,4 +37,23 @@ exports.get = function(buzzr) {
   
     reply.statuses.forEach(tweetProcessor);
   });
+}
+
+
+// update existing feed go back 24hrs
+exports.update = function(buzzr) {
+  var query = buildQuery(buzzr.topic),
+      tweetProcessor = TweetProcessor(buzzr);
+
+  callTwitter(query, tweetProcessor);
 };
+
+
+// this is a new feed so we have to go back in time
+exports.create = function(buzzr) {
+  var query = buildQuery(buzzr.topic),
+      tweetProcessor = TweetProcessor(buzzr);
+
+  callTwitter(query, tweetProcessor);
+};
+

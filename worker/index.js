@@ -13,12 +13,12 @@ function start(req, res, next) {
     if (buzzr === null) {
       Buzzr.create({topic: topic}, function(err, newBuzzr) {
         if (err) { next(err); }
-        search.get(newBuzzr);
+        search.create(newBuzzr);
         res.send(200);
       });
 
     } else {
-      search.get(buzzr);
+      search.update(buzzr);
       res.send(200);
     }
   });
@@ -32,9 +32,11 @@ module.exports = function(app, config, topic) {
     });
   });
 
-  app.get('/xxx', function(req, res) {
-    Buzzr.findOne({topic: 'javapscript'}).exec(function (err, buzzr) {
-      res.send(buzzr.passiveLinks);
+  app.get('/:id/links', function(req, res) {
+    var topic = decodeURI(req.params.id);
+    Buzzr.findOne({topic: topic}).exec(function (err, buzzr) {
+      if (err || !buzzr) { return res.send(404); }
+      res.json(buzzr.passiveLinks).json(buzzr.activeLinks);
     });
   });
 
