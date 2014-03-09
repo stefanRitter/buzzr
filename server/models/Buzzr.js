@@ -39,10 +39,6 @@ buzzrSchema.methods.pushLink = function(data) {
   // TODO:
   // get rid of utm_* params
 
-  if (!data.title || data.title === ' ') {
-    return console.log('TINYURL: ', data.url);
-  }
-
 
   var pI = _.findIndex(this.passiveLinks, function(link) {
     return link.url === data.url || link.title === data.title;

@@ -1,12 +1,15 @@
 'use strict';
 
-var excludedDomains = {
+var ent = require('ent'),
+    excludedDomains = {
       'pinterest.com': true,
       'instagram.com': true,
       'ask.fm': true,
       'vine.co': true,
       'facebook.com': true,
-      'amazon.com': true
+      'amazon.com': true,
+      'adf.ly': true,
+      'q.gs': true
     };
 
 
@@ -14,9 +17,13 @@ function processLink(data, rank, buzzr) {
   var expandedUrl = data.url,
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
   
+  if (!data.title || data.title === ' ') {
+    return console.log('TINYURL: ', data.url);
+  }
   if (excludedDomains[domain]) { return; }
 
   data.rank = rank;
+  data.title = ent.decode(data.title);
   buzzr.pushLink(data);
 }
 
