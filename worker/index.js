@@ -42,7 +42,7 @@ module.exports = function(app, config, topic) {
 
   app.get( '/:id', start);
 
-  app.listen(config.port+1);
-  console.log('listening on port ' + (config.port+1));
+  app.listen(3031);
+  console.log('listening on port 3031');
 };
 

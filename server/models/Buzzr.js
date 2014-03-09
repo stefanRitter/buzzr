@@ -45,7 +45,7 @@ buzzrSchema.methods.pushLink = function(data) {
   });
 
   if (pI > -1) {
-    var newRank = this.passiveLinks[pI].rank + data.rank;
+    var newRank = data.rank === 0 ? 1 : data.rank;
 
     this.activeLinks.push({
       url: data.url,
@@ -64,7 +64,7 @@ buzzrSchema.methods.pushLink = function(data) {
   });
 
   if (aI > -1) {
-    this.activeLinks[aI].rank += data.rank;
+    this.activeLinks[aI].rank += data.rank === 0 ? 1 : data.rank;
     this.activeLinks[aI].updated = Date.now();
     return this.save();
   } 

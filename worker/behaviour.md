@@ -1,19 +1,21 @@
-main algo
-=========
-- get link from twitter
-- if link is already processed +1 it
-- else goto urlencoder
-- if link is already processed +1 it
-- else check for title
-- if no title, push to error array and skip
-- if title is already processed +1 it
-- else add new link
+
+
+exclude
+======
+job offers
+adf.ly
+
+
+
+improvements
+===========
+- get language from google translate api
 
 
 
 
-pro veriosn: realtime
-======================
+pro version: realtime
+=====================
 - socket.io: send link by link
 - non blocking http calls to get urls
 
@@ -23,19 +25,13 @@ pro veriosn: realtime
 sources
 =======
 - twitter
+- google+
 - delicious
 - facebook
 - google alerts?
 - feedly?
 - digg
 - users can add sources!!!
-
-
-
-improvments
-===========
-- get language from google translate api
-
 
 
 

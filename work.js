@@ -6,7 +6,7 @@ var express = require('express'),
     dotenv = require('dotenv').load();
 
 
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+var env = args[0] || 'development',
     config = require('./server/config/config')[env],
     app = express();
 
