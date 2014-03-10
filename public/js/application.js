@@ -165,7 +165,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
   };
 });
 ;
-angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, appIdentity, appNotifier) {
+angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
   
   $scope.currentUser = angular.copy(appIdentity.currentUser);
   $scope.email = {
@@ -179,6 +179,9 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, a
   $scope.update = function () {
     appAuth.updateCurrentUser($scope.currentUser).then(function () {
       appNotifier.notify('Your account has been updated', $scope);
+      setTimeout(function() {
+        $location.path('/');
+      }, 1000);
     }, function (reason) {
       appNotifier.error(reason, $scope);
     });
@@ -351,7 +354,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.triggerSearch();
 });
-;angular.module('app').controller('appHomeCtrl', function ($scope, $location, appIsMobile, appIdentity, appHeader) {
+;angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIsMobile, appIdentity, appHeader) {
   
   // auto focus on desktop
   if (!appIsMobile.any()) {

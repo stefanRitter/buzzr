@@ -1,4 +1,4 @@
-angular.module('app').controller('appHomeCtrl', function ($scope, $location, appIsMobile, appIdentity, appHeader) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIsMobile, appIdentity, appHeader) {
   
   // auto focus on desktop
   if (!appIsMobile.any()) {

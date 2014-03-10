@@ -1,5 +1,5 @@
 
-angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, appIdentity, appNotifier) {
+angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
   
   $scope.currentUser = angular.copy(appIdentity.currentUser);
   $scope.email = {
@@ -13,6 +13,9 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, a
   $scope.update = function () {
     appAuth.updateCurrentUser($scope.currentUser).then(function () {
       appNotifier.notify('Your account has been updated', $scope);
+      setTimeout(function() {
+        $location.path('/');
+      }, 1000);
     }, function (reason) {
       appNotifier.error(reason, $scope);
     });
