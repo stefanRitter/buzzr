@@ -20,6 +20,10 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
     include ../../public/css/application.css
     | </style>
 
+    <!--[if IE]>
+    <script src="/js/iewarning/warning.js"></script>
+    <script>window.onload=function(){e("/js/iewarning/")}</script>
+    <![endif]-->
 
   body(ng-app="app")
     include ../../app/header/header
