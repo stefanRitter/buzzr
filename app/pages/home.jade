@@ -5,19 +5,18 @@
   form.home-form.form(ng-submit="search()")
     input.home-input#focus(ng-model="searchText")
 
-  .margin-top &nbsp;
-  .margin-top &nbsp;
-  p.center.margin-top
+  p.center.margin-top-big(ng-hide="identity.isAuthenticated()")
+    br
     br
     br
     | Help make Buzzr better:
     br
     a.button-black(href="/join") Sign up for BETA access
     //-
-      br
-      a(href="/")
-        img.margin-right(src="/img/appstore.png", alt="Get it on the Apple App Store")
-      a(href="/")
-        img(src="/img/playstore.png", alt="Get it on the Google Play Store")
+      p.center.margin-top
+        a(href="/")
+          img.margin-right(src="/img/appstore.png", alt="Get it on the Apple App Store")
+        a(href="/")
+          img(src="/img/playstore.png", alt="Get it on the Google Play Store")
 
 include ../common/footer

@@ -1,8 +1,9 @@
 angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appHeader) {
   
   $scope.links = [];
-  $scope.searching = false;
+  $scope.searching = true;
   $scope.identity = appIdentity;
+  $scope.searchText = decodeURI($routeParams.id);
 
   $scope.triggerSearch = function() {
     if (!$scope.searchText) return;
@@ -18,7 +19,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
         }
         
         if (!links || links.length === 0) {
-          return alert('empty');
+          return alert('create new buzzr');
         }
 
         $scope.links = res.data.links;
@@ -30,10 +31,5 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
     appHeader.toggle();
   };
 
-  if (!!$routeParams.id) {
-    $scope.searchText = decodeURI($routeParams.id);
-    $scope.triggerSearch();
-  } else {
-    $scope.toggleHeader();
-  }
+  $scope.triggerSearch();
 });

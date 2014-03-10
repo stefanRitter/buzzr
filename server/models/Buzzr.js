@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Buzzr;
 
 
-buzzrSchema =new Schema({
+buzzrSchema = new Schema({
   topic: {
     type:     String,
     required: '{PATH} is required!',

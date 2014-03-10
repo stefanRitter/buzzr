@@ -38,6 +38,7 @@ h2{font-size:1.8em}
 .margin{margin:1em}
 .margin-big{margin:2em}
 .margin-top{margin-top:1em}
+.margin-top-big{margin-top:2em}
 .margin-right{margin-right:1em}
 .button-white,.button-black,.button-twitter{-webkit-border-radius:4px;-moz-border-radius:4px;-o-border-radius:4px;border-radius:4px;padding:.5em 2em;display:inline-block;border:2px Black solid;min-width:40px;text-align:center;cursor:pointer;opacity:1;-webkit-transition:opacity .5s ease 0s;-moz-transition:opacity .5s ease 0s;-o-transition:opacity .5s ease 0s;transition:opacity .5s ease 0s;}
 .button-white:disabled,.button-black:disabled,.button-twitter:disabled{opacity:.3}

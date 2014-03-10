@@ -4,7 +4,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
 
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {
-      $location.path('/home');
+      $location.path('/');
     });
   };
 

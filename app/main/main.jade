@@ -17,7 +17,7 @@ table
       td(ng-show="identity.isAuthenticated()") 
         a(href="{{link.url}}", target="_blank") {{link.title}}
       
-      td(ng-hide="identity.isAuthenticated()") 
+      td(ng-hide="identity.isAuthenticated()")
         a(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
       
       td {{link.rank}}

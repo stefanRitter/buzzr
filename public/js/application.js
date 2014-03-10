@@ -17,14 +17,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
-    .when('/',        {templateUrl: '/partials/main/main', controller: 'appMainCtrl',
-                        resolve: routeRoleChecks.user})
-    .when('/home',    {templateUrl: '/partials/pages/home', controller: 'appPagesCtrl'})
-    .when('/login',   {templateUrl: '/partials/account/login', controller: 'appLoginCtrl'})
-    .when('/join',    {templateUrl: '/partials/account/join', controller: 'appJoinCtrl'})
-    .when('/about',   {templateUrl: '/partials/pages/about', controller: 'appPagesCtrl'})
-    .when('/terms',   {templateUrl: '/partials/pages/terms', controller: 'appPagesCtrl'})
-    .when('/profile', {templateUrl: '/partials/account/profile', controller: 'appProfileCtrl',
+    .when('/',        {templateUrl: '/partials/pages/home',       controller: 'appPagesCtrl'})
+    .when('/about',   {templateUrl: '/partials/pages/about',      controller: 'appPagesCtrl'})
+    .when('/terms',   {templateUrl: '/partials/pages/terms',      controller: 'appPagesCtrl'})
+    .when('/login',   {templateUrl: '/partials/account/login',    controller: 'appLoginCtrl'})
+    .when('/join',    {templateUrl: '/partials/account/join',     controller: 'appJoinCtrl'})
+    .when('/profile', {templateUrl: '/partials/account/profile',  controller: 'appProfileCtrl',
                         resolve: routeRoleChecks.user})
     .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
 
@@ -37,7 +35,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
 angular.module('app').run(function ($rootScope, $location) {
   $rootScope.$on('$routeChangeError', function (event, current, previous, rejectionReason) {
     if (rejectionReason === 'not authorized') {
-      $location.path('/home');
+      $location.path('/');
     }
   });
 });
@@ -289,7 +287,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {
-      $location.path('/home');
+      $location.path('/');
     });
   };
 
@@ -310,8 +308,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 ;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appHeader) {
   
   $scope.links = [];
-  $scope.searching = false;
+  $scope.searching = true;
   $scope.identity = appIdentity;
+  $scope.searchText = decodeURI($routeParams.id);
 
   $scope.triggerSearch = function() {
     if (!$scope.searchText) return;
@@ -327,7 +326,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
         }
         
         if (!links || links.length === 0) {
-          return alert('empty');
+          return alert('create new buzzr');
         }
 
         $scope.links = res.data.links;
@@ -339,20 +338,17 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     appHeader.toggle();
   };
 
-  if (!!$routeParams.id) {
-    $scope.searchText = decodeURI($routeParams.id);
-    $scope.triggerSearch();
-  } else {
-    $scope.toggleHeader();
-  }
+  $scope.triggerSearch();
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIsMobile, appFeedback) {
+;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIdentity, appIsMobile, appFeedback, appHeader) {
   
   // auto focus on desktop
   if (!appIsMobile.any()) {
     var homeInput = $document[0].getElementById("focus");
     if (homeInput !== null) { homeInput.focus(); }
   }
+
+  $scope.identity = appIdentity;
 
   $scope.search = function() {
     if (!!$scope.searchText) {
@@ -364,4 +360,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   $scope.toggleFeedback = function() {
     appFeedback.toggle();
   };
+
+  if (appIdentity.isAuthenticated()) {
+    appHeader.toggle();
+  }
 });
