@@ -1,5 +1,13 @@
 100 links in active
+===================
 - if more than 100 links in active, retire some links
+
+
+
+All time favorites
+===================
+= ten links with the highest rank
+
 
 
 exclude

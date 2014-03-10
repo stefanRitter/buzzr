@@ -25,7 +25,7 @@ a{text-decoration:none;color:inherit;cursor:pointer}
 h1,h2,h3{font-weight:300;line-height:2}
 h1{font-size:2.2em}
 h2{font-size:1.8em}
-.composite-layer,.feedback-button{-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}
+.composite-layer,.feedback-button,.header{-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}
 .clickable{cursor:pointer}
 .table{display:table}
 .table-cell-vertical-middle{display:table-cell;vertical-align:middle}
@@ -66,8 +66,8 @@ h2{font-size:1.8em}
 .form input,.form select,.form textarea{display:block;width:285px;height:2em;-webkit-animation:none;-moz-animation:none;-o-animation:none;-webkit-animation:none;-moz-animation:none;-o-animation:none;animation:none;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border:1px solid #ccc;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;padding-left:10px;background:transparent}
 .form-group{margin-top:1em}
 .required{font-size:.8em;font-style:italic}
-.header{z-index:1000;display:block;position:fixed;left:0;top:0;width:320px;height:100%;-webkit-transition:all .5s ease 0s;-moz-transition:all .5s ease 0s;-o-transition:all .5s ease 0s;transition:all .5s ease 0s;-webkit-transform:translateX(-290px);-moz-transform:translateX(-290px);-o-transform:translateX(-290px);transform:translateX(-290px);}
-.header.open{-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);transform:translateX(0)}
+.header{z-index:1000;display:block;position:fixed;top:0;left:-290px;width:320px;height:100%;-webkit-transition:all .5s ease 0s;-moz-transition:all .5s ease 0s;-o-transition:all .5s ease 0s;transition:all .5s ease 0s;}
+.header.open{left:0}
 .header-content-left,.header-content-center,.header-content-right{float:left;height:100%;padding-top:1em;background:White}
 .header-content-left{width:20px}
 .header-content-center{width:259px;border-right:1px Black solid;padding:1em 5px;position:relative}
