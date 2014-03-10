@@ -2,6 +2,9 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
   .header-content-left &nbsp;
   
   .header-content-center
+    
+    //- Logged out
+
     .header-loggedout-menu(ng-hide="identity.isAuthenticated()")
       h4 Welcome to buzzr.
       p.
@@ -17,6 +20,8 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
         | Sign in with Twitter
 
 
+    //- Logged in
+
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
       ul
         li.dropdown
@@ -27,7 +32,7 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
             li(ng-show="identity.currentUser.isAdmin()")
               a(href="/admin/users") User admin
             li
-              a(href="/profile") Profile
+              a(href="/account/settings") Settings
             li
               a(href="", ng-click="signout()") Sign Out
     

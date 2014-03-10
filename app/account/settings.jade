@@ -1,0 +1,22 @@
+.pages-container
+  include ../common/buzzr-logo
+
+  form.form.center(name="profileForm")
+    h1 Settings
+
+    .form-group
+      label Email
+      input(name="email", type="text", placeholder="Email", ng-model="currentUser.email", required)
+    .form-group
+      label Name
+      input(name="name", type="text", placeholder="Name", ng-model="currentUser.name")
+    .form-group
+      label Password
+      input(name="password", type="password", placeholder="Password", ng-model="currentUser.password")
+  
+    .form-group
+      button.button-black(ng-click="update()", ng-disabled="profileForm.$invalid") Submit
+
+    .form-group.notifier
+      .error {{notifier.error}}
+      .notice {{notifier.notice}}

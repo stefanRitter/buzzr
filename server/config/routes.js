@@ -10,15 +10,17 @@ var auth = require('./auth.js'),
 
 module.exports = function (app) {
   // APP
-  app.get('/',        pages.getRoot);
-  app.get('/home',    pages.getRoot);
-  app.get('/login',   pages.getLogin);
-  app.get('/join',    pages.getJoin);
-  app.get('/about',   pages.getAbout);
-  app.get('/terms',   pages.getTerms);
-  app.get('/later',   pages.getReadLater);
-  app.get('/:id',     pages.getRoot);
+  app.get('/',        pages('index'));
+  app.get('/home',    pages('home'));
+  app.get('/login',   pages('login'));
+  app.get('/join',    pages('join'));
+  app.get('/about',   pages('about'));
+  app.get('/terms',   pages('terms'));
+  app.get('/later',   pages('index'));
+  app.get('/:id',     pages('index'));
 
+  app.get('/account/settings', pages('settings'));
+  
   // VIEW PARTIALS
   app.get('/partials/*', function (req, res) {
     res.render('../../app/' + req.params);

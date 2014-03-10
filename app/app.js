@@ -22,9 +22,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/terms',   {templateUrl: '/partials/pages/terms',      controller: 'appPagesCtrl'})
     .when('/login',   {templateUrl: '/partials/account/login',    controller: 'appLoginCtrl'})
     .when('/join',    {templateUrl: '/partials/account/join',     controller: 'appJoinCtrl'})
-    .when('/profile', {templateUrl: '/partials/account/profile',  controller: 'appProfileCtrl',
-                        resolve: routeRoleChecks.user})
     .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
+  
+  $routeProvider
+    .when('/account/settings', {templateUrl: '/partials/account/settings',  controller: 'appSettingsCtrl',
+                        resolve: routeRoleChecks.user});
 
   $routeProvider
     .when('/admin/users', {templateUrl: '/partials/admin/users', controller: 'appAdminUsersCtrl',
