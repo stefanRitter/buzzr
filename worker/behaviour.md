@@ -1,6 +1,7 @@
-100 links in active
-===================
+
+- order links by date, and by rank => add activated date!
 - if more than 100 links in active, retire some links
+
 
 
 
@@ -10,9 +11,12 @@ All time favorites
 
 
 
+
 exclude
 ======
 job offers
+'to rent', 'to let' => unless in buzzr topic
+
 
 
 
@@ -26,8 +30,6 @@ improvements
 pro version: realtime
 =====================
 - socket.io: send link by link
-- non blocking http calls to get urls
-
 
 
 

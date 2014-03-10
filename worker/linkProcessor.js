@@ -9,7 +9,8 @@ var ent = require('ent'),
       'facebook.com': true,
       'amazon.com': true,
       'adf.ly': true,
-      'q.gs': true
+      'q.gs': true,
+      'ft.com': true
     };
 
 
