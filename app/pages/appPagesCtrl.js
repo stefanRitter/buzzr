@@ -1,25 +1,6 @@
-angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIdentity, appIsMobile, appFeedback, appHeader) {
-  
-  // auto focus on desktop
-  if (!appIsMobile.any()) {
-    var homeInput = $document[0].getElementById("focus");
-    if (homeInput !== null) { homeInput.focus(); }
-  }
-
-  $scope.identity = appIdentity;
-
-  $scope.search = function() {
-    if (!!$scope.searchText) {
-      var searchText = encodeURI($scope.searchText.trim());
-      $location.path('/' + searchText);
-    }
-  };
+angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback) {
 
   $scope.toggleFeedback = function() {
     appFeedback.toggle();
   };
-
-  if (appIdentity.isAuthenticated()) {
-    appHeader.toggle();
-  }
 });

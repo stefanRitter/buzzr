@@ -17,12 +17,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
-    .when('/',        {templateUrl: '/partials/pages/home',       controller: 'appPagesCtrl'})
-    .when('/about',   {templateUrl: '/partials/pages/about',      controller: 'appPagesCtrl'})
-    .when('/terms',   {templateUrl: '/partials/pages/terms',      controller: 'appPagesCtrl'})
-    .when('/login',   {templateUrl: '/partials/account/login',    controller: 'appLoginCtrl'})
-    .when('/join',    {templateUrl: '/partials/account/join',     controller: 'appJoinCtrl'})
-    .when('/:id',     {templateUrl: '/partials/main/main', controller: 'appMainCtrl'});
+    .when('/',        {templateUrl: '/partials/pages/home',     controller: 'appHomeCtrl'})
+    .when('/about',   {templateUrl: '/partials/pages/about',    controller: 'appPagesCtrl'})
+    .when('/terms',   {templateUrl: '/partials/pages/terms',    controller: 'appPagesCtrl'})
+    .when('/login',   {templateUrl: '/partials/account/login',  controller: 'appLoginCtrl'})
+    .when('/join',    {templateUrl: '/partials/account/join',   controller: 'appJoinCtrl'})
+    .when('/:id',     {templateUrl: '/partials/main/main',      controller: 'appMainCtrl'});
   
   $routeProvider
     .when('/account/settings', {templateUrl: '/partials/account/settings',  controller: 'appSettingsCtrl',
@@ -342,12 +342,12 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.triggerSearch();
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope, $location, $document, appIdentity, appIsMobile, appFeedback, appHeader) {
+;angular.module('app').controller('appHomeCtrl', function ($scope, $location, appIsMobile, appIdentity, appHeader) {
   
   // auto focus on desktop
   if (!appIsMobile.any()) {
     var homeInput = $document[0].getElementById("focus");
-    if (homeInput !== null) { homeInput.focus(); }
+    homeInput.focus();
   }
 
   $scope.identity = appIdentity;
@@ -359,11 +359,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     }
   };
 
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
   if (appIdentity.isAuthenticated()) {
     appHeader.toggle();
   }
+});
+;angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback) {
+
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
+  };
 });
