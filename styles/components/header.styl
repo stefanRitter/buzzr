@@ -1,15 +1,15 @@
 .header
-  @extend .composite-layer
   z-index 1000
   display block
   position fixed
   top 0
-  left -290px
+  left 0
   width 320px
   height 100%
   transition all 0.5s ease 0s
+  transform translateX(-290px)
   &.open
-    left 0
+    transform translateX(0)
 
 .header-content-left
 .header-content-center
