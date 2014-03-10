@@ -15,19 +15,32 @@ buzzrSchema = new Schema({
     index:    true,
     trim:     true
   },
+  
+  lang: {type: String, default: 'en'},
+  
   activeLinks:  [{
-    url:      String, 
-    title:    String,
-    rank:     Number,
-    updated:  Date
+    url:        String, 
+    title:      String,
+    rank:       Number,
+    activated:  Date,
+    updated:    Date
   }],
+  
   passiveLinks: [{
-    url:      String, 
-    title:    String,
-    rank:     Number,
-    updated:  Date
+    url:        String, 
+    title:      String,
+    rank:       Number,
+    activated:  Date,
+    updated:    Date
   }],
-  lang: {type: String, default: 'en'}
+  
+  retiredLinks: [{
+    url:        String, 
+    title:      String,
+    rank:       Number,
+    activated:  Date,
+    updated:    Date
+  }]
 });
 
 
@@ -36,10 +49,6 @@ buzzrSchema.methods.pushLink = function(data) {
   // data.url: 'http://instagram.com/p/QhLtWhB_A1/'
   // data.title: 'Photo by sofishlin &bull; Instagram'
   // data.rank: 5
-
-  // TODO:
-  // get rid of utm_* params
-
 
   var pI = _.findIndex(this.passiveLinks, function(link) {
     return link.url === data.url || link.title === data.title;
@@ -52,6 +61,7 @@ buzzrSchema.methods.pushLink = function(data) {
       url: data.url,
       title: data.title,
       rank: newRank,
+      activated: Date.now(),
       updated: Date.now()
     });
 
@@ -79,6 +89,7 @@ buzzrSchema.methods.pushLink = function(data) {
     updated: Date.now()
   };
   if (newLink.rank > 0) {
+    newLink.activated = Date.now();
     this.activeLinks.push(newLink);
   } else {
     this.passiveLinks.push(newLink); 

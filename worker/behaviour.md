@@ -1,7 +1,7 @@
 
 - order links by date, and by rank => add activated date!
 - if more than 100 links in active, retire some links
-
+- get rid of utm_* params
 
 
 

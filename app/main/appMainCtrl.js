@@ -1,12 +1,16 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appHeader) {
+angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader) {
   
   $scope.links = [];
-  $scope.searching = true;
+  $scope.dates = [];
+
+  $scope.toggleHeader = function() {
+    appHeader.toggle();
+  };
+ 
   $scope.identity = appIdentity;
   $scope.searchText = decodeURI($routeParams.id);
 
   $scope.triggerSearch = function() {
-    if (!$scope.searchText) return;
     $scope.searching = true;
 
     $http
@@ -22,14 +26,10 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
           return alert('create new buzzr');
         }
 
-        $scope.links = res.data.links;
+        appProcessLinks.process(res.data.links);
         $scope.searching = false;
       });
   };
-
-  $scope.toggleHeader = function() {
-    appHeader.toggle();
-  };
-
+  
   $scope.triggerSearch();
 });

@@ -1,23 +1,24 @@
-form(ng-hide="searching")
-  input(ng-model="searchText", placeholder="What are you interested in?")
-  button(ng-click="triggerSearch()") Generate Buzzr
-
 h2(ng-show="searching") ... buzzing the interweb for &quot;{{searchText}}&quot; ...
 
-hr
-h4 Results
-table
-  thead
-    tr
-      th Link
-      th Rank
+div(ng-hide="searching") 
+  h1.margin Results
   
-  tbody
-    tr(ng-repeat="link in links | orderBy:'rank':'true'")
-      td(ng-show="identity.isAuthenticated()") 
-        a(href="{{link.url}}", target="_blank") {{link.title}}
+  table
+    thead
+      tr
+        th Link
+        th Rank
+
+
+  table(ng-repeat="date in dates")
+    tbody
       
-      td(ng-hide="identity.isAuthenticated()")
-        a(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
-      
-      td {{link.rank}}
+      tr(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
+        
+        td(ng-show="identity.isAuthenticated()") 
+          a(href="{{link.url}}", target="_blank") {{link.title}}
+        
+        td(ng-hide="identity.isAuthenticated()")
+          a(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
+        
+        td {{link.rank}}
