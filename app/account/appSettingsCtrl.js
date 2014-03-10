@@ -1,6 +1,14 @@
 
 angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, appIdentity, appNotifier) {
+  
   $scope.currentUser = angular.copy(appIdentity.currentUser);
+  $scope.email = {
+    valid: appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)
+  };
+
+  if (!$scope.email.valid) {
+    $scope.currentUser.email = '';
+  }
 
   $scope.update = function () {
     appAuth.updateCurrentUser($scope.currentUser).then(function () {

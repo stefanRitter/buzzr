@@ -1,11 +1,12 @@
 .pages-container
   include ../common/buzzr-logo
 
-  form.form.center(name="profileForm")
-    h1 Settings
+  h1.center(ng-hide="email.valid") Please complete your signup:
+  h1.center(ng-show="email.valid") Settings
 
+  form.form.center(name="profileForm")
     .form-group
-      label Email
+      label Email*
       input(name="email", type="text", placeholder="Email", ng-model="currentUser.email", required)
     .form-group
       label Name
@@ -16,7 +17,9 @@
   
     .form-group
       button.button-black(ng-click="update()", ng-disabled="profileForm.$invalid") Submit
-
+      br
+      span.required * required
+    
     .form-group.notifier
       .error {{notifier.error}}
       .notice {{notifier.notice}}

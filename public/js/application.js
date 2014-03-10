@@ -166,7 +166,15 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
 });
 ;
 angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, appIdentity, appNotifier) {
+  
   $scope.currentUser = angular.copy(appIdentity.currentUser);
+  $scope.email = {
+    valid: appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)
+  };
+
+  if (!$scope.email.valid) {
+    $scope.currentUser.email = '';
+  }
 
   $scope.update = function () {
     appAuth.updateCurrentUser($scope.currentUser).then(function () {
@@ -175,7 +183,8 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, appAuth, a
       appNotifier.error(reason, $scope);
     });
   };
-});;angular.module('app').factory('appUser', function ($resource) {
+});
+;angular.module('app').factory('appUser', function ($resource) {
   var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
     update: { method: 'PUT', isArray: false }
   });

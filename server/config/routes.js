@@ -1,11 +1,10 @@
 'use strict';
 
-var auth = require('./auth.js'),
+var auth = require('../controllers/auth.js'),
     users = require('../controllers/users.js'),
     pages = require('../controllers/pages.js'),
     feedback = require('../controllers/feedback.js'),
-    buzzrs = require('../controllers/buzzrs.js'),
-    passport = require('passport');
+    buzzrs = require('../controllers/buzzrs.js');
 
 
 module.exports = function (app) {
