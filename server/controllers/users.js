@@ -38,11 +38,6 @@ exports.createUser = function (req, res, next) {
 exports.updateUser = function (req, res) {
   var userUpdates = req.body;
 
-  if (req.user._id !== userUpdates._id && !req.user.hasRole('admin')) {
-    res.status(403);
-    return res.end();
-  }
-
   req.user.email = userUpdates.email;
   if (userUpdates.password && userUpdates.password.length > 0) {
     req.user.salt = encrypt.createSalt();
@@ -51,10 +46,12 @@ exports.updateUser = function (req, res) {
 
   req.user.save(function (err) {
     if (err) {
-      res.status(400);
-      return res.send({reason: err.toString()});
+      var reason = err.toString();
+      if (err.toString().indexOf('E11000') > -1) {
+        reason = 'Email already exists, please choose another';
+      }
+      return res.status(400).send({reason: reason});
     }
-
     res.send(req.user.safe());
   });
 };

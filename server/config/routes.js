@@ -29,7 +29,7 @@ module.exports = function (app) {
   app.get( '/api/buzzrs/:id', buzzrs.getByTopic);
   app.get( '/api/users',      auth.requiresRole('admin'), users.getUser);
   app.post('/api/users',      users.createUser);
-  app.put( '/api/users',      users.updateUser);
+  app.put( '/api/users',      auth.authorize, users.updateUser);
   app.post('/api/feedback',   feedback.createFeedback);
 
   // AUTH
