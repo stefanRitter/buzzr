@@ -26,7 +26,8 @@ buzzrSchema =new Schema({
     title:    String,
     rank:     Number,
     updated:  Date
-  }]
+  }],
+  lang: {type: String, default: 'en'}
 });
 
 

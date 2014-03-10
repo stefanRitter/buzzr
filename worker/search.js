@@ -11,10 +11,10 @@ var Twit = require('twit'),
 
 
 
-function buildQuery(topic, sinceId, beforeId) {
+function buildQuery(topic, lang, sinceId, beforeId) {
   var now = new Date(),
       timeAgo = (now.getFullYear()-1) + "-" + now.getMonth() + "-" + now.getDate(),
-      query = topic + ' filter:links' + ' since:' + timeAgo + ' lang:en';
+      query = topic + ' filter:links' + ' since:' + timeAgo + ' lang:' + lang;
 
   if (!!sinceId) {
     // query += ...
@@ -42,7 +42,7 @@ function callTwitter(query, tweetProcessor) {
 
 // update existing feed go back 24hrs
 exports.update = function(buzzr) {
-  var query = buildQuery(buzzr.topic),
+  var query = buildQuery(buzzr.topic, buzzr.lang),
       tweetProcessor = TweetProcessor(buzzr);
 
   callTwitter(query, tweetProcessor);
@@ -51,7 +51,7 @@ exports.update = function(buzzr) {
 
 // this is a new feed so we have to go back in time
 exports.create = function(buzzr) {
-  var query = buildQuery(buzzr.topic),
+  var query = buildQuery(buzzr.topic, buzzr.lang),
       tweetProcessor = TweetProcessor(buzzr);
 
   callTwitter(query, tweetProcessor);

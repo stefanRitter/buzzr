@@ -11,6 +11,8 @@ function start(req, res, next) {
     if (err) { next(err); }
     
     if (buzzr === null) {
+      // 'https://www.googleapis.com/language/translate/v2/detect?q=' +
+      // req.params.id + '&key=' + process.env.GOGL_API_KEY
       Buzzr.create({topic: topic}, function(err, newBuzzr) {
         if (err) { next(err); }
         search.create(newBuzzr);
