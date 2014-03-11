@@ -6,6 +6,15 @@
     | ...
 
 
+//- unknown error
+.center.display-none(ng-class="{'display-none': status.error == false}")
+  h2.margin-top-big.center
+    strong Unexpected error: 
+    | {{errorMessage}}
+    br
+    a.underline(ng-click="toggleFeedback()") Please contact us for help.
+
+
 //- creating a new feed
 .center.display-none(ng-class="{'display-none': status.creating == false}")
   h2.margin-top
@@ -32,25 +41,21 @@
       include ../../public/img/logo-anim.svg
 
 
-//- display results
-.display-none(ng-class="{'display-none': status.feeding == false}") 
-  h1.margin Results
-  
-  table
-    thead
-      tr
-        th Link
-        th Rank
+//- alternative Buzzrs to watch
+.center.display-none(ng-class="{'display-none': status.creating == false}")
+  p.margin-top-big
+    br
+    br
+    span.italic Or check out these Buzzrs in the meantime:
+  p.margin-top-big
+    a.button-black(href="/damien%20hirst") Damien Hirst
+    | &nbsp;&nbsp;
+    a.button-white(href="/snowboarding") Snowboarding
+  p.margin-top-sm
+    a.button-white(href="/javascript") Javascript
+    | &nbsp;&nbsp;
+    a.button-black(href="/london%20property") London Property
 
-  table(ng-repeat="date in dates")
-    tbody
-      
-      tr(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
-        
-        td(ng-show="identity.isAuthenticated()") 
-          a(href="{{link.url}}", target="_blank") {{link.title}}
-        
-        td(ng-hide="identity.isAuthenticated()")
-          a(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
-        
-        td {{link.rank}}
+
+//- display results
+include feed

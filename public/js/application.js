@@ -321,7 +321,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     $scope.toggleOpen();
   });
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader) {
+;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
   
   $scope.links = [];
   $scope.dates = [];
@@ -345,21 +345,24 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     appHeader.toggle();
   };
 
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
+  };
+
   $scope.triggerSearch = function() {
     $http
       .get('/api/buzzrs/' + $scope.searchText.trim())
       .then(function(res) {
         var links = res.data.links;
 
-        if (res.data.err) { 
-          alert('Error ' + res.data.err);
+        if (res.data.err) {
           $scope.errorMessage = res.data.err;
           $scope.status.error = true;
+          return $scope.status.searching = false;
         }
         
         if (!links || links.length === 0) {
           $scope.status.creating = true;
-          alert('create new buzzr');
         
         } else {
           appProcessLinks.process(res.data.links);
@@ -375,6 +378,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 ;angular.module('app').factory('appProcessLinks', function () {
   return {
     process: function($scope, incomingLinks) {
+      alert('process links');
       $scope.links = incomingLinks;
     }
   };
