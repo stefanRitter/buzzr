@@ -4,9 +4,12 @@ footer.pages-footer
   ul.list-horizontal.bg-white.inline-block
     li
       a(href="/about") About buzzr
-    li
+    
+    li(ng-hide="identity.isAuthenticated()")
       a(href="/join") Join
-    li
+    
+    li(ng-hide="identity.isAuthenticated()")
       a(href="/login") Login
+    
     li
       a(href="/terms") Terms &amp; Privacy

@@ -306,13 +306,16 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
 
   $scope.toggleOpen = function() {
     $scope.open = !$scope.open;
-    $document.one('click', function() {
+    $document.one('click', close);
+    $document.one('touch', close);
+
+    function close() {
       if ($scope.open) {
         $scope.open = false;
         $scope.$digest();
       }
-    });
-  }
+    }
+  };
 
   $scope.$on('toggleHeader', function() {
     $scope.toggleOpen();
@@ -382,7 +385,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
     appHeader.toggle();
   }
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback) {
+;angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback, appIdentity) {
+
+  $scope.identity = appIdentity;
 
   $scope.toggleFeedback = function() {
     appFeedback.toggle();

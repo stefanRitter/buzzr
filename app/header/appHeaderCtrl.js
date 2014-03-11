@@ -10,13 +10,16 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
 
   $scope.toggleOpen = function() {
     $scope.open = !$scope.open;
-    $document.one('click', function() {
+    $document.one('click', close);
+    $document.one('touch', close);
+
+    function close() {
       if ($scope.open) {
         $scope.open = false;
         $scope.$digest();
       }
-    });
-  }
+    }
+  };
 
   $scope.$on('toggleHeader', function() {
     $scope.toggleOpen();
