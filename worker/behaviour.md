@@ -1,3 +1,4 @@
+- add last 3 logins to User
 
 - order links by date, and by rank => add activated date!
 - if more than 100 links in active, retire some links
@@ -15,7 +16,8 @@ All time favorites
 exclude
 ======
 job offers
-'to rent', 'to let' => unless in buzzr topic
+'akamai error'
+'for sale', 'to rent', 'to let' => unless in buzzr topic
 
 
 
