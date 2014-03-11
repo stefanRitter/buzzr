@@ -2,17 +2,25 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
   
   $scope.links = [];
   $scope.dates = [];
+  $scope.identity = appIdentity;
+  $scope.searchText = decodeURI($routeParams.id);
+  $scope.status = {
+    searching: true,
+    creating: false,
+    feeding: false
+  };
+
+  $scope.showLoading = function() {
+    if ($scope.status.searching) { return true; }
+    if ($scope.status.creating && appIdentity.isAuthenticated()) { return true; }
+    return false;
+  };
 
   $scope.toggleHeader = function() {
     appHeader.toggle();
   };
- 
-  $scope.identity = appIdentity;
-  $scope.searchText = decodeURI($routeParams.id);
 
   $scope.triggerSearch = function() {
-    $scope.searching = true;
-
     $http
       .get('/api/buzzrs/' + $scope.searchText.trim())
       .then(function(res) {
@@ -23,11 +31,15 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
         }
         
         if (!links || links.length === 0) {
-          return alert('create new buzzr');
+          $scope.status.creating = true;
+          alert('create new buzzr');
+        
+        } else {
+          appProcessLinks.process(res.data.links);
+          $scope.status.feeding = true;
         }
 
-        appProcessLinks.process(res.data.links);
-        $scope.searching = false;
+        $scope.status.searching = false;
       });
   };
   

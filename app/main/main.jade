@@ -1,6 +1,39 @@
-h2(ng-show="searching") ... buzzing the interweb for &quot;{{searchText}}&quot; ...
+//- searching
+.center(ng-show="status.searching")
+  h2.margin-top-big.center
+    | buzzing the interweb for 
+    strong {{searchText}} 
+    | ...
 
-div(ng-hide="searching") 
+
+//- creating a new feed
+.center.display-none(ng-class="{'display-none': status.creating == false}")
+  h2.margin-top
+    | Your topic 
+    strong {{searchText}} 
+    | is a new one for Buzzr!
+  p.margin-top(ng-hide="identity.isAuthenticated()")
+    | Creating new topics is only possible for logged-in users at this moment.
+    br
+    | Please join us to create this new feed (takes only 30 seconds):
+    br
+    br
+    a.button-black(href="/join") Join to create a new Buzzr
+  p.margin-top(ng-show="identity.isAuthenticated()")
+    | Creating completely new topics takes a while for Buzzr.
+    br
+    | We will email you when your brand new Buzzr is ready (~ 15min).
+
+
+//- loading
+.center(ng-show="showLoading()")
+  h2.margin-top.center
+    .loading
+      include ../../public/img/logo-anim.svg
+
+
+//- display results
+.display-none(ng-class="{'display-none': status.feeding == false}") 
   h1.margin Results
   
   table
@@ -8,7 +41,6 @@ div(ng-hide="searching")
       tr
         th Link
         th Rank
-
 
   table(ng-repeat="date in dates")
     tbody

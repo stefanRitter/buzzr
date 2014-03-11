@@ -40,6 +40,7 @@ h2{font-size:1.8em}
 .right{text-align:right}
 .justify{text-align:justify}
 .inline-block{display:inline-block}
+.display-none{display:none}
 .margin{margin:1em}
 .margin-big{margin:2em}
 .margin-top{margin-top:1em}
@@ -84,5 +85,6 @@ h2{font-size:1.8em}
 .logo-link h1{width:0;height:0;overflow:hidden;margin:0 auto}
 .logo-link h2{font-size:17px;font-weight:300;margin-bottom:1.5em;line-height:0}
 .logo-svg{width:260px;height:55px;display:inline-block}
+.loading{display:inline-block;width:40px;height:40px}
 .notifier{font-weight:600;text-align:center}
 .pages-container{margin:0 auto;padding:0 10px;text-align:left;position:relative;max-width:960px}
