@@ -3,7 +3,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;
-  $scope.searchText = decodeURI($routeParams.id);
+  $scope.searchText = decodeURI($routeParams.id).toLowerCase();
   $scope.status = {
     searching: true,
     creating: false,

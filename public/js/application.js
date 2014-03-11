@@ -326,16 +326,18 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;
-  $scope.searchText = decodeURI($routeParams.id);
+  $scope.searchText = decodeURI($routeParams.id).toLowerCase();
   $scope.status = {
     searching: true,
     creating: false,
-    feeding: false
+    feeding: false,
+    error: false
   };
 
   $scope.showLoading = function() {
-    if ($scope.status.searching) { return true; }
-    if ($scope.status.creating && appIdentity.isAuthenticated()) { return true; }
+    var status = $scope.status;
+    if (status.searching || status.error) { return true; }
+    if (status.creating && appIdentity.isAuthenticated()) { return true; }
     return false;
   };
 
@@ -350,7 +352,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
         var links = res.data.links;
 
         if (res.data.err) { 
-          return alert('Error ' + res.data.err);
+          alert('Error ' + res.data.err);
+          $scope.errorMessage = res.data.err;
+          $scope.status.error = true;
         }
         
         if (!links || links.length === 0) {
