@@ -7,12 +7,14 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
   $scope.status = {
     searching: true,
     creating: false,
-    feeding: false
+    feeding: false,
+    error: false
   };
 
   $scope.showLoading = function() {
-    if ($scope.status.searching) { return true; }
-    if ($scope.status.creating && appIdentity.isAuthenticated()) { return true; }
+    var status = $scope.status;
+    if (status.searching || status.error) { return true; }
+    if (status.creating && appIdentity.isAuthenticated()) { return true; }
     return false;
   };
 
@@ -27,7 +29,9 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
         var links = res.data.links;
 
         if (res.data.err) { 
-          return alert('Error ' + res.data.err);
+          alert('Error ' + res.data.err);
+          $scope.errorMessage = res.data.err;
+          $scope.status.error = true;
         }
         
         if (!links || links.length === 0) {
