@@ -50,5 +50,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
       });
   };
   
-  $scope.triggerSearch();
+  setTimeout(function() {
+    $scope.$apply($scope.triggerSearch);
+  }, 500);
 });

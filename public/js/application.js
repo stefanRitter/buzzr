@@ -373,7 +373,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
       });
   };
   
-  $scope.triggerSearch();
+  setTimeout(function() {
+    $scope.$apply($scope.triggerSearch);
+  }, 500);
 });
 ;angular.module('app').factory('appProcessLinks', function () {
   var u = {};

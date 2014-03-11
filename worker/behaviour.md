@@ -17,7 +17,8 @@ exclude
 ======
 job offers
 'akamai error'
-'for sale', 'to rent', 'to let' => unless in buzzr topic
+'for sale', 'to rent', 'to let' => unless in buzzr topic?
+'50% sale' => get rid of offers and promotions
 
 
 

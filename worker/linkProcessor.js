@@ -11,7 +11,8 @@ var ent = require('ent'),
       'adf.ly': true,
       'q.gs': true,
       'buzzr.io': true,
-      'dailymail.co.uk': true
+      'dailymail.co.uk': true,
+      'stackoverflow.com': true
     };
 
 

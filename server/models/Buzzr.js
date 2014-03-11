@@ -16,10 +16,14 @@ buzzrSchema = new Schema({
     index:    true,
     trim:     true
   },
-  
+
   lang: {type: String, default: 'en'},
-  maxId: {type: String},
   
+  twitPoints: {
+    maxId: {type: String},
+    sinceId: {type: String}
+  },
+
   activeLinks:  [{
     url:        String, 
     title:      String,
