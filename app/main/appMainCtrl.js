@@ -42,7 +42,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
           $scope.status.creating = true;
         
         } else {
-          appProcessLinks.process(res.data.links);
+          appProcessLinks.process($scope, res.data.links);
           $scope.status.feeding = true;
         }
 

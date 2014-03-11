@@ -1,15 +1,14 @@
 .display-none(ng-class="{'display-none': status.feeding == false}") 
   h1.margin Results
-  
-  table
+
+  table(ng-repeat="date in dates")
     thead
+      tr
+        th {{date}}
       tr
         th Link
         th Rank
-
-  table(ng-repeat="date in dates")
     tbody
-      
       tr(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
         
         td(ng-show="identity.isAuthenticated()") 
