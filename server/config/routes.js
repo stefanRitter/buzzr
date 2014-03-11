@@ -16,7 +16,7 @@ module.exports = function (app) {
   app.get('/about',   pages('about'));
   app.get('/terms',   pages('terms'));
   app.get('/later',   pages('index'));
-  app.get('/:id',     pages('index'));
+  app.get('/:id',     pages('main'));
 
   app.get('/account/settings', pages('settings'));
   
