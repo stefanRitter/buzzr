@@ -3,6 +3,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     _ = require('lodash'),
+    minVal = 4,
     buzzrSchema,
     Buzzr;
 
@@ -17,6 +18,7 @@ buzzrSchema = new Schema({
   },
   
   lang: {type: String, default: 'en'},
+  maxId: {type: String},
   
   activeLinks:  [{
     url:        String, 
@@ -55,17 +57,23 @@ buzzrSchema.methods.pushLink = function(data) {
   });
 
   if (pI > -1) {
-    var newRank = data.rank === 0 ? 1 : data.rank;
+    var newRank = this.passiveLinks[pI].rank;
+    newRank += data.rank === 0 ? 1 : data.rank;
 
-    this.activeLinks.push({
-      url: data.url,
-      title: data.title,
-      rank: newRank,
-      activated: Date.now(),
-      updated: Date.now()
-    });
+    if (newRank > minVal) {
+      this.activeLinks.push({
+        url: data.url,
+        title: data.title,
+        rank: newRank,
+        activated: Date.now(),
+        updated: Date.now()
+      });
 
-    this.passiveLinks.splice(pI, 1);
+      this.passiveLinks.splice(pI, 1);
+    } else {
+      this.passiveLinks[pI].rank = newRank;
+      this.passiveLinks[pI].updated = Date.now();
+    }
     return this.save();
   }
 
@@ -88,7 +96,7 @@ buzzrSchema.methods.pushLink = function(data) {
     rank: data.rank,
     updated: Date.now()
   };
-  if (newLink.rank > 0) {
+  if (newLink.rank > minVal) {
     newLink.activated = Date.now();
     this.activeLinks.push(newLink);
   } else {

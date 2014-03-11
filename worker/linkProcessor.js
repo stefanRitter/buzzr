@@ -10,7 +10,8 @@ var ent = require('ent'),
       'amazon.com': true,
       'adf.ly': true,
       'q.gs': true,
-      'buzzr.io': true
+      'buzzr.io': true,
+      'dailymail.co.uk': true
     };
 
 

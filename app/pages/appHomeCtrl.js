@@ -1,17 +1,4 @@
 angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIsMobile, appIdentity, appHeader) {
-  
-  // redirect if invalid email
-  if (appIdentity.isAuthenticated()) {
-    if (!appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)) {
-      $location.path('account/settings')
-    }
-  }
-
-  // auto focus on desktop
-  if (!appIsMobile.any()) {
-    var homeInput = $document[0].getElementById("focus");
-    homeInput.focus();
-  }
 
   $scope.identity = appIdentity;
 
@@ -21,6 +8,19 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
       $location.path('/' + searchText);
     }
   };
+
+  // redirect if invalid email
+  if (appIdentity.isAuthenticated()) {
+    if (!appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)) {
+      $location.path('account/settings')
+    }
+  }
+
+  // auto focus input on desktop
+  if (!appIsMobile.any()) {
+    var homeInput = $document[0].getElementById("focus");
+    homeInput.focus();
+  }
 
   if (appIdentity.isAuthenticated()) {
     appHeader.toggle();
