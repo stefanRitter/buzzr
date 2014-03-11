@@ -40,7 +40,7 @@ exports.authorize = function(req, res, next) {
 exports.authenticateTwitter = passport.authenticate('twitter');
 
 exports.twitterCallback = passport.authenticate('twitter', {
-  successRedirect: '/account/settings',
+  successRedirect: '/',
   failureRedirect: '/login'
 });
 
