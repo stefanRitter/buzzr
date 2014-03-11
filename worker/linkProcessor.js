@@ -10,7 +10,7 @@ var ent = require('ent'),
       'amazon.com': true,
       'adf.ly': true,
       'q.gs': true,
-      'ft.com': true
+      'buzzr.io': true
     };
 
 
