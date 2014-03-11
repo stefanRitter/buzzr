@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 
 var express = require('express'),
@@ -18,4 +19,3 @@ require('./server/config/express.js')(app, config);
 
 // setup worker
 require('./worker/')(app, config);
-
