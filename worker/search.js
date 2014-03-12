@@ -7,8 +7,8 @@ var Twit = require('twit'),
       access_token:         process.env.TWIT_TOKEN,
       access_token_secret:  process.env.TWIT_TOKEN_SECRET
     }),
-    TweetProcessor = require('./tweetProcessor');
-
+    TweetProcessor = require('./tweetProcessor'),
+    Batch = require('batch');
 
 
 function buildQuery(buzzr, maxId, sinceId) {
@@ -17,23 +17,28 @@ function buildQuery(buzzr, maxId, sinceId) {
   if (maxId && !!buzzr.twitPoints.maxId) {
     query = query + ' max_id:' + buzzr.twitPoints.maxId;
   }
-
+  if (sinceId && !!buzzr.twitPoints.sinceId) {
+    query = query + ' since_id:' + buzzr.twitPoints.since_id;
+  }
   return query;
 }
 
-function callTwitter(query, tweetProcessor) {
-  T.get('search/tweets', {
-    q: query,
-    include_entities: true,
-    count: 100 
-  },
-  function(err, reply) {
-    if (err) { throw new Error(err); }
-    
-    var tweets = reply.statuses,
-        lastTweet = tweets[tweets.length - 1];
-    
-    tweets.forEach(tweetProcessor);
+function batchTweets(tweets, tweetProcessor) {
+  var batch = new Batch;
+
+  batch.concurrency(3);
+
+  tweets.forEach(function(tweet){
+    batch.push(function(done){
+      tweetProcessor(tweet, done);
+    });
+  });
+  
+  batch.on('progress', function(e) {
+    // console.log('progress: ', e.index, '/', e.pending);
+  });
+
+  batch.end(function(err, tweets) {
   });
 }
 
@@ -66,7 +71,7 @@ exports.update = function(buzzr) {
       buzzr.twitPoints.sinceId = tweets[0].id_str;
       buzzr.save();
 
-      tweets.forEach(tweetProcessor);
+      batchTweets(tweets, tweetProcessor);
 
       count += 1;
       next();
@@ -75,7 +80,7 @@ exports.update = function(buzzr) {
 
   function next() {
     if (count >= 400) {
-      return '400 calls to twitter done';
+      return console.log('calls to twitter done!');
     }
     
     var query = buildQuery(buzzr, false, true)
@@ -112,7 +117,7 @@ exports.create = function(buzzr) {
       buzzr.twitPoints.maxId = lastTweet.id_str;
       buzzr.save();
 
-      tweets.forEach(tweetProcessor);
+      batchTweets(tweets, tweetProcessor);
 
       count += 1;
       next();
@@ -121,7 +126,7 @@ exports.create = function(buzzr) {
 
   function next() {
     if (count >= 40) {
-      return '40 calls to twitter done';
+      return console.log('calls to twitter done!');
     }
     
     var query = buildQuery(buzzr, true, false)

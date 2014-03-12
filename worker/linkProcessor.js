@@ -30,8 +30,10 @@ function processLink(data, rank, buzzr) {
   buzzr.pushLink(data);
 }
 
-module.exports = function(rank, buzzr) {
+module.exports = function(rank, buzzr, done) {
   return function(err, data) {
+    done(); // start next request
+
     if (err) { return console.log('URLEXPAND ERROR', err); }
     processLink(data, rank, buzzr);
   }

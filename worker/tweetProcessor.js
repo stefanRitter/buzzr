@@ -17,18 +17,18 @@ function calcRank(tweet) {
   return rank;
 }
 
-function processTweet(tweet, buzzr) {
+function processTweet(tweet, buzzr, done) {
   if (tweet.entities.urls && tweet.entities.urls.length > 0) {
     var link = tweet.entities.urls[0],
         url = link.expanded_url || link.url,
         rank = calcRank(tweet);
 
-    urlexpand(url, processLink(rank, buzzr));
+    urlexpand(url, processLink(rank, buzzr, done));
   }
 }
 
 module.exports = function(buzzr) {
-  return function(tweet) {
-    processTweet(tweet, buzzr);
+  return function(tweet, done) {
+    processTweet(tweet, buzzr, done);
   }
 };

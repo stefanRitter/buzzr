@@ -1,8 +1,12 @@
 - add last 3 logins to User
 
-- order links by date, and by rank => add activated date!
-- if more than 100 links in active, retire some links
+- when a buzzr is created maxVal for becoming active 5, when updated 2
+
+- if more than 100 links in active, retire oldest 10 links > part of the update routine
+
 - get rid of utm_* params
+
+
 
 
 
@@ -23,10 +27,10 @@ job offers
 
 
 
+
 improvements
 ===========
-- get language from google translate api
-
+- get language from google translate api, if not English error out: sorry we only support queries in english at this point. please email: help@buzzr.io
 
 
 
@@ -46,6 +50,7 @@ sources
 - feedly?
 - digg
 - users can add sources!!!
+- user can sign their buzzr up to newsletters!!!!
 
 
 
