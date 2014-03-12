@@ -392,7 +392,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser)
         a.push(date);
       }
     }
-    return a;
+    return a.reverse();
   }
 
   return {

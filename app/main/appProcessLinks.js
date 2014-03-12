@@ -15,7 +15,7 @@ angular.module('app').factory('appProcessLinks', function () {
         a.push(date);
       }
     }
-    return a;
+    return a.reverse();
   }
 
   return {
