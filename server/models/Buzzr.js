@@ -21,7 +21,8 @@ buzzrSchema = new Schema({
   
   twitPoints: {
     maxId: {type: String},
-    sinceId: {type: String}
+    sinceId: {type: String},
+    nextSinceId: {type: String}
   },
 
   activeLinks:  [{

@@ -18,7 +18,7 @@ function buildQuery(buzzr, maxId, sinceId) {
     query = query + ' max_id:' + buzzr.twitPoints.maxId;
   }
   if (sinceId && !!buzzr.twitPoints.sinceId) {
-    query = query + ' since_id:' + buzzr.twitPoints.since_id;
+    //query = query + ' since_id:' + buzzr.twitPoints.since_id;
   }
   return query;
 }
@@ -43,16 +43,19 @@ function batchTweets(tweets, tweetProcessor) {
 }
 
 
-// update existing feed go back 24hrs
+// update existing feed go back until since_id
 exports.update = function(buzzr) {
   var count = 0,
       tweetProcessor = TweetProcessor(buzzr);
+
+  buzzr.twitPoints.sinceId = buzzr.twitPoints.nextSinceId;
+  buzzr.save();
 
   console.log('updating: ' + buzzr.topic);
   next();
 
   function sinceIdCall(query) {
-    console.log('call ' + count);
+    console.log('twit call ' + count);
 
     T.get('search/tweets', {
       q: query,
@@ -70,12 +73,19 @@ exports.update = function(buzzr) {
         return next();
       }
 
-      if (buzzr.twitPoints.sinceId === tweets[0].id_str) {
+      console.log('nextSinceId', buzzr.twitPoints.sinceId);
+      console.log('sinceId ', buzzr.twitPoints.sinceId);
+      console.log('currentid', tweets[0].id_str);
+
+      if (buzzr.twitPoints.sinceId >= tweets[0].id_str) {
         count = 500;
         return next();
       }
-      buzzr.twitPoints.sinceId = tweets[0].id_str;
-      buzzr.save();
+      
+      if (count === 0) {
+        buzzr.twitPoints.nextSinceId = tweets[0].id_str;
+        buzzr.save();
+      }
 
       batchTweets(tweets, tweetProcessor);
 
@@ -122,8 +132,8 @@ exports.create = function(buzzr) {
         return next();
       }
 
-      if (count === 0) { 
-        buzzr.twitPoints.sinceId = tweets[0].id_str;
+      if (count === 0) {
+        buzzr.twitPoints.nextSinceId = tweets[0].id_str;
       }
       buzzr.twitPoints.maxId = lastTweet.id_str;
       buzzr.save();
@@ -136,7 +146,7 @@ exports.create = function(buzzr) {
   }
 
   function next() {
-    if (count >= 40) {
+    if (count >= 400) {
       return console.log('calls to twitter done!');
     }
     
