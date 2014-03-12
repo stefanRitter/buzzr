@@ -64,9 +64,15 @@ exports.update = function(buzzr) {
       
       var tweets = reply.statuses,
           lastTweet = tweets[tweets.length - 1];
+      
+      if (tweets.length === 0) {
+        count = 500;
+        return next();
+      }
 
       if (buzzr.twitPoints.sinceId === tweets[0].id_str) {
-        return count = 401;
+        count = 500;
+        return next();
       }
       buzzr.twitPoints.sinceId = tweets[0].id_str;
       buzzr.save();
@@ -110,6 +116,11 @@ exports.create = function(buzzr) {
       
       var tweets = reply.statuses,
           lastTweet = tweets[tweets.length - 1];
+
+      if (tweets.length === 0) {
+        count = 500;
+        return next();
+      }
 
       if (count === 0) { 
         buzzr.twitPoints.sinceId = tweets[0].id_str;
