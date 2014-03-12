@@ -1,6 +1,9 @@
+
+
+
 - add last 3 logins to User
 
-- when a buzzr is created maxVal for becoming active 5, when updated 2
+- get language from google translate api
 
 - if more than 100 links in active, retire oldest 10 links > part of the update routine
 
@@ -19,18 +22,11 @@ All time favorites
 
 exclude
 ======
-job offers
+job offers?
 'akamai error'
 'for sale', 'to rent', 'to let' => unless in buzzr topic?
-'50% sale' => get rid of offers and promotions
+'50% sale' => get rid of offers and promotions?
 
-
-
-
-
-improvements
-===========
-- get language from google translate api, if not English error out: sorry we only support queries in english at this point. please email: help@buzzr.io
 
 
 

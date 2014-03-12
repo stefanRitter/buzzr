@@ -1,5 +1,21 @@
 'use strict';
 
+/*
+Example results:
+
+"search_metadata": {
+  "max_id": 250126199840518145,
+  "since_id": 24012619984051000,
+  "refresh_url": "?since_id=250126199840518145&q=%23freebandnames&result_type=mixed&include_entities=1",
+  "next_results": "?max_id=249279667666817023&q=%23freebandnames&count=4&include_entities=1&result_type=mixed",
+  "count": 4,
+  "completed_in": 0.035,
+  "since_id_str": "24012619984051000",
+  "query": "%23freebandnames",
+  "max_id_str": "250126199840518145"
+}
+*/
+
 var Twit = require('twit'),
     T = new Twit({
       consumer_key:         process.env.TWIT_KEY,
@@ -11,19 +27,17 @@ var Twit = require('twit'),
     Batch = require('batch');
 
 
-function buildQuery(buzzr, maxId, sinceId) {
-  var query = buzzr.topic + ' filter:links' + ' lang:' + buzzr.lang;
+function buildQuery(buzzr) {
+  var query = buzzr.topic + ' filter:links' +
+              ' lang:' + buzzr.lang;
 
-  if (maxId && !!buzzr.twitPoints.maxId) {
+  if (!!buzzr.twitPoints.maxId) {
     query = query + ' max_id:' + buzzr.twitPoints.maxId;
-  }
-  if (sinceId && !!buzzr.twitPoints.sinceId) {
-    //query = query + ' since_id:' + buzzr.twitPoints.since_id;
   }
   return query;
 }
 
-function batchTweets(tweets, tweetProcessor) {
+function batchProcessTweets(tweets, tweetProcessor) {
   var batch = new Batch;
 
   batch.concurrency(3);
@@ -49,12 +63,14 @@ exports.update = function(buzzr) {
       tweetProcessor = TweetProcessor(buzzr);
 
   buzzr.twitPoints.sinceId = buzzr.twitPoints.nextSinceId;
+  buzzr.twitPoints.maxId = undefined; //reset
+  buzzr.minRank = 1;
   buzzr.save();
 
   console.log('updating: ' + buzzr.topic);
-  next();
+  nextUpdate();
 
-  function sinceIdCall(query) {
+  function updateCall(query) {
     console.log('twit call ' + count);
 
     T.get('search/tweets', {
@@ -69,40 +85,35 @@ exports.update = function(buzzr) {
           lastTweet = tweets[tweets.length - 1];
       
       if (tweets.length === 0) {
-        count = 500;
-        return next();
+        return console.log('no tweets received!');
       }
 
-      console.log('nextSinceId', buzzr.twitPoints.sinceId);
-      console.log('sinceId ', buzzr.twitPoints.sinceId);
-      console.log('currentid', tweets[0].id_str);
-
-      if (buzzr.twitPoints.sinceId >= tweets[0].id_str) {
-        count = 500;
-        return next();
+      if (buzzr.twitPoints.sinceId >= reply.search_metadata.max_id) {
+        count += 500;
       }
       
       if (count === 0) {
-        buzzr.twitPoints.nextSinceId = tweets[0].id_str;
-        buzzr.save();
+        buzzr.twitPoints.nextSinceId = reply.search_metadata.since_id;
       }
+      buzzr.twitPoints.maxId = reply.search_metadata.max_id;
+      buzzr.save();
 
-      batchTweets(tweets, tweetProcessor);
-
-      count += 1;
-      next();
+      batchProcessTweets(tweets, tweetProcessor);
+      nextUpdate(1);
     });
   }
 
-  function next() {
+  function nextUpdate(i) {
+    count += i || 0;
     if (count >= 400) {
       return console.log('calls to twitter done!');
     }
     
-    var query = buildQuery(buzzr, false, true)
-    sinceIdCall(query);
+    var query = buildQuery(buzzr)
+    updateCall(query);
   }
 };
+
 
 
 // this is a new feed so we have to go back in time
@@ -113,7 +124,7 @@ exports.create = function(buzzr) {
   console.log('creating: ' + buzzr.topic);
   next();
 
-  function maxIdCall(query) {
+  function createCall(query) {
     console.log('call ' + count);
 
     T.get('search/tweets', {
@@ -124,33 +135,31 @@ exports.create = function(buzzr) {
     function(err, reply) {
       if (err) { throw new Error(err); }
       
-      var tweets = reply.statuses,
-          lastTweet = tweets[tweets.length - 1];
+      var tweets = reply.statuses;
 
       if (tweets.length === 0) {
-        count = 500;
-        return next();
+        return console.log('no tweets received!');
       }
 
       if (count === 0) {
-        buzzr.twitPoints.nextSinceId = tweets[0].id_str;
+        buzzr.twitPoints.nextSinceId = reply.search_metadata.since_id;
       }
-      buzzr.twitPoints.maxId = lastTweet.id_str;
+      buzzr.twitPoints.maxId = reply.search_metadata.max_id;
       buzzr.save();
 
-      batchTweets(tweets, tweetProcessor);
+      batchProcessTweets(tweets, tweetProcessor);
 
-      count += 1;
-      next();
+      next(1);
     });
   }
 
-  function next() {
+  function next(i) {
+    count += i || 0;
     if (count >= 400) {
       return console.log('calls to twitter done!');
     }
     
-    var query = buildQuery(buzzr, true, false)
-    maxIdCall(query);
+    var query = buildQuery(buzzr)
+    createCall(query);
   }
 };

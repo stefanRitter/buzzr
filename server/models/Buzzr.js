@@ -25,6 +25,8 @@ buzzrSchema = new Schema({
     nextSinceId: {type: String}
   },
 
+  minRank: {type: Number, default: 4},
+
   activeLinks:  [{
     url:        String, 
     title:      String,
@@ -65,7 +67,7 @@ buzzrSchema.methods.pushLink = function(data) {
     var newRank = this.passiveLinks[pI].rank;
     newRank += data.rank === 0 ? 1 : data.rank;
 
-    if (newRank > minVal) {
+    if (newRank > this.minRank) {
       this.activeLinks.push({
         url: data.url,
         title: data.title,
@@ -101,7 +103,7 @@ buzzrSchema.methods.pushLink = function(data) {
     rank: data.rank,
     updated: Date.now()
   };
-  if (newLink.rank > minVal) {
+  if (newLink.rank > this.minRank) {
     newLink.activated = Date.now();
     this.activeLinks.push(newLink);
   } else {
