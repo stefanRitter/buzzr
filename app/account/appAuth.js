@@ -1,5 +1,5 @@
 
-angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUser) {
+angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
   return {
     authenticateUser: function (email, password) {
       var dfd = $q.defer();
@@ -8,7 +8,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
         .post('/login', {email: email, password: password})
         .then(function (res) {
           if (res.data.success) {
-            var user = new appUser();
+            var user = new AppUser();
             angular.extend(user, res.data.user);
             appIdentity.currentUser = user;
             dfd.resolve(true);
@@ -21,7 +21,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
     },
 
     createUser: function (newUserData) {
-      var newUser = new appUser(newUserData);
+      var newUser = new AppUser(newUserData);
       var dfd = $q.defer();
 
       newUser.$save().then(function () {

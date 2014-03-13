@@ -41,8 +41,18 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   });
 });
-;
-angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUser) {
+;angular.module('app').factory('AppUser', function ($resource) {
+  var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
+    update: { method: 'PUT', isArray: false }
+  });
+
+  UserResource.prototype.isAdmin = function () {
+    return this.roles && this.roles.indexOf('admin') > -1;
+  };
+
+  return UserResource;
+});;
+angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
   return {
     authenticateUser: function (email, password) {
       var dfd = $q.defer();
@@ -51,7 +61,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
         .post('/login', {email: email, password: password})
         .then(function (res) {
           if (res.data.success) {
-            var user = new appUser();
+            var user = new AppUser();
             angular.extend(user, res.data.user);
             appIdentity.currentUser = user;
             dfd.resolve(true);
@@ -64,7 +74,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
     },
 
     createUser: function (newUserData) {
-      var newUser = new appUser(newUserData);
+      var newUser = new AppUser(newUserData);
       var dfd = $q.defer();
 
       newUser.$save().then(function () {
@@ -117,11 +127,11 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
       return $q.reject('not authorized');
     }
   };
-});;angular.module('app').factory('appIdentity', function ($window, appUser) {
+});;angular.module('app').factory('appIdentity', function ($window, AppUser) {
   var currentUser;
   
   if (!!$window.bootstrappedUser) {
-    currentUser = new appUser();
+    currentUser = new AppUser();
     angular.extend(currentUser, $window.bootstrappedUser);
   }
 
@@ -135,7 +145,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, appUs
     }
   };
 });
-;angular.module('app').controller('appJoinCtrl', function ($scope, $location, appUser, appAuth, appNotifier) {
+;angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
 
   $scope.signup = function () {
     var newUserData = {
@@ -186,19 +196,9 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     });
   };
 });
-;angular.module('app').factory('appUser', function ($resource) {
-  var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
-    update: { method: 'PUT', isArray: false }
-  });
-
-  UserResource.prototype.isAdmin = function () {
-    return this.roles && this.roles.indexOf('admin') > -1;
-  };
-
-  return UserResource;
-});;
-angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
-  $scope.users = appUser.query();
+;
+angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
+  $scope.users = AppUser.query();
 });;angular.module('app').factory('appIsMobile', function () {
   var isMobile = {
     Android: function() {

@@ -1,4 +1,4 @@
 
-angular.module('app').controller('appAdminUsersCtrl', function ($scope, appUser) {
-  $scope.users = appUser.query();
+angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
+  $scope.users = AppUser.query();
 });

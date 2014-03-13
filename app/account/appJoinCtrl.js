@@ -1,4 +1,4 @@
-angular.module('app').controller('appJoinCtrl', function ($scope, $location, appUser, appAuth, appNotifier) {
+angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
 
   $scope.signup = function () {
     var newUserData = {
