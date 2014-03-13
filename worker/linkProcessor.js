@@ -21,7 +21,7 @@ function processLink(data, rank, buzzr) {
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
   
   if (!data.title || data.title === ' ') {
-    return console.log('TINYURL: ', data.url);
+    return console.log('NO TITLE: ', data.url);
   }
   if (excludedDomains[domain]) { return; }
 

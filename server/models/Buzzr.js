@@ -3,7 +3,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     _ = require('lodash'),
-    minVal = 4,
     buzzrSchema,
     Buzzr;
 
@@ -25,7 +24,7 @@ buzzrSchema = new Schema({
     nextSinceId: {type: String}
   },
 
-  minRank: {type: Number, default: 3},
+  minRank: {type: Number, default: 1},
 
   activeLinks:  [{
     url:        String, 

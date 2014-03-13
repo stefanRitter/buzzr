@@ -64,7 +64,6 @@ exports.update = function(buzzr) {
 
   buzzr.twitPoints.sinceId = buzzr.twitPoints.nextSinceId;
   buzzr.twitPoints.maxId = undefined; //reset
-  buzzr.minRank = 1;
   buzzr.save();
 
   console.log('updating: ' + buzzr.topic);

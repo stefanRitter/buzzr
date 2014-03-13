@@ -23,6 +23,7 @@ function processTweet(tweet, buzzr, done) {
         url = link.expanded_url || link.url,
         rank = calcRank(tweet);
 
+    console.log('processing: ', url);
     urlexpand(url, processLink(rank, buzzr, done));
   }
 }
