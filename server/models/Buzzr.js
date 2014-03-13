@@ -25,7 +25,7 @@ buzzrSchema = new Schema({
     nextSinceId: {type: String}
   },
 
-  minRank: {type: Number, default: 4},
+  minRank: {type: Number, default: 3},
 
   activeLinks:  [{
     url:        String, 
