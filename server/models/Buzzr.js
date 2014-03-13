@@ -51,15 +51,15 @@ buzzrSchema = new Schema({
   }]
 });
 
-function checkLinkEquality(link) {
-  return link.url === data.url || link.title === data.title;
-}
-
 buzzrSchema.methods.pushLink = function(data) {
   // Example data:
   // data.url: 'http://instagram.com/p/QhLtWhB_A1/'
   // data.title: 'Photo by sofishlin &bull; Instagram'
   // data.rank: 5
+  function checkLinkEquality(link) {
+    return link.url === data.url || link.title === data.title;
+  }
+
 
   var pI = _.findIndex(this.passiveLinks, checkLinkEquality);
   if (pI > -1) {
@@ -94,7 +94,7 @@ buzzrSchema.methods.updateActiveLink = function(data, aI) {
   this.activeLinks[aI].rank += data.rank === 0 ? 1 : data.rank;
   this.activeLinks[aI].updated = Date.now();
   this.save();
-}
+};
 
 buzzrSchema.methods.updatePassiveLink = function(data, pI) {
   var newRank = this.passiveLinks[pI].rank;

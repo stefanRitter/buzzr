@@ -1,8 +1,11 @@
 'use strict';
 
-var User = require('./User');
+var User = require('./User'),
+    Arrays = require('./Arrays');
 
 require('./Buzzr');
-require('./Arrays');
 
 User.createDefaultUsers();
+Arrays.createDefaultArrayDump();
+
+console.log('here');

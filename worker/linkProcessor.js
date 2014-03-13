@@ -1,12 +1,14 @@
 'use strict';
 
 var ent = require('ent'),
+    Arrays = require('mongoose').model('Arrays'),
+    arrayDump,
     excludedDomains = {
       'pinterest.com': true,
       'instagram.com': true,
       'ask.fm': true,
       'vine.co': true,
-      'facebook.com': true,
+      //'facebook.com': true,
       'amazon.com': true,
       'adf.ly': true,
       'q.gs': true,
@@ -15,6 +17,11 @@ var ent = require('ent'),
       'stackoverflow.com': true
     };
 
+Arrays.findOne({}, function(err, obj) {
+  if (err) { throw new Error(err); }
+  arrayDump = obj;
+});
+
 
 function processLink(data, rank, buzzr) {
   var expandedUrl = data.url,
@@ -22,7 +29,8 @@ function processLink(data, rank, buzzr) {
   
   if (excludedDomains[domain]) { return; }
   if (!data.title || data.title === ' ') {
-    return console.log('NO TITLE: ', data.url);
+    arrayDump.titleErrorLinks.push(data.url);
+    return arrayDump.save();
   }
 
   data.rank = rank;
@@ -34,7 +42,11 @@ module.exports = function(rank, buzzr, done) {
   return function(err, data) {
     done(); // start next request
 
-    if (err) { return console.log('URLEXPAND ERROR', err); }
+    if (err) {
+      console.log('URLEXPAND ERROR', data); 
+      arrayDump.socketErrorLinks.push(data.url);
+      return arrayDump.save();
+    }
     processLink(data, rank, buzzr);
   }
 };

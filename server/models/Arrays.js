@@ -13,3 +13,11 @@ arraysSchema = new Schema({
 
 
 Arrays = mongoose.model('Arrays', arraysSchema);
+
+exports.createDefaultArrayDump = function () {
+  Arrays.find({}).exec(function (err, collection) {
+    if (collection.length === 0) {
+      Arrays.create({ socketErrorLinks: [], titleErrorLinks: []});
+    }
+  });
+};

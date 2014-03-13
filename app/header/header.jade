@@ -18,7 +18,7 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
 
     //- Logged in
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
-      h4 Welcome to back {{ identity.currentUser.name }}
+      h4 Welcome back {{ identity.currentUser.name }}
 
       a.button-white.header-button(href="/") + add a Buzzr
 
