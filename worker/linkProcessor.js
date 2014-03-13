@@ -20,10 +20,10 @@ function processLink(data, rank, buzzr) {
   var expandedUrl = data.url,
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
   
+  if (excludedDomains[domain]) { return; }
   if (!data.title || data.title === ' ') {
     return console.log('NO TITLE: ', data.url);
   }
-  if (excludedDomains[domain]) { return; }
 
   data.rank = rank;
   data.title = ent.decode(data.title);

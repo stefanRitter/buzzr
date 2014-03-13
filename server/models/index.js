@@ -1,4 +1,6 @@
+'use strict';
+
 var User = require('./User');
-var Buzzr = require('./Buzzr');
+require('./Buzzr');
 
 User.createDefaultUsers();

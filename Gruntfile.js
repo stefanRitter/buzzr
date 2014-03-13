@@ -38,6 +38,18 @@ module.exports = function (grunt) {
       }
     },
 
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      all: [
+        '*.js',
+        'worker/**/*.js',
+        'server/**/*.js',
+        'test/**/*.js'
+      ]
+    },
+
     watch: {
       scripts: {
         files: [

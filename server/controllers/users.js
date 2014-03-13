@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     encrypt = require('../utils/encryption.js');

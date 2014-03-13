@@ -27,7 +27,7 @@ buzzrSchema = new Schema({
   minRank: {type: Number, default: 1},
 
   activeLinks:  [{
-    url:        String, 
+    url:        String,
     title:      String,
     rank:       Number,
     activated:  Date,
@@ -35,7 +35,7 @@ buzzrSchema = new Schema({
   }],
   
   passiveLinks: [{
-    url:        String, 
+    url:        String,
     title:      String,
     rank:       Number,
     activated:  Date,
@@ -43,7 +43,7 @@ buzzrSchema = new Schema({
   }],
   
   retiredLinks: [{
-    url:        String, 
+    url:        String,
     title:      String,
     rank:       Number,
     activated:  Date,
@@ -92,7 +92,7 @@ buzzrSchema.methods.pushLink = function(data) {
     this.activeLinks[aI].rank += data.rank === 0 ? 1 : data.rank;
     this.activeLinks[aI].updated = Date.now();
     return this.save();
-  } 
+  }
 
   
   // this link is new
@@ -106,7 +106,7 @@ buzzrSchema.methods.pushLink = function(data) {
     newLink.activated = Date.now();
     this.activeLinks.push(newLink);
   } else {
-    this.passiveLinks.push(newLink); 
+    this.passiveLinks.push(newLink);
   }
   this.save();
 };

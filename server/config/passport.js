@@ -1,3 +1,5 @@
+'use strict';
+
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
