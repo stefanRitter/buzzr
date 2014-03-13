@@ -59,8 +59,10 @@ exports.createDefaultUsers = function () {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'test');
 
-      User.create({ email: 'stef@stef.com', name: 'stefan', salt: salt, password: pwd, roles: ['admin']});
-      User.create({ email: 'jeroen@jeroen.com', salt: salt, password: pwd, roles: []});
+      User.create({ email: 'stef@stef.com', name: 'stefan', salt: salt,
+        password: pwd, roles: ['admin']});
+      User.create({ email: 'jeroen@jeroen.com', salt: salt,
+        password: pwd, roles: []});
     }
   });
 };

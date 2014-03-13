@@ -19,16 +19,18 @@
   "trailing": true,
   "smarttabs": true,
   "globals": {
-    "jQuery"     : false,
+    /* ANGULAR */
+    "angular"     : false,
+    "inject"      : false,
     
     /* MOCHA */
-    "describe"   : false,
-    "it"         : false,
-    "before"     : false,
-    "beforeEach" : false,
-    "after"      : false,
-    "afterEach"  : false,
-    "expect"     : false
+    "describe"    : false,
+    "it"          : false,
+    "before"      : false,
+    "beforeEach"  : false,
+    "after"       : false,
+    "afterEach"   : false,
+    "expect"      : false
   },
 
   "maxparams": 4,

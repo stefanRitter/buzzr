@@ -1,7 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    models = require('../models');
+var mongoose = require('mongoose');
+models = require('../models');
 
 module.exports = function (config) {
   mongoose.connect(config.datastoreURI);

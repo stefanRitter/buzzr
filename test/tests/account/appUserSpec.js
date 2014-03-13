@@ -1,3 +1,5 @@
+'use strict';
+
 describe('appUser', function () {
   beforeEach(module('app'));
 

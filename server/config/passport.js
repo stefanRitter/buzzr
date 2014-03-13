@@ -24,14 +24,14 @@ module.exports = function () {
   passport.use(new TwitterStrategy({
       consumerKey: process.env.TWIT_KEY,
       consumerSecret: process.env.TWIT_SECRET,
-      callbackURL: "/auth/twitter/callback"
+      callbackURL: '/auth/twitter/callback'
     },
     function(token, tokenSecret, profile, done) {
       var user = {
         token: token,
         secret: tokenSecret,
         profile: profile
-      }
+      };
       users.findOrCreate(user, function(err, user) {
         if (err) { return done(err); }
         done(null, user);
@@ -40,7 +40,7 @@ module.exports = function () {
   ));
 
   passport.serializeUser(function (user, done) {
-    if (user) done(null, user.id);
+    if (user) { done(null, user.id); }
   });
 
   passport.deserializeUser(function (id, done) {

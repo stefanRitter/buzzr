@@ -1,4 +1,3 @@
-angular.module('app', ['ngResource']);
+'use strict';
 
-// mock toastr
-var toastr = {};
+angular.module('app', ['ngResource']);
