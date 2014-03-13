@@ -35,13 +35,13 @@ function start(req, res, next) {
 
 module.exports = function(app, config, topic) {
   
-  app.get('/all', function(req, res) {
+  app.get('/api/all', function(req, res) {
     Buzzr.find().exec(function (err, collection) {
       res.send(collection);
     });
   });
 
-  app.get('/:id/links', function(req, res) {
+  app.get('/api/:id/links', function(req, res) {
     var topic = decodeURI(req.params.id);
     Buzzr.findOne({topic: topic}).exec(function (err, buzzr) {
       if (err || !buzzr) { return res.send(404); }
@@ -49,12 +49,7 @@ module.exports = function(app, config, topic) {
     });
   });
 
-  app.get( '/:id', start);
-
-
-  app.get('*', function(req, res) {
-    res.send('hello EC2');
-  });
+  app.get( '/api/:id', start);
 
   app.listen(8080);
   console.log('listening on port 8080');
