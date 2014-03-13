@@ -38,7 +38,7 @@ function buildQuery(buzzr) {
 }
 
 function batchProcessTweets(tweets, tweetProcessor) {
-  var batch = new Batch;
+  var batch = new Batch();
 
   batch.concurrency(3);
 
@@ -48,12 +48,8 @@ function batchProcessTweets(tweets, tweetProcessor) {
     });
   });
   
-  batch.on('progress', function(e) {
-    // console.log('progress: ', e.index, '/', e.pending);
-  });
-
-  batch.end(function(err, tweets) {
-  });
+  batch.on('progress', function() {});
+  batch.end(function() {});
 }
 
 
@@ -75,13 +71,12 @@ exports.update = function(buzzr) {
     T.get('search/tweets', {
       q: query,
       include_entities: true,
-      count: 100 
+      count: 100
     },
     function(err, reply) {
       if (err) { throw new Error(err); }
       
-      var tweets = reply.statuses,
-          lastTweet = tweets[tweets.length - 1];
+      var tweets = reply.statuses;
       
       if (tweets.length === 0) {
         return console.log('no tweets received!');
@@ -108,7 +103,7 @@ exports.update = function(buzzr) {
       return console.log('calls to twitter done!');
     }
     
-    var query = buildQuery(buzzr)
+    var query = buildQuery(buzzr);
     updateCall(query);
   }
 };
@@ -129,7 +124,7 @@ exports.create = function(buzzr) {
     T.get('search/tweets', {
       q: query,
       include_entities: true,
-      count: 100 
+      count: 100
     },
     function(err, reply) {
       if (err) { throw new Error(err); }
@@ -158,7 +153,7 @@ exports.create = function(buzzr) {
       return console.log('calls to twitter done!');
     }
     
-    var query = buildQuery(buzzr)
+    var query = buildQuery(buzzr);
     createCall(query);
   }
 };

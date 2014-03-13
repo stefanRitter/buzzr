@@ -31,5 +31,5 @@ function processTweet(tweet, buzzr, done) {
 module.exports = function(buzzr) {
   return function(tweet, done) {
     processTweet(tweet, buzzr, done);
-  }
+  };
 };

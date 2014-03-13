@@ -43,10 +43,10 @@ module.exports = function(rank, buzzr, done) {
     done(); // start next request
 
     if (err) {
-      console.log('URLEXPAND ERROR', data); 
+      console.log('URLEXPAND ERROR', data);
       arrayDump.socketErrorLinks.push(data.url);
       return arrayDump.save();
     }
     processLink(data, rank, buzzr);
-  }
+  };
 };

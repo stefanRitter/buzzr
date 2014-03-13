@@ -8,6 +8,8 @@ var auth = require('../controllers/auth.js'),
 
 
 module.exports = function (app) {
+  /*jshint maxstatements: false */
+
   // APP
   app.get('/',        pages('index'));
   app.get('/home',    pages('home'));

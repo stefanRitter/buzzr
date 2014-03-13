@@ -21,7 +21,7 @@ function start(req, res, next) {
 
     } else {
       var created = new Date(buzzr._id.getTimestamp()),
-          today = (new Date).toLocaleDateString();
+          today = (new Date()).toLocaleDateString();
 
       if (today === created.toLocaleDateString()) {
         console.log(topic, 'was created too recently, skipping...');
@@ -33,7 +33,7 @@ function start(req, res, next) {
   });
 }
 
-module.exports = function(app, config, topic) {
+module.exports = function(app) {
   
   app.get('/api/all', function(req, res) {
     Buzzr.find().exec(function (err, collection) {

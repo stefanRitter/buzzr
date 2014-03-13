@@ -3,8 +3,9 @@
 'use strict';
 
 var express = require('express'),
-    args = process.argv.slice(2),
-    dotenv = require('dotenv').load();
+    args = process.argv.slice(2);
+
+require('dotenv').load();
 
 
 var env = args[0] || 'development',
@@ -18,4 +19,4 @@ require('./server/config/mongoose.js')(config);
 require('./server/config/express.js')(app, config);
 
 // setup worker
-require('./worker/')(app, config);
+require('./worker/')(app);
