@@ -51,7 +51,12 @@ module.exports = function(app, config, topic) {
 
   app.get( '/:id', start);
 
-  app.listen(3031);
-  console.log('listening on port 3031');
+
+  app.get('*', function(req, res) {
+    res.send('hello EC2');
+  });
+
+  app.listen(80);
+  console.log('listening on port 80');
 };
 
