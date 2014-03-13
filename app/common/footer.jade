@@ -1,15 +1,12 @@
 .footer-spacer
-
 footer.pages-footer
   ul.list-horizontal.bg-white.inline-block
     li
-      a(href="/about") About buzzr
-    
+      a(href="/about") About Buzzr
     li(ng-hide="identity.isAuthenticated()")
       a(href="/join") Join
     
     li(ng-hide="identity.isAuthenticated()")
       a(href="/login") Login
-    
     li
       a(href="/terms") Terms &amp; Privacy
