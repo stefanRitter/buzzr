@@ -28,8 +28,8 @@ var Twit = require('twit'),
 
 
 function buildQuery(buzzr) {
-  var query = buzzr.topic + ' filter:links' +
-              ' lang:' + buzzr.lang;
+  var query = buzzr.topic + ' filter:links';
+  //' lang:' + buzzr.lang;
 
   if (!!buzzr.twitPoints.maxId) {
     query = query + ' max_id:' + buzzr.twitPoints.maxId;
