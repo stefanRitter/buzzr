@@ -20,6 +20,13 @@ function start(req, res, next) {
       });
 
     } else {
+      var created = new Date(buzzr._id.getTimestamp()),
+          today = (new Date).toLocaleDateString();
+
+      if (today === created.toLocaleDateString()) {
+        console.log(topic, 'was created too recently, skipping...');
+        return res.send(200);
+      }
       search.update(buzzr);
       res.send(200);
     }
