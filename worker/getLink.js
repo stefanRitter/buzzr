@@ -28,14 +28,12 @@ module.exports = function (shortUrl, cb) {
       });
     }
 
-    // parse for title or h1
     var $ = cheerio.load(body),
-        title = $('title').first().text() || '',
-        h1 = $('h1').first().text() || '';
+        title = $('title').first().text();
 
     cb(err, {
       url: response.request.href,
-      title: (title.length > h1.length ? title : h1)
+      title: title
     });
   });
 };
