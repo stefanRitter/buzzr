@@ -30,3 +30,8 @@ git clone git@github.com:stefanRitter/buzzr.git
 git remote add origin git@github.com:stefanRitter/buzzr.git
 heroku git:remote -a buzzr3
 heroku config:pull --overwrite --interactive
+npm install
+bower install
+
+# connect
+ssh -i innsbruck-ubuntu.pem ubuntu@54.72.83.88

@@ -56,7 +56,7 @@ module.exports = function(app, config, topic) {
     res.send('hello EC2');
   });
 
-  app.listen(80);
-  console.log('listening on port 80');
+  app.listen(8080);
+  console.log('listening on port 8080');
 };
 
