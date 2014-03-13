@@ -1,8 +1,7 @@
 'use strict';
 
-var urlexpand = require('urlexpand'),
+var urlexpand = require('./getLink.js'), //require('urlexpand'),
     processLink = require('./linkProcessor.js');
-
 
 
 function calcRank(tweet) {

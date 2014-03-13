@@ -34,19 +34,21 @@ function processLink(data, rank, buzzr) {
     return arrayDump.save();
   }
 
+  data.url = data.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');
   data.rank = rank;
   data.title = ent.decode(data.title);
   buzzr.pushLink(data);
 }
 
-module.exports = function(rank, buzzr, done) {
+module.exports = function (rank, buzzr, done) {
   return function(err, data) {
     done(); // start next request
 
     if (err) {
       console.log('URLEXPAND ERROR', data);
       arrayDump.socketErrorLinks.push(data.url);
-      return arrayDump.save();
+      arrayDump.save();
+      data.err = err;
     }
     processLink(data, rank, buzzr);
   };

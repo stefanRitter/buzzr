@@ -48,18 +48,23 @@ buzzrSchema = new Schema({
     rank:       Number,
     activated:  Date,
     updated:    Date
+  }],
+
+  timedoutLinks: [{
+    url:        String,
+    title:      String,
+    rank:       Number,
+    activated:  Date,
+    updated:    Date
   }]
 });
 
 buzzrSchema.methods.pushLink = function(data) {
-  // Example data:
-  // data.url: 'http://instagram.com/p/QhLtWhB_A1/'
-  // data.title: 'Photo by sofishlin &bull; Instagram'
-  // data.rank: 5
   function checkLinkEquality(link) {
     return link.url === data.url || link.title === data.title;
   }
 
+  if (!!data.err) { return this.pushErrorLink(data); }
 
   var pI = _.findIndex(this.passiveLinks, checkLinkEquality);
   if (pI > -1) {
@@ -72,6 +77,17 @@ buzzrSchema.methods.pushLink = function(data) {
   }
 
   this.pushNewLink(data);
+};
+
+buzzrSchema.methods.pushErrorLink = function(data) {
+  var newLink = {
+    url: data.url,
+    title: data.title,
+    rank: data.rank,
+    updated: Date.now()
+  };
+  this.timedoutLinks.push(newLink);
+  return this.save();
 };
 
 buzzrSchema.methods.pushNewLink = function(data) {

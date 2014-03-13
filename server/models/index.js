@@ -7,5 +7,3 @@ require('./Buzzr');
 
 User.createDefaultUsers();
 Arrays.createDefaultArrayDump();
-
-console.log('here');
