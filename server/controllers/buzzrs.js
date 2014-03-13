@@ -3,7 +3,7 @@
 var Buzzr = require('mongoose').model('Buzzr');
 
 
-function createBuzzr(topic) {
+function createBuzzr() {
   // TODO
 }
 

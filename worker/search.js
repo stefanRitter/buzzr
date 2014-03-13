@@ -6,8 +6,10 @@ Example results:
 "search_metadata": {
   "max_id": 250126199840518145,
   "since_id": 24012619984051000,
-  "refresh_url": "?since_id=250126199840518145&q=%23freebandnames&result_type=mixed&include_entities=1",
-  "next_results": "?max_id=249279667666817023&q=%23freebandnames&count=4&include_entities=1&result_type=mixed",
+  "refresh_url":
+    "?since_id=250126199840518145&q=%23freebandnames&result_type=mixed&include_entities=1",
+  "next_results":
+    "?max_id=249279667666817023&q=%23freebandnames&count=4&include_entities=1&result_type=mixed",
   "count": 4,
   "completed_in": 0.035,
   "since_id_str": "24012619984051000",
@@ -17,15 +19,15 @@ Example results:
 */
 
 var Twit = require('twit'),
-    T = new Twit({
-      consumer_key:         process.env.TWIT_KEY,
-      consumer_secret:      process.env.TWIT_SECRET,
-      access_token:         process.env.TWIT_TOKEN,
-      access_token_secret:  process.env.TWIT_TOKEN_SECRET
-    }),
-    TweetProcessor = require('./tweetProcessor'),
+    tweetProcessorFactory = require('./tweetProcessor'),
     Batch = require('batch');
 
+var T = new Twit({
+  consumer_key:         process.env.TWIT_KEY,
+  consumer_secret:      process.env.TWIT_SECRET,
+  access_token:         process.env.TWIT_TOKEN,
+  access_token_secret:  process.env.TWIT_TOKEN_SECRET
+});
 
 function buildQuery(buzzr) {
   var query = buzzr.topic + ' filter:links';
@@ -56,7 +58,7 @@ function batchProcessTweets(tweets, tweetProcessor) {
 // update existing feed go back until since_id
 exports.update = function(buzzr) {
   var count = 0,
-      tweetProcessor = TweetProcessor(buzzr);
+      tweetProcessor = tweetProcessorFactory(buzzr);
 
   buzzr.twitPoints.sinceId = buzzr.twitPoints.nextSinceId;
   buzzr.twitPoints.maxId = undefined; //reset
@@ -113,7 +115,7 @@ exports.update = function(buzzr) {
 // this is a new feed so we have to go back in time
 exports.create = function(buzzr) {
   var count = 0,
-      tweetProcessor = TweetProcessor(buzzr);
+      tweetProcessor = tweetProcessorFactory(buzzr);
 
   console.log('creating: ' + buzzr.topic);
   next();

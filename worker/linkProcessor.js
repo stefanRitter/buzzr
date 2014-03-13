@@ -2,20 +2,21 @@
 
 var ent = require('ent'),
     Arrays = require('mongoose').model('Arrays'),
-    arrayDump,
-    excludedDomains = {
-      'pinterest.com': true,
-      'instagram.com': true,
-      'ask.fm': true,
-      'vine.co': true,
-      //'facebook.com': true,
-      'amazon.com': true,
-      'adf.ly': true,
-      'q.gs': true,
-      'buzzr.io': true,
-      'dailymail.co.uk': true,
-      'stackoverflow.com': true
-    };
+    arrayDump;
+
+var excludedDomains = {
+  'pinterest.com': true,
+  'instagram.com': true,
+  'ask.fm': true,
+  'vine.co': true,
+  //'facebook.com': true,
+  'amazon.com': true,
+  'adf.ly': true,
+  'q.gs': true,
+  'buzzr.io': true,
+  'dailymail.co.uk': true,
+  'stackoverflow.com': true
+};
 
 Arrays.findOne({}, function(err, obj) {
   if (err) { throw new Error(err); }
