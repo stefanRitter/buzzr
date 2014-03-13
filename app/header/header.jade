@@ -1,10 +1,7 @@
 header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
-  .header-content-left &nbsp;
   
   .header-content-center
-    
     //- Logged out
-
     .header-loggedout-menu(ng-hide="identity.isAuthenticated()")
       h4 Welcome to buzzr.
       p.
@@ -21,27 +18,23 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
 
 
     //- Logged in
-
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
-      ul
-        li.dropdown
-          a.dropdown-toggle(href="", data-toggle="dropdown")
-            | {{ identity.currentUser.name }}
-            b.caret
-          ul.dropdown-menu
-            li(ng-show="identity.currentUser.isAdmin()")
-              a(href="/admin/users") User admin
-            li
-              a(href="/account/settings") Settings
-            li
-              a(href="", ng-click="signout()") Sign Out
+      h4 Welcome to back {{ identity.currentUser.name }}
+
+      a.button-white.header-button(href="/") + add a Buzzr
+
+
     
     .header-footer
       ul.list-horizontal
-        li &copy; 2014 built in London, 
         li
           a(href="/about") About
-  
+        li
+          a(href="/terms") Terms
+        li(ng-show="identity.isAuthenticated()")
+          a(href="/account/settings") Settings
+        li(ng-show="identity.isAuthenticated()")
+          a(href="", ng-click="signout()") Sign Out
   .header-content-right
     .header-logo(ng-click="toggleOpen(); $event.stopPropagation()")
       include ../../public/img/logo.svg
