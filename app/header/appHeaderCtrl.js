@@ -20,6 +20,10 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
     });
   };
 
+  $scope.removeBuzzr = function(topic) {
+    appIdentity.currentUser.removeBuzzr(topic);
+  };
+
   $scope.toggleOpen = function() {
     $scope.open = !$scope.open;
     $document.one('click', close);
@@ -36,6 +40,10 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
   $scope.$on('toggleHeader', function() {
     $scope.setBuzzrs();
     $scope.toggleOpen();
+  });
+
+  $scope.$on('buzzrsChanged', function() {
+    $scope.setBuzzrs();
   });
 
   $scope.setBuzzrs();

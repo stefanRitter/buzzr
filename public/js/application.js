@@ -43,7 +43,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   });
 });
-;angular.module('app').factory('AppUser', function ($resource) {
+;angular.module('app').factory('AppUser', function ($resource, $rootScope) {
   'use strict';
 
   var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
@@ -58,6 +58,16 @@ angular.module('app').run(function ($rootScope, $location) {
     if (this.buzzrs.indexOf(topic) === -1) {
       this.buzzrs.push(topic);
       this.$update();
+      $rootScope.$broadcast('buzzrsChanged');
+    }
+  };
+
+  UserResource.prototype.removeBuzzr = function(topic) {
+    var i = this.buzzrs.indexOf(topic);
+    if (i > -1) {
+      this.buzzrs.splice(i,1);
+      this.$update();
+      $rootScope.$broadcast('buzzrsChanged');
     }
   };
 
@@ -327,6 +337,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
     });
   };
 
+  $scope.removeBuzzr = function(topic) {
+    appIdentity.currentUser.removeBuzzr(topic);
+  };
+
   $scope.toggleOpen = function() {
     $scope.open = !$scope.open;
     $document.one('click', close);
@@ -343,6 +357,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   $scope.$on('toggleHeader', function() {
     $scope.setBuzzrs();
     $scope.toggleOpen();
+  });
+
+  $scope.$on('buzzrsChanged', function() {
+    $scope.setBuzzrs();
   });
 
   $scope.setBuzzrs();

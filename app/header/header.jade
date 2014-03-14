@@ -20,15 +20,15 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
       h4 Welcome back, {{ identity.currentUser.name }}!
       a.underline.header-readlater(href="/account/readlater") Read later
-      a.button-black.header-button(href="/")
-        span + 
+      a.button-black.header-button.relative(href="/")
         | add new Buzzr
+        span.header-action-add +
 
       ul.margin-top
-        li(ng-repeat="buzzr in buzzrs")
+        li.relative(ng-repeat="buzzr in buzzrs")
           a.button-white.header-button(href="/{{encode(buzzr)}}")
-            span -
             | {{buzzr}}
+          span.header-action(ng-click="removeBuzzr(buzzr); $event.stopPropagation();") -
 
 
     .header-footer(ng-show="identity.isAuthenticated()")
@@ -39,5 +39,5 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
           a(href="", ng-click="signout()") Sign Out
   
   .header-content-right
-    .header-logo(ng-click="toggleOpen(); $event.stopPropagation()")
+    .header-logo(ng-click="toggleOpen(); $event.stopPropagation();")
       include ../../public/img/logo.svg
