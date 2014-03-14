@@ -10,6 +10,10 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
     }
   }
 
+  $scope.encode = function(topic) {
+    return encodeURI(topic);
+  }
+
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {
       $location.path('/');

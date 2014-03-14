@@ -1,6 +1,6 @@
 //- searching
 .center(ng-show="status.searching")
-  h2.margin-top-big.center
+  h2.margin-top-big
     | buzzing the interweb for 
     strong {{searchText}} 
     | ...
@@ -8,7 +8,7 @@
 
 //- unknown error
 .center(ng-show="status.error")
-  h2.margin-top-big.center
+  h2.margin-top-big
     strong Unexpected error: 
     | {{errorMessage}}
     br
