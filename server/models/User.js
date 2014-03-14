@@ -29,7 +29,14 @@ userSchema = mongoose.Schema({
     secret: {type: String, required: false},
     name:   {type: String, required: false},
     provId: {type: String, required: false}
-  }
+  },
+
+  buzzrs: [String],
+  readLater: [{
+    url:        String,
+    title:      String,
+    activated:  Date
+  }]
 });
 
 // remove sensitive data
@@ -38,7 +45,9 @@ userSchema.methods.safe = function() {
     _id: this._id,
     name: this.name || this.email,
     email: this.email,
-    roles: this.roles
+    roles: this.roles,
+    buzzrs: this.buzzrs,
+    readLater: this.readLater
   };
 };
 
