@@ -1,18 +1,7 @@
 
 - add last 3 logins to User
 
-- get language from google translate api
-
 - if more than 100 links in active, retire oldest 10 links > part of the update routine
-
-
-
-
-
-
-All time favorites
-===================
-= ten links with the highest rank
 
 
 
@@ -31,6 +20,11 @@ sources
 
 
 
+All time favorites
+===================
+= ten links with the highest rank
+
+
 rich content:
 =============
 check for schema.org - image, title, primaryContent, primaryImage
@@ -47,7 +41,7 @@ tech:
 
 
 exclude
-======
+=======
 job offers?
 'akamai error'
 'for sale', 'to rent', 'to let' => unless in buzzr topic?
