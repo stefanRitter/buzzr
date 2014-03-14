@@ -4,6 +4,10 @@ BUZZR
 work in progress
 
 
+UTILS
+=====
+counting lines of code: git ls-files | xargs wc -l
+
 
 AWS SETUP
 =========
