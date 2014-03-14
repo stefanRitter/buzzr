@@ -2,6 +2,7 @@
 
 var ent = require('ent'),
     Arrays = require('mongoose').model('Arrays'),
+    logger = require('./logger.js'),
     arrayDump;
 
 var excludedDomains = {
@@ -45,7 +46,6 @@ module.exports = function (rank, buzzr, done) {
     done(); // start next request
 
     if (err) {
-      console.log('URLEXPAND ERROR', data);
       arrayDump.socketErrorLinks.push(data.url);
       arrayDump.save();
       data.err = err;

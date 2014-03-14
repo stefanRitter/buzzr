@@ -20,7 +20,8 @@ Example results:
 
 var Twit = require('twit'),
     tweetProcessorFactory = require('./tweetProcessor'),
-    Batch = require('batch');
+    Batch = require('batch'),
+    logger = require('./logger.js');
 
 var T = new Twit({
   consumer_key:         process.env.TWIT_KEY,
@@ -64,11 +65,11 @@ exports.update = function(buzzr) {
   buzzr.twitPoints.maxId = undefined; //reset
   buzzr.save();
 
-  console.log('updating: ' + buzzr.topic);
+  logger.log('updating: ' + buzzr.topic);
   nextUpdate();
 
   function updateCall(query) {
-    console.log('twit call ' + count);
+    logger.log('twit call ' + count);
 
     T.get('search/tweets', {
       q: query,
@@ -81,7 +82,7 @@ exports.update = function(buzzr) {
       var tweets = reply.statuses;
       
       if (tweets.length === 0) {
-        return console.log('no tweets received!');
+        return logger.log('no tweets received!');
       }
 
       if (buzzr.twitPoints.sinceId >= reply.search_metadata.max_id) {
@@ -102,7 +103,7 @@ exports.update = function(buzzr) {
   function nextUpdate(i) {
     count += i || 0;
     if (count >= 400) {
-      return console.log('calls to twitter done!');
+      return logger.log('calls to twitter done!');
     }
     
     var query = buildQuery(buzzr);
@@ -117,11 +118,11 @@ exports.create = function(buzzr) {
   var count = 0,
       tweetProcessor = tweetProcessorFactory(buzzr);
 
-  console.log('creating: ' + buzzr.topic);
+  logger.log('creating: ' + buzzr.topic);
   next();
 
   function createCall(query) {
-    console.log('call ' + count);
+    logger.log('call ' + count);
 
     T.get('search/tweets', {
       q: query,
@@ -134,7 +135,7 @@ exports.create = function(buzzr) {
       var tweets = reply.statuses;
 
       if (tweets.length === 0) {
-        return console.log('no tweets received!');
+        return logger.log('no tweets received!');
       }
 
       if (count === 0) {
@@ -152,7 +153,7 @@ exports.create = function(buzzr) {
   function next(i) {
     count += i || 0;
     if (count >= 400) {
-      return console.log('calls to twitter done!');
+      return logger.log('calls to twitter done!');
     }
     
     var query = buildQuery(buzzr);

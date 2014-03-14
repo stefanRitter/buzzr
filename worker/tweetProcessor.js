@@ -1,7 +1,8 @@
 'use strict';
 
-var urlexpand = require('./getLink.js'), //require('urlexpand'),
-    processLink = require('./linkProcessor.js');
+var urlexpand = require('./getLink.js'),
+    processLink = require('./linkProcessor.js'),
+    logger = require('./logger.js');
 
 
 function calcRank(tweet) {
@@ -22,7 +23,7 @@ function processTweet(tweet, buzzr, done) {
         url = link.expanded_url || link.url,
         rank = calcRank(tweet);
 
-    console.log('processing: ', url);
+    logger.log('processing: ', url);
     urlexpand(url, processLink(rank, buzzr, done));
   }
 }

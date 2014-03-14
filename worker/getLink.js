@@ -4,7 +4,8 @@
 // require('./worker/getLink.js')('http://google.com')
 
 var request = require('request'),
-    cheerio = require('cheerio');
+    cheerio = require('cheerio'),
+    logger = require('./logger.js');
 
 module.exports = function (shortUrl, cb) {
   request(
@@ -22,6 +23,7 @@ module.exports = function (shortUrl, cb) {
   
   function (err, response, body) {
     if (err || response.statusCode !== 200) {
+      logger.error('URL ERROR', shortUrl, err, response.statusCode);
       return cb(err, {
         url: shortUrl,
         title: ''

@@ -1,7 +1,8 @@
 'use strict';
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    search = require('./search.js');
+    search = require('./search.js'),
+    logger = require('./logger.js');
 
 
 function start(req, res, next) {
@@ -24,7 +25,7 @@ function start(req, res, next) {
           today = (new Date()).toLocaleDateString();
 
       if (today === created.toLocaleDateString()) {
-        console.log(topic, 'was created too recently, skipping...');
+        logger.log(topic, 'was created too recently, skipping...');
         return res.send(200);
       }
       search.update(buzzr);
