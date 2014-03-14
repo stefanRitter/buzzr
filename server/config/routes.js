@@ -17,10 +17,10 @@ module.exports = function (app) {
   app.get('/join',    pages('join'));
   app.get('/about',   pages('about'));
   app.get('/terms',   pages('terms'));
-  app.get('/later',   pages('index'));
   app.get('/:id',     pages('main'));
 
-  app.get('/account/settings', pages('settings'));
+  app.get('/account/readlater', pages('main'));
+  app.get('/account/settings',  pages('main'));
   
   // VIEW PARTIALS
   app.get('/partials/*', function (req, res) {
