@@ -9,6 +9,7 @@ var titleErrorLinksSchema,
     SocketErrorLinks;
 
 function push(data) {
+  /*jshint validthis:true */
   this.array.push(data);
   this.save();
 }
