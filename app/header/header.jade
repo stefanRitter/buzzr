@@ -21,12 +21,14 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
       h4 Welcome back, {{ identity.currentUser.name }}!
       a.underline.header-readlater(href="/account/readlater") Read later
       a.button-black.header-button(href="/")
-        span.bold + 
+        span + 
         | add new Buzzr
 
       ul.margin-top
         li(ng-repeat="buzzr in buzzrs")
-          a.button-white.header-button(href="/{{encode(buzzr)}}") {{buzzr}}
+          a.button-white.header-button(href="/{{encode(buzzr)}}")
+            span -
+            | {{buzzr}}
 
 
     .header-footer(ng-show="identity.isAuthenticated()")

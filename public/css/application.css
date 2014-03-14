@@ -79,7 +79,8 @@ th,td{padding:8px}
 .header-content-center{width:289px;border-right:1px Black solid}
 .header-content-right{width:30px;background:transparent}
 .header-logo{cursor:pointer;width:30px;height:30px;margin:0 0 0 1em}
-.header-button{display:block;width:200px;overflow:hidden;margin:3px auto}
+.header-button{display:block;width:235px;overflow:hidden;margin:3px auto;padding:.5em 10px;position:relative;text-align:left;}
+.header-button span{position:absolute;top:0;right:8px;font-size:22px;font-weight:600}
 .header-readlater{margin:0 0 10px 0;display:inline-block}
 .home-heading{text-align:center;margin-top:2em;font-size:3em}
 .home-form.form{text-align:center;width:100%;margin:0 auto;max-width:400px;}
