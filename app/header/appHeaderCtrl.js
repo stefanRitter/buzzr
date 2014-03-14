@@ -3,8 +3,11 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
 
   $scope.open = false;
   $scope.identity = appIdentity;
-  if (appIdentity.isAuthenticated()) {
-    $scope.buzzrs = appIdentity.currentUser.buzzrs;
+
+  $scope.setBuzzrs = function() {
+    if (appIdentity.isAuthenticated()) {
+      $scope.buzzrs = appIdentity.currentUser.buzzrs;
+    }
   }
 
   $scope.signout = function() {
@@ -27,6 +30,9 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
   };
 
   $scope.$on('toggleHeader', function() {
+    $scope.setBuzzrs();
     $scope.toggleOpen();
   });
+
+  $scope.setBuzzrs();
 });

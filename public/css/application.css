@@ -76,7 +76,7 @@ th,td{padding:8px}
 .header-content-center{width:279px;border-right:1px Black solid;padding:1em 5px;position:relative}
 .header-content-right{width:30px;background:transparent}
 .header-logo{cursor:pointer;width:30px;height:30px;margin:0 0 0 1em}
-.header-button{display:block;width:200px;overflow:hidden;margin:0 auto}
+.header-button{display:block;width:200px;overflow:hidden;margin:3px auto}
 .header-readlater{margin:0 0 10px 10px;display:inline-block}
 .header-loggedin-menu h4{margin:1em 10px}
 .home-heading{text-align:center;margin-top:2em;font-size:3em}

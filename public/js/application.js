@@ -310,8 +310,11 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.open = false;
   $scope.identity = appIdentity;
-  if (appIdentity.isAuthenticated()) {
-    $scope.buzzrs = appIdentity.currentUser.buzzrs;
+
+  $scope.setBuzzrs = function() {
+    if (appIdentity.isAuthenticated()) {
+      $scope.buzzrs = appIdentity.currentUser.buzzrs;
+    }
   }
 
   $scope.signout = function() {
@@ -334,8 +337,11 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   };
 
   $scope.$on('toggleHeader', function() {
+    $scope.setBuzzrs();
     $scope.toggleOpen();
   });
+
+  $scope.setBuzzrs();
 });
 ;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
   'use strict';

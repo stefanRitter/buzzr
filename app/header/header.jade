@@ -22,6 +22,10 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
       a.underline.header-readlater(href="/account/readlater") Read later
       a.button-white.header-button(href="/") + add new Buzzr
 
+      ul.margin-top
+        li(ng-repeat="buzzr in buzzrs")
+          a.button-white.header-button(href="/{{encodeURI(buzzr)}}") {{buzzr}}
+
 
     .header-footer(ng-show="identity.isAuthenticated()")
       ul.list-horizontal

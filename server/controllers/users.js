@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    encrypt = require('../utils/encryption.js');
+    encrypt = require('../utils/encryption.js'),
+    _ = require('lodash');
 
 
 exports.getUser = function (req, res) {
@@ -47,7 +48,7 @@ exports.updateUser = function (req, res) {
 
   req.user.email = userUpdates.email;
   req.user.readlater = userUpdates.readlater;
-  req.user.buzzrs = userUpdates.buzzrs;
+  req.user.buzzrs = _.uniq(userUpdates.buzzrs);
   req.user.save(function (err) {
     if (err) {
       var reason = err.toString();
