@@ -44,12 +44,21 @@ angular.module('app').run(function ($rootScope, $location) {
   });
 });
 ;angular.module('app').factory('AppUser', function ($resource) {
+  'use strict';
+
   var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
     update: { method: 'PUT', isArray: false }
   });
 
-  UserResource.prototype.isAdmin = function () {
+  UserResource.prototype.isAdmin = function() {
     return this.roles && this.roles.indexOf('admin') > -1;
+  };
+
+  UserResource.prototype.addBuzzr = function(topic) {
+    if (this.buzzrs.indexOf(topic) === -1) {
+      this.buzzrs.push(topic);
+      this.$update();
+    }
   };
 
   return UserResource;
@@ -297,8 +306,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   return header;
 });
 ;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+  'use strict';
+
   $scope.open = false;
   $scope.identity = appIdentity;
+  if (appIdentity.isAuthenticated()) {
+    $scope.buzzrs = appIdentity.currentUser.buzzrs;
+  }
 
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {
@@ -324,7 +338,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   });
 });
 ;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
-  
+  'use strict';
+
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;
@@ -374,6 +389,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
         $scope.status.searching = false;
       });
   };
+
+  if (appIdentity.isAuthenticated()) {
+    appIdentity.currentUser.addBuzzr($scope.searchText);
+  }
   
   $scope.triggerSearch();
 });

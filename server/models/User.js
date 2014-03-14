@@ -32,7 +32,7 @@ userSchema = mongoose.Schema({
   },
 
   buzzrs: [String],
-  readLater: [{
+  readlater: [{
     url:        String,
     title:      String,
     activated:  Date
@@ -47,7 +47,7 @@ userSchema.methods.safe = function() {
     email: this.email,
     roles: this.roles,
     buzzrs: this.buzzrs,
-    readLater: this.readLater
+    readlater: this.readlater
   };
 };
 

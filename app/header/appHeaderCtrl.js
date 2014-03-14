@@ -1,6 +1,11 @@
 angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+  'use strict';
+
   $scope.open = false;
   $scope.identity = appIdentity;
+  if (appIdentity.isAuthenticated()) {
+    $scope.buzzrs = appIdentity.currentUser.buzzrs;
+  }
 
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {

@@ -40,12 +40,14 @@ exports.createUser = function (req, res, next) {
 exports.updateUser = function (req, res) {
   var userUpdates = req.body;
 
-  req.user.email = userUpdates.email;
   if (userUpdates.password && userUpdates.password.length > 0) {
     req.user.salt = encrypt.createSalt();
     req.user.password = encrypt.hashPwd(req.user.salt, userUpdates.password);
   }
 
+  req.user.email = userUpdates.email;
+  req.user.readlater = userUpdates.readlater;
+  req.user.buzzrs = userUpdates.buzzrs;
   req.user.save(function (err) {
     if (err) {
       var reason = err.toString();

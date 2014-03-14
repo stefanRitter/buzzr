@@ -1,5 +1,6 @@
 angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
-  
+  'use strict';
+
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;
@@ -49,6 +50,10 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
         $scope.status.searching = false;
       });
   };
+
+  if (appIdentity.isAuthenticated()) {
+    appIdentity.currentUser.addBuzzr($scope.searchText);
+  }
   
   $scope.triggerSearch();
 });
