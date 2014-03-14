@@ -73,12 +73,14 @@ th,td{padding:8px}
 .header{z-index:1000;display:block;position:fixed;top:0;left:0;width:320px;height:100%;-webkit-transition:all .5s ease 0s;-moz-transition:all .5s ease 0s;-o-transition:all .5s ease 0s;transition:all .5s ease 0s;-webkit-transform:translateX(-290px);-moz-transform:translateX(-290px);-o-transform:translateX(-290px);transform:translateX(-290px);}
 .header.open{-webkit-transform:translateX(0);-moz-transform:translateX(0);-o-transform:translateX(0);transform:translateX(0)}
 .header-content-center,.header-content-right{float:left;height:100%;padding-top:1em;background:White}
-.header-content-center{width:279px;border-right:1px Black solid;padding:1em 5px;position:relative}
+.header-loggedout-menu,.header-loggedin-menu{width:260px;height:100%;overflow:auto;margin:0 auto;}
+.header-loggedout-menu h4,.header-loggedin-menu h4{margin:1em 0}
+.header-loggedout-menu ul,.header-loggedin-menu ul{display:block;list-style:none}
+.header-content-center{width:289px;border-right:1px Black solid}
 .header-content-right{width:30px;background:transparent}
 .header-logo{cursor:pointer;width:30px;height:30px;margin:0 0 0 1em}
 .header-button{display:block;width:200px;overflow:hidden;margin:3px auto}
-.header-readlater{margin:0 0 10px 10px;display:inline-block}
-.header-loggedin-menu h4{margin:1em 10px}
+.header-readlater{margin:0 0 10px 0;display:inline-block}
 .home-heading{text-align:center;margin-top:2em;font-size:3em}
 .home-form.form{text-align:center;width:100%;margin:0 auto;max-width:400px;}
 .home-form.form input.home-input{display:inline-block;font-size:24px;border:0;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border-bottom:2px solid Black;width:90%;}

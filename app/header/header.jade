@@ -11,14 +11,14 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
         a.button-black(href="/join") Join&nbsp;&nbsp;
         | &nbsp;&nbsp;
         a.button-white(href="/login") Login
-      a.button-twitter.margin-top(href="/auth/twitter", target="_self")
+      a.button-twitter.margin-top-sm(href="/auth/twitter", target="_self")
         .svg
           include ../../public/img/twitter.svg
         | Sign in with Twitter
 
     //- Logged in
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
-      h4 Welcome back {{ identity.currentUser.name }}
+      h4 Welcome back, {{ identity.currentUser.name }}!
       a.underline.header-readlater(href="/account/readlater") Read later
       a.button-black.header-button(href="/")
         span.bold + 
