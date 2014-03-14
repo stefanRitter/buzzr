@@ -25,6 +25,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/:id',     {templateUrl: '/partials/main/main',      controller: 'appMainCtrl'});
   
   $routeProvider
+    .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',  controller: 'appReadlaterCtrl',
+                        resolve: routeRoleChecks.user})
     .when('/account/settings', {templateUrl: '/partials/account/settings',  controller: 'appSettingsCtrl',
                         resolve: routeRoleChecks.user});
 
@@ -438,4 +440,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   $scope.toggleFeedback = function() {
     appFeedback.toggle();
   };
+});
+;angular.module('app').controller('appReadlaterCtrl', function ($scope) {
+  'use strict';
+
 });

@@ -7,7 +7,7 @@
 
 
 //- unknown error
-.center.display-none(ng-class="{'display-none': status.error == false}")
+.center(ng-show="status.error")
   h2.margin-top-big.center
     strong Unexpected error: 
     | {{errorMessage}}
@@ -16,7 +16,7 @@
 
 
 //- creating a new feed
-.center.display-none(ng-class="{'display-none': status.creating == false}")
+.center(ng-show="status.creating")
   h2.margin-top
     | Your topic 
     strong {{searchText}} 
@@ -24,7 +24,7 @@
   p.margin-top(ng-hide="identity.isAuthenticated()")
     | Creating new topics is only possible for logged-in users at this moment.
     br
-    | Please join us to create your new feed (takes only 30 seconds):
+    | Simply join now to create your new feed (takes only 30 seconds):
     br
     br
     a.button-black(href="/join") Join to create a new Buzzr
@@ -44,7 +44,7 @@
 
 
 //- alternative Buzzrs to watch
-.center.display-none(ng-class="{'display-none': status.creating == false}")
+.center(ng-show="status.creating")
   p.margin-top-big
     br
     br

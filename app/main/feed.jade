@@ -1,4 +1,4 @@
-.display-none(ng-class="{'display-none': status.feeding == false}") 
+.main-feed(ng-show="status.feeding")
   h1.margin Results
 
   table(ng-repeat="date in dates")
