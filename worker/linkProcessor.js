@@ -1,9 +1,7 @@
 'use strict';
 
 var ent = require('ent'),
-    Arrays = require('mongoose').model('Arrays'),
-    logger = require('./logger.js'),
-    arrayDump;
+    arr = require('../server/utils/arrays.js');
 
 var excludedDomains = {
   'pinterest.com': true,
@@ -19,11 +17,6 @@ var excludedDomains = {
   'stackoverflow.com': true
 };
 
-Arrays.findOne({}, function(err, obj) {
-  if (err) { throw new Error(err); }
-  arrayDump = obj;
-});
-
 
 function processLink(data, rank, buzzr) {
   var expandedUrl = data.url,
@@ -31,8 +24,7 @@ function processLink(data, rank, buzzr) {
   
   if (excludedDomains[domain]) { return; }
   if (!data.title || data.title === ' ') {
-    arrayDump.titleErrorLinks.push(data.url);
-    return arrayDump.save();
+    return arr.titleErrorLinks.push(data.url);
   }
 
   data.url = data.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');
@@ -46,8 +38,7 @@ module.exports = function (rank, buzzr, done) {
     done(); // start next request
 
     if (err) {
-      arrayDump.socketErrorLinks.push(data.url);
-      arrayDump.save();
+      arr.socketErrorLinks.push(data.url);
       data.err = err;
     }
     processLink(data, rank, buzzr);

@@ -6,7 +6,7 @@ var fs = require('fs'),
     today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
 
 function stringify(data) {
-  var newData = '{ '
+  var newData = '{ ';
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
       newData += key + ': ' + data[key] + ', ';
@@ -25,7 +25,7 @@ function write2Log(func, data) {
   }
   
   fs.appendFile(
-    path.resolve('../logs/worker-'+today+'.log'),
+    path.resolve(__dirname, '../logs/worker-'+today+'.log'),
     func + ': ' + data+'\n',
     function (err) {
       if (err) { throw err; }

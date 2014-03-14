@@ -6,4 +6,4 @@ var User = require('./User'),
 require('./Buzzr');
 
 User.createDefaultUsers();
-Arrays.createDefaultArrayDump();
+Arrays.createArrays();

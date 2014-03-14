@@ -1,23 +1,43 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    arraysSchema,
-    Arrays;
+    Schema = mongoose.Schema;
+
+var titleErrorLinksSchema,
+    TitleErrorLinks,
+    socketErrorLinksSchema,
+    SocketErrorLinks;
+
+function push(data) {
+  this.array.push(data);
+  this.save();
+}
 
 
-arraysSchema = new Schema({
-  socketErrorLinks:  [String],
-  titleErrorLinks: [String]
+titleErrorLinksSchema = new Schema({
+  name:  {type: String, default: 'titleErrorLinks'},
+  array: {type: [String], default: []}
 });
+titleErrorLinksSchema.methods.push = push;
+TitleErrorLinks = mongoose.model('TitleErrorLinks', titleErrorLinksSchema);
+
+socketErrorLinksSchema = new Schema({
+  name:  {type: String, default: 'socketErrorLinks'},
+  array: {type: [String], default: []}
+});
+socketErrorLinksSchema.methods.push = push;
+SocketErrorLinks = mongoose.model('SocketErrorLinks', socketErrorLinksSchema);
 
 
-Arrays = mongoose.model('Arrays', arraysSchema);
-
-exports.createDefaultArrayDump = function () {
-  Arrays.find({}).exec(function (err, collection) {
+function createArray(array) {
+  array.find({}).exec(function(err, collection) {
     if (collection.length === 0) {
-      Arrays.create({ socketErrorLinks: [], titleErrorLinks: []});
+      array.create({});
     }
   });
+}
+
+exports.createArrays = function() {
+  createArray(TitleErrorLinks);
+  createArray(SocketErrorLinks);
 };

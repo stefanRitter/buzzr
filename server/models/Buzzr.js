@@ -41,14 +41,6 @@ buzzrSchema = new Schema({
     activated:  Date,
     updated:    Date
   }],
-  
-  retiredLinks: [{
-    url:        String,
-    title:      String,
-    rank:       Number,
-    activated:  Date,
-    updated:    Date
-  }],
 
   timedoutLinks: [{
     url:        String,

@@ -23,7 +23,8 @@ module.exports = function (shortUrl, cb) {
   
   function (err, response, body) {
     if (err || response.statusCode !== 200) {
-      logger.error('URL ERROR', shortUrl, err, response.statusCode);
+      var status = !!response ? response.statusCode : '';
+      logger.error('URL ERROR', shortUrl, err, status);
       return cb(err, {
         url: shortUrl,
         title: ''

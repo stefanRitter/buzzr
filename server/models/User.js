@@ -53,8 +53,8 @@ userSchema.methods.authenticated = function(passwordToMatch) {
 User = mongoose.model('User', userSchema);
 
 // seed users
-exports.createDefaultUsers = function () {
-  User.find({}).exec(function (err, collection) {
+exports.createDefaultUsers = function() {
+  User.find({}).exec(function(err, collection) {
     if (collection.length === 0) {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'test');

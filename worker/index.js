@@ -24,10 +24,10 @@ function start(req, res, next) {
       var created = new Date(buzzr._id.getTimestamp()),
           today = (new Date()).toLocaleDateString();
 
-      if (today === created.toLocaleDateString()) {
+      /*if (today === created.toLocaleDateString()) {
         logger.log(topic, 'was created too recently, skipping...');
         return res.send(200);
-      }
+      }*/
       search.update(buzzr);
       res.send(200);
     }
