@@ -16,6 +16,8 @@ function stringify(data) {
 }
 
 function write2Log(func, data) {
+  if (data === null) { return; }
+
   if (typeof data === 'object') {
     if (typeof data.join === 'function') {
       data = '['+data.join(', ')+']';
