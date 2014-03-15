@@ -1,12 +1,16 @@
 .center(ng-show="status.feeding")
-  include ../common/buzzr-logo
-  
+
   .feed-topic {{searchText}}
   
-  .feed-container(masonry='{"itemSelector" : ".feed-item"}')
-    
-    .feed-item(masonry-tile ng-repeat="link in links")
-      a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
+  .feed-container(ng-repeat="date in dates")
+    .feed-date {{date}}
+    .feed-item(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
+      div(ng-show="identity.isAuthenticated()")
+        a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
+      
+      div(ng-hide="identity.isAuthenticated()")
+        a.feed-link(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
+
       .feed-item-info
         .feed-item-actions
           .action-readlater &starf;
