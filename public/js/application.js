@@ -458,8 +458,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.search = function() {
     if (!!$scope.searchText) {
-      var searchText = encodeURI($scope.searchText.trim());
-      $location.path('/' + searchText);
+      $location.path('/' + $scope.searchText.trim());
     }
   };
 

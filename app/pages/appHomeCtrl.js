@@ -4,8 +4,7 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
 
   $scope.search = function() {
     if (!!$scope.searchText) {
-      var searchText = encodeURI($scope.searchText.trim());
-      $location.path('/' + searchText);
+      $location.path('/' + $scope.searchText.trim());
     }
   };
 
