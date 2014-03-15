@@ -5,13 +5,11 @@ div(ng-show="status.feeding")
     .feed-item(masonry-tile ng-repeat="link in links")
       a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
       .feed-item-info
-        ul.feed-item-actions
-          li.action-readlater
-            span &starf;
-          li.action-share
+        .feed-item-actions
+          .action-readlater &starf;
+          .action-share
             img(src="/img/share-white.svg")
-          li.action-remove
-            span &times;
+          .action-remove &times;
         .feed-item-date {{link.activated}}
 
 
