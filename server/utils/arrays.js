@@ -22,6 +22,8 @@ TitleErrorLinks.findOne({name: 'titleErrorLinks'}, function(err, obj) {
 Topics.findOne({name: 'topics'}, function(err, obj) {
   if (err) { throw err; }
   topics = obj;
+  topics.push('javascript');
+  topics.push('london property');
 });
 
 
