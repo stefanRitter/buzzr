@@ -66,7 +66,6 @@ exports.update = function(buzzr) {
   buzzr.save();
 
   logger.log('updating: ' + buzzr.topic);
-  nextUpdate();
 
   function updateCall(query) {
     logger.log('twit call ' + count);
@@ -109,6 +108,8 @@ exports.update = function(buzzr) {
     var query = buildQuery(buzzr);
     updateCall(query);
   }
+
+  nextUpdate();
 };
 
 
@@ -119,7 +120,6 @@ exports.create = function(buzzr) {
       tweetProcessor = tweetProcessorFactory(buzzr);
 
   logger.log('creating: ' + buzzr.topic);
-  next();
 
   function createCall(query) {
     logger.log('call ' + count);
@@ -159,4 +159,6 @@ exports.create = function(buzzr) {
     var query = buildQuery(buzzr);
     createCall(query);
   }
+
+  next();
 };

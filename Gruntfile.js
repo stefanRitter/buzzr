@@ -47,15 +47,22 @@ module.exports = function (grunt) {
         'worker/**/*.js',
         'server/**/*.js',
         'test/**/*.js'
+      ],
+      app: [
+        'app/**/*.js'
       ]
     },
 
     watch: {
       scripts: {
         files: [
+          '*.js',
+          'worker/**/*.js',
+          'server/**/*.js',
+          'test/**/*.js',
           'app/**/*.js'
         ],
-        tasks: ['concat:application']
+        tasks: ['jshint:all', 'concat:application']
       },
       styles: {
         files: [
