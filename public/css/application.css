@@ -101,7 +101,7 @@ th,td{padding:8px}
 }.home-form.form{text-align:center;width:100%;margin:0 auto;max-width:400px;}
 .home-form.form input.home-input{display:inline-block;font-size:24px;border:0;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;border-bottom:2px solid Black;width:90%;}
 .home-form.form input.home-input:focus{outline:none}
-.list-horizontal li{display:inline-block;margin:0 .6em}
+.list-horizontal li{display:inline-block;margin:0 .65em}
 .logo-big{text-align:center}
 .logo-link{display:inline-block;margin-top:70px;text-align:center;}
 .logo-link h1{width:0;height:0;overflow:hidden;margin:0 auto}
