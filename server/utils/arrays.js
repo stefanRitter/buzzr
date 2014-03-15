@@ -38,5 +38,8 @@ exports.titleErrorLinks = {
 exports.topics = {
   push: function(data) {
     topics.push(data);
+  },
+  get: function() {
+    return topics.array;
   }
 };
