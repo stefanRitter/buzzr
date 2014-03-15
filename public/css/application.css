@@ -74,7 +74,7 @@ th,td{padding:8px}
 .feedback-close{position:absolute;top:-10px;right:6px;cursor:pointer;font-weight:600;font-size:30px}
 .pages-footer,.header-footer{position:absolute;bottom:15px;left:0;width:100%;text-align:center;font-size:11px;font-weight:bold;color:Gray;}
 @media (max-width:460px){.pages-footer,.header-footer{font-size:13px}
-}@media (max-height:375px){.pages-footer,.header-footer{display:none}
+}@media (max-height:375px){.pages-footer,.header-footer{display:static}
 }.header-footer{left:-15px}
 .footer-spacer{width:100%;height:120px}
 .form{width:300px;margin:0 auto;}
