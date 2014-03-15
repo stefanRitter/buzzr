@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
+    arr = require('../utils/arrays.js'),
     _ = require('lodash'),
     buzzrSchema,
     Buzzr;
@@ -49,6 +50,13 @@ buzzrSchema = new Schema({
     activated:  Date,
     updated:    Date
   }]
+});
+
+buzzrSchema.pre('save', function (next) {
+  if (this.isNew) {
+    arr.topics.push(this.topic);
+  }
+  next();
 });
 
 buzzrSchema.methods.pushLink = function(data) {

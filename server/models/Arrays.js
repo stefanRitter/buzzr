@@ -3,11 +3,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var titleErrorLinksSchema,
-    TitleErrorLinks,
-    socketErrorLinksSchema,
-    SocketErrorLinks;
-
 function push(data) {
   /*jshint validthis:true */
   this.array.push(data);
@@ -15,19 +10,29 @@ function push(data) {
 }
 
 
-titleErrorLinksSchema = new Schema({
+
+var titleErrorLinksSchema = new Schema({
   name:  {type: String, default: 'titleErrorLinks'},
   array: {type: [String], default: []}
 });
 titleErrorLinksSchema.methods.push = push;
-TitleErrorLinks = mongoose.model('TitleErrorLinks', titleErrorLinksSchema);
+var TitleErrorLinks = mongoose.model('TitleErrorLinks', titleErrorLinksSchema);
 
-socketErrorLinksSchema = new Schema({
+
+var socketErrorLinksSchema = new Schema({
   name:  {type: String, default: 'socketErrorLinks'},
   array: {type: [String], default: []}
 });
 socketErrorLinksSchema.methods.push = push;
-SocketErrorLinks = mongoose.model('SocketErrorLinks', socketErrorLinksSchema);
+var SocketErrorLinks = mongoose.model('SocketErrorLinks', socketErrorLinksSchema);
+
+
+var topicsSchema = new Schema({
+  name:  {type: String, default: 'topics'},
+  array: {type: [String], default: []}
+});
+topicsSchema.methods.push = push;
+var Topics = mongoose.model('Topics', topicsSchema);
 
 
 function createArray(array) {
@@ -41,4 +46,5 @@ function createArray(array) {
 exports.createArrays = function() {
   createArray(TitleErrorLinks);
   createArray(SocketErrorLinks);
+  createArray(Topics);
 };
