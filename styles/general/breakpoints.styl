@@ -1,0 +1,13 @@
+
+phone   = "(max-width:460px)"
+phablet = "(max-width:768px)"
+tablet  = "(max-width:980px)"
+
+.phone-hide
+  @media phone
+    display none
+
+.phone-only
+  display none
+  @media phone
+    display block
