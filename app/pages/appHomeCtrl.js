@@ -1,4 +1,5 @@
-angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIsMobile, appIdentity, appHeader) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIsMobile, appIdentity, appHeader, appTopics) {
+  'use strict';
 
   $scope.identity = appIdentity;
 
@@ -21,6 +22,7 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     homeInput.focus();
   }
 
+  // open header for returning users
   if (appIdentity.isAuthenticated()) {
     appHeader.toggle();
   }
