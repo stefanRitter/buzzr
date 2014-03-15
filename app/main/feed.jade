@@ -1,6 +1,21 @@
-.main-feed(ng-show="status.feeding")
-  h1.margin Results
+div(ng-show="status.feeding")
+  .feed-topic {{searchText}}
 
+  .feed-container(masonry='{"itemSelector" : ".feed-item"}')
+    .feed-item(masonry-tile ng-repeat="link in links")
+      a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
+      .feed-item-info
+        ul.feed-item-actions
+          li.action-readlater
+            span &starf;
+          li.action-share
+            img(src="/img/share-white.svg")
+          li.action-remove
+            span &times;
+        .feed-item-date {{link.activated}}
+
+
+//-
   table(ng-repeat="date in dates")
     thead
       tr
