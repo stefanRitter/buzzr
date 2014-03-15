@@ -57,7 +57,7 @@ userSchema.methods.recordLogin = function() {
   var today = (new Date()).toLocaleDateString();
   if (today !== this.logins[0]) {
     this.logins.unshift(today);
-    if (this.logins.length > 10) {
+    if (this.logins.length > 100) {
       this.logins.pop();
     }
     this.save();
