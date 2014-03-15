@@ -14,6 +14,8 @@ userSchema = mongoose.Schema({
     unique: true,
     index: true
   },
+
+  logins: [String],
   
   name:     {type: String, trim: true, required: false},
   location: {type: String, trim: true, required: false},
@@ -49,6 +51,17 @@ userSchema.methods.safe = function() {
     buzzrs: this.buzzrs,
     readlater: this.readlater
   };
+};
+
+userSchema.methods.recordLogin = function() {
+  var today = (new Date()).toLocaleDateString();
+  if (today !== this.logins[0]) {
+    this.logins.unshift(today);
+    if (this.logins.length > 10) {
+      this.logins.pop();
+    }
+    this.save();
+  }
 };
 
 userSchema.methods.hasRole = function(role) {
