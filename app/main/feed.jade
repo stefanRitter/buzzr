@@ -16,7 +16,7 @@
 
         .feed-item-info
           .feed-item-actions
-            .action-readlater(ng-click="saveLink(link.url, link.title)")
+            .action-readlater(ng-click="saveLink(link)", ng-class="{'saved': link.saved}")
               span &hearts;
             a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
               img(src="/img/share-white.svg")

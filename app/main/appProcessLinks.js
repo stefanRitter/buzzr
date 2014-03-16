@@ -45,8 +45,10 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
   return {
     process: function($scope, incomingLinks) {
       if (appIdentity.isAuthenticated()) {
-        readlater = appIdentity.currentUser.readlater;
-        appIdentity.currentUser.activities.forEach(function(obj, i) {
+        appIdentity.currentUser.readlater.forEach(function(obj) {
+          readlater.push(obj.url);
+        });
+        appIdentity.currentUser.activities.forEach(function(obj) {
           if (obj.topic === $scope.searchText) {
             removedLinks = obj.removed;
           }
@@ -59,14 +61,15 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
       $scope.links = incomingLinks;
     },
 
-    saveLink: function(url, title, topic) {
+    saveLink: function(link, topic) {
       var newSavedLink = {
-        url: url,
-        title: title,
+        url: link.url,
+        title: link.title,
         topic: topic,
         activated: Date.now()
       };
       appIdentity.currentUser.saveLink(newSavedLink);
+      link.saved = true;
     },
     
     removeLink: function(link, topic) {

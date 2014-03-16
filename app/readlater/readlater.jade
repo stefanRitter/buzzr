@@ -17,11 +17,12 @@
   .feed-container
     
     .feed-item(ng-repeat="link in readlater | orderBy:'activated':'true'")
-      a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
+      .feed-item-body
+        a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
 
-      .feed-item-info
-        .feed-item-actions
-          a.action-share(href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
-            img(src="/img/share-white.svg")
-          .action-remove(ng-click="removeLink(link.url)") &times;
-        .feed-item-date {{link.topic}} | {{link.activated}}
+        .feed-item-info
+          .feed-item-actions
+            a.action-share(href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
+              img(src="/img/share-white.svg")
+            .action-remove(ng-click="removeLink(link.url)") &times;
+          .feed-item-date {{link.topic}} | {{link.activated}}
