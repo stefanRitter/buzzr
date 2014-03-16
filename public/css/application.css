@@ -74,6 +74,7 @@ th,td{padding:8px}
 .feed-item-actions{float:right}
 .action-readlater,.action-share,.action-remove{display:inline-block;font-weight:300;text-align:center;margin:0 10px 5px 0;font-weight:600;font-size:22px;text-align:center;line-height:1;cursor:pointer;color:WhiteSmoke;width:24px;height:24px;-webkit-border-radius:50%;-moz-border-radius:50%;-o-border-radius:50%;border-radius:50%;vertical-align:bottom;background:rgba(0,0,0,0.5)}
 .action-share img{width:12px;margin:0 2px 1px 0}
+.action-readlater span{display:inline-block;padding:0 2px 2px 0}
 .feed-item-date{float:left;font-weight:300;font-size:12px;position:relative;bottom:-5px}
 .feedback-popop,.feedback-button{position:fixed}
 .feedback-button{z-index:2000;bottom:1em;right:1em;font-weight:600;font-size:22px;text-align:center;line-height:1;cursor:pointer;width:24px;height:24px;padding:4px;background:WhiteSmoke;border:2px solid #000;-webkit-border-radius:50%;-moz-border-radius:50%;-o-border-radius:50%;border-radius:50%;}

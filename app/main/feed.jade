@@ -13,7 +13,8 @@
 
       .feed-item-info
         .feed-item-actions
-          .action-readlater(ng-click="saveLink(link.url)") &starf;
+          .action-readlater(ng-click="saveLink(link.url)")
+            span &hearts;
           a.action-share(href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
             img(src="/img/share-white.svg")
           .action-remove(ng-click="removeLink(link.url)") &times;
