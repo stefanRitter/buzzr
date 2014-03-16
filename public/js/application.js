@@ -74,11 +74,27 @@ angular.module('app').run(function ($rootScope, $location) {
   UserResource.prototype.saveLink = function(newSavedLink) {
     this.readlater.push(newSavedLink);
     this.$update();
+    $rootScope.$broadcast('readlaterChanged');
   };
 
-  // remove link
-  // remove saved link
-  // mark as read
+  UserResource.prototype.removeSavedLink = function(url) {
+    var index = -1;
+    this.readlater.forEach(function(link, i) {
+      if (link.url === url) {
+        index = i;
+      }
+    });
+
+    if (index > -1) {
+      this.readlater.splice(index,1);
+      this.$update();
+      $rootScope.$broadcast('readlaterChanged');
+    }
+  };
+
+  UserResource.prototype.hideLink = function(link) {
+    alert('hide link');
+  };
 
   return UserResource;
 });;
@@ -547,4 +563,12 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
   $scope.toggleHeader = function() { appHeader.toggle(); };
+
+  $scope.removeLink = function(url) {
+    appIdentity.currentUser.removeSavedLink(url);
+  };
+
+  $scope.$on('readlaterChanged', function() {
+    $scope.readlater = appIdentity.currentUser.readlater;
+  });
 });

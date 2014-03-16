@@ -29,11 +29,27 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
   UserResource.prototype.saveLink = function(newSavedLink) {
     this.readlater.push(newSavedLink);
     this.$update();
+    $rootScope.$broadcast('readlaterChanged');
   };
 
-  // remove link
-  // remove saved link
-  // mark as read
+  UserResource.prototype.removeSavedLink = function(url) {
+    var index = -1;
+    this.readlater.forEach(function(link, i) {
+      if (link.url === url) {
+        index = i;
+      }
+    });
+
+    if (index > -1) {
+      this.readlater.splice(index,1);
+      this.$update();
+      $rootScope.$broadcast('readlaterChanged');
+    }
+  };
+
+  UserResource.prototype.hideLink = function(link) {
+    alert('hide link');
+  };
 
   return UserResource;
 });

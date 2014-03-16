@@ -8,4 +8,12 @@ angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedba
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
   $scope.toggleHeader = function() { appHeader.toggle(); };
+
+  $scope.removeLink = function(url) {
+    appIdentity.currentUser.removeSavedLink(url);
+  };
+
+  $scope.$on('readlaterChanged', function() {
+    $scope.readlater = appIdentity.currentUser.readlater;
+  });
 });
