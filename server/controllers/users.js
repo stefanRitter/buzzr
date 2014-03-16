@@ -49,6 +49,8 @@ exports.updateUser = function (req, res) {
   req.user.email = userUpdates.email;
   req.user.readlater = userUpdates.readlater;
   req.user.buzzrs = _.uniq(userUpdates.buzzrs);
+  req.user.activities = userUpdates.activities;
+  
   req.user.save(function (err) {
     if (err) {
       var reason = err.toString();

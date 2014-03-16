@@ -72,6 +72,7 @@ angular.module('app').run(function ($rootScope, $location) {
   };
 
   UserResource.prototype.saveLink = function(newSavedLink) {
+    this.recordActivity('saved', newSavedLink.url, newSavedLink.topic);
     this.readlater.push(newSavedLink);
     this.$update();
     $rootScope.$broadcast('readlaterChanged');
@@ -92,9 +93,44 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 
-  UserResource.prototype.hideLink = function(link) {
-    alert('hide link');
+  UserResource.prototype.removeLink = function(url, topic) {
+    this.recordActivity('removed', url, topic);
+    this.$update();
+    $rootScope.$broadcast('removedLink');
   };
+
+  UserResource.prototype.trackView = function(url, topic) {
+    this.recordActivity('viewed', url, topic);
+    this.$update();
+  };
+
+  UserResource.prototype.trackShare = function(url, topic) {
+    this.recordActivity('shared', url, topic);
+    this.$update();
+  };
+
+  UserResource.prototype.recordActivity = function(type, url, topic) {
+    var index = -1;
+    this.activities.forEach(function(obj, i) {
+      if (obj.topic === topic) {
+        index = i;
+      }
+    });
+    
+    if (index === -1) {
+      this.activities.push({
+        topic: topic,
+        removed: [],
+        viewed: [],
+        saved: [],
+        shared:[]
+      });
+      index = 0;
+    }
+    this.activities[index][type].push(url);
+  };
+
+
 
   return UserResource;
 });;
@@ -401,25 +437,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.setBuzzrs();
 });
-;angular.module('app').factory('appLink', function (appIdentity, appHeader) {
-  'use strict';
-
-  return {
-    saveLink: function(url, title, topic) {
-      var newSavedLink = {
-        url: url,
-        title: title,
-        topic: topic,
-        activated: Date.now()
-      };
-      appIdentity.currentUser.saveLink(newSavedLink);
-    },
-    removeLink: function(link, topic) {
-      alert(link);
-    }
-  };
-});
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appLink) {
+;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
   'use strict';
 
   $scope.links = [];
@@ -476,11 +494,17 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
       });
   };
 
-
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-    $scope.saveLink = function(url, title) { appLink.saveLink(url, title, $scope.searchText); };
-    $scope.removeLink = function(url) { appLink.removeLink(url, $scope.searchText); };
+
+    $scope.saveLink = function(url, title) { appProcessLinks.saveLink(url, title, $scope.searchText); };
+    $scope.removeLink = function(url) { appProcessLinks.removeLink(url, $scope.searchText); };
+    $scope.trackView = function(url) {
+      appIdentity.currentUser.trackView(url, $scope.searchText);
+    };
+    $scope.trackShare = function(url) {
+      appIdentity.currentUser.trackShare(url, $scope.searchText);
+    };
   } else  {
     $scope.saveLink = $scope.toggleHeader;
     $scope.removeLink = $scope.toggleHeader;
@@ -488,7 +512,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   
   $scope.triggerSearch();
 });
-;angular.module('app').factory('appProcessLinks', function () {
+;angular.module('app').factory('appProcessLinks', function (appIdentity) {
+  'use strict';
+
   var u = {};
 
   function setLocalDate(link) {
@@ -513,6 +539,20 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
       incomingLinks.forEach(setLocalDate);
       $scope.dates = getDates();
       $scope.links = incomingLinks;
+    },
+
+    saveLink: function(url, title, topic) {
+      var newSavedLink = {
+        url: url,
+        title: title,
+        topic: topic,
+        activated: Date.now()
+      };
+      appIdentity.currentUser.saveLink(newSavedLink);
+    },
+    
+    removeLink: function(url, topic) {
+      appIdentity.currentUser.removeLink(url, topic);
     }
   };
 });

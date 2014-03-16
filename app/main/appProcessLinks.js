@@ -38,7 +38,7 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
     },
     
     removeLink: function(url, topic) {
-      alert(url);
+      appIdentity.currentUser.removeLink(url, topic);
     }
   };
 });

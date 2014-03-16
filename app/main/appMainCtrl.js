@@ -55,11 +55,17 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
       });
   };
 
-
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
+
     $scope.saveLink = function(url, title) { appProcessLinks.saveLink(url, title, $scope.searchText); };
     $scope.removeLink = function(url) { appProcessLinks.removeLink(url, $scope.searchText); };
+    $scope.trackView = function(url) {
+      appIdentity.currentUser.trackView(url, $scope.searchText);
+    };
+    $scope.trackShare = function(url) {
+      appIdentity.currentUser.trackShare(url, $scope.searchText);
+    };
   } else  {
     $scope.saveLink = $scope.toggleHeader;
     $scope.removeLink = $scope.toggleHeader;

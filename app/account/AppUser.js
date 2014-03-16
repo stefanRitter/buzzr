@@ -27,6 +27,7 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
   };
 
   UserResource.prototype.saveLink = function(newSavedLink) {
+    this.recordActivity('saved', newSavedLink.url, newSavedLink.topic);
     this.readlater.push(newSavedLink);
     this.$update();
     $rootScope.$broadcast('readlaterChanged');
@@ -47,9 +48,44 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
     }
   };
 
-  UserResource.prototype.hideLink = function(link) {
-    alert('hide link');
+  UserResource.prototype.removeLink = function(url, topic) {
+    this.recordActivity('removed', url, topic);
+    this.$update();
+    $rootScope.$broadcast('removedLink');
   };
+
+  UserResource.prototype.trackView = function(url, topic) {
+    this.recordActivity('viewed', url, topic);
+    this.$update();
+  };
+
+  UserResource.prototype.trackShare = function(url, topic) {
+    this.recordActivity('shared', url, topic);
+    this.$update();
+  };
+
+  UserResource.prototype.recordActivity = function(type, url, topic) {
+    var index = -1;
+    this.activities.forEach(function(obj, i) {
+      if (obj.topic === topic) {
+        index = i;
+      }
+    });
+    
+    if (index === -1) {
+      this.activities.push({
+        topic: topic,
+        removed: [],
+        viewed: [],
+        saved: [],
+        shared:[]
+      });
+      index = 0;
+    }
+    this.activities[index][type].push(url);
+  };
+
+
 
   return UserResource;
 });

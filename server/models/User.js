@@ -34,6 +34,15 @@ userSchema = mongoose.Schema({
   },
 
   buzzrs: [String],
+
+  activities: [{
+    topic: String,
+    viewed: [String],
+    saved: [String],
+    shared: [String],
+    removed: [String]
+  }],
+  
   readlater: [{
     url:        String,
     title:      String,
@@ -50,7 +59,8 @@ userSchema.methods.safe = function() {
     email: this.email,
     roles: this.roles,
     buzzrs: this.buzzrs,
-    readlater: this.readlater
+    readlater: this.readlater,
+    activities: this.activities
   };
 };
 
