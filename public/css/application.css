@@ -65,7 +65,7 @@ th,td{padding:8px}
 .button-twitter .svg{height:20px;width:20px;margin-right:8px;position:relative;top:3px;line-height:1;display:inline-block}
 .button-width{width:115px}
 .feed-container{margin:60px auto 0 auto;width:95%;text-align:left}
-.feed-topic{z-index:2;position:fixed;top:0;left:50px;text-transform:uppercase;font-size:20px;font-weight:600;padding:10px 10px;background:WhiteSmoke}
+.feed-topic{z-index:2;position:fixed;top:0;left:50px;text-transform:uppercase;font-size:20px;font-weight:300;cursor:pointer;padding:10px 10px;background:WhiteSmoke}
 .feed-item,.feed-date{width:50%;margin:45px auto;min-width:650px}
 .feed-date{font-weight:300;font-size:24px;padding-top:60px;margin-bottom:0}
 .feed-item{overflow:hidden;padding:10px 0 3px 0;border-bottom:1px solid rgba(0,0,0,0.5)}

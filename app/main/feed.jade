@@ -1,9 +1,11 @@
 .center(ng-show="status.feeding")
 
-  .feed-topic {{searchText}}
+  .feed-topic(ng-click="toggleHeader(); $event.stopPropagation();") {{searchText}}
   
   .feed-container(ng-repeat="date in dates")
-    .feed-date {{date}}
+    .feed-date
+      span.underline {{date}}
+    
     .feed-item(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
       div(ng-show="identity.isAuthenticated()")
         a.feed-link(href="{{link.url}}", target="_blank") {{link.title}}
@@ -13,7 +15,7 @@
 
       .feed-item-info
         .feed-item-actions
-          .action-readlater(ng-click="saveLink(link.url)")
+          .action-readlater(ng-click="saveLink(link.url, link.title)")
             span &hearts;
           a.action-share(href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
             img(src="/img/share-white.svg")

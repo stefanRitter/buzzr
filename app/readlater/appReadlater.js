@@ -1,16 +1,11 @@
-angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appIdentity) {
+angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appHeader, appIdentity) {
   'use strict';
 
   $scope.readlater = appIdentity.currentUser.readlater || [];
-  $scope.status = {
-    empty: false
+  $scope.empty = function() {
+    return $scope.readlater.length === 0;
   };
 
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  if ($scope.readlater.length === 0) {
-    $scope.status.empty = true;
-  }
+  $scope.toggleFeedback = function() { appFeedback.toggle(); };
+  $scope.toggleHeader = function() { appHeader.toggle(); };
 });

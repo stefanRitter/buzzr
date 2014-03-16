@@ -58,8 +58,8 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
 
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-    $scope.saveLink = function(link) { appLink.saveLink(link, $scope.searchText); };
-    $scope.removeLink = function(link) { appLink.removeLink(link, $scope.searchText); };
+    $scope.saveLink = function(url, title) { appLink.saveLink(url, title, $scope.searchText); };
+    $scope.removeLink = function(url) { appLink.removeLink(url, $scope.searchText); };
   } else  {
     $scope.saveLink = $scope.toggleHeader;
     $scope.removeLink = $scope.toggleHeader;

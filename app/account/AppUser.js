@@ -26,7 +26,11 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
     }
   };
 
-  // save link
+  UserResource.prototype.saveLink = function(newSavedLink) {
+    this.readlater.push(newSavedLink);
+    this.$update();
+  };
+
   // remove link
   // remove saved link
   // mark as read

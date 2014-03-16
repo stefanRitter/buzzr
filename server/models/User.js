@@ -37,6 +37,7 @@ userSchema = mongoose.Schema({
   readlater: [{
     url:        String,
     title:      String,
+    topic:      String,
     activated:  Date
   }]
 });

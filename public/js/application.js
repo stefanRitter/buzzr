@@ -71,7 +71,11 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 
-  // save link
+  UserResource.prototype.saveLink = function(newSavedLink) {
+    this.readlater.push(newSavedLink);
+    this.$update();
+  };
+
   // remove link
   // remove saved link
   // mark as read
@@ -385,8 +389,14 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   'use strict';
 
   return {
-    saveLink: function(link, topic) {
-      alert(link);
+    saveLink: function(url, title, topic) {
+      var newSavedLink = {
+        url: url,
+        title: title,
+        topic: topic,
+        activated: Date.now()
+      };
+      appIdentity.currentUser.saveLink(newSavedLink);
     },
     removeLink: function(link, topic) {
       alert(link);
@@ -453,8 +463,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-    $scope.saveLink = function(link) { appLink.saveLink(link, $scope.searchText); };
-    $scope.removeLink = function(link) { appLink.removeLink(link, $scope.searchText); };
+    $scope.saveLink = function(url, title) { appLink.saveLink(url, title, $scope.searchText); };
+    $scope.removeLink = function(url) { appLink.removeLink(url, $scope.searchText); };
   } else  {
     $scope.saveLink = $scope.toggleHeader;
     $scope.removeLink = $scope.toggleHeader;
@@ -527,19 +537,14 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
     appFeedback.toggle();
   };
 });
-;angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appIdentity) {
+;angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appHeader, appIdentity) {
   'use strict';
 
   $scope.readlater = appIdentity.currentUser.readlater || [];
-  $scope.status = {
-    empty: false
+  $scope.empty = function() {
+    return $scope.readlater.length === 0;
   };
 
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  if ($scope.readlater.length === 0) {
-    $scope.status.empty = true;
-  }
+  $scope.toggleFeedback = function() { appFeedback.toggle(); };
+  $scope.toggleHeader = function() { appHeader.toggle(); };
 });
