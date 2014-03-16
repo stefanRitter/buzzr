@@ -71,6 +71,11 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 
+  // save link
+  // remove link
+  // remove saved link
+  // mark as read
+
   return UserResource;
 });;
 angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
@@ -376,7 +381,19 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.setBuzzrs();
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
+;angular.module('app').factory('appLink', function (appIdentity, appHeader) {
+  'use strict';
+
+  return {
+    saveLink: function(link, topic) {
+      alert(link);
+    },
+    removeLink: function(link, topic) {
+      alert(link);
+    }
+  };
+});
+;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appLink) {
   'use strict';
 
   $scope.links = [];
@@ -389,6 +406,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
     feeding: false,
     error: false
   };
+
+  $scope.encode = function(title) {
+    return encodeURI(title);
+  }
 
   $scope.showLoading = function() {
     var status = $scope.status;
@@ -429,8 +450,14 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
       });
   };
 
+
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
+    $scope.saveLink = function(link) { appLink.saveLink(link, $scope.searchText); };
+    $scope.removeLink = function(link) { appLink.removeLink(link, $scope.searchText); };
+  } else  {
+    $scope.saveLink = $scope.toggleHeader;
+    $scope.removeLink = $scope.toggleHeader;
   }
   
   $scope.triggerSearch();

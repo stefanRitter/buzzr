@@ -26,5 +26,10 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
     }
   };
 
+  // save link
+  // remove link
+  // remove saved link
+  // mark as read
+
   return UserResource;
 });
