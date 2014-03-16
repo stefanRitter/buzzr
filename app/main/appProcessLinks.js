@@ -1,28 +1,60 @@
 angular.module('app').factory('appProcessLinks', function (appIdentity) {
   'use strict';
 
-  var u = {};
+  var uniqDates = {},
+      removedLinks = [],
+      readlater = [];
 
   function setLocalDate(link) {
     if(!!link.activated) {
       link.activated = (new Date(link.activated)).toLocaleDateString();
-      u[link.activated] = true;
+      uniqDates[link.activated] = true;
     }
   }
 
   function getDates() {
     var a = [];
-    for (var date in u) {
-      if(u.hasOwnProperty(date)) {
+    for (var date in uniqDates) {
+      if(uniqDates.hasOwnProperty(date)) {
         a.push(date);
       }
     }
     return a.reverse();
   }
 
+  function checkRemoved(link) {
+    link.removed = false;
+    if (removedLinks.indexOf(link) > -1) {
+      link.removed = true;
+    }
+  }
+
+  function checkSaved(link) {
+    link.saved = false;
+    if (readlater.indexOf(link) > -1) {
+      link.saved = true;
+    }
+  }
+
+  function processLink(link) {
+    setLocalDate(link);
+    checkSaved(link);
+    checkRemoved(link);
+  }
+
   return {
     process: function($scope, incomingLinks) {
-      incomingLinks.forEach(setLocalDate);
+      if (appIdentity.isAuthenticated()) {
+        readlater = appIdentity.currentUser.readlater;
+        appIdentity.currentUser.activities.forEach(function(obj, i) {
+          if (obj.topic === $scope.searchText) {
+            removedLinks = obj.removed;
+          }
+        });
+      }
+      
+      incomingLinks.forEach(processLink);
+      
       $scope.dates = getDates();
       $scope.links = incomingLinks;
     },
