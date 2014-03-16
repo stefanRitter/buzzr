@@ -1,4 +1,4 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appLink) {
+angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
   'use strict';
 
   $scope.links = [];
@@ -58,8 +58,8 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
 
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-    $scope.saveLink = function(url, title) { appLink.saveLink(url, title, $scope.searchText); };
-    $scope.removeLink = function(url) { appLink.removeLink(url, $scope.searchText); };
+    $scope.saveLink = function(url, title) { appProcessLinks.saveLink(url, title, $scope.searchText); };
+    $scope.removeLink = function(url) { appProcessLinks.removeLink(url, $scope.searchText); };
   } else  {
     $scope.saveLink = $scope.toggleHeader;
     $scope.removeLink = $scope.toggleHeader;

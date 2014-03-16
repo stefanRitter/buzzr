@@ -1,4 +1,6 @@
-angular.module('app').factory('appProcessLinks', function () {
+angular.module('app').factory('appProcessLinks', function (appIdentity) {
+  'use strict';
+
   var u = {};
 
   function setLocalDate(link) {
@@ -23,6 +25,20 @@ angular.module('app').factory('appProcessLinks', function () {
       incomingLinks.forEach(setLocalDate);
       $scope.dates = getDates();
       $scope.links = incomingLinks;
+    },
+
+    saveLink: function(url, title, topic) {
+      var newSavedLink = {
+        url: url,
+        title: title,
+        topic: topic,
+        activated: Date.now()
+      };
+      appIdentity.currentUser.saveLink(newSavedLink);
+    },
+    
+    removeLink: function(url, topic) {
+      alert(url);
     }
   };
 });
