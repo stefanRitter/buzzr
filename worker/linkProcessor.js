@@ -14,7 +14,8 @@ var excludedDomains = {
   'q.gs': true,
   'buzzr.io': true,
   'dailymail.co.uk': true,
-  'stackoverflow.com': true
+  'stackoverflow.com': true,
+  'newsnow.co.uk': true
 };
 
 
