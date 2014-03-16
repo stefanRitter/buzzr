@@ -24,14 +24,14 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
 
   function checkRemoved(link) {
     link.removed = false;
-    if (removedLinks.indexOf(link) > -1) {
+    if (removedLinks.indexOf(link.url) > -1) {
       link.removed = true;
     }
   }
 
   function checkSaved(link) {
     link.saved = false;
-    if (readlater.indexOf(link) > -1) {
+    if (readlater.indexOf(link.url) > -1) {
       link.saved = true;
     }
   }
@@ -69,8 +69,9 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
       appIdentity.currentUser.saveLink(newSavedLink);
     },
     
-    removeLink: function(url, topic) {
-      appIdentity.currentUser.removeLink(url, topic);
+    removeLink: function(link, topic) {
+      appIdentity.currentUser.removeLink(link.url, topic);
+      link.removed = true;
     }
   };
 });

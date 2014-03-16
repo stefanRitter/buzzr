@@ -59,7 +59,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeP
     appIdentity.currentUser.addBuzzr($scope.searchText);
 
     $scope.saveLink = function(url, title) { appProcessLinks.saveLink(url, title, $scope.searchText); };
-    $scope.removeLink = function(url) { appProcessLinks.removeLink(url, $scope.searchText); };
+    $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) {
       appIdentity.currentUser.trackView(url, $scope.searchText);
     };

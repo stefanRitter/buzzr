@@ -7,17 +7,18 @@
       span.underline {{date}}
     
     .feed-item(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
-      div(ng-show="identity.isAuthenticated()")
-        a.feed-link(href="{{link.url}}", target="_blank", ng-click="trackView(link.url)") {{link.title}}
-      
-      div(ng-hide="identity.isAuthenticated()")
-        a.feed-link(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
+      .feed-item-body(ng-hide="link.removed")
+        div(ng-show="identity.isAuthenticated()")
+          a.feed-link(href="{{link.url}}", target="_blank", ng-click="trackView(link.url)") {{link.title}}
+        
+        div(ng-hide="identity.isAuthenticated()")
+          a.feed-link(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
 
-      .feed-item-info
-        .feed-item-actions
-          .action-readlater(ng-click="saveLink(link.url, link.title)")
-            span &hearts;
-          a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
-            img(src="/img/share-white.svg")
-          .action-remove(ng-click="removeLink(link.url)") &times;
-        .feed-item-date {{link.activated}}
+        .feed-item-info
+          .feed-item-actions
+            .action-readlater(ng-click="saveLink(link.url, link.title)")
+              span &hearts;
+            a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
+              img(src="/img/share-white.svg")
+            .action-remove(ng-click="removeLink(link)") &times;
+          .feed-item-date {{link.activated}}

@@ -498,7 +498,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
     appIdentity.currentUser.addBuzzr($scope.searchText);
 
     $scope.saveLink = function(url, title) { appProcessLinks.saveLink(url, title, $scope.searchText); };
-    $scope.removeLink = function(url) { appProcessLinks.removeLink(url, $scope.searchText); };
+    $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) {
       appIdentity.currentUser.trackView(url, $scope.searchText);
     };
@@ -538,14 +538,14 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   function checkRemoved(link) {
     link.removed = false;
-    if (removedLinks.indexOf(link) > -1) {
+    if (removedLinks.indexOf(link.url) > -1) {
       link.removed = true;
     }
   }
 
   function checkSaved(link) {
     link.saved = false;
-    if (readlater.indexOf(link) > -1) {
+    if (readlater.indexOf(link.url) > -1) {
       link.saved = true;
     }
   }
@@ -583,8 +583,9 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
       appIdentity.currentUser.saveLink(newSavedLink);
     },
     
-    removeLink: function(url, topic) {
-      appIdentity.currentUser.removeLink(url, topic);
+    removeLink: function(link, topic) {
+      appIdentity.currentUser.removeLink(link.url, topic);
+      link.removed = true;
     }
   };
 });
