@@ -1,21 +1,28 @@
 'use strict';
 
-var StringArray = require('mongoose').model('StringArray');
+var StringArray = require('mongoose').model('StringArray'),
+    LinkArray = require('mongoose').model('LinkArray');
 
 var titleErrorLinks,
     socketErrorLinks,
+    newLinks,
     topics,
     newTopics;
 
 
-StringArray.findOne({name: 'socketErrorLinks'}, function(err, obj) {
+LinkArray.findOne({name: 'socketErrorLinks'}, function(err, obj) {
   if (err) { throw err; }
   socketErrorLinks = obj;
 });
 
-StringArray.findOne({name: 'titleErrorLinks'}, function(err, obj) {
+LinkArray.findOne({name: 'titleErrorLinks'}, function(err, obj) {
   if (err) { throw err; }
   titleErrorLinks = obj;
+});
+
+LinkArray.findOne({name: 'newLinks'}, function(err, obj) {
+  if (err) { throw err; }
+  newLinks = obj;
 });
 
 StringArray.findOne({name: 'topics'}, function(err, obj) {

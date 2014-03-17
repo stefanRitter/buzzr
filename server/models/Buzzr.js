@@ -41,14 +41,6 @@ buzzrSchema = new Schema({
     rank:       Number,
     activated:  Date,
     updated:    Date
-  }],
-
-  timedoutLinks: [{
-    url:        String,
-    title:      String,
-    rank:       Number,
-    activated:  Date,
-    updated:    Date
   }]
 });
 
@@ -60,11 +52,11 @@ buzzrSchema.pre('save', function (next) {
 });
 
 buzzrSchema.methods.pushLink = function(data) {
+  // data.url, data.rank, data.title
+
   function checkLinkEquality(link) {
     return link.url === data.url || link.title === data.title;
   }
-
-  if (!!data.err) { return this.pushErrorLink(data); }
 
   var pI = _.findIndex(this.passiveLinks, checkLinkEquality);
   if (pI > -1) {
@@ -77,17 +69,6 @@ buzzrSchema.methods.pushLink = function(data) {
   }
 
   this.pushNewLink(data);
-};
-
-buzzrSchema.methods.pushErrorLink = function(data) {
-  var newLink = {
-    url: data.url,
-    title: data.title,
-    rank: data.rank,
-    updated: Date.now()
-  };
-  this.timedoutLinks.push(newLink);
-  return this.save();
 };
 
 buzzrSchema.methods.pushNewLink = function(data) {

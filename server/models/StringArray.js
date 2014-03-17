@@ -28,8 +28,6 @@ var StringArray = mongoose.model('StringArray', stringArraySchema);
 exports.createArrays = function() {
   StringArray.find({}).exec(function(err, collection) {
     if (collection.length === 0) {
-      StringArray.create({name: 'titleErrorLinks'});
-      StringArray.create({name: 'socketErrorLinks'});
       StringArray.create({name: 'topics'});
       StringArray.create({name: 'newTopics'});
     }
