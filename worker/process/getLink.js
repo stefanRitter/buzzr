@@ -5,7 +5,7 @@
 
 var request = require('request'),
     cheerio = require('cheerio'),
-    logger = require('./logger.js');
+    logger = require('../common/logger.js');
 
 module.exports = function (shortUrl, cb) {
   request(

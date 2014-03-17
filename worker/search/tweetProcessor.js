@@ -2,7 +2,7 @@
 
 var urlexpand = require('./getLink.js'),
     processLink = require('./linkProcessor.js'),
-    logger = require('./logger.js');
+    logger = require('../common/logger.js');
 
 
 function calcRank(tweet) {

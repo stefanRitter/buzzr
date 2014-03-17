@@ -1,7 +1,7 @@
 'use strict';
 
 var ent = require('ent'),
-    arr = require('../server/utils/arrays.js');
+    arr = require('../../server/utils/arrays.js');
 
 var excludedDomains = {
   'pinterest.com': true,

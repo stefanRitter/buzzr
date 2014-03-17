@@ -21,7 +21,7 @@ Example results:
 var Twit = require('twit'),
     tweetProcessorFactory = require('./tweetProcessor'),
     Batch = require('batch'),
-    logger = require('./logger.js');
+    logger = require('../common/logger.js');
 
 var T = new Twit({
   consumer_key:         process.env.TWIT_KEY,

@@ -27,7 +27,7 @@ function write2Log(func, data) {
   }
   
   fs.appendFile(
-    path.resolve(__dirname, '../logs/worker-'+today+'.log'),
+    path.resolve(__dirname, '../../logs/worker-'+today+'.log'),
     func + ': ' + data+'\n',
     function (err) {
       if (err) { throw err; }
