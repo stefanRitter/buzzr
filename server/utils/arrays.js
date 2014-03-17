@@ -40,6 +40,9 @@ StringArray.findOne({name: 'newTopics'}, function(err, obj) {
 exports.socketErrorLinks = {
   push: function(data) {
     socketErrorLinks.push(data);
+  },
+  pop: function() {
+    return socketErrorLinks.pop();
   }
 };
 
@@ -51,10 +54,10 @@ exports.titleErrorLinks = {
 
 exports.newTopics = {
   push: function(data) {
-    newTopics.push(data);
+    newTopics.pushUniq(data);
   },
-  uniq: function() {
-    return newTopics.uniq();
+  pop: function() {
+    return newTopics.pop();
   }
 };
 

@@ -1,16 +1,5 @@
-warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.
-Trace
-    at Socket.EventEmitter.addListener (events.js:160:15)
-    at Socket.Readable.on (_stream_readable.js:689:33)
-    at Socket.EventEmitter.once (events.js:185:8)
-    at Request.onResponse (/home/stefan/buzzr/node_modules/request/request.js:713:25)
-    at ClientRequest.g (events.js:180:16)
-    at ClientRequest.EventEmitter.emit (events.js:95:17)
-    at HTTPParser.parserOnIncomingClient [as onIncoming] (http.js:1688:21)
-    at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:121:23)
-    at Socket.socketOnData [as ondata] (http.js:1583:20)
-    at TCP.onread (net.js:527:27)
-
+// 'https://www.googleapis.com/language/translate/v2/detect?q=' +
+// req.params.id + '&key=' + process.env.GOGL_API_KEY
 
 cleanup
 =======

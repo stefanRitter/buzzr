@@ -15,7 +15,14 @@ stringArraySchema.methods.push = function(data) {
   this.save();
 };
 
-stringArraySchema.methods.uniq = function() {
+stringArraySchema.methods.pop = function() {
+  var obj = this.array.pop();
+  this.save();
+  return obj;
+};
+
+stringArraySchema.methods.pushUniq = function(data) {
+  this.array.push(data);
   this.array = _.uniq(this.array);
   this.save();
   return this.array;
