@@ -1,28 +1,33 @@
 'use strict';
 
-var SocketErrorLinks = require('mongoose').model('SocketErrorLinks'),
-    TitleErrorLinks = require('mongoose').model('TitleErrorLinks'),
-    Topics = require('mongoose').model('Topics');
+var StringArray = require('mongoose').model('StringArray');
 
 var titleErrorLinks,
     socketErrorLinks,
-    topics;
+    topics,
+    newTopics;
 
 
-SocketErrorLinks.findOne({name: 'socketErrorLinks'}, function(err, obj) {
+StringArray.findOne({name: 'socketErrorLinks'}, function(err, obj) {
   if (err) { throw err; }
   socketErrorLinks = obj;
 });
 
-TitleErrorLinks.findOne({name: 'titleErrorLinks'}, function(err, obj) {
+StringArray.findOne({name: 'titleErrorLinks'}, function(err, obj) {
   if (err) { throw err; }
   titleErrorLinks = obj;
 });
 
-Topics.findOne({name: 'topics'}, function(err, obj) {
+StringArray.findOne({name: 'topics'}, function(err, obj) {
   if (err) { throw err; }
   topics = obj;
 });
+
+StringArray.findOne({name: 'newTopics'}, function(err, obj) {
+  if (err) { throw err; }
+  newTopics = obj;
+});
+
 
 
 exports.socketErrorLinks = {
@@ -30,11 +35,22 @@ exports.socketErrorLinks = {
     socketErrorLinks.push(data);
   }
 };
+
 exports.titleErrorLinks = {
   push: function(data) {
     titleErrorLinks.push(data);
   }
 };
+
+exports.newTopics = {
+  push: function(data) {
+    newTopics.push(data);
+  },
+  uniq: function() {
+    return newTopics.uniq();
+  }
+};
+
 exports.topics = {
   push: function(data) {
     topics.push(data);

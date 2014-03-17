@@ -1,9 +1,9 @@
 'use strict';
 
 var User = require('./User'),
-    Arrays = require('./Arrays');
+    StringArray = require('./StringArray');
 
 User.createDefaultUsers();
-Arrays.createArrays();
+StringArray.createArrays();
 
 require('./Buzzr');

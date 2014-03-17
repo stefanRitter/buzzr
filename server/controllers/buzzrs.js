@@ -1,11 +1,7 @@
 'use strict';
 
-var Buzzr = require('mongoose').model('Buzzr');
-
-
-function createBuzzr() {
-  // TODO
-}
+var Buzzr = require('mongoose').model('Buzzr'),
+    arr = require('../utils/arrays.js');
 
 
 exports.getByTopic = function (req, res) {
@@ -15,7 +11,7 @@ exports.getByTopic = function (req, res) {
     if (err) { return res.json({err: err}); }
     
     if (!obj) {
-      createBuzzr(topic);
+      arr.newTopics.push(topic);
       return res.json({links: []});
     }
     
