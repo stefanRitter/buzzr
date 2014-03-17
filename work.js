@@ -9,15 +9,15 @@ require('dotenv').load();
 
 
 var env = args[0] || 'development',
-    config = require('../server/config/config')[env],
+    config = require('./server/config/config')[env],
     app = express(),
     worker = args[1] || 'search';
 
 // setup datastore
-require('../server/config/mongoose.js')(config);
+require('./server/config/mongoose.js')(config);
 
 // setup express
-require('../server/config/express.js')(app, config);
+require('./server/config/express.js')(app, config);
 
 // start worker
-require('./'+worker+'/')(app);
+require('./worker/'+worker+'/')(app);

@@ -30,7 +30,9 @@ function work() {
         twitter.update(buzzr);
       });
     }
-  }, 16*6000);
+
+    arr.update();
+  }, 960000);
 }
 
 
