@@ -11,8 +11,6 @@ function work() {
       topics = [];
 
   setInterval(function() {
-    logger.log('SEARCH: 15 min loop restarted');
-
     var topic = arr.newTopics.pop();
     if (topic) {
       Buzzr.create({topic: topic}, function(err, newBuzzr) {
@@ -32,7 +30,7 @@ function work() {
     }
 
     arr.update();
-  }, 960000);
+  }, 4000);
 }
 
 
