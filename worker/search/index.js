@@ -7,10 +7,7 @@ var arr = require('../../server/utils/arrays.js'),
 var EventEmitter = require('events').EventEmitter,
     ee = new EventEmitter();
 
-var currentTopic = -1,
-    requestCount = 0,
-    startTime = Date.now(),
-    elapsedTime = 960000;
+var currentTopic = -1;
 
 
 function nextEvent() {
@@ -37,19 +34,13 @@ function nextEvent() {
 }
 
 function reset() {
-  var wait = elapsedTime - 960000;
-  
   setTimeout(function() {
-    startTime = Date.now();
     ee.emit('next');
-  }, (wait < 0 ? 0 : wait));
+  }, 18000);
 }
 
 function continueEvent() {
-  requestCount += 1;
-  elapsedTime = startTime - Date.now();
-
-  if (requestCount > 400 || elapsedTime > 900000) {
+  if (true) {
     ee.emit('reset');
   } else {
     ee.emit('next');

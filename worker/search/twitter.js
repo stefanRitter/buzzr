@@ -69,7 +69,7 @@ function getTweets(buzzr) {
   T.get('search/tweets', {
     q: query,
     include_entities: true,
-    count: 100
+    count: 50
   },
   function(err, reply) {
     if (err) { throw new Error(err); }
