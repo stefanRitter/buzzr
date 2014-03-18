@@ -8,7 +8,7 @@ var express = require('express'),
 require('dotenv').load();
 
 
-var env = args[0] || 'development',
+var env = process.env.NODE_ENV,
     config = require('./server/config/config')[env],
     app = express();
 

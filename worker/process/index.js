@@ -2,8 +2,7 @@
 
 require('dotenv').load();
 
-var args = process.argv.slice(2),
-    env = args[0] || 'development',
+var env = process.env.NODE_ENV,
     config = require('../../server/config/config')[env];
 
 // setup datastore
