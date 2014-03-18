@@ -14,9 +14,23 @@ var linkArraySchema = new Schema({
   }]
 });
 
-linkArraySchema.methods.push = function(data) {
-  this.array.push(data);
+linkArraySchema.methods.push = function(link) {
+  this.array.push(link);
   this.save();
+};
+
+linkArraySchema.methods.pushUniq = function(newLink) {
+  var index = -1;
+  this.array.forEach(function(link, i) {
+    if (link.url === newLink.url) {
+      index = i;
+    }
+  });
+  
+  if (index > -1) {
+    this.array.push(newLink);
+    this.save();
+  }
 };
 
 linkArraySchema.methods.pop = function() {

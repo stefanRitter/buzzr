@@ -1,7 +1,9 @@
 'use strict';
 
 var ent = require('ent'),
-    arr = require('../../server/utils/arrays.js');
+    arr = require('../../server/utils/arrays.js'),
+    Buzzr = require('mongoose').model('Buzzr'),
+    logger = require('../common/logger.js');
 
 var excludedDomains = {
   'pinterest.com': true,
@@ -19,29 +21,31 @@ var excludedDomains = {
 };
 
 
-function processLink(data, rank, buzzr) {
-  var expandedUrl = data.url,
+function processLink(link, buzzr) {
+  var expandedUrl = link.url,
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
   
   if (excludedDomains[domain]) { return; }
-  if (!data.title || data.title === ' ') {
-    return arr.titleErrorLinks.push(data.url);
+  if (!link.title || link.title === '') {
+    delete link.title;
+    return arr.titleErrorLinks.push(link);
   }
 
-  data.url = data.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');
-  data.rank = rank;
-  data.title = ent.decode(data.title);
-  buzzr.pushLink(data);
+  logger.log('PROCESS: adding ' + expandedUrl);
+
+  link.url = link.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');
+  link.title = ent.decode(link.title);
+  buzzr.pushLink(link);
 }
 
-module.exports = function (rank, buzzr, done) {
-  return function(err, data) {
-    done(); // start next request
-
-    if (err) {
-      arr.socketErrorLinks.push(data.url);
-      data.err = err;
-    }
-    processLink(data, rank, buzzr);
-  };
+module.exports = function (err, link) {
+  if (err) {
+    logger.error('PROCESS: error ' + link.url);
+    return arr.socketErrorLinks.push(link);
+  }
+  
+  Buzzr.findOne({topic: link.topic}, function(err, buzzr) {
+    if (err) { throw err; }
+    processLink(link, buzzr);
+  });
 };

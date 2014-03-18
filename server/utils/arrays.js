@@ -41,7 +41,7 @@ init();
 
 exports.socketErrorLinks = {
   push: function(data) {
-    socketErrorLinks.push(data);
+    socketErrorLinks.pushUniq(data);
   },
   pop: function() {
     return socketErrorLinks.pop();
@@ -59,7 +59,7 @@ exports.newLinks = {
 
 exports.titleErrorLinks = {
   push: function(data) {
-    titleErrorLinks.push(data);
+    titleErrorLinks.pushUniq(data);
   }
 };
 

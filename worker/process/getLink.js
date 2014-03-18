@@ -1,13 +1,12 @@
 'use strict';
 
-// example:
-// require('./worker/getLink.js')('http://google.com')
-
 var request = require('request'),
     cheerio = require('cheerio'),
     logger = require('../common/logger.js');
 
-module.exports = function (shortUrl, cb) {
+module.exports = function (link, cb) {
+  var shortUrl = link.url;
+
   request(
   {
     method: 'GET',
@@ -22,22 +21,20 @@ module.exports = function (shortUrl, cb) {
   },
   
   function (err, response, body) {
-    if (err || response.statusCode !== 200) {
-      var status = !!response ? response.statusCode : '';
-      logger.error('URL ERROR', shortUrl, err, status);
-      return cb(err, {
-        url: shortUrl,
-        title: ''
-      });
+    if (err) {
+      return cb(err, link);
+    }
+
+    if (response.statusCode !== 200) {
+      return logger.error('URL STATUS ERROR', shortUrl, response.statusCode);
     }
 
     var $ = cheerio.load(body),
-        title = $('title').first().text();
+        title = $('title').first().text().trim();
 
-    cb(err, {
-      url: response.request.href,
-      title: title
-    });
+    link.url = response.request.href;
+    link.title = title;
+    cb(null, link);
   });
 };
 
