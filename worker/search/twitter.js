@@ -2,8 +2,7 @@
 
 var arr = require('../../server/utils/arrays.js'),
     logger = require('../common/logger.js'),
-    Twit = require('twit'),
-    currentTopic = '';
+    Twit = require('twit');
 
 var T = new Twit({
   consumer_key:         process.env.TWIT_KEY,
@@ -12,6 +11,8 @@ var T = new Twit({
   access_token_secret:  process.env.TWIT_TOKEN_SECRET
 });
 
+var currentTopic = '',
+    ee = {};
 
 function calcRank(tweet) {
   var favs = tweet.favorite_count || 0,
@@ -40,7 +41,7 @@ function processTweet(tweet) {
   }
 }
 
-function getTweets(buzzr) {
+function getTweets(buzzr, creating) {
   var query = buzzr.topic + ' filter:links';
   
   currentTopic = buzzr.topic;
@@ -55,11 +56,24 @@ function getTweets(buzzr) {
     var tweets = reply.statuses;
     tweets.forEach(processTweet);
     //maxId = reply.search_metadata.max_id;
+
+    if (creating) {
+      ee.emit('continueCreate');
+    } else {
+      ee.emit('continue');
+    }
   });
 }
 
 
-exports.update = function(buzzr) {
+exports.update = function(buzzr, _ee) {
   logger.log('SEARCH: updating: ' + buzzr.topic);
+  ee = _ee;
   getTweets(buzzr);
+};
+
+exports.create = function(buzzr, _ee) {
+  logger.log('SEARCH: creating: ' + buzzr.topic);
+  ee = _ee;
+  getTweets(buzzr, true);
 };
