@@ -8,7 +8,6 @@ var EventEmitter = require('events').EventEmitter,
     ee = new EventEmitter();
 
 var currentTopic = -1,
-    currentBuzzr = {},
     requestCount = 0,
     startTime = Date.now(),
     elapsedTime = 960000;
@@ -16,65 +15,62 @@ var currentTopic = -1,
 
 function nextEvent() {
   var topics = arr.topics.get(),
-      topic = topics[++currentTopic % topics.length],
-      wait = elapsedTime - 960000;
+      topic = arr.newTopics.pop();
   
-  setTimeout(function() {
+  if (topic) {
+    Buzzr.create({topic: topic}, function(err, newBuzzr) {
+      if (err) { throw err; }
+      
+      ee.emit('update', newBuzzr);
+    });
+  
+  } else {
+    topic = topics[++currentTopic % topics.length];
+    
     Buzzr.findOne({topic: topic}, function(err, buzzr) {
       if (err) { throw err; }
       if (!buzzr) { throw new Error('No Buzzr found: ' + topic); }
       
-      currentBuzzr = buzzr;
-      startTime = Date.now();
-      ee.emit('update');
+      ee.emit('update', buzzr);
     });
+  }
+}
+
+function reset() {
+  var wait = elapsedTime - 960000;
+  
+  setTimeout(function() {
+    arr.update();
+    startTime = Date.now();
+    ee.emit('next');
   }, (wait < 0 ? 0 : wait));
 }
 
 function continueEvent() {
-  var topic = arr.newTopics.pop();
-  
-  if (topic) {
-    // stop current update cycle and create new buzzr
-    Buzzr.create({topic: topic}, function(err, newBuzzr) {
-      if (err) { throw err; }
-      ee.emit('create', newBuzzr);
-    });
-  
+  requestCount += 1;
+  elapsedTime = startTime - Date.now();
+
+  if (requestCount > 400 || elapsedTime > 900000) {
+    ee.emit('reset');
   } else {
-    requestCount += 1;
-    elapsedTime = startTime - Date.now();
-    
-    if (requestCount > 400 || elapsedTime > 900000) {
-      ee.emit('next');
-    } else {
-      ee.emit('update');
-    }
+    ee.emit('next');
   }
-
-  arr.update();
 }
 
-function createEvent(newBuzzr) {
-  // createNewTopicWhenDoneContinue
-  twitter.create(newBuzzr, ee);
-  // reset startTime and continue
-}
-
-function updateEvent() {
+function update(currentBuzzr) {
   twitter.update(currentBuzzr, ee);
 }
 
 ee.on('continue', continueEvent);
 ee.on('next',     nextEvent);
-ee.on('update',   updateEvent);
-ee.on('create',   createEvent);
+ee.on('update',   update);
+ee.on('reset',    reset);
 
 
 module.exports = function(app) {
   app.get('/start', function(req, res) {
     res.send(200);
-    ee.emit('next');
+    ee.emit('reset');
   });
   app.listen(8080);
   console.log('listening on port 8080');

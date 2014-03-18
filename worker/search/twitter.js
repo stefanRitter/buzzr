@@ -41,7 +41,7 @@ function processTweet(tweet) {
   }
 }
 
-function getTweets(buzzr, creating) {
+function getTweets(buzzr) {
   var query = buzzr.topic + ' filter:links';
   
   currentTopic = buzzr.topic;
@@ -57,11 +57,7 @@ function getTweets(buzzr, creating) {
     tweets.forEach(processTweet);
     //maxId = reply.search_metadata.max_id;
 
-    if (creating) {
-      ee.emit('continueCreate');
-    } else {
-      ee.emit('continue');
-    }
+    ee.emit('continue');
   });
 }
 
@@ -72,8 +68,3 @@ exports.update = function(buzzr, _ee) {
   getTweets(buzzr);
 };
 
-exports.create = function(buzzr, _ee) {
-  logger.log('SEARCH: creating: ' + buzzr.topic);
-  ee = _ee;
-  getTweets(buzzr, true);
-};
