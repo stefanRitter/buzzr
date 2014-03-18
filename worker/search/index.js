@@ -17,7 +17,6 @@ function nextEvent() {
   if (topic) {
     Buzzr.create({topic: topic}, function(err, newBuzzr) {
       if (err) { throw err; }
-      
       ee.emit('update', newBuzzr);
     });
   
@@ -27,7 +26,6 @@ function nextEvent() {
     Buzzr.findOne({topic: topic}, function(err, buzzr) {
       if (err) { throw err; }
       if (!buzzr) { throw new Error('No Buzzr found: ' + topic); }
-      
       ee.emit('update', buzzr);
     });
   }
@@ -35,6 +33,7 @@ function nextEvent() {
 
 function reset() {
   setTimeout(function() {
+    arr.update();
     ee.emit('next');
   }, 18000);
 }
