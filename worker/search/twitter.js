@@ -60,7 +60,8 @@ function processTweet(tweet) {
 }
 
 function getTweets(buzzr) {
-  var query = buzzr.topic + ' filter:links';
+  var query = buzzr.topic + ' filter:links' +
+              ' since_id:' + buzzr.twitPoints.sinceId;
   
   currentTopic = buzzr.topic;
 
@@ -73,8 +74,15 @@ function getTweets(buzzr) {
     if (err) { throw new Error(err); }
     var tweets = reply.statuses;
     tweets.forEach(processTweet);
-    //maxId = reply.search_metadata.max_id;
 
+    if (buzzr.twitPoints.sinceId < reply.search_metadata.since_id_str) {
+      buzzr.twitPoints.sinceId = reply.search_metadata.since_id_str;
+    }
+    if (buzzr.twitPoints.maxId < reply.search_metadata.max_id_str) {
+      buzzr.twitPoints.maxId = reply.search_metadata.max_id_str;
+    }
+
+    buzzr.save();
     ee.emit('continue');
   });
 }

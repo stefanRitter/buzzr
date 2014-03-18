@@ -20,9 +20,9 @@ buzzrSchema = new Schema({
   lang: {type: String, default: 'en'},
   
   twitPoints: {
-    maxId:        String,
-    sinceId:      String,
-    nextSinceId:  String
+    maxId:        {type: String, default: '0'},
+    sinceId:      {type: String, default: '0'},
+    nextSinceId:  {type: String, default: '0'}
   },
 
   minRank: {type: Number, default: 1},

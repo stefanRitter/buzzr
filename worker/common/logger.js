@@ -1,9 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    path = require('path'),
-    date = new Date(),
-    today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+    path = require('path');
 
 function stringify(data) {
   var newData = '{ ';
@@ -17,6 +15,9 @@ function stringify(data) {
 
 function write2Log(func, data) {
   if (data === null) { return; }
+  
+  var date = new Date(),
+      today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
 
   if (typeof data === 'object') {
     if (typeof data.join === 'function') {
