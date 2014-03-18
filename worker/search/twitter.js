@@ -49,7 +49,6 @@ function processTweet(tweet) {
         url = link.expanded_url || link.url,
         rank = calcRank(tweet);
 
-    logger.log('SEARCH: found ' + url);
     arr.newLinks.push({
       url: url,
       topic: currentTopic,
@@ -60,8 +59,10 @@ function processTweet(tweet) {
 }
 
 function getTweets(buzzr) {
-  var query = buzzr.topic + ' filter:links' +
-              ' since_id:' + buzzr.twitPoints.sinceId;
+  var query = buzzr.topic + ' filter:links';
+  if (buzzr.sinceId !== '0') {
+    query += ' since_id:' + buzzr.twitPoints.sinceId;
+  }
   
   currentTopic = buzzr.topic;
 
@@ -72,17 +73,25 @@ function getTweets(buzzr) {
   },
   function(err, reply) {
     if (err) { throw new Error(err); }
-    var tweets = reply.statuses;
-    tweets.forEach(processTweet);
+    
+    var tweets = reply.statuses,
+        refresh = reply.search_metadata.refresh_url,
+        nextResults = reply.search_metadata.next_results,
+        sinceId = refresh.split('&q=')[0].replace('?since_id=', ''),
+        maxId = '0';
 
-    if (buzzr.twitPoints.sinceId < reply.search_metadata.since_id_str) {
-      buzzr.twitPoints.sinceId = reply.search_metadata.since_id_str;
-    }
-    if (buzzr.twitPoints.maxId < reply.search_metadata.max_id_str) {
-      buzzr.twitPoints.maxId = reply.search_metadata.max_id_str;
+    if (nextResults) {
+      maxId = nextResults.split('&q=')[0].replace('?max_id=', '');
     }
 
+    buzzr.twitPoints.sinceId = sinceId;
+    if (maxId > buzzr.twitPoints.maxId) {
+      buzzr.twitPoints.maxId = maxId;
+    }
     buzzr.save();
+
+    logger.log('SEARCH: found ' + tweets.length);
+    tweets.forEach(processTweet);
     ee.emit('continue');
   });
 }

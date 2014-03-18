@@ -22,4 +22,9 @@ require('./server/config/express.js')(app, config);
 require('./worker/search/')(app);
 
 // start crawler
-require('child_process').fork('./worker/process/index.js');
+var child = require('child_process').fork('./worker/process/index.js');
+
+process.on('SIGINT', function() {
+  child.kill('SIGINT');
+  process.exit();
+});

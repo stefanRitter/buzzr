@@ -67,10 +67,10 @@ ee.on('reset',    reset);
 
 
 module.exports = function(app) {
-  app.get('/start', function(req, res) {
-    res.send(200);
-    ee.emit('reset');
-  });
   app.listen(8080);
   console.log('listening on port 8080');
+  
+  setTimeout(function() {
+    ee.emit('reset');
+  }, 3000);
 };

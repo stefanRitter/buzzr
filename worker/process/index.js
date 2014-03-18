@@ -26,4 +26,4 @@ setInterval(function() {
     arr.update();
     console.log('waiting for links...');
   }
-}, 3000);
+}, 2000);
