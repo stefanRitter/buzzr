@@ -40,7 +40,6 @@ function reset() {
   var wait = elapsedTime - 960000;
   
   setTimeout(function() {
-    arr.update();
     startTime = Date.now();
     ee.emit('next');
   }, (wait < 0 ? 0 : wait));

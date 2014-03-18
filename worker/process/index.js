@@ -1,13 +1,18 @@
 'use strict';
 
+require('dotenv').load();
+
+var args = process.argv.slice(2),
+    env = args[0] || 'development',
+    config = require('../../server/config/config')[env];
+
+// setup datastore
+require('../../server/config/mongoose.js')(config);
+
+
 var arr = require('../../server/utils/arrays.js'),
     getLink = require('./getLink.js'),
     linkProcessor = require('./linkProcessor.js');
-
-
-setInterval(function() {
-  arr.update();
-}, 7000);
 
 setInterval(function() {
   var link = arr.newLinks.pop();
@@ -18,12 +23,7 @@ setInterval(function() {
   if (!!link) {
     getLink(link, linkProcessor);
   } else {
+    arr.update();
     console.log('waiting for links...');
   }
 }, 3000);
-
-
-module.exports = function(app) {
-  app.listen(8090);
-  console.log('listening on port 8090');
-};

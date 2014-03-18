@@ -1,5 +1,23 @@
 'use strict';
 
+/*
+Example results:
+
+"search_metadata": {
+  "max_id": 250126199840518145,
+  "since_id": 24012619984051000,
+  "refresh_url":
+    "?since_id=250126199840518145&q=%23freebandnames&result_type=mixed&include_entities=1",
+  "next_results":
+    "?max_id=249279667666817023&q=%23freebandnames&count=4&include_entities=1&result_type=mixed",
+  "count": 4,
+  "completed_in": 0.035,
+  "since_id_str": "24012619984051000",
+  "query": "%23freebandnames",
+  "max_id_str": "250126199840518145"
+}
+*/
+
 var arr = require('../../server/utils/arrays.js'),
     logger = require('../common/logger.js'),
     Twit = require('twit');
