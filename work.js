@@ -24,6 +24,7 @@ require('./worker/search/')(app);
 // start crawler
 var child = require('child_process').fork('./worker/process/index.js');
 
+// kill child
 process.on('SIGINT', function() {
   child.kill('SIGINT');
   process.exit();
