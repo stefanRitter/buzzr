@@ -11,6 +11,7 @@ var stringArraySchema = new Schema({
 
 stringArraySchema.methods.push = function(stringData) {
   this.array.push(stringData);
+  this.save();
 };
 
 stringArraySchema.methods.pop = function() {

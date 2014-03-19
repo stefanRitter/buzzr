@@ -11,48 +11,25 @@ var currentTopic = -1;
 
 
 function updateBuzzr(err, buzzr) {
-  if (err) {
-    if (err.toString().indexOf('E11000') > -1) {
-      arr.topics.update();
-      arr.newTopics.update(function() {
-        ee.emit('next');
-      });
-    }
-    else {
-      throw err;
-    }
-  }
-  if (!buzzr) { return ee.emit('reset'); }
+  if (err) { throw err; }
+  if (!buzzr) { return ee.emit('continue'); }
   ee.emit('update', buzzr);
 }
 
-
 function nextEvent() {
   var topics = arr.topics.get(),
-      newTopics = arr.newTopics.get();
+      topic = topics[++currentTopic % topics.length];
 
-  // loop through all new topics if one is really new priorities it
-  for (var nt = 0, ntl = newTopics.length; nt < ntl; nt += 1) {
-    if (topics.indexOf(newTopics[nt]) === -1) {
-      return Buzzr.create({topic: newTopics[nt]}, updateBuzzr);
-    }
-  }
-  
-  var topic = topics[++currentTopic % topics.length];
   Buzzr.findOne({topic: topic}, updateBuzzr);
 }
 
-function reset() {
+function continueEvent() {
   setTimeout(function() {
     arr.topics.update();
     arr.newTopics.update(function() {
       ee.emit('next');
     });
   }, 20000);
-}
-
-function continueEvent() {
-  ee.emit('reset');
 }
 
 function update(currentBuzzr) {
@@ -62,7 +39,6 @@ function update(currentBuzzr) {
 ee.on('continue', continueEvent);
 ee.on('next',     nextEvent);
 ee.on('update',   update);
-ee.on('reset',    reset);
 
 
 module.exports = function(app) {
@@ -70,6 +46,6 @@ module.exports = function(app) {
   console.log('listening on port 8080');
   
   setTimeout(function() {
-    ee.emit('reset');
+    ee.emit('continue');
   }, 3000);
 };
