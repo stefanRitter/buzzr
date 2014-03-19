@@ -9,34 +9,35 @@ var titleErrorLinks,
     topics,
     newTopics;
 
-
-function init() {
+function getAll(cb) {
   LinkArray.findOne({name: 'socketErrorLinks'}, function(err, obj) {
     if (err) { throw err; }
     socketErrorLinks = obj;
-  });
 
-  LinkArray.findOne({name: 'titleErrorLinks'}, function(err, obj) {
-    if (err) { throw err; }
-    titleErrorLinks = obj;
-  });
+    LinkArray.findOne({name: 'titleErrorLinks'}, function(err, obj) {
+      if (err) { throw err; }
+      titleErrorLinks = obj;
 
-  LinkArray.findOne({name: 'newLinks'}, function(err, obj) {
-    if (err) { throw err; }
-    newLinks = obj;
-  });
+      LinkArray.findOne({name: 'newLinks'}, function(err, obj) {
+        if (err) { throw err; }
+        newLinks = obj;
 
-  StringArray.findOne({name: 'topics'}, function(err, obj) {
-    if (err) { throw err; }
-    topics = obj;
-  });
+        StringArray.findOne({name: 'topics'}, function(err, obj) {
+          if (err) { throw err; }
+          topics = obj;
 
-  StringArray.findOne({name: 'newTopics'}, function(err, obj) {
-    if (err) { throw err; }
-    newTopics = obj;
+          StringArray.findOne({name: 'newTopics'}, function(err, obj) {
+            if (err) { throw err; }
+            newTopics = obj;
+
+            if (cb) {cb();}
+          });
+        });
+      });
+    });
   });
 }
-init();
+getAll();
 
 
 exports.socketErrorLinks = {
@@ -67,8 +68,8 @@ exports.newTopics = {
   push: function(data) {
     newTopics.pushUniq(data);
   },
-  pop: function() {
-    return newTopics.pop();
+  get: function() {
+    return newTopics.array;
   }
 };
 
@@ -81,6 +82,6 @@ exports.topics = {
   }
 };
 
-exports.update = function() {
-  init();
+exports.update = function(cb) {
+  getAll(cb);
 };

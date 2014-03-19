@@ -10,22 +10,19 @@ var stringArraySchema = new Schema({
   array: {type: [String], default: []}
 });
 
-stringArraySchema.methods.push = function(data) {
-  this.array.push(data);
-  this.save();
+stringArraySchema.methods.push = function(stringData) {
+  this.array.push(stringData);
 };
 
 stringArraySchema.methods.pop = function() {
   var obj = this.array.pop();
-  this.save();
   return obj;
 };
 
-stringArraySchema.methods.pushUniq = function(data) {
-  this.array.push(data);
-  this.array = _.uniq(this.array);
-  this.save();
-  return this.array;
+stringArraySchema.methods.pushUniq = function(stringData) {
+  if (this.array.indexOf(stringData) === -1) {
+    this.array.push(stringData);
+  }
 };
 
 

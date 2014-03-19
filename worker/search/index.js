@@ -12,29 +12,31 @@ var currentTopic = -1;
 
 function nextEvent() {
   var topics = arr.topics.get(),
-      topic = arr.newTopics.pop();
+      newTopics = arr.newTopics.get();
   
-  if (topic) {
-    Buzzr.create({topic: topic}, function(err, newBuzzr) {
-      if (err) { throw err; }
-      ee.emit('update', newBuzzr);
-    });
-  
-  } else {
-    topic = topics[++currentTopic % topics.length];
-    
-    Buzzr.findOne({topic: topic}, function(err, buzzr) {
-      if (err) { throw err; }
-      if (!buzzr) { throw new Error('No Buzzr found: ' + topic); }
-      ee.emit('update', buzzr);
-    });
+  // loop through all new topics if one is really new priorities it
+  for (var nt = 0, ntl = newTopics.length; nt < ntl; nt += 1) {
+    if (topics.indexOf(newTopics[nt]) === -1) {
+      return Buzzr.create({topic: topic}, function(err, newBuzzr) {
+        if (err) { throw err; }
+        ee.emit('update', newBuzzr);
+      });
+    }
   }
+  
+  var topic = topics[++currentTopic % topics.length];
+  Buzzr.findOne({topic: topic}, function(err, buzzr) {
+    if (err) { throw err; }
+    if (!buzzr) { throw new Error('No Buzzr found: ' + topic); }
+    ee.emit('update', buzzr);
+  });
 }
 
 function reset() {
   setTimeout(function() {
-    arr.update();
-    ee.emit('next');
+    arr.update(function() {
+      ee.emit('next');
+    });
   }, 18000);
 }
 

@@ -11,7 +11,6 @@ exports.getByTopic = function (req, res) {
     if (err) { return res.json({err: err}); }
     
     if (!obj) {
-      console.log('NEW BUZZR: ' + topic);
       arr.newTopics.push(topic);
       return res.json({links: []});
     }
