@@ -5,8 +5,11 @@ var Buzzr = require('mongoose').model('Buzzr'),
 
 
 function registerNewTopic(topic) {
-  // TODO: remove duplicates
   arr.newTopics.push(topic);
+  
+  if (arr.newTopics.length() > 10) {
+    // TODO: remove duplicates
+  }
 }
 
 exports.getByTopic = function (req, res) {

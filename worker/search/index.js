@@ -34,7 +34,7 @@ function nextEvent() {
 
 function reset() {
   setTimeout(function() {
-    arr.update(function() {
+    arr.newTopics.update(function() {
       ee.emit('next');
     });
   }, 18000);
