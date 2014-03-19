@@ -1,8 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    _ = require('lodash');
+    Schema = mongoose.Schema;
 
 
 var stringArraySchema = new Schema({

@@ -2,13 +2,12 @@
 
 'use strict';
 
-var express = require('express'),
-    args = process.argv.slice(2);
+var express = require('express');
 
 require('dotenv').load();
 
 
-var env = process.env.NODE_ENV,
+var env = process.env.NODE_ENV || 'development',
     config = require('./server/config/config')[env],
     app = express();
 

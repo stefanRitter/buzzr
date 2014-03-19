@@ -4,6 +4,11 @@ var Buzzr = require('mongoose').model('Buzzr'),
     arr = require('../utils/arrays.js');
 
 
+function registerNewTopic(topic) {
+  // TODO: remove duplicates
+  arr.newTopics.push(topic);
+}
+
 exports.getByTopic = function (req, res) {
   var topic = decodeURI(req.params.id);
 
@@ -11,7 +16,7 @@ exports.getByTopic = function (req, res) {
     if (err) { return res.json({err: err}); }
     
     if (!obj) {
-      arr.newTopics.push(topic);
+      registerNewTopic(topic);
       return res.json({links: []});
     }
     

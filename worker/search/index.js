@@ -10,6 +10,13 @@ var EventEmitter = require('events').EventEmitter,
 var currentTopic = -1;
 
 
+function updateBuzzr(err, buzzr) {
+  if (err) { throw err; }
+  if (!buzzr) { return ee.emit('reset'); }
+  ee.emit('update', buzzr);
+}
+
+
 function nextEvent() {
   var topics = arr.topics.get(),
       newTopics = arr.newTopics.get();
@@ -17,19 +24,12 @@ function nextEvent() {
   // loop through all new topics if one is really new priorities it
   for (var nt = 0, ntl = newTopics.length; nt < ntl; nt += 1) {
     if (topics.indexOf(newTopics[nt]) === -1) {
-      return Buzzr.create({topic: topic}, function(err, newBuzzr) {
-        if (err) { throw err; }
-        ee.emit('update', newBuzzr);
-      });
+      return Buzzr.create({topic: newTopics[nt]}, updateBuzzr);
     }
   }
   
   var topic = topics[++currentTopic % topics.length];
-  Buzzr.findOne({topic: topic}, function(err, buzzr) {
-    if (err) { throw err; }
-    if (!buzzr) { throw new Error('No Buzzr found: ' + topic); }
-    ee.emit('update', buzzr);
-  });
+  Buzzr.findOne({topic: topic}, updateBuzzr);
 }
 
 function reset() {
@@ -41,11 +41,7 @@ function reset() {
 }
 
 function continueEvent() {
-  if (true) {
-    ee.emit('reset');
-  } else {
-    ee.emit('next');
-  }
+  ee.emit('reset');
 }
 
 function update(currentBuzzr) {
