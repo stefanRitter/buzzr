@@ -16,6 +16,7 @@ var linkArraySchema = new Schema({
 
 linkArraySchema.methods.push = function(link) {
   this.array.push(link);
+  this.save();
 };
 
 linkArraySchema.methods.pushUniq = function(newLink) {
@@ -28,11 +29,13 @@ linkArraySchema.methods.pushUniq = function(newLink) {
   
   if (index === -1) {
     this.array.push(newLink);
+    this.save();
   }
 };
 
 linkArraySchema.methods.pop = function() {
-  var link = this.array.pop();
+  var link = this.array.$pop();
+  this.save();
   return link;
 };
 

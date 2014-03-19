@@ -14,13 +14,15 @@ stringArraySchema.methods.push = function(stringData) {
 };
 
 stringArraySchema.methods.pop = function() {
-  var obj = this.array.pop();
+  var obj = this.array.$pop();
+  this.save();
   return obj;
 };
 
 stringArraySchema.methods.pushUniq = function(stringData) {
   if (this.array.indexOf(stringData) === -1) {
     this.array.push(stringData);
+    this.save();
   }
 };
 
