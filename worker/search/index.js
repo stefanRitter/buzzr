@@ -13,7 +13,7 @@ var currentTopic = -1;
 function updateBuzzr(err, buzzr) {
   if (err) {
     if (err.toString().indexOf('E11000') > -1) {
-      console.log('DUB BUZZR ERROR');
+      arr.topics.update();
       arr.newTopics.update(function() {
         ee.emit('next');
       });
@@ -29,13 +29,22 @@ function updateBuzzr(err, buzzr) {
 
 function nextEvent() {
   var topics = arr.topics.get(),
-      topic = topics[++currentTopic % topics.length];
+      newTopics = arr.newTopics.get();
+
+  // loop through all new topics if one is really new priorities it
+  for (var nt = 0, ntl = newTopics.length; nt < ntl; nt += 1) {
+    if (topics.indexOf(newTopics[nt]) === -1) {
+      return Buzzr.create({topic: newTopics[nt]}, updateBuzzr);
+    }
+  }
   
+  var topic = topics[++currentTopic % topics.length];
   Buzzr.findOne({topic: topic}, updateBuzzr);
 }
 
 function reset() {
   setTimeout(function() {
+    arr.topics.update();
     arr.newTopics.update(function() {
       ee.emit('next');
     });

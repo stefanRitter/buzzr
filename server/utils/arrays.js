@@ -83,5 +83,12 @@ exports.topics = {
   },
   get: function() {
     return topics.array;
+  },
+  update: function(cb) {
+    StringArray.findOne({name: 'topics'}, function(err, obj) {
+      if (err) { throw err; }
+      topics = obj;
+      if (cb) {cb();}
+    });
   }
 };
