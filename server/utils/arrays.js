@@ -49,6 +49,13 @@ exports.newLinks = {
   },
   pop: function() {
     return newLinks.pop();
+  },
+  update: function(cb) {
+    LinkArray.findOne({name: 'newLinks'}, function(err, obj) {
+      if (err) { throw err; }
+      newLinks = obj;
+      if (cb) {cb();}
+    });
   }
 };
 

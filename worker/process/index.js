@@ -5,15 +5,17 @@ var arr = require('../../server/utils/arrays.js'),
     linkProcessor = require('./linkProcessor.js');
 
 setInterval(function() {
-  var link = arr.newLinks.pop();
+  arr.newLinks.update(function() {
+    var link = arr.newLinks.pop();
       
-  if (!link) {
-    link = arr.socketErrorLinks.pop();
-  }
+    if (!link) {
+      link = arr.socketErrorLinks.pop();
+    }
 
-  if (!!link) {
-    getLink(link, linkProcessor);
-  } else {
-    console.log('waiting for links...');
-  }
-}, 2000);
+    if (!!link) {
+      getLink(link, linkProcessor);
+    } else {
+      console.log('waiting for links...');
+    }
+  });
+}, 2300);
