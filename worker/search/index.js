@@ -29,16 +29,8 @@ function updateBuzzr(err, buzzr) {
 
 function nextEvent() {
   var topics = arr.topics.get(),
-      newTopics = arr.newTopics.get();
+      topic = topics[++currentTopic % topics.length];
   
-  // loop through all new topics if one is really new priorities it
-  for (var nt = 0, ntl = newTopics.length; nt < ntl; nt += 1) {
-    if (topics.indexOf(newTopics[nt]) === -1) {
-      return Buzzr.create({topic: newTopics[nt]}, updateBuzzr);
-    }
-  }
-  
-  var topic = topics[++currentTopic % topics.length];
   Buzzr.findOne({topic: topic}, updateBuzzr);
 }
 
