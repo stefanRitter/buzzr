@@ -47,7 +47,7 @@ function reset() {
     arr.newTopics.update(function() {
       ee.emit('next');
     });
-  }, 18000);
+  }, 20000);
 }
 
 function continueEvent() {

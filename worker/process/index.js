@@ -6,6 +6,7 @@ var arr = require('../../server/utils/arrays.js'),
 
 setInterval(function() {
   var link = arr.newLinks.pop();
+      
   if (!link) {
     link = arr.socketErrorLinks.pop();
   }
