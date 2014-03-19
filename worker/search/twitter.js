@@ -49,7 +49,6 @@ function processTweet(tweet) {
         url = link.expanded_url || link.url,
         rank = calcRank(tweet);
 
-    console.log('for processing: ' + url);
     arr.newLinks.push({
       url: url,
       topic: currentTopic,
