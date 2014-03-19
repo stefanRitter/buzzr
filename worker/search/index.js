@@ -11,7 +11,7 @@ var currentTopic = -1;
 
 
 function updateBuzzr(err, buzzr) {
-  if (err) { 
+  if (err) {
     if (err.toString().indexOf('E11000') > -1) {
       console.log('DUB BUZZR ERROR');
       arr.newTopics.update(function() {
@@ -19,7 +19,7 @@ function updateBuzzr(err, buzzr) {
       });
     }
     else {
-      throw err; 
+      throw err;
     }
   }
   if (!buzzr) { return ee.emit('reset'); }
