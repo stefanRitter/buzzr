@@ -10,14 +10,14 @@ var excludedDomains = {
   'instagram.com': true,
   'ask.fm': true,
   'vine.co': true,
-  //'facebook.com': true,
   'amazon.com': true,
   'adf.ly': true,
   'q.gs': true,
   'buzzr.io': true,
   'dailymail.co.uk': true,
   'stackoverflow.com': true,
-  'newsnow.co.uk': true
+  'newsnow.co.uk': true,
+  'findmydreamjob.co.uk': true
 };
 
 

@@ -4,9 +4,21 @@ BUZZR
 work in progress
 
 
+WORKER
+======
+ssh -i innsbruck-ubuntu.pem ubuntu@54.72.83.88
+screen
+node --stack-size=32000 work.js
+CTRL+A .. D
+# resume
+screen -r
+# terminate SSH
+exit
+
 UTILS
 =====
 counting lines of code: git ls-files | xargs wc -l
+
 
 
 AWS SETUP
