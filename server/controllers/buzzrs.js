@@ -11,6 +11,9 @@ exports.getByTopic = function (req, res) {
     if (err) { return res.json({err: err}); }
     
     if (!obj) {
+      //arr.newTopics.update(function() {
+      //  var newTopic = arr.newTopics.push(topic);
+      //});
       Buzzr.create({topic: topic}, function(err, buzzr) {
         if (err) { throw err; }
         arr.topics.push(buzzr.topic);

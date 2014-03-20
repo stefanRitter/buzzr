@@ -72,7 +72,14 @@ function getTweets(buzzr) {
     count: 50
   },
   function(err, reply) {
-    if (err) { throw new Error(err); }
+    if (err) {
+      if (err.toString().indexOf('ETIMEDOUT') > -1) {
+        return setTimeout(function() {
+          ee.emit('continue');
+        }, 960000);
+      }
+      throw err;
+    }
     
     var tweets = reply.statuses,
         refresh = reply.search_metadata.refresh_url,
