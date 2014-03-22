@@ -6,7 +6,7 @@ work in progress
 
 WORKER
 ======
-ssh -i innsbruck-ubuntu.pem ubuntu@54.72.83.88
+ssh -i london-macbookair.pem ubuntu@54.186.153.188
 screen
 node --stack-size=32000 work.js
 CTRL+A .. D
@@ -73,6 +73,3 @@ sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-po
 #config firewall
 sudo iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT
 sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT
-
-# connect
-ssh -i innsbruck-ubuntu.pem ubuntu@54.72.83.88

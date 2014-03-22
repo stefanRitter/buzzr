@@ -25,25 +25,10 @@ function nextBuzzr() {
 }
 
 
-function createBuzzr(topic) {
-  // TODO
-  console.log(topic);
-  
-  //arr.topics.push(buzzr.topic);
-  ee.emit('next');
-}
-
-
 function continueEvent() {
   setTimeout(function() {
-    arr.newTopics.update(function() {
-      var newTopic = arr.newTopics.pop();
-      if (!!newTopic) {
-        return ee.emit('create', newTopic);
-      }
-      arr.topics.update(function() {
-        ee.emit('next');
-      });
+    arr.topics.update(function() {
+      ee.emit('next');
     });
   }, 60000);
 }
@@ -51,7 +36,6 @@ function continueEvent() {
 
 ee.on('continue', continueEvent);
 ee.on('next',     nextBuzzr);
-ee.on('create',   createBuzzr);
 
 
 module.exports = function(app) {
