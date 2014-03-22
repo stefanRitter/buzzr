@@ -9,7 +9,8 @@ require('../config/mongoose.js')(config);
 var Buzzr = require('mongoose').model('Buzzr'),
     arr = require('../utils/arrays.js');
 
-var getLink = require('../../worker/process/getLink.js'),
+var calcRank = require('../../worker/common/calcTweetRank.js'),
+    getLink = require('../../worker/process/getLink.js'),
     linkProcessor = require('../../worker/process/linkProcessor.js'),
     links = [];
 
@@ -27,7 +28,7 @@ function callTwitter(buzzr) {
     if (tweet.entities.urls && tweet.entities.urls.length > 0) {
       var link = tweet.entities.urls[0],
           url = link.expanded_url || link.url,
-          rank = 0; //calcRank(tweet);
+          rank = calcRank(tweet);
       
       links.push({
         url: url,
@@ -35,7 +36,6 @@ function callTwitter(buzzr) {
         provider: 'twitter',
         rank: rank
       });
-      console.log(url);
     }
   };
 
@@ -71,6 +71,10 @@ function callTwitter(buzzr) {
 
     console.log('CREATOR: found ' + tweets.length + ' for ' + buzzr.topic);
     tweets.forEach(processTweet);
+    links.forEach(function(link) {
+      getLink(link, linkProcessor);
+    });
+    arr.topics.push(buzzr.topic);
   });
 }
 
