@@ -441,9 +441,10 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.setBuzzrs();
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
+;angular.module('app').controller('appMainCtrl', function ($scope, $http, $route, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
   'use strict';
 
+  $scope.countDown = 10;
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;
@@ -490,6 +491,16 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
         
         if (!links || links.length === 0) {
           $scope.status.creating = true;
+          var interv = setInterval(function() {
+            $scope.$apply(function() {
+              $scope.countDown -= 1;
+              if ($scope.countDown <= 0) {
+                $scope.countDown = 0;
+                $route.reload();
+                clearInterval(interv);
+              }
+            });
+          }, 1000);
         
         } else {
           appProcessLinks.process($scope, res.data.links);
