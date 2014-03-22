@@ -43,6 +43,18 @@ buzzrSchema = new Schema({
   }]
 });
 
+buzzrSchema.methods.makeUniq = function() {
+  var tempA = _.uniq(this.activeLinks, 'title'),
+      tempP = _.uniq(this.passiveLinks, 'title');
+  
+  tempA = _.uniq(tempA, 'url');
+  tempP = _.uniq(tempP, 'url');
+
+  this.activeLinks = tempA;
+  this.passiveLinks = tempP;
+  this.save();
+};
+
 buzzrSchema.methods.pushLink = function(data) {
   // data.url, data.rank, data.title
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node --stack-size=32000 server.js",
     "test": "echo \"Please use Grunt for testing\" && exit 1"
   },
   "author": "",

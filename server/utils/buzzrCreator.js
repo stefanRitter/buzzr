@@ -71,10 +71,14 @@ function callTwitter(buzzr) {
 
     console.log('CREATOR: found ' + tweets.length + ' for ' + buzzr.topic);
     tweets.forEach(processTweet);
-    links.forEach(function(link) {
-      getLink(link, linkProcessor);
-    });
-    arr.topics.push(buzzr.topic);
+    links.forEach(function(link) { getLink(link, linkProcessor); });
+    
+    setTimeout(function() {
+      Buzzr.findOne({topic: buzzr.topic}, function(err, buzzr) {
+        buzzr.makeUniq();
+        arr.topics.push(buzzr.topic);
+      });
+    }, 8000);
   });
 }
 
