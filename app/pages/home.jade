@@ -5,6 +5,25 @@
   form.home-form.form(ng-submit="search()")
     input.home-input#focus(ng-model="searchText")
 
+  .center.margin-top-big(ng-show="status.creating")
+    p.margin-top-big
+      br
+      br
+      span.italic Check out these Buzzrs in the meantime:
+    p.margin-top-big
+      a.button-black.button-width(href="/damien%20hirst") Damien Hirst
+      | &nbsp;&nbsp;
+      a.button-white.button-width(href="/snowboarding") Snowboarding
+    p.margin-top-sm
+      a.button-white.button-width(href="/javascript") Javascript
+      | &nbsp;&nbsp;
+      a.button-black.button-width(href="/london%20property") London Property
+    p.margin-top-sm
+      a.button-black.button-width(href="/judith%20butler") Judith Butler
+      | &nbsp;&nbsp;
+      a.button-white.button-width(href="/teen%20wolf") Teen Wolf
+
+//- 
   p.center.margin-top-big(ng-hide="identity.isAuthenticated()")
     br
     br
@@ -12,11 +31,11 @@
     | Help make Buzzr better:
     br
     a.button-black(href="/join") Sign up for BETA access
-    //-
-      p.center.margin-top
-        a(href="/")
-          img.margin-right(src="/img/appstore.png", alt="Get it on the Apple App Store")
-        a(href="/")
-          img(src="/img/playstore.png", alt="Get it on the Google Play Store")
+
+  p.center.margin-top
+    a(href="/")
+      img.margin-right(src="/img/appstore.png", alt="Get it on the Apple App Store")
+    a(href="/")
+      img(src="/img/playstore.png", alt="Get it on the Google Play Store")
 
 include ../common/footer

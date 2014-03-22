@@ -21,19 +21,8 @@
     | Your topic 
     strong {{searchText}} 
     | is a new one for Buzzr!
-  p.margin-top(ng-hide="identity.isAuthenticated()")
-    | Creating new topics is only possible for logged-in users at this moment.
-    br
-    | Simply join now to create your new feed (takes only 30 seconds):
-    br
-    br
-    a.button-black(href="/join") Join to create a new Buzzr
-    br
-    br
-  p.margin-top(ng-show="identity.isAuthenticated()")
-    | Creating completely new topics takes a while for Buzzr.
-    br
-    | We will email you when your brand new Buzzr is ready (~ 15min).
+  p.margin-top
+    | Creating completely new topics takes a while for Buzzr (~ 5min)...
 
 
 //- loading

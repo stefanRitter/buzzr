@@ -55,7 +55,7 @@ cat ~/.ssh/id_rsa.pub
 
 # setup repo
 git clone git@github.com:stefanRitter/buzzr.git
-git remote add origin git@github.com:stefanRitter/buzzr.git
+git remote add heroku git@github.com:stefanRitter/buzzr.git
 heroku git:remote -a buzzr3
 heroku config:pull --overwrite --interactive
 npm install
