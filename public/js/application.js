@@ -1,6 +1,8 @@
 angular.module('app', ['ngResource', 'ngRoute']);
 
 angular.module('app').config(function ($routeProvider, $locationProvider) {
+  'use strict';
+
   var routeRoleChecks = {
     admin: {
       auth: function (appAuth) {
@@ -25,18 +27,20 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/:id',     {templateUrl: '/partials/main/main',      controller: 'appMainCtrl'});
   
   $routeProvider
-    .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',  controller: 'appReadlaterCtrl',
-                        resolve: routeRoleChecks.user})
-    .when('/account/settings', {templateUrl: '/partials/account/settings',  controller: 'appSettingsCtrl',
-                        resolve: routeRoleChecks.user});
+    .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',
+      controller: 'appReadlaterCtrl', resolve: routeRoleChecks.user})
+    .when('/account/settings', {templateUrl: '/partials/account/settings',
+      controller: 'appSettingsCtrl', resolve: routeRoleChecks.user});
 
   $routeProvider
-    .when('/admin/users', {templateUrl: '/partials/admin/users', controller: 'appAdminUsersCtrl',
-                            resolve: routeRoleChecks.admin});
+    .when('/admin/users', {templateUrl: '/partials/admin/users',
+      controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin});
 });
 
 
 angular.module('app').run(function ($rootScope, $location) {
+  'use strict';
+
   $rootScope.$on('$routeChangeError', function (event, current, previous, rejectionReason) {
     if (rejectionReason === 'not authorized') {
       $location.path('/');
