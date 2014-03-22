@@ -17,6 +17,8 @@ buzzrSchema = new Schema({
   },
 
   lang: {type: String, default: 'en'},
+
+  lastViewed: Date,
   
   twitPoints: {
     maxId:        {type: String, default: '0'},
@@ -42,6 +44,11 @@ buzzrSchema = new Schema({
     updated:    Date
   }]
 });
+
+buzzrSchema.methods.viewed = function() {
+  this.lastViewed = Date.now();
+  this.save();
+};
 
 buzzrSchema.methods.makeUniq = function() {
   var tempA = _.uniq(this.activeLinks, 'title'),

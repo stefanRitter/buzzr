@@ -34,7 +34,7 @@ sudo apt-get update
 sudo apt-get install -y nodejs
 sudo npm install bower -g
 sudo npm install grunt-cli -g
-
+sudo npm install forever -g
 
 # setup heroku
 heroku login
