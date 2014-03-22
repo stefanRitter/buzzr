@@ -33,7 +33,7 @@ function continueEvent() {
   }, 30000);
 }
 
-
+ee.setMaxListeners(20);
 ee.on('continue', continueEvent);
 ee.on('next',     nextBuzzr);
 
