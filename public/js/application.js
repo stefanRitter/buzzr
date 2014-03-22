@@ -457,12 +457,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 
   $scope.encode = function(title) {
     return encodeURI(title);
-  }
+  };
 
   $scope.showLoading = function() {
     var status = $scope.status;
-    if (status.searching || status.error) { return true; }
-    if (status.creating && appIdentity.isAuthenticated()) { return true; }
+    if (status.searching || status.error || status.creating) {
+      return true;
+    }
     return false;
   };
 
@@ -483,7 +484,8 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
         if (res.data.err) {
           $scope.errorMessage = res.data.err;
           $scope.status.error = true;
-          return $scope.status.searching = false;
+          $scope.status.searching = false;
+          return;
         }
         
         if (!links || links.length === 0) {

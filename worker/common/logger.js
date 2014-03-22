@@ -3,6 +3,9 @@
 var fs = require('fs'),
     path = require('path');
 
+fs.mkdir(path.resolve(__dirname, '../../logs') ,function(){});
+
+
 function stringify(data) {
   var newData = '{ ';
   for (var key in data) {
