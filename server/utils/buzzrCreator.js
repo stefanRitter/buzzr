@@ -78,7 +78,7 @@ function callTwitter(buzzr) {
         buzzr.makeUniq();
         arr.topics.push(buzzr.topic);
       });
-    }, 8000);
+    }, 9400);
   });
 }
 
