@@ -30,7 +30,7 @@ function continueEvent() {
     arr.topics.update(function() {
       ee.emit('next');
     });
-  }, 60000);
+  }, 30000);
 }
 
 

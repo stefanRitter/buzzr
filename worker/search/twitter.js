@@ -23,10 +23,10 @@ var arr = require('../../server/utils/arrays.js'),
     Twit = require('twit');
 
 var T = new Twit({
-  consumer_key:         process.env.TWIT_KEY,
-  consumer_secret:      process.env.TWIT_SECRET,
-  access_token:         process.env.TWIT_TOKEN,
-  access_token_secret:  process.env.TWIT_TOKEN_SECRET
+  consumer_key:         process.env.TWIT_KEY_SPDR,
+  consumer_secret:      process.env.TWIT_SECRET_SPDR,
+  access_token:         process.env.TWIT_TOKEN_SPDR,
+  access_token_secret:  process.env.TWIT_TOKEN_SECRET_SPDR
 });
 
 var currentTopic = '',
