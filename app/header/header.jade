@@ -18,17 +18,17 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
 
     //- Logged in
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
-      h4 Welcome back, {{ identity.currentUser.name }}!
-      a.underline.header-readlater(href="/account/readlater") Read later
-      a.button-black.header-button.relative(href="/")
-        | add new Buzzr
-        span.header-action-add +
+      .center.margin-top
+        a.header-action-readlater(href="/account/readlater")
+          span &hearts;
+        a.header-action-add(href="/")
+          span +
 
       ul.margin-top
         li.relative(ng-repeat="buzzr in buzzrs")
           a.button-white.header-button(href="/{{encode(buzzr)}}")
             | {{buzzr}}
-          span.header-action(ng-click="removeBuzzr(buzzr); $event.stopPropagation();") -
+          span.header-action-remove(ng-click="removeBuzzr(buzzr); $event.stopPropagation();") -
 
 
     .header-footer(ng-show="identity.isAuthenticated()")
