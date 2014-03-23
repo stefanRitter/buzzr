@@ -1,4 +1,4 @@
-angular.module('app').controller('appHomeCtrl', function ($scope, $location, appIdentity, appHeader) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appHeader, appIsMobile) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -17,5 +17,11 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, app
       // open header for returning users
       appHeader.toggle();
     }
+  }
+
+  // auto focus input on desktop
+  if (!appIsMobile.any()) {
+    var homeInput = $document[0].getElementById('focus');
+    homeInput.focus();
   }
 });
