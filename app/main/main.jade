@@ -9,10 +9,12 @@
 //- unknown error
 .center(ng-show="status.error")
   h2.margin-top-big
-    strong Unexpected error: 
+    strong Unexpected error:
+    br
     | {{errorMessage}}
     br
-    a.underline(ng-click="toggleFeedback()") Please contact us for help.
+    br
+    a.underline(ng-click="toggleFeedback()") Contact us for help.
 
 
 //- creating a new feed

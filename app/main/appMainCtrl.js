@@ -19,7 +19,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $route,
 
   $scope.showLoading = function() {
     var status = $scope.status;
-    if (status.searching || status.error || status.creating) {
+    if (status.searching || status.creating) {
       return true;
     }
     return false;
@@ -63,8 +63,13 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $route,
           appProcessLinks.process($scope, res.data.links);
           $scope.status.feeding = true;
         }
-
         $scope.status.searching = false;
+      
+      }, function() {
+        $scope.errorMessage = 'Sorry, something went wrong! Please try again!';
+        $scope.status.error = true;
+        $scope.status.searching = false;
+        return;
       });
   };
 
