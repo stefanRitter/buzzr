@@ -38,6 +38,6 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
         li
           a(href="", ng-click="signout()") Sign Out
   
-  .header-content-right
+  .header-content-right(ng-mouseenter="slideOut()")
     .header-logo(ng-click="toggleOpen(); $event.stopPropagation();")
       include ../../public/img/logo.svg

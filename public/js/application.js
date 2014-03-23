@@ -393,6 +393,13 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
 });
 ;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
   'use strict';
+  
+  function close() {
+    if ($scope.open) {
+      $scope.open = false;
+      $scope.$digest();
+    }
+  }
 
   $scope.open = false;
   $scope.identity = appIdentity;
@@ -401,11 +408,11 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
     if (appIdentity.isAuthenticated()) {
       $scope.buzzrs = appIdentity.currentUser.buzzrs;
     }
-  }
+  };
 
   $scope.encode = function(topic) {
     return encodeURI(topic);
-  }
+  };
 
   $scope.signout = function() {
     appAuth.logoutUser().then(function() {
@@ -421,13 +428,12 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
     $scope.open = !$scope.open;
     $document.one('click', close);
     $document.one('touch', close);
+  };
 
-    function close() {
-      if ($scope.open) {
-        $scope.open = false;
-        $scope.$digest();
-      }
-    }
+  $scope.slideOut = function() {
+    $scope.open = true;
+    $document.one('click', close);
+    $document.one('touch', close);
   };
 
   $scope.$on('toggleHeader', function() {
