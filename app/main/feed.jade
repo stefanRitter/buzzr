@@ -1,12 +1,17 @@
 .center(ng-show="status.feeding")
 
   .feed-topic(ng-click="toggleHeader(); $event.stopPropagation();") {{searchText}}
+  .feed-filters
+    input.filter-input(ng-model="filterByText", placeholder="search")
+    select.filter-select
+      option language
+      option coming soon
   
   .feed-container(ng-repeat="date in dates")
     .feed-date
       span.underline {{date}}
     
-    .feed-item(ng-repeat="link in links | filter: {activated: date} | orderBy:'rank':'true'")
+    .feed-item(ng-repeat="link in links | filter:filterByText | filter: {activated: date} | orderBy:'rank':'true'")
       .feed-item-body(ng-hide="link.removed")
         div(ng-show="identity.isAuthenticated()")
           a.feed-link(href="{{link.url}}", target="_blank", ng-click="trackView(link.url)") {{link.title}}
