@@ -11,13 +11,17 @@ var excludedDomains = {
   'ask.fm': true,
   'vine.co': true,
   'amazon.com': true,
+  'amazon.fr': true,
+  'amazon.de': true,
+  'amazon.co.uk': true,
   'adf.ly': true,
   'q.gs': true,
   'buzzr.io': true,
   'dailymail.co.uk': true,
   'stackoverflow.com': true,
   'newsnow.co.uk': true,
-  'findmydreamjob.co.uk': true
+  'findmydreamjob.co.uk': true,
+  'twitlonger.com': true
 };
 
 
@@ -28,7 +32,9 @@ function processLink(link, buzzr, done) {
   if (excludedDomains[domain]) { return; }
   if (!link.title || link.title === '') {
     delete link.title;
-    return arr.titleErrorLinks.push(link);
+    arr.titleErrorLinks.push(link);
+    if (done) { return done(); }
+    return;
   }
 
   logger.log('PROCESS: adding ' + expandedUrl);
@@ -41,11 +47,16 @@ function processLink(link, buzzr, done) {
 module.exports = function (err, link, done) {
   if (err) {
     logger.error('PROCESS: error ' + link.url);
-    return arr.socketErrorLinks.push(link);
+    arr.socketErrorLinks.push(link);
+    if (done) { return done(); }
+    return;
   }
   
   Buzzr.findOne({topic: link.topic}, function(err, buzzr) {
-    if (err) { throw err; }
+    if (err) {
+      if (done) { return done(err); }
+      throw err;
+    }
     processLink(link, buzzr, done);
   });
 };

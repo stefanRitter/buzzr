@@ -30,7 +30,8 @@
     "request": "^2.34.0",
     "cheerio": "^0.13.1",
     "twit": "^1.1.12",
-    "ent": "^0.1.0"
+    "ent": "^0.1.0",
+    "batch": "~0.5.0"
   },
   "devDependencies": {
     "bower": "~1.2.8",

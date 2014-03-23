@@ -1,7 +1,7 @@
 angular.module('app').controller('appMainCtrl', function ($scope, $http, $route, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
   'use strict';
 
-  $scope.countDown = 10;
+  $scope.countDown = 18;
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;

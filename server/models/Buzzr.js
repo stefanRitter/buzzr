@@ -52,7 +52,14 @@ buzzrSchema.methods.viewed = function() {
 
 buzzrSchema.methods.saveCb = function(cb) {
   this.save(function(err) {
-    if (err) { throw err; }
+    if (err) {
+      if (err.toString('VersionError').indexOf() > -1) {
+        console.log('CONCURRENT SAVE ERROR: '+this.topic);
+      } else {
+        if (cb) { return cb(err); }
+        throw err;
+      }
+    }
     if (cb) { cb(); }
   });
 };

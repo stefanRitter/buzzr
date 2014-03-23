@@ -7,14 +7,13 @@ var env = process.env.NODE_ENV || 'development',
 require('../config/mongoose.js')(config);
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    arr = require('../utils/arrays.js');
-
-var calcRank = require('../../worker/common/calcTweetRank.js'),
+    arr = require('../utils/arrays.js'),
+    calcRank = require('../../worker/common/calcTweetRank.js'),
     getLink = require('../../worker/process/getLink.js'),
     linkProcessor = require('../../worker/process/linkProcessor.js'),
-    links = [];
+    Twit = require('twit'),
+    Batch = require('batch');
 
-var Twit = require('twit');
 var T = new Twit({
   consumer_key:         process.env.TWIT_KEY,
   consumer_secret:      process.env.TWIT_SECRET,
@@ -24,6 +23,9 @@ var T = new Twit({
 
 
 function callTwitter(buzzr) {
+  var links = [],
+      batch = {};
+  
   var processTweet = function(tweet) {
     if (tweet.entities.urls && tweet.entities.urls.length > 0) {
       var link = tweet.entities.urls[0],
@@ -64,21 +66,27 @@ function callTwitter(buzzr) {
     }
 
     buzzr.twitPoints.sinceId = sinceId;
-    if (maxId > buzzr.twitPoints.maxId) {
-      buzzr.twitPoints.maxId = maxId;
-    }
+    buzzr.twitPoints.maxId = maxId;
     buzzr.save();
 
     console.log('CREATOR: found ' + tweets.length + ' for ' + buzzr.topic);
     tweets.forEach(processTweet);
-    links.forEach(function(link) { getLink(link, linkProcessor); });
-    
-    setTimeout(function() {
+
+    batch = new Batch();
+    batch.concurrency(10);
+    links.forEach(function(link) {
+      batch.push(function(done){
+        getLink(link, linkProcessor, done);
+      });
+    });
+    batch.end(function(err) {
+      if (err) { throw err; }
+      console.log('DONE');
       Buzzr.findOne({topic: buzzr.topic}, function(err, buzzr) {
         buzzr.makeUniq();
         arr.topics.push(buzzr.topic);
       });
-    }, 9400);
+    });
   });
 }
 
