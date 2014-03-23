@@ -7,7 +7,8 @@ var express = require('express');
 require('dotenv').load();
 
 
-var env = process.env.NODE_ENV || 'development',
+var args = process.argv.slice(2),
+    env = process.env.NODE_ENV || 'development',
     config = require('./server/config/config')[env],
     app = express();
 
@@ -17,11 +18,14 @@ require('./server/config/mongoose.js')(config);
 // setup express
 require('./server/config/express.js')(app, config);
 
-// start searcher
-require('./worker/search/')(app);
+if (args[0] === 'uniq') {
+  // uniqify
+  require('./worker/uniqify/');
 
-// start crawler
-require('./worker/process/index.js');
+} else {
+  // start searcher
+  require('./worker/search/')(app);
 
-// uniqify
-//require('./worker/uniqify/');
+  // start crawler
+  require('./worker/process/index.js');
+}
