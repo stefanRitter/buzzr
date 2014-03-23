@@ -51,10 +51,11 @@ buzzrSchema.methods.viewed = function() {
 };
 
 buzzrSchema.methods.saveCb = function(cb) {
+  var that = this;
   this.save(function(err) {
     if (err) {
       if (err.toString().indexOf('VersionError') > -1) {
-        console.log('CONCURRENT SAVE ERROR');
+        console.log('CONCURRENT SAVE ERROR: '+that.topic);
       } else {
         if (cb) { return cb(err); }
         throw err;
