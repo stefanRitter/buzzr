@@ -6,6 +6,8 @@ a.feed-topic(href="/login", ng-show="!identity.isAuthenticated()") Login
   h1.home-heading What are you interested in?
   form.home-form.form(ng-submit="search()")
     input.home-input#focus(ng-model="searchText")
+    .home-search-icon
+      include ../../public/img/search.svg
 
   .center.margin-top-big
     p.margin-top-big
