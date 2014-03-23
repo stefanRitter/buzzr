@@ -4,7 +4,7 @@ var request = require('request'),
     cheerio = require('cheerio'),
     logger = require('../common/logger.js');
 
-module.exports = function (link, cb) {
+module.exports = function (link, cb, done) {
   var shortUrl = link.url;
 
   request(
@@ -22,7 +22,7 @@ module.exports = function (link, cb) {
   
   function (err, response, body) {
     if (err) {
-      return cb(err, link);
+      return cb(err, link, done);
     }
 
     if (response.statusCode !== 200) {
@@ -34,7 +34,7 @@ module.exports = function (link, cb) {
 
     link.url = response.request.href;
     link.title = title;
-    cb(null, link);
+    cb(null, link, done);
   });
 };
 

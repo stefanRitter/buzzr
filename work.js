@@ -18,7 +18,10 @@ require('./server/config/mongoose.js')(config);
 require('./server/config/express.js')(app, config);
 
 // start searcher
-require('./worker/search/')(app);
+// require('./worker/search/')(app);
 
 // start crawler
-require('./worker/process/index.js');
+// require('./worker/process/index.js');
+
+// uniqify
+require('./worker/uniqify/');

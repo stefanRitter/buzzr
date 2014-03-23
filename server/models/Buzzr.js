@@ -50,6 +50,13 @@ buzzrSchema.methods.viewed = function() {
   this.save();
 };
 
+buzzrSchema.methods.saveCb = function(cb) {
+  this.save(function(err) {
+    if (err) { throw err; }
+    if (cb) { cb(); }
+  });
+};
+
 buzzrSchema.methods.makeUniq = function() {
   var tempA = _.uniq(this.activeLinks, 'title'),
       tempP = _.uniq(this.passiveLinks, 'title');
@@ -62,27 +69,26 @@ buzzrSchema.methods.makeUniq = function() {
   this.save();
 };
 
-buzzrSchema.methods.pushLink = function(data) {
+buzzrSchema.methods.pushLink = function(data, cb) {
   // data.url, data.rank, data.title
-
   function checkLinkEquality(link) {
     return link.url === data.url || link.title === data.title;
   }
 
   var pI = _.findIndex(this.passiveLinks, checkLinkEquality);
   if (pI > -1) {
-    return this.updatePassiveLink(data, pI);
+    return this.updatePassiveLink(data, pI, cb);
   }
 
   var aI = _.findIndex(this.activeLinks, checkLinkEquality);
   if (aI > -1) {
-    return this.updateActiveLink(data, aI);
+    return this.updateActiveLink(data, aI, cb);
   }
 
-  this.pushNewLink(data);
+  this.pushNewLink(data, cb);
 };
 
-buzzrSchema.methods.pushNewLink = function(data) {
+buzzrSchema.methods.pushNewLink = function(data, cb) {
   var newLink = {
     url: data.url,
     title: data.title,
@@ -95,16 +101,16 @@ buzzrSchema.methods.pushNewLink = function(data) {
   } else {
     this.passiveLinks.push(newLink);
   }
-  this.save();
+  this.saveCb(cb);
 };
 
-buzzrSchema.methods.updateActiveLink = function(data, aI) {
+buzzrSchema.methods.updateActiveLink = function(data, aI, cb) {
   this.activeLinks[aI].rank += data.rank === 0 ? 1 : data.rank;
   this.activeLinks[aI].updated = Date.now();
-  this.save();
+  this.saveCb(cb);
 };
 
-buzzrSchema.methods.updatePassiveLink = function(data, pI) {
+buzzrSchema.methods.updatePassiveLink = function(data, pI, cb) {
   var newRank = this.passiveLinks[pI].rank;
   newRank += data.rank === 0 ? 1 : data.rank;
 
@@ -122,7 +128,7 @@ buzzrSchema.methods.updatePassiveLink = function(data, pI) {
     this.passiveLinks[pI].rank = newRank;
     this.passiveLinks[pI].updated = Date.now();
   }
-  return this.save();
+  this.saveCb(cb);
 };
 
 Buzzr = mongoose.model('Buzzr', buzzrSchema);

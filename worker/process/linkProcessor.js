@@ -21,7 +21,7 @@ var excludedDomains = {
 };
 
 
-function processLink(link, buzzr) {
+function processLink(link, buzzr, done) {
   var expandedUrl = link.url,
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
   
@@ -35,10 +35,10 @@ function processLink(link, buzzr) {
 
   link.url = link.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');
   link.title = ent.decode(link.title);
-  buzzr.pushLink(link);
+  buzzr.pushLink(link, done);
 }
 
-module.exports = function (err, link) {
+module.exports = function (err, link, done) {
   if (err) {
     logger.error('PROCESS: error ' + link.url);
     return arr.socketErrorLinks.push(link);
@@ -46,6 +46,6 @@ module.exports = function (err, link) {
   
   Buzzr.findOne({topic: link.topic}, function(err, buzzr) {
     if (err) { throw err; }
-    processLink(link, buzzr);
+    processLink(link, buzzr, done);
   });
 };
