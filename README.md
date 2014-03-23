@@ -8,7 +8,7 @@ WORKER
 ======
 ssh -i london-macbookair.pem ubuntu@54.186.153.188
 screen
-node --stack-size=32000 work.js
+forever --stack-size=32000 work.js
 CTRL+A .. D
 # resume
 screen -r
