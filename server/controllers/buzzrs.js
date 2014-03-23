@@ -7,10 +7,6 @@ var Buzzr = require('mongoose').model('Buzzr'),
 exports.getByTopic = function (req, res) {
   var topic = decodeURI(req.params.id).toLowerCase().trim();
 
-  Buzzr.findOne({topic: 'giorgio armani'}, function(err, buzzr) {
-    buzzr.remove();
-  });
-
   Buzzr.findOne({topic: topic}).exec(function (err, buzzr) {
     if (err) { return res.json({err: err}); }
     
