@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="93.3 0 655.2 595.3" enable-background="new 93.3 0 655.2 595.3" xml:space="preserve">
   <g transform="translate(327.6,297.65)">
-    <polygon points="-127,-26.1 -205.4,-162.1 -127,-297.8 29.8,-297.8 108.2,-162.1 29.8,-26.1" transform="scale(0)">
+    <polygon points="-127,-26.1 -205.4,-162.1 -127,-297.8 29.8,-297.8 108.2,-162.1 29.8,-26.1" transform="scale(0)" class="logo-color">
       <animateTransform attributeName="transform" type="scale" values="0;1;1;0" dur="2.5s" repeatCount="indefinite" begin="0s" keySplines="0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1" />
     </polygon>
-    <polygon points="186.6,-26.1 108.2,-162.1 186.6,-297.8 343.4,-297.8 421.4,-162.1 343.4,-26.1" transform="scale(0)">
+    <polygon points="186.6,-26.1 108.2,-162.1 186.6,-297.8 343.4,-297.8 421.4,-162.1 343.4,-26.1" transform="scale(0)" class="logo-color">
       <animateTransform attributeName="transform" type="scale" values="0;1;1;1;0" dur="2.5s" repeatCount="indefinite" begin="0.3s" keySplines="0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1" />
     </polygon>
-    <polygon points="-155.4,297.5 -233.8,161.5 -155.4,25.8 1.4,25.8 79.7,161.5 1.4,297.5" transform="scale(0)">
+    <polygon points="-155.4,297.5 -233.8,161.5 -155.4,25.8 1.4,25.8 79.7,161.5 1.4,297.5" transform="scale(0)" class="logo-color">
       <animateTransform attributeName="transform" type="scale" values="0;1;1;1;0" dur="2.5s" repeatCount="indefinite" begin="0.6s" keySplines="0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1" />
     </polygon>
-    <polygon points="186.6,246 108.2,110 186.6,-25.7 343.4,-25.7 421.4,110 343.4,246" transform="scale(0)">
+    <polygon points="186.6,246 108.2,110 186.6,-25.7 343.4,-25.7 421.4,110 343.4,246" transform="scale(0)" class="logo-color">
       <animateTransform attributeName="transform" type="scale" values="0;1;1;0" dur="2.5s" repeatCount="indefinite" begin="0.9s" keySplines="0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1; 0.1 0.8 0.2 1" />
     </polygon>
   </g>
