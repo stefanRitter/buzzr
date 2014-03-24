@@ -19,8 +19,7 @@ exports.getByTopic = function (req, res) {
         len = links.length;
 
     if (len > 120) {
-      links = links.reverse();
-      return res.send({links: links.slice(0,120)});
+      return res.send({links: links.reverse().slice(0,120)});
     }
     res.send({links: links});
   });
