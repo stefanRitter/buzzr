@@ -16,7 +16,7 @@ exports.getByTopic = function (req, res) {
     
     buzzr.viewed();
     var links = buzzr.activeLinks,
-    
-    res.send({links: links.slice(Math.max(links.length - 120, 1))});
+    //slice(Math.max(links.length - 120, 1))
+    res.send({links: links});
   });
 };
