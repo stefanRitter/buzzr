@@ -20,7 +20,7 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
     .header-loggedin-menu(ng-show="identity.isAuthenticated()")
       .center.margin-top
         a.header-action-readlater(href="/account/readlater")
-          span &hearts;
+          img(src="/img/heart.svg")
         a.header-action-add(href="/")
           span +
 
