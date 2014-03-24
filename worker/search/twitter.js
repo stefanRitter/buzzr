@@ -49,7 +49,7 @@ function processTweet(tweet) {
 }
 
 function getTweets(buzzr) {
-  var query = buzzr.topic + ' filter:links';
+  var query = buzzr.topic + ' filter:links lang:en';
   if (buzzr.sinceId !== '0') {
     query += ' since_id:' + buzzr.twitPoints.sinceId;
   }

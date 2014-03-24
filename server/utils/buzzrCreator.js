@@ -42,7 +42,7 @@ function callTwitter(buzzr) {
   };
 
   T.get('search/tweets', {
-    q: buzzr.topic + ' filter:links',
+    q: buzzr.topic + ' filter:links lang:en',
     include_entities: true,
     count: 100
   },
