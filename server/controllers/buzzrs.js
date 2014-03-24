@@ -15,6 +15,7 @@ exports.getByTopic = function (req, res) {
     }
     
     buzzr.viewed();
-    res.send({links: buzzr.activeLinks});
+    var length = buzzr.activeLinks.length - 123;
+    res.send({links: buzzr.activeLinks.slice(length, 120)});
   });
 };
