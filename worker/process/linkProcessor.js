@@ -21,7 +21,9 @@ var excludedDomains = {
   'stackoverflow.com': true,
   'newsnow.co.uk': true,
   'findmydreamjob.co.uk': true,
-  'twitlonger.com': true
+  'twitlonger.com': true,
+  'facebook.com': true,
+  'donotlink.com': true
 };
 
 
