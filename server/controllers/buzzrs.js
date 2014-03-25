@@ -9,7 +9,7 @@ exports.getByTopic = function (req, res) {
   Buzzr.findOne({topic: topic}).exec(function (err, buzzr) {
     if (err) { return res.json({err: err}); }
     
-    if (!buzzr) {
+    if (!buzzr || buzzr.activeLinks.length === 0) {
       buzzrCreator.send({topic: topic});
       return res.json({links: []});
     }

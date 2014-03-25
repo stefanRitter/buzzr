@@ -94,9 +94,11 @@ process.on('message', function(m) {
   if (!!m.topic) {
     console.log('CREATOR: ' + m.topic);
 
-    Buzzr.create({topic: m.topic}, function(err, buzzr) {
-      if (err) { throw err; }
-      callTwitter(buzzr);
-    });
+    Buzzr.findOneAndUpdate({topic: m.topic}, {topic: m.topic}, {upsert: true},
+      function(err, buzzr) {
+        if (err) { throw err; }
+        callTwitter(buzzr);
+      }
+    );
   }
 });
