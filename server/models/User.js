@@ -102,10 +102,10 @@ exports.createDefaultUsers = function() {
         if (err) { throw err; }
       });
     } else {
-      User.findOne({email: 'stef@stef.com'}, function(err, obj) {
+      /*User.findOne({email: 'stef@stef.com'}, function(err, obj) {
         if (err) { throw err; }
         obj.remove();
-      });
+      });*/
     }
   });
 };
