@@ -33,9 +33,9 @@
     "expect"      : false
   },
 
-  "maxparams": 4,
+  "maxparams": 10,
   "maxdepth": 4,
   "maxstatements": 20,
-  "maxlen": 100,
+  "maxlen": 200,
   "maxcomplexity": 7
 }

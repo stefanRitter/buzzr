@@ -50,6 +50,7 @@ module.exports = function (grunt) {
         '*.js',
         'worker/**/*.js',
         'server/**/*.js',
+        'app/**/*.js',
         'test/**/*.js'
       ],
       app: [

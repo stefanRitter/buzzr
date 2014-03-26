@@ -271,17 +271,20 @@ angular.module('app').run(function ($rootScope, $location) {
     });
   };
 });
-;angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http) {
+;angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope) {
   'use strict';
+  
   $scope.buzzrs = [];
 });
-;angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http) {
+;angular.module('app').controller('appAdminErrorsCtrl', function ($scope) {
   'use strict';
+  
   $scope.socketErrors = [];
   $scope.titleErrors = [];
 });
 ;angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';
+  
   $scope.users = AppUser.query();
 });;angular.module('app').factory('appIsMobile', function() {
   'use strict';
