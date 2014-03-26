@@ -41,7 +41,7 @@ module.exports = function (app) {
   app.post('/logout',                 auth.logout);
 
   // ADMIN
-  app.get( '/admin/users', auth.requiresRole('admin'), admin.get);
+  app.get( '/admin/*', auth.requiresRole('admin'), admin.get);
   app.get( '/api/users',   auth.requiresRole('admin'), users.getUser);
   
   // 404
