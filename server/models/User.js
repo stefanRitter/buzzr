@@ -90,12 +90,12 @@ exports.createDefaultUsers = function() {
   User.find({}).exec(function(err, collection) {
     if (collection.length === 0) {
       var salt = encrypt.createSalt();
-      var pwd = encrypt.hashPwd(salt, 'test');
+      var pwd = encrypt.hashPwd(salt, 'Buzzr2014');
 
-      User.create({ email: 'stef@stef.com', name: 'stefan', salt: salt,
+      User.create({ email: 'stefan@buzzr.io', name: 'Stefan', salt: salt,
         password: pwd, roles: ['admin']});
-      User.create({ email: 'jeroen@jeroen.com', salt: salt,
-        password: pwd, roles: []});
+      User.create({ email: 'jeroen@buzzr.io', salt: salt,
+        password: pwd, roles: ['admin']});
     }
   });
 };

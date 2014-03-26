@@ -1,12 +1,13 @@
-
 angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
+  'use strict';
+
   return {
-    authenticateUser: function (email, password) {
+    authenticateUser: function(email, password) {
       var dfd = $q.defer();
 
       $http
         .post('/login', {email: email, password: password})
-        .then(function (res) {
+        .then(function(res) {
           if (res.data.success) {
             var user = new AppUser();
             angular.extend(user, res.data.user);
@@ -20,39 +21,39 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
       return dfd.promise;
     },
 
-    createUser: function (newUserData) {
+    createUser: function(newUserData) {
       var newUser = new AppUser(newUserData);
       var dfd = $q.defer();
 
-      newUser.$save().then(function () {
+      newUser.$save().then(function() {
         appIdentity.currentUser = newUser;
         dfd.resolve(true);
-      }, function (response) {
+      }, function(response) {
         dfd.reject(response.data.reason);
       });
 
       return dfd.promise;
     },
 
-    updateCurrentUser: function (updatedUser) {
+    updateCurrentUser: function(updatedUser) {
       var dfd = $q.defer();
 
-      updatedUser.$update().then(function () {
+      updatedUser.$update().then(function() {
         appIdentity.currentUser = updatedUser;
         dfd.resolve(true);
-      }, function (response) {
+      }, function(response) {
         dfd.reject(response.data.reason);
       });
 
       return dfd.promise;
     },
 
-    logoutUser: function () {
+    logoutUser: function() {
       var dfd = $q.defer();
 
       $http
         .post('/logout', {logout: true})
-        .then(function (res) {
+        .then(function() {
           appIdentity.currentUser = undefined;
           dfd.resolve(true);
         });
@@ -60,14 +61,14 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
       return dfd.promise;
     },
 
-    authorizeCurrentUserForRoute: function (role) {
+    authorizeCurrentUserForRoute: function() {
       if (appIdentity.isAuthorized('admin')) {
         return true;
       }
       return $q.reject('not authorized');
     },
 
-    authorizeLoggedInUserForRoute: function () {
+    authorizeLoggedInUserForRoute: function() {
       if (appIdentity.isAuthenticated()) {
         return true;
       }

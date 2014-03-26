@@ -125,18 +125,18 @@ angular.module('app').run(function ($rootScope, $location) {
     this.activities[index][type].push(url);
   };
 
-
-
   return UserResource;
-});;
-angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
+});
+;angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
+  'use strict';
+
   return {
-    authenticateUser: function (email, password) {
+    authenticateUser: function(email, password) {
       var dfd = $q.defer();
 
       $http
         .post('/login', {email: email, password: password})
-        .then(function (res) {
+        .then(function(res) {
           if (res.data.success) {
             var user = new AppUser();
             angular.extend(user, res.data.user);
@@ -150,39 +150,39 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
       return dfd.promise;
     },
 
-    createUser: function (newUserData) {
+    createUser: function(newUserData) {
       var newUser = new AppUser(newUserData);
       var dfd = $q.defer();
 
-      newUser.$save().then(function () {
+      newUser.$save().then(function() {
         appIdentity.currentUser = newUser;
         dfd.resolve(true);
-      }, function (response) {
+      }, function(response) {
         dfd.reject(response.data.reason);
       });
 
       return dfd.promise;
     },
 
-    updateCurrentUser: function (updatedUser) {
+    updateCurrentUser: function(updatedUser) {
       var dfd = $q.defer();
 
-      updatedUser.$update().then(function () {
+      updatedUser.$update().then(function() {
         appIdentity.currentUser = updatedUser;
         dfd.resolve(true);
-      }, function (response) {
+      }, function(response) {
         dfd.reject(response.data.reason);
       });
 
       return dfd.promise;
     },
 
-    logoutUser: function () {
+    logoutUser: function() {
       var dfd = $q.defer();
 
       $http
         .post('/logout', {logout: true})
-        .then(function (res) {
+        .then(function() {
           appIdentity.currentUser = undefined;
           dfd.resolve(true);
         });
@@ -190,14 +190,14 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
       return dfd.promise;
     },
 
-    authorizeCurrentUserForRoute: function (role) {
+    authorizeCurrentUserForRoute: function() {
       if (appIdentity.isAuthorized('admin')) {
         return true;
       }
       return $q.reject('not authorized');
     },
 
-    authorizeLoggedInUserForRoute: function () {
+    authorizeLoggedInUserForRoute: function() {
       if (appIdentity.isAuthenticated()) {
         return true;
       }
@@ -205,6 +205,8 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
     }
   };
 });;angular.module('app').factory('appIdentity', function ($window, AppUser) {
+  'use strict';
+
   var currentUser;
   
   if (!!$window.bootstrappedUser) {
@@ -214,35 +216,38 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
 
   return {
     currentUser: currentUser,
-    isAuthenticated: function () {
+    isAuthenticated: function() {
       return !!this.currentUser;
     },
-    isAuthorized: function (role) {
+    isAuthorized: function(role) {
       return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
     }
   };
 });
 ;angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
+  'use strict';
 
-  $scope.signup = function () {
+  $scope.signup = function() {
     var newUserData = {
       email: $scope.email,
       password: $scope.password
     };
 
-    appAuth.createUser(newUserData).then(function () {
+    appAuth.createUser(newUserData).then(function() {
       $location.path('/');
-    }, function (reason) {
+    }, function(reason) {
       appNotifier.error(reason, $scope);
     });
   };
-});;angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
-  
-  $scope.signin = function () {
+});
+;angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
+  'use strict';
+
+  $scope.signin = function() {
     
     appAuth
       .authenticateUser($scope.email, $scope.password)
-      .then(function (success) {
+      .then(function(success) {
         if (success) {
           $location.path('/');
         } else {
@@ -251,9 +256,9 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
       });
   };
 });
-;
-angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
-  
+;angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
+  'use strict';
+
   $scope.currentUser = angular.copy(appIdentity.currentUser);
   $scope.email = {
     valid: appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)
@@ -264,11 +269,11 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     $scope.currentUser.email = '';
   }
 
-  $scope.update = function () {
-    appAuth.updateCurrentUser($scope.currentUser).then(function () {
+  $scope.update = function() {
+    appAuth.updateCurrentUser($scope.currentUser).then(function() {
       if (!$scope.email.valid) { return $location.path('/'); }
       appNotifier.notify('Your account has been updated', $scope);
-    }, function (reason) {
+    }, function(reason) {
       appNotifier.error(reason, $scope);
     });
   };
@@ -285,7 +290,9 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
 ;angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';
   $scope.users = AppUser.query();
-});;angular.module('app').factory('appIsMobile', function () {
+});;angular.module('app').factory('appIsMobile', function() {
+  'use strict';
+
   var isMobile = {
     Android: function() {
       return navigator.userAgent.match(/Android/i) ? true : false;
@@ -306,38 +313,42 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
   
   return isMobile;
 });
-;angular.module('app').factory('appNotifier', function () {
+;angular.module('app').factory('appNotifier', function() {
+  'use strict';
+
   return {
-    notify: function (msg, scope) {
+    notify: function(msg, scope) {
       scope.notifier = {};
       scope.notifier.notice = msg;
-      setTimeout(function () {
+      setTimeout(function() {
         scope.notifier.notice = '';
         scope.$digest();
       }, 4000);
     },
-    error: function (msg, scope) {
+    error: function(msg, scope) {
       scope.notifier = {};
       scope.notifier.error = msg;
-      setTimeout(function () {
+      setTimeout(function() {
         scope.notifier.error = '';
         scope.$digest();
       }, 4000);
     }
   };
 });
-;angular.module('app').factory('appTopics', function ($window, AppUser) {
+;angular.module('app').factory('appTopics', function ($window) {
   'use strict';
 
   var topics = [];
   
   if (!!$window.bootstrappedTopics) {
-    topics = $window.bootstrappedUser;
+    topics = $window.bootstrappedTopics;
   }
 
   return topics;
 });
 ;angular.module('app').factory('appFeedback', function ($rootScope) {
+  'use strict';
+
   return {
     toggle: function() {
       $rootScope.$broadcast('toggleFeedback');
@@ -345,7 +356,8 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
   };
 });
 ;angular.module('app').controller('appFeedbackCtrl', function ($scope, $location, $window, $http, appIdentity, appNotifier) {
-  
+  'use strict';
+
   $scope.success = false;
   $scope.show = false;
 
@@ -353,26 +365,26 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
   $scope.feedback.userAgent = $window.navigator.userAgent;
   
   if (appIdentity.isAuthenticated()) {
-    $scope.feedback.name = appIdentity.currentUser.name
-    $scope.feedback.email = appIdentity.currentUser.email
-  }  
+    $scope.feedback.name = appIdentity.currentUser.name;
+    $scope.feedback.email = appIdentity.currentUser.email;
+  }
 
-  $scope.send = function () {
+  $scope.send = function() {
     $scope.feedback.currentPath = $location.path();
     
     $http
       .post('/api/feedback', $scope.feedback)
-      .then(function (res) {
+      .then(function(res) {
         if (res.data.success) {
           $scope.success = true;
         } else {
           appNotifier.error(res.data.err || 'unknown error', $scope);
         }
-      }, function (res) {
+      }, function(res) {
         appNotifier.error('error ' + res.status +
           ' occurred - please email help@buzzr.io', $scope);
       });
-  }
+  };
 
   $scope.toggle = function () {
     $scope.show = !$scope.show;
@@ -383,6 +395,8 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
   });
 });
 ;angular.module('app').factory('appHeader', function ($rootScope) {
+  'use strict';
+
   var header = {};
 
   header.toggle = function() {
@@ -648,6 +662,7 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
   }
 });
 ;angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback, appIdentity) {
+  'use strict';
 
   $scope.identity = appIdentity;
 

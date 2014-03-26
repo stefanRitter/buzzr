@@ -85,7 +85,5 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
     this.activities[index][type].push(url);
   };
 
-
-
   return UserResource;
 });

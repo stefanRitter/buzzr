@@ -1,4 +1,6 @@
-angular.module('app').factory('appIsMobile', function () {
+angular.module('app').factory('appIsMobile', function() {
+  'use strict';
+
   var isMobile = {
     Android: function() {
       return navigator.userAgent.match(/Android/i) ? true : false;

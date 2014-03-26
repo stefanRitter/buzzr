@@ -1,10 +1,10 @@
-angular.module('app').factory('appTopics', function ($window, AppUser) {
+angular.module('app').factory('appTopics', function ($window) {
   'use strict';
 
   var topics = [];
   
   if (!!$window.bootstrappedTopics) {
-    topics = $window.bootstrappedUser;
+    topics = $window.bootstrappedTopics;
   }
 
   return topics;

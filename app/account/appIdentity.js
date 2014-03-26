@@ -1,4 +1,6 @@
 angular.module('app').factory('appIdentity', function ($window, AppUser) {
+  'use strict';
+
   var currentUser;
   
   if (!!$window.bootstrappedUser) {
@@ -8,10 +10,10 @@ angular.module('app').factory('appIdentity', function ($window, AppUser) {
 
   return {
     currentUser: currentUser,
-    isAuthenticated: function () {
+    isAuthenticated: function() {
       return !!this.currentUser;
     },
-    isAuthorized: function (role) {
+    isAuthorized: function(role) {
       return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
     }
   };

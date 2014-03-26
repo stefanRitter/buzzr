@@ -1,10 +1,11 @@
 angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
-  
-  $scope.signin = function () {
+  'use strict';
+
+  $scope.signin = function() {
     
     appAuth
       .authenticateUser($scope.email, $scope.password)
-      .then(function (success) {
+      .then(function(success) {
         if (success) {
           $location.path('/');
         } else {
