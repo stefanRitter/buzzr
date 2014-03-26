@@ -15,7 +15,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
 
   $routeProvider
     .when('/admin/users', {templateUrl: '/partials/admin/users',
-      controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin});
+      controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin})
+    .when('/admin/errors', {templateUrl: '/partials/admin/errors',
+      controller: 'appAdminErrorsCtrl', resolve: routeRoleChecks.admin})
+    .when('/admin/buzzrs', {templateUrl: '/partials/admin/buzzrs',
+      controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
 });
 
 angular.module('app').run(function ($rootScope, $location) {
@@ -262,8 +266,16 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     });
   };
 });
-;
-angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
+;angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http) {
+  'use strict';
+  $scope.buzzrs = [];
+});
+;angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http) {
+  'use strict';
+  $scope.socketErrors = [];
+  $scope.titleErrors = [];
+});
+;angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';
   $scope.users = AppUser.query();
 });;angular.module('app').factory('appIsMobile', function () {
