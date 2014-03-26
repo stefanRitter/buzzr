@@ -88,14 +88,19 @@ User = mongoose.model('User', userSchema);
 // seed users
 exports.createDefaultUsers = function() {
   User.find({}).exec(function(err, collection) {
-    if (collection.length === 0) {
+    //if (collection.length === 0) {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'Buzzr2014');
-
-      User.create({ email: 'stefan@buzzr.io', name: 'Stefan', salt: salt,
-        password: pwd, roles: ['admin']});
-      User.create({ email: 'jeroen@buzzr.io', salt: salt,
-        password: pwd, roles: ['admin']});
-    }
+      
+      User.findOneAndUpdate({email: 'stefan@buzzr.io'}, {email: 'stefan@buzzr.io',
+        name: 'Stefan', salt: salt, password: pwd, roles: ['admin']},
+        {upsert: true}, function(err) {
+        if (err) { throw err; }
+      });
+      User.findOneAndUpdate({email: 'jeroen@buzzr.io'}, { email: 'jeroen@buzzr.io', salt: salt,
+        password: pwd, roles: ['admin']}, {upsert: true}, function(err) {
+        if (err) { throw err; }
+      });
+    //}
   });
 };
