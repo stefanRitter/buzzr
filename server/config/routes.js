@@ -4,7 +4,8 @@ var auth = require('../controllers/auth.js'),
     users = require('../controllers/users.js'),
     pages = require('../controllers/pages.js'),
     feedback = require('../controllers/feedback.js'),
-    buzzrs = require('../controllers/buzzrs.js');
+    buzzrs = require('../controllers/buzzrs.js'),
+    admin = require('../controllers/admin.js');
 
 
 module.exports = function (app) {
@@ -39,6 +40,9 @@ module.exports = function (app) {
   app.get( '/auth/twitter',           auth.authenticateTwitter);
   app.get( '/auth/twitter/callback',  auth.twitterCallback);
   app.post('/logout',                 auth.logout);
+
+  // ADMIN
+  app.get( '/admin/users',  admin.get);
   
   // 404
   app.all('/api/*', function (req, res) { res.send(404); });

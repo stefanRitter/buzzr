@@ -35,6 +35,10 @@ module.exports = function (grunt) {
       application: {
         src: ['app/app.js', 'app/*/*.js'],
         dest: 'public/js/application.js'
+      },
+      admin: {
+        src: ['app/admin.js', 'app/*/*.js'],
+        dest: 'public/js/admin.js'
       }
     },
 
@@ -62,7 +66,7 @@ module.exports = function (grunt) {
           'test/**/*.js',
           'app/**/*.js'
         ],
-        tasks: ['jshint:all', 'concat:application']
+        tasks: ['jshint:all', 'concat:application', 'concat:admin']
       },
       styles: {
         files: [
