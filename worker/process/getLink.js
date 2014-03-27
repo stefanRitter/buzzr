@@ -34,6 +34,7 @@ module.exports = function (link, cb, done) {
 
     link.url = response.request.href;
     link.title = title;
+    link.lang = 'en';
     cb(null, link, done);
   });
 };

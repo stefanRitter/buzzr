@@ -10,7 +10,8 @@ var linkArraySchema = new Schema({
     url: String,
     topic: String,
     rank: Number,
-    provider: {type: String, default: 'twitter'}
+    provider: {type: String, default: 'twitter'},
+    lang: {type: String, default: ''}
   }]
 });
 

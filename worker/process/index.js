@@ -8,9 +8,9 @@ setInterval(function() {
   arr.newLinks.update(function() {
     var link = arr.newLinks.pop();
       
-    //if (!link) {
-    //  link = arr.socketErrorLinks.pop();
-    //}
+    if (!link) {
+      link = arr.socketErrorLinks.pop();
+    }
 
     if (!!link) {
       getLink(link, linkProcessor);

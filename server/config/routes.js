@@ -13,7 +13,6 @@ module.exports = function (app) {
 
   // APP
   app.get('/',        pages('index'));
-  app.get('/home',    pages('home'));
   app.get('/login',   pages('login'));
   app.get('/join',    pages('join'));
   app.get('/about',   pages('about'));
@@ -29,10 +28,10 @@ module.exports = function (app) {
   });
 
   // API
-  app.get( '/api/buzzrs/:id', buzzrs.getByTopic);
-  app.post('/api/users',      users.createUser);
-  app.put( '/api/users',      auth.authorize, users.updateUser);
-  app.post('/api/feedback',   feedback.createFeedback);
+  app.get( '/api/buzzrs/:id',  buzzrs.getByTopic);
+  app.post('/api/users',       users.createUser);
+  app.put( '/api/users',       auth.authorize, users.updateUser);
+  app.post('/api/feedback',    feedback.createFeedback);
 
   // AUTH
   app.post('/login',                  auth.authenticateLocal);
@@ -41,8 +40,10 @@ module.exports = function (app) {
   app.post('/logout',                 auth.logout);
 
   // ADMIN
-  app.get( '/admin/*', auth.requiresRole('admin'), admin.get);
-  app.get( '/api/users',   auth.requiresRole('admin'), users.getUser);
+  app.get('/admin/*',        auth.requiresRole('admin'), admin.get);
+  app.get('/api/users',      auth.requiresRole('admin'), users.getUser);
+  app.get('/api/buzzrs',     auth.requiresRole('admin'), users.getUser);
+  app.put('/api/buzzrs/:id', auth.requiresRole('admin'), users.getUser);
   
   // 404
   app.all('/api/*', function (req, res) { res.send(404); });

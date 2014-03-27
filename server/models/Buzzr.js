@@ -33,7 +33,8 @@ buzzrSchema = new Schema({
     title:      String,
     rank:       Number,
     activated:  Date,
-    updated:    Date
+    updated:    Date,
+    lang:       String
   }],
   
   passiveLinks: [{
@@ -41,7 +42,8 @@ buzzrSchema = new Schema({
     title:      String,
     rank:       Number,
     activated:  Date,
-    updated:    Date
+    updated:    Date,
+    lang:       String
   }]
 });
 
@@ -78,7 +80,7 @@ buzzrSchema.methods.makeUniq = function() {
 };
 
 buzzrSchema.methods.pushLink = function(data, cb) {
-  // data.url, data.rank, data.title
+  // data.url, data.rank, data.title, data.lang
   function checkLinkEquality(link) {
     return link.url === data.url || link.title === data.title;
   }
@@ -101,7 +103,8 @@ buzzrSchema.methods.pushNewLink = function(data, cb) {
     url: data.url,
     title: data.title,
     rank: data.rank,
-    updated: Date.now()
+    updated: Date.now(),
+    lang: data.lang
   };
   if (newLink.rank >= this.minRank) {
     newLink.activated = Date.now();
@@ -128,7 +131,8 @@ buzzrSchema.methods.updatePassiveLink = function(data, pI, cb) {
       title: data.title,
       rank: newRank,
       activated: Date.now(),
-      updated: Date.now()
+      updated: Date.now(),
+      lang: data.lang
     });
 
     this.passiveLinks.splice(pI, 1);

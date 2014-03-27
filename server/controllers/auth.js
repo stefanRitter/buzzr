@@ -27,14 +27,11 @@ exports.requiresRole = function(role) {
 
 exports.authorize = function(req, res, next) {
   if (req.isAuthenticated()) {
-    if (req.user._id.toString() !== req.body._id && !req.user.hasRole('admin')) {
-      return res.status(403).json({reason:'not authorized'});
+    if (req.user._id.toString() === req.body._id || req.user.hasRole('admin')) {
+      return next();
     }
-    return next();
-  
-  } else {
-    return res.status(403).json({reason:'not authorized'});
   }
+  return res.status(403).json({reason:'not authorized'});
 };
 
 exports.authenticateTwitter = passport.authenticate('twitter');
