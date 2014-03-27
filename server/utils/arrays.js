@@ -6,8 +6,7 @@ var StringArray = require('mongoose').model('StringArray'),
 var titleErrorLinks,
     socketErrorLinks,
     newLinks,
-    topics,
-    newTopics;
+    topics;
 
 function getAll() {
   LinkArray.findOne({name: 'socketErrorLinks'}, function(err, obj) {
@@ -25,10 +24,6 @@ function getAll() {
   StringArray.findOne({name: 'topics'}, function(err, obj) {
     if (err) { throw err; }
     topics = obj;
-  });
-  StringArray.findOne({name: 'newTopics'}, function(err, obj) {
-    if (err) { throw err; }
-    newTopics = obj;
   });
 }
 getAll();
@@ -65,28 +60,9 @@ exports.titleErrorLinks = {
   }
 };
 
-exports.newTopics = {
-  push: function(data) {
-    newTopics.pushUniq(data);
-  },
-  get: function() {
-    return newTopics.array;
-  },
-  length: function() {
-    return newTopics.array.length;
-  },
-  update: function(cb) {
-    StringArray.findOne({name: 'newTopics'}, function(err, obj) {
-      if (err) { throw err; }
-      newTopics = obj;
-      if (cb) {cb();}
-    });
-  }
-};
-
 exports.topics = {
   push: function(data) {
-    topics.push(data);
+    topics.pushUniq(data);
   },
   get: function() {
     return topics.array;
