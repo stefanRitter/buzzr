@@ -278,10 +278,10 @@ angular.module('app').run(function ($rootScope, $location) {
     });
   };
 });
-;angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope) {
+;angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, appTopics) {
   'use strict';
   
-  $scope.buzzrs = [];
+  $scope.buzzrs = appTopics;
 });
 ;angular.module('app').controller('appAdminErrorsCtrl', function ($scope) {
   'use strict';
