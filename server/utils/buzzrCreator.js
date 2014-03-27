@@ -81,7 +81,7 @@ function callTwitter(buzzr) {
     });
     batch.end(function(err) {
       if (err) { throw err; }
-      console.log('DONE');
+      console.log('CREATOR DONE: ' + buzzr.topic);
       Buzzr.findOne({topic: buzzr.topic}, function(err, buzzr) {
         buzzr.makeUniq();
         arr.topics.push(buzzr.topic);
