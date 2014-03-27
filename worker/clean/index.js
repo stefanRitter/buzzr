@@ -5,10 +5,14 @@ var Buzzr = require('mongoose').model('Buzzr'),
 
 Buzzr.find({}, function(err, buzzrs) {
   if (err) { throw err; }
+  arr.topics.erase();
+  var a = [];
 
   buzzrs.forEach(function(buzzr) {
     console.log('CLEAN: ' + buzzr.topic);
-    arr.topics.push(buzzr.topic);
+    a.push(buzzr.topic);
     buzzr.makeUniq();
   });
+
+  arr.topics.set(a);
 });
