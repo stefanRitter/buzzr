@@ -1,9 +1,10 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $http, $route, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
+angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appBuzzr) {
   'use strict';
 
   $scope.countDown = 18;
   $scope.links = [];
   $scope.dates = [];
+  $scope.lang = '';
   $scope.identity = appIdentity;
   $scope.searchText = decodeURI($routeParams.id).toLowerCase();
   $scope.status = {
@@ -13,80 +14,27 @@ angular.module('app').controller('appMainCtrl', function ($scope, $http, $route,
     error: false
   };
 
-  $scope.encode = function(title) {
-    return encodeURI(title);
-  };
+  $scope.encode = function(title) { return encodeURI(title); };
+
+  $scope.toggleHeader = function() { appHeader.toggle(); };
+
+  $scope.toggleFeedback = function() { appFeedback.toggle(); };
+
+  $scope.getLang = function(lang) { return $scope.lang === lang; };
+
+  $scope.triggerSearch = function() { appBuzzr.startFeed($scope); };
 
   $scope.showLoading = function() {
-    var status = $scope.status;
-    if (status.searching || status.creating) {
-      return true;
-    }
+    if ($scope.status.searching || $scope.status.creating) { return true; }
     return false;
-  };
-
-  $scope.toggleHeader = function() {
-    appHeader.toggle();
-  };
-
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  $scope.triggerSearch = function() {
-    $http
-      .get('/api/buzzrs/' + $scope.searchText.trim())
-      .then(function(res) {
-        var links = res.data.links;
-
-        if (res.data.err) {
-          $scope.errorMessage = res.data.err;
-          $scope.status.error = true;
-          $scope.status.searching = false;
-          return;
-        }
-        
-        if (!links || links.length === 0) {
-          $scope.status.creating = true;
-          var interv = setInterval(function() {
-            $scope.$apply(function() {
-              $scope.countDown -= 1;
-              if ($scope.countDown <= 0) {
-                $scope.countDown = 0;
-                $route.reload();
-                clearInterval(interv);
-              }
-            });
-          }, 1000);
-        
-        } else {
-          appProcessLinks.process($scope, res.data.links);
-          $scope.status.feeding = true;
-        }
-        $scope.status.searching = false;
-      
-      }, function() {
-        $scope.errorMessage = 'Sorry, something went wrong! Please try again!';
-        $scope.status.error = true;
-        $scope.status.searching = false;
-        return;
-      });
   };
 
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-
     $scope.saveLink = function(link) { appProcessLinks.saveLink(link, $scope.searchText); };
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
-    $scope.trackView = function(url) {
-      appIdentity.currentUser.trackView(url, $scope.searchText);
-    };
-    $scope.trackShare = function(url) {
-      appIdentity.currentUser.trackShare(url, $scope.searchText);
-    };
-  } else  {
-    $scope.saveLink = $scope.toggleHeader;
-    $scope.removeLink = $scope.toggleHeader;
+    $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
+    $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };
   }
   
   $scope.triggerSearch();

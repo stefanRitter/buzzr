@@ -464,42 +464,11 @@ angular.module('app').run(function ($rootScope, $location) {
 
   $scope.setBuzzrs();
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $http, $route, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback) {
+;angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLinks) {
   'use strict';
+  var BuzzrResource = {};
 
-  $scope.countDown = 18;
-  $scope.links = [];
-  $scope.dates = [];
-  $scope.identity = appIdentity;
-  $scope.searchText = decodeURI($routeParams.id).toLowerCase();
-  $scope.status = {
-    searching: true,
-    creating: false,
-    feeding: false,
-    error: false
-  };
-
-  $scope.encode = function(title) {
-    return encodeURI(title);
-  };
-
-  $scope.showLoading = function() {
-    var status = $scope.status;
-    if (status.searching || status.creating) {
-      return true;
-    }
-    return false;
-  };
-
-  $scope.toggleHeader = function() {
-    appHeader.toggle();
-  };
-
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  $scope.triggerSearch = function() {
+  BuzzrResource.startFeed = function($scope) {
     $http
       .get('/api/buzzrs/' + $scope.searchText.trim())
       .then(function(res) {
@@ -539,20 +508,45 @@ angular.module('app').run(function ($rootScope, $location) {
       });
   };
 
+  return BuzzrResource;
+});
+;angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appBuzzr) {
+  'use strict';
+
+  $scope.countDown = 18;
+  $scope.links = [];
+  $scope.dates = [];
+  $scope.lang = '';
+  $scope.identity = appIdentity;
+  $scope.searchText = decodeURI($routeParams.id).toLowerCase();
+  $scope.status = {
+    searching: true,
+    creating: false,
+    feeding: false,
+    error: false
+  };
+
+  $scope.encode = function(title) { return encodeURI(title); };
+
+  $scope.toggleHeader = function() { appHeader.toggle(); };
+
+  $scope.toggleFeedback = function() { appFeedback.toggle(); };
+
+  $scope.getLang = function(lang) { return $scope.lang === lang; };
+
+  $scope.triggerSearch = function() { appBuzzr.startFeed($scope); };
+
+  $scope.showLoading = function() {
+    if ($scope.status.searching || $scope.status.creating) { return true; }
+    return false;
+  };
+
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-
     $scope.saveLink = function(link) { appProcessLinks.saveLink(link, $scope.searchText); };
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
-    $scope.trackView = function(url) {
-      appIdentity.currentUser.trackView(url, $scope.searchText);
-    };
-    $scope.trackShare = function(url) {
-      appIdentity.currentUser.trackShare(url, $scope.searchText);
-    };
-  } else  {
-    $scope.saveLink = $scope.toggleHeader;
-    $scope.removeLink = $scope.toggleHeader;
+    $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
+    $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };
   }
   
   $scope.triggerSearch();

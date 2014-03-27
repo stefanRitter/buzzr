@@ -5,7 +5,7 @@
     input.filter-input(ng-model="filterByText", placeholder="search")
     select.filter-select
       option Language
-      option(value="en") English
+      option(value="en", ng-selected="getLang('en')") English
       option coming soon
 
   .feed-container(ng-repeat="date in dates")
