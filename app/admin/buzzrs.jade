@@ -10,6 +10,7 @@ include header
       td.bold # passive links
       td.bold # active links
       td.bold language
+      td.bold action
     tr(ng-repeat="buzzr in buzzrs")
       td {{buzzr.topic}}
       td {{buzzr.lastViewed}}
@@ -17,3 +18,5 @@ include header
       td {{buzzr.passiveLinks}}
       td {{buzzr.activeLinks}}
       td {{buzzr.lang}}
+      td
+        .underline remove

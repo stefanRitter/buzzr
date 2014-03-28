@@ -28,7 +28,8 @@ module.exports = function (grunt) {
         src: [
           'bower_components/angular/angular.min.js',
           'bower_components/angular-resource/angular-resource.min.js',
-          'bower_components/angular-route/angular-route.min.js'
+          'bower_components/angular-route/angular-route.min.js',
+          'public/js/twitter-widget.js'
         ],
         dest: 'public/js/vendor.js',
       },
