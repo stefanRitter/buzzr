@@ -122,8 +122,8 @@ buzzrSchema.methods.pushNewLink = function(data, cb) {
   if (this.activeLinks.length > 200) {
     this.activeLinks = this.activeLinks.slice(Math.max(this.activeLinks.length - 200, 1));
   }
-  if (this.passiveLinks.length > 1000) {
-    this.passiveLinks = this.passiveLinks.slice(Math.max(this.passiveLinks.length - 1000, 1));
+  if (this.passiveLinks.length > 2000) {
+    this.passiveLinks = this.passiveLinks.slice(Math.max(this.passiveLinks.length - 2000, 1));
   }
   this.saveCb(cb);
 };
