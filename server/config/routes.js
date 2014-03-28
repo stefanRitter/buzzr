@@ -44,6 +44,7 @@ module.exports = function (app) {
   app.get('/api/users',      auth.requiresRole('admin'), users.getUser);
   app.get('/api/buzzrs',     auth.requiresRole('admin'), buzzrs.getAdminList);
   app.put('/api/buzzrs/:id', auth.requiresRole('admin'), buzzrs.putAdmin);
+  app.get('/api/errors',     auth.requiresRole('admin'), admin.getErrors);
   
   // 404
   app.all('/api/*', function (req, res) { res.send(404); });

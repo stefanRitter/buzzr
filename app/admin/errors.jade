@@ -6,9 +6,11 @@ include header
   h2.margin Title Errors
   table.margin
     tr(ng-repeat="error in titleErrors")
-      td {{user.email}}
+      td
+        a(href="{{error}}", target="_blank") {{error}}
 
   h2.margin.margin-top-big Socket Errors
   table.margin
     tr(ng-repeat="error in socketErrors")
-      td {{user.email}}
+      td
+        a(href="{{error}}", target="_blank") {{error}}

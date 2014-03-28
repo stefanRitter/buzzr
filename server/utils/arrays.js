@@ -35,6 +35,9 @@ exports.socketErrorLinks = {
   },
   pop: function() {
     return socketErrorLinks.pop();
+  },
+  get: function() {
+    return socketErrorLinks.array;
   }
 };
 
@@ -57,6 +60,9 @@ exports.newLinks = {
 exports.titleErrorLinks = {
   push: function(data) {
     titleErrorLinks.pushUniq(data);
+  },
+  get: function() {
+    return titleErrorLinks.array;
   }
 };
 
