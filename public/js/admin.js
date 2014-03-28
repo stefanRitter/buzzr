@@ -495,7 +495,7 @@ angular.module('app').run(function ($rootScope, $location) {
           return;
         }
         
-        if (!links || links.length === 0) {
+        if (!links) {
           $scope.status.creating = true;
           var interv = setInterval(function() {
             $scope.$apply(function() {
@@ -509,7 +509,13 @@ angular.module('app').run(function ($rootScope, $location) {
           }, 1000);
         
         } else {
-          appProcessLinks.process($scope, res.data.links);
+          if (links.length === 0) {
+            $scope.errorMessage = 'Sorry, Buzzr did not find anything to this topic! Come back later for an update!';
+            $scope.status.error = true;
+            $scope.status.searching = false;
+            return;
+          }
+          appProcessLinks.process($scope, links);
           $scope.status.feeding = true;
         }
         $scope.status.searching = false;
