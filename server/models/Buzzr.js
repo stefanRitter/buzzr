@@ -19,6 +19,7 @@ buzzrSchema = new Schema({
   lang: {type: String, default: 'en'},
 
   lastViewed: Date,
+  lastUpdated: Date,
   
   twitPoints: {
     maxId:        {type: String, default: '0'},
@@ -45,6 +46,11 @@ buzzrSchema = new Schema({
     updated:    Date,
     lang:       String
   }]
+});
+
+buzzrSchema.pre('save', function (next) {
+  this.lastUpdated = Date.now();
+  next();
 });
 
 buzzrSchema.methods.viewed = function() {

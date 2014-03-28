@@ -1,6 +1,19 @@
 include header
+
 .margin
   h1.margin Admin: Buzzrs
   table.margin
+    tr
+      td.bold topic
+      td.bold last viewed
+      td.bold last updated
+      td.bold # passive links
+      td.bold # active links
+      td.bold language
     tr(ng-repeat="buzzr in buzzrs")
-      td {{buzzr}}
+      td {{buzzr.topic}}
+      td {{buzzr.lastViewed}}
+      td {{buzzr.lastUpdated}}
+      td {{buzzr.passiveLinks}}
+      td {{buzzr.activeLinks}}
+      td {{buzzr.lang}}

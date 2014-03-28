@@ -1,5 +1,15 @@
-angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, appTopics) {
+angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {
   'use strict';
   
-  $scope.buzzrs = appTopics;
+  $scope.buzzrs = [];
+
+  $http
+    .get('/api/buzzrs')
+    .then(function(res) {
+      if (res.data.buzzrs) {
+        $scope.buzzrs = res.data.buzzrs;
+      } else {
+        $window.alert('$http error');
+      }
+    });
 });
