@@ -20,6 +20,21 @@ module.exports = function (grunt) {
       }
     },
 
+    ngmin: {
+      app: {
+        src: ['app/app.js', 'app/*/*.js'],
+        dest: 'public/js/application.js'
+      }
+    },
+
+    uglify: {
+      app: {
+        files: {
+          'public/js/application.js': ['public/js/application.js']
+        }
+      }
+    },
+
     concat: {
       options: {
         separator: ';'
@@ -68,7 +83,7 @@ module.exports = function (grunt) {
           'test/**/*.js',
           'app/**/*.js'
         ],
-        tasks: ['jshint:all', 'concat:application', 'concat:admin']
+        tasks: ['jshint:all', 'ngmin:app', 'uglify:app', 'concat:admin']
       },
       styles: {
         files: [
