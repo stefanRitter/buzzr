@@ -118,6 +118,10 @@ buzzrSchema.methods.pushNewLink = function(data, cb) {
   } else {
     this.passiveLinks.push(newLink);
   }
+
+  if (this.activeLinks.length > 200) {
+    this.activeLinks = this.activeLinks.slice(Math.max(this.activeLinks.length - 200, 1));
+  }
   this.saveCb(cb);
 };
 
