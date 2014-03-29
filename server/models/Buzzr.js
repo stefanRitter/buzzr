@@ -48,11 +48,6 @@ buzzrSchema = new Schema({
   }]
 });
 
-buzzrSchema.pre('save', function (next) {
-  this.lastUpdated = Date.now();
-  next();
-});
-
 buzzrSchema.methods.viewed = function() {
   this.lastViewed = Date.now();
   this.save();
@@ -60,6 +55,7 @@ buzzrSchema.methods.viewed = function() {
 
 buzzrSchema.methods.saveCb = function(cb) {
   var that = this;
+  this.lastUpdated = Date.now();
   this.save(function(err) {
     if (err) {
       if (err.toString().indexOf('VersionError') > -1) {

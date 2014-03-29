@@ -7,7 +7,6 @@ var env = process.env.NODE_ENV || 'development',
 require('../config/mongoose.js')(config);
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    arr = require('../utils/arrays.js'),
     calcRank = require('../../worker/common/calcTweetRank.js'),
     getLink = require('../../worker/process/getLink.js'),
     linkProcessor = require('../../worker/process/linkProcessor.js'),
@@ -51,7 +50,6 @@ function callTwitter(buzzr) {
       if (err.toString().indexOf('ETIMEDOUT') > -1) {
         return setTimeout(function() { callTwitter(buzzr); }, 60000);
       }
-      arr.topics.push(buzzr.topic);
       throw err;
     }
     
@@ -84,7 +82,6 @@ function callTwitter(buzzr) {
       console.log('CREATOR DONE: ' + buzzr.topic);
       Buzzr.findOne({topic: buzzr.topic}, function(err, buzzr) {
         buzzr.makeUniq();
-        arr.topics.push(buzzr.topic);
       });
     });
   });

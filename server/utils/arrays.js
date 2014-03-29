@@ -1,7 +1,8 @@
 'use strict';
 
 var StringArray = require('mongoose').model('StringArray'),
-    LinkArray = require('mongoose').model('LinkArray');
+    LinkArray = require('mongoose').model('LinkArray'),
+    Buzzr = require('mongoose').model('Buzzr');
 
 var titleErrorLinks,
     socketErrorLinks,
@@ -78,9 +79,16 @@ exports.topics = {
     topics.save();
   },
   update: function(cb) {
-    StringArray.findOne({name: 'topics'}, function(err, obj) {
+    var that = this;
+    Buzzr.find({}, function(err, buzzrs) {
       if (err) { throw err; }
-      topics = obj;
+      var a = [];
+      
+      that.erase();
+      buzzrs.forEach(function(buzzr) {
+        a.push(buzzr.topic);
+      });
+      that.set(a);
       if (cb) {cb();}
     });
   },
