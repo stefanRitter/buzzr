@@ -27,12 +27,9 @@ exports.getAdminList = function(req, res) {
   Buzzr.find({}, function(err, collection) {
     if (err) { return res.json({err: err}); }
 
-    var buzzrs = [],
-        topics = [];
-    
-    arr.topics.erase();
+    var buzzrs = [];
+
     collection.forEach(function(buzzr){
-      topics.push(buzzr.topic);
       buzzrs.push({
         topic: buzzr.topic,
         lastViewed: buzzr.lastViewed,
@@ -42,8 +39,7 @@ exports.getAdminList = function(req, res) {
         lang: buzzr.lang
       });
     });
-    
-    arr.topics.set(topics);
+
     res.json({buzzrs: buzzrs});
   });
 };
