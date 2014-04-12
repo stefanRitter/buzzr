@@ -1,7 +1,6 @@
 'use strict';
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    arr = require('../utils/arrays.js'),
     buzzrCreator = require('child_process').fork('server/utils/buzzrCreator.js');
 
 exports.getByTopic = function(req, res) {
