@@ -34,6 +34,7 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
   body(ng-app="app")
     include ../../app/header/header
     .move
+      .blackout
       div.app-view(ng-view)
         block main-content
     include ../../app/sidebar/sidebar
