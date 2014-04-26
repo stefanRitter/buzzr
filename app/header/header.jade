@@ -1,1 +1,8 @@
-header.header(ng-controller="appHeaderCtrl") &nbsp;
+header.header(ng-controller="appHeaderCtrl")
+  .header-body
+    .header-sidebar-toggle(ng-click="toggleSidebar(); $event.stopPropagation();" ng-class="{'open': open}")
+      span
+    .header-logo
+    .header-filters
+
+.header-spacer

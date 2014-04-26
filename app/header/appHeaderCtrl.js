@@ -1,4 +1,8 @@
-angular.module('app').controller('appHeaderCtrl', function ($scope) {
+angular.module('app').controller('appHeaderCtrl', function ($scope, appSidebar) {
   'use strict';
-  $scope.header = {};
+  
+  $scope.toggleSidebar = function() {
+    $scope.open = !$scope.open;
+    appSidebar.toggle();
+  };
 });
