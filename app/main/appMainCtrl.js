@@ -1,4 +1,4 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appBuzzr) {
+angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
   'use strict';
 
   $scope.countDown = 18;
@@ -16,7 +16,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
 
   $scope.encode = function(title) { return encodeURI(title); };
 
-  $scope.toggleHeader = function() { appHeader.toggle(); };
+  $scope.toggleSidebar = function() { appSidebar.toggle(); };
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
 

@@ -1,4 +1,4 @@
-angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appHeader, appIsMobile) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -14,8 +14,8 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
       // redirect if invalid email
       $location.path('account/settings');
     } else {
-      // open header for returning users
-      appHeader.toggle();
+      // open sidear for returning users
+      appSidebar.toggle();
     }
   }
 

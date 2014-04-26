@@ -1,6 +1,6 @@
 .center.margin-top-big(ng-show="status.feeding")
 
-  .feed-topic(ng-click="toggleHeader(); $event.stopPropagation();") {{searchText}}
+  .feed-topic(ng-click="toggleSidebar(); $event.stopPropagation();") {{searchText}}
   .feed-filters
     input.filter-input(ng-model="filterByText", placeholder="search")
 
@@ -11,7 +11,7 @@
           a.feed-link(href="{{link.url}}", target="_blank", ng-click="trackView(link.url)") {{link.title}}
         
         div(ng-hide="identity.isAuthenticated()")
-          a.feed-link(ng-click="toggleHeader(); $event.stopPropagation();") {{link.title}}
+          a.feed-link(ng-click="toggleSidebar(); $event.stopPropagation();") {{link.title}}
 
         .feed-item-info
           .feed-item-actions
@@ -20,4 +20,4 @@
             a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
               img(src="/img/share.svg")
             .action-remove(ng-click="removeLink(link)") &times;
-          .feed-item-date {{link.activated}}
+          //-.feed-item-date {{link.activated}}

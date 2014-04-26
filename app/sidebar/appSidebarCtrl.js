@@ -1,4 +1,4 @@
-angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+angular.module('app').controller('appSidebarCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
   'use strict';
   
   function close() {
@@ -43,7 +43,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $
     $document.one('touch', close);
   };
 
-  $scope.$on('toggleHeader', function() {
+  $scope.$on('toggleSidebar', function() {
     $scope.setBuzzrs();
     $scope.toggleOpen();
   });

@@ -411,73 +411,6 @@ angular.module('app').run(function ($rootScope, $location) {
     $scope.toggle();
   });
 });
-;angular.module('app').factory('appHeader', function ($rootScope) {
-  'use strict';
-
-  var header = {};
-
-  header.toggle = function() {
-    $rootScope.$broadcast('toggleHeader');
-  };
-  
-  return header;
-});
-;angular.module('app').controller('appHeaderCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
-  'use strict';
-  
-  function close() {
-    if ($scope.open) {
-      $scope.open = false;
-      $scope.$digest();
-    }
-  }
-
-  $scope.open = false;
-  $scope.identity = appIdentity;
-
-  $scope.setBuzzrs = function() {
-    if (appIdentity.isAuthenticated()) {
-      $scope.buzzrs = appIdentity.currentUser.buzzrs;
-    }
-  };
-
-  $scope.encode = function(topic) {
-    return encodeURI(topic);
-  };
-
-  $scope.signout = function() {
-    appAuth.logoutUser().then(function() {
-      $location.path('/');
-    });
-  };
-
-  $scope.removeBuzzr = function(topic) {
-    appIdentity.currentUser.removeBuzzr(topic);
-  };
-
-  $scope.toggleOpen = function() {
-    $scope.open = !$scope.open;
-    $document.one('click', close);
-    $document.one('touch', close);
-  };
-
-  $scope.slideOut = function() {
-    $scope.open = true;
-    $document.one('click', close);
-    $document.one('touch', close);
-  };
-
-  $scope.$on('toggleHeader', function() {
-    $scope.setBuzzrs();
-    $scope.toggleOpen();
-  });
-
-  $scope.$on('buzzrsChanged', function() {
-    $scope.setBuzzrs();
-  });
-
-  $scope.setBuzzrs();
-});
 ;angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLinks) {
   'use strict';
   var BuzzrResource = {};
@@ -530,7 +463,7 @@ angular.module('app').run(function ($rootScope, $location) {
 
   return BuzzrResource;
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appHeader, appFeedback, appBuzzr) {
+;angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
   'use strict';
 
   $scope.countDown = 18;
@@ -548,7 +481,7 @@ angular.module('app').run(function ($rootScope, $location) {
 
   $scope.encode = function(title) { return encodeURI(title); };
 
-  $scope.toggleHeader = function() { appHeader.toggle(); };
+  $scope.toggleSidebar = function() { appSidebar.toggle(); };
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
 
@@ -651,7 +584,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 });
-;angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appHeader, appIsMobile) {
+;angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -667,8 +600,8 @@ angular.module('app').run(function ($rootScope, $location) {
       // redirect if invalid email
       $location.path('account/settings');
     } else {
-      // open header for returning users
-      appHeader.toggle();
+      // open sidear for returning users
+      appSidebar.toggle();
     }
   }
 
@@ -687,7 +620,7 @@ angular.module('app').run(function ($rootScope, $location) {
     appFeedback.toggle();
   };
 });
-;angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appHeader, appIdentity) {
+;angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appSidebar, appIdentity) {
   'use strict';
 
   $scope.readlater = appIdentity.currentUser.readlater || [];
@@ -696,7 +629,7 @@ angular.module('app').run(function ($rootScope, $location) {
   };
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
-  $scope.toggleHeader = function() { appHeader.toggle(); };
+  $scope.toggleSidebar = function() { appSidebar.toggle(); };
 
   $scope.removeLink = function(url) {
     appIdentity.currentUser.removeSavedLink(url);
@@ -705,4 +638,71 @@ angular.module('app').run(function ($rootScope, $location) {
   $scope.$on('readlaterChanged', function() {
     $scope.readlater = appIdentity.currentUser.readlater;
   });
+});
+;angular.module('app').factory('appSidebar', function ($rootScope) {
+  'use strict';
+
+  var header = {};
+
+  header.toggle = function() {
+    $rootScope.$broadcast('toggleSidebar');
+  };
+  
+  return header;
+});
+;angular.module('app').controller('appSidebarCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+  'use strict';
+  
+  function close() {
+    if ($scope.open) {
+      $scope.open = false;
+      $scope.$digest();
+    }
+  }
+
+  $scope.open = false;
+  $scope.identity = appIdentity;
+
+  $scope.setBuzzrs = function() {
+    if (appIdentity.isAuthenticated()) {
+      $scope.buzzrs = appIdentity.currentUser.buzzrs;
+    }
+  };
+
+  $scope.encode = function(topic) {
+    return encodeURI(topic);
+  };
+
+  $scope.signout = function() {
+    appAuth.logoutUser().then(function() {
+      $location.path('/');
+    });
+  };
+
+  $scope.removeBuzzr = function(topic) {
+    appIdentity.currentUser.removeBuzzr(topic);
+  };
+
+  $scope.toggleOpen = function() {
+    $scope.open = !$scope.open;
+    $document.one('click', close);
+    $document.one('touch', close);
+  };
+
+  $scope.slideOut = function() {
+    $scope.open = true;
+    $document.one('click', close);
+    $document.one('touch', close);
+  };
+
+  $scope.$on('toggleSidebar', function() {
+    $scope.setBuzzrs();
+    $scope.toggleOpen();
+  });
+
+  $scope.$on('buzzrsChanged', function() {
+    $scope.setBuzzrs();
+  });
+
+  $scope.setBuzzrs();
 });

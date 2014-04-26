@@ -1,8 +1,8 @@
-header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
-  .header-content-center
+aside.sidebar(ng-controller="appSidebarCtrl", ng-class="{'open': open}")
+  .sidebar-content-center
     
     //- Logged out
-    .header-loggedout-menu(ng-hide="identity.isAuthenticated()")
+    .sidebar-loggedout-menu(ng-hide="identity.isAuthenticated()")
       h4 Welcome to buzzr.
       p.
         Sign up to save your personal feeds, 
@@ -17,27 +17,27 @@ header.header(ng-controller="appHeaderCtrl", ng-class="{'open': open}")
         | Sign in with Twitter
 
     //- Logged in
-    .header-loggedin-menu(ng-show="identity.isAuthenticated()")
+    .sidebar-loggedin-menu(ng-show="identity.isAuthenticated()")
       .center.margin-top
-        a.header-action-readlater(href="/account/readlater")
+        a.sidebar-action-readlater(href="/account/readlater")
           img(src="/img/heart.svg")
-        a.header-action-add(href="/")
+        a.sidebar-action-add(href="/")
           span +
 
       ul.margin-top
         li.relative(ng-repeat="buzzr in buzzrs")
-          a.button-white.header-button(href="/{{encode(buzzr)}}")
+          a.button-white.sidebar-button(href="/{{encode(buzzr)}}")
             | {{buzzr}}
-          span.header-action-remove(ng-click="removeBuzzr(buzzr); $event.stopPropagation();") -
+          span.sidebar-action-remove(ng-click="removeBuzzr(buzzr); $event.stopPropagation();") -
 
 
-    .header-footer(ng-show="identity.isAuthenticated()")
+    .sidebar-footer(ng-show="identity.isAuthenticated()")
       ul.list-horizontal
         li
           a(href="/account/settings") Settings
         li
           a(href="", ng-click="signout()") Sign Out
   
-  .header-content-right(ng-mouseenter="slideOut()")
-    .header-logo(ng-click="toggleOpen(); $event.stopPropagation();")
+  .sidebar-content-right(ng-mouseenter="slideOut()")
+    .sidebar-logo(ng-click="toggleOpen(); $event.stopPropagation();")
       include ../../public/img/logo.svg
