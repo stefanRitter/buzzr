@@ -30,7 +30,7 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
   };
 
   $scope.toggleOpen = function() {
-    var moveOver = angular.element(document.querySelector('.move'));
+    var moveOver = angular.element(document.querySelectorAll('.move'));
     moveOver.toggleClass('over');
     $scope.open = !$scope.open;
     if ($scope.open) {
