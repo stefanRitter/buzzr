@@ -11,11 +11,8 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
 
   if (appIdentity.isAuthenticated()) {
     if (!appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)) {
-      // redirect if invalid email
+      // redirect if email invalid (twitter logins)
       $location.path('account/settings');
-    } else {
-      // open sidear for returning users
-      appSidebar.toggle();
     }
   }
 
