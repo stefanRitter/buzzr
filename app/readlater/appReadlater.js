@@ -7,7 +7,6 @@ angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedba
   };
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
-  $scope.toggleSidebar = function() { appSidebar.toggle(); };
 
   $scope.removeLink = function(url) {
     appIdentity.currentUser.removeSavedLink(url);

@@ -936,7 +936,6 @@ angular.module('app').run(function ($rootScope, $location) {
   };
 
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
-  $scope.toggleSidebar = function() { appSidebar.toggle(); };
 
   $scope.removeLink = function(url) {
     appIdentity.currentUser.removeSavedLink(url);

@@ -1,7 +1,7 @@
-.feed-topic(ng-click="toggleSidebar(); $event.stopPropagation();") Read later
+.header-spacer
 
 //- empty list
-.center(ng-show="empty()")
+.center.margin-top-big(ng-show="empty()")
   h2.margin-top-big
     | Sorry, you have no saved links.
   p.margin-top-big
@@ -13,7 +13,7 @@
     a.underline(ng-click="toggleFeedback()") please contact us for help.
 
 //- read later feed
-.center(ng-hide="empty()")
+.center.margin-top-big(ng-hide="empty()")
   .feed-container
     
     .feed-item(ng-repeat="link in readlater | orderBy:'activated':'true'")
