@@ -1,5 +1,7 @@
 angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope, appSidebar, $location, $document, appAuth, appNotifier, appIdentity) {
   'use strict';
+
+  var blackout = angular.element(document.querySelector('.blackout'));
   
   function close() {
     if ($scope.open) {
@@ -30,8 +32,7 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
   };
 
   $scope.toggleOpen = function() {
-    var moveOver = angular.element(document.querySelectorAll('.move'));
-    moveOver.toggleClass('over');
+    blackout.toggleClass('on');
     $scope.open = !$scope.open;
     if ($scope.open) {
       $document.one('click', close);
