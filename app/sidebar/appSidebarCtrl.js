@@ -1,14 +1,12 @@
-angular.module('app').controller('appSidebarCtrl', function ($scope, $location, $document, appAuth, appNotifier, appIdentity) {
+angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope, appSidebar, $location, $document, appAuth, appNotifier, appIdentity) {
   'use strict';
   
   function close() {
     if ($scope.open) {
-      $scope.open = false;
-      $scope.$digest();
+      appSidebar.toggle();
     }
   }
 
-  $scope.open = false;
   $scope.identity = appIdentity;
 
   $scope.setBuzzrs = function() {
@@ -32,18 +30,19 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $location, 
   };
 
   $scope.toggleOpen = function() {
+    var moveOver = angular.element(document.querySelector('.move'));
+    moveOver.toggleClass('over');
     $scope.open = !$scope.open;
-    $document.one('click', close);
-    $document.one('touch', close);
+    if ($scope.open) {
+      $document.one('click', close);
+      $document.one('touch', close);
+    }
+    if(!$scope.$$phase) {
+      $scope.$digest();
+    }
   };
 
-  $scope.slideOut = function() {
-    $scope.open = true;
-    $document.one('click', close);
-    $document.one('touch', close);
-  };
-
-  $scope.$on('toggleSidebar', function() {
+  $rootScope.$on('toggleSidebar', function() {
     $scope.setBuzzrs();
     $scope.toggleOpen();
   });

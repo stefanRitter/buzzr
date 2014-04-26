@@ -32,10 +32,11 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
     <![endif]-->
 
   body(ng-app="app")
-    include ../../app/header/header
+    .move
+      include ../../app/header/header
+      div.app-view(ng-view)
+        block main-content
     include ../../app/sidebar/sidebar
-    div.app-view(ng-view)
-      block main-content
     include ../../app/feedback/feedback
 
 

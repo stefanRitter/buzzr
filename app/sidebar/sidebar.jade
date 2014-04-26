@@ -1,6 +1,5 @@
 aside.sidebar(ng-controller="appSidebarCtrl", ng-class="{'open': open}")
   .sidebar-content-center
-    
     //- Logged out
     .sidebar-loggedout-menu(ng-hide="identity.isAuthenticated()")
       h4 Welcome to buzzr.
@@ -37,7 +36,3 @@ aside.sidebar(ng-controller="appSidebarCtrl", ng-class="{'open': open}")
           a(href="/account/settings") Settings
         li
           a(href="", ng-click="signout()") Sign Out
-  
-  .sidebar-content-right(ng-mouseenter="slideOut()")
-    .sidebar-logo(ng-click="toggleOpen(); $event.stopPropagation();")
-      include ../../public/img/logo.svg

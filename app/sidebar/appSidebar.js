@@ -4,7 +4,7 @@ angular.module('app').factory('appSidebar', function ($rootScope) {
   var header = {};
 
   header.toggle = function() {
-    $rootScope.$broadcast('toggleSidebar');
+    $rootScope.$emit('toggleSidebar');
   };
   
   return header;
