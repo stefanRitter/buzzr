@@ -13,18 +13,12 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, 
   });
 
   $scope.$on('$locationChangeSuccess', function() {
-    var path = $location.path(),
-        noTitle = ['/', '/about', '/terms', '/join', '/login', '/account/settings', '/account/readlater'];
-    
-    if (noTitle.indexOf(path) === -1) {
-      $scope.title = path.replace('/', '');
-      return;
-    }
-
-    if (path === '/account/readlater') {
-      $scope.title = 'read later';
-      return;
-    }
-    $scope.title = '';
+    var path = $location.path();
+    $scope.title = path.replace('/', '').replace('account/', '');
   });
+
+  $scope.showLogo = function() {
+    var noLogo = ['/', '/login', '/about', '/join', '/terms'];
+    return noLogo.indexOf($location.path()) === -1;
+  };
 });

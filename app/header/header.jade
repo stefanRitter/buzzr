@@ -3,4 +3,8 @@ header.header(ng-controller="appHeaderCtrl")
     span
   .header-title
     {{title}}
+  a.header-logo.ng-hide(href="/" ng-show="showLogo()")
+    img(src="/img/logo.png")
+    strong buzzr
+
   .header-filters
