@@ -2,10 +2,11 @@
 
 var request = require('request'),
     cheerio = require('cheerio'),
+    googleDecoder = require('./googleDecoder.js'),
     logger = require('../common/logger.js');
 
 module.exports = function (link, cb, done) {
-  var shortUrl = link.url;
+  var shortUrl = googleDecoder(link.url);
 
   request(
   {
@@ -26,7 +27,8 @@ module.exports = function (link, cb, done) {
     }
 
     if (response.statusCode !== 200) {
-      return logger.error('URL STATUS ERROR', shortUrl, response.statusCode);
+      logger.error('URL STATUS ERROR', shortUrl, response.statusCode);
+      return done();
     }
 
     var $ = cheerio.load(body),

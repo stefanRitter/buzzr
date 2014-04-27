@@ -28,12 +28,21 @@ var excludedDomains = {
 
 
 function processLink(link, buzzr, done) {
+  /*jshint maxstatements: false */
+  /*jshint maxcomplexity: false */
+
   var expandedUrl = link.url,
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
   
-  if (excludedDomains[domain]) { return; }
+  if (excludedDomains[domain]) {
+    if (done) { return done(); }
+    return;
+  }
+  
   if (!link.title || link.title === '') {
     delete link.title;
+    delete link.searchHead;
+    delete link.searchBody;
     arr.titleErrorLinks.push(link);
     if (done) { return done(); }
     return;
