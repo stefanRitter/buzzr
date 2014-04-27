@@ -39,6 +39,14 @@ function processLink(link, buzzr, done) {
     return;
   }
 
+  var searchHead = link.headText.search(buzzr.topic),
+      searchBody = link.bodyText.search(buzzr.topic);
+
+  if (searchHead === -1 && searchBody === -1) {
+    if (done) { return done(); }
+    return;
+  }
+
   logger.log('PROCESS: adding ' + expandedUrl);
 
   link.url = link.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');

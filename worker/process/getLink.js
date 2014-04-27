@@ -35,6 +35,8 @@ module.exports = function (link, cb, done) {
     link.url = response.request.href;
     link.title = title;
     link.lang = 'en';
+    link.bodyText = $('body').text();
+    link.headText = $('head').text();
     cb(null, link, done);
   });
 };

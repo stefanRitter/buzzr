@@ -37,7 +37,7 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        separator: ';'
+        separator: ''
       },
       vendor: {
         src: [

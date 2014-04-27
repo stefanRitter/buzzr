@@ -288,7 +288,6 @@
           startSize        : this.startSize
         };
 
-
-      }];     //
-    });       // wtf javascript. srsly
-})();       //
+      }];
+    });
+})();

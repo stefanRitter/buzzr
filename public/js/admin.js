@@ -31,7 +31,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   });
 });
-;angular.module('app').factory('AppUser', function ($resource, $rootScope) {
+angular.module('app').factory('AppUser', function ($resource, $rootScope) {
   'use strict';
 
   var UserResource = $resource('/api/users/:id', {_id: '@id'}, {
@@ -120,7 +120,7 @@ angular.module('app').run(function ($rootScope, $location) {
 
   return UserResource;
 });
-;angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
+angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUser) {
   'use strict';
 
   return {
@@ -197,7 +197,7 @@ angular.module('app').run(function ($rootScope, $location) {
       return $q.reject('not authorized');
     }
   };
-});;angular.module('app').factory('appIdentity', function ($window, AppUser) {
+});angular.module('app').factory('appIdentity', function ($window, AppUser) {
   'use strict';
 
   var currentUser;
@@ -217,7 +217,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 });
-;angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
+angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
   'use strict';
 
   $scope.signup = function() {
@@ -233,7 +233,7 @@ angular.module('app').run(function ($rootScope, $location) {
     });
   };
 });
-;angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
+angular.module('app').controller('appLoginCtrl', function ($scope, $location, appAuth, appNotifier) {
   'use strict';
 
   $scope.signin = function() {
@@ -249,7 +249,7 @@ angular.module('app').run(function ($rootScope, $location) {
       });
   };
 });
-;angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
+angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
   'use strict';
 
   $scope.currentUser = angular.copy(appIdentity.currentUser);
@@ -271,7 +271,7 @@ angular.module('app').run(function ($rootScope, $location) {
     });
   };
 });
-;angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {
+angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {
   'use strict';
   
   $scope.buzzrs = [];
@@ -286,7 +286,7 @@ angular.module('app').run(function ($rootScope, $location) {
       }
     });
 });
-;angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http, $window) {
+angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http, $window) {
   'use strict';
   
   $scope.socketErrors = [];
@@ -303,11 +303,11 @@ angular.module('app').run(function ($rootScope, $location) {
       }
     });
 });
-;angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
+angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';
   
   $scope.users = AppUser.query();
-});;  /*
+});  /*
    * angular-loading-bar
    *
    * intercepts XHR requests and creates a loading bar.
@@ -597,10 +597,9 @@ angular.module('app').run(function ($rootScope, $location) {
           startSize        : this.startSize
         };
 
-
-      }];     //
-    });       // wtf javascript. srsly
-})();       //;angular.module('app').factory('appIsMobile', function() {
+      }];
+    });
+})();angular.module('app').factory('appIsMobile', function() {
   'use strict';
 
   var isMobile = {
@@ -623,7 +622,7 @@ angular.module('app').run(function ($rootScope, $location) {
   
   return isMobile;
 });
-;angular.module('app').factory('appNotifier', function() {
+angular.module('app').factory('appNotifier', function() {
   'use strict';
 
   return {
@@ -645,7 +644,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 });
-;angular.module('app').factory('appTopics', function ($window) {
+angular.module('app').factory('appTopics', function ($window) {
   'use strict';
 
   var topics = [];
@@ -656,11 +655,11 @@ angular.module('app').run(function ($rootScope, $location) {
 
   return topics;
 });
-;String.prototype.trunc = function(n) {
+String.prototype.trunc = function(n) {
   'use strict';
   return this.length > n ? this.substr(0, n-1) + '...' : this;
 };
-;angular.module('app').factory('appFeedback', function ($rootScope) {
+angular.module('app').factory('appFeedback', function ($rootScope) {
   'use strict';
 
   return {
@@ -669,7 +668,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 });
-;angular.module('app').controller('appFeedbackCtrl', function ($scope, $location, $window, $http, appIdentity, appNotifier) {
+angular.module('app').controller('appFeedbackCtrl', function ($scope, $location, $window, $http, appIdentity, appNotifier) {
   'use strict';
 
   $scope.success = false;
@@ -708,7 +707,7 @@ angular.module('app').run(function ($rootScope, $location) {
     $scope.toggle();
   });
 });
-;angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, $location, appSidebar) {
+angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, $location, appSidebar) {
   'use strict';
   
   $scope.toggleSidebar = function() {
@@ -732,7 +731,7 @@ angular.module('app').run(function ($rootScope, $location) {
     return noLogo.indexOf($location.path()) === -1;
   };
 });
-;angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLinks) {
+angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLinks) {
   'use strict';
   var BuzzrResource = {};
 
@@ -784,7 +783,7 @@ angular.module('app').run(function ($rootScope, $location) {
 
   return BuzzrResource;
 });
-;angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
+angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
   'use strict';
 
   $scope.countDown = 18;
@@ -825,7 +824,7 @@ angular.module('app').run(function ($rootScope, $location) {
   
   $scope.triggerSearch();
 });
-;angular.module('app').factory('appProcessLinks', function (appIdentity) {
+angular.module('app').factory('appProcessLinks', function (appIdentity) {
   'use strict';
 
   var uniqDates = {},
@@ -905,7 +904,7 @@ angular.module('app').run(function ($rootScope, $location) {
     }
   };
 });
-;angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -929,7 +928,7 @@ angular.module('app').run(function ($rootScope, $location) {
     homeInput.focus();
   }
 });
-;angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback, appIdentity) {
+angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback, appIdentity) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -938,7 +937,7 @@ angular.module('app').run(function ($rootScope, $location) {
     appFeedback.toggle();
   };
 });
-;angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appSidebar, appIdentity) {
+angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appSidebar, appIdentity) {
   'use strict';
 
   $scope.readlater = appIdentity.currentUser.readlater || [];
@@ -956,7 +955,7 @@ angular.module('app').run(function ($rootScope, $location) {
     $scope.readlater = appIdentity.currentUser.readlater;
   });
 });
-;angular.module('app').factory('appSidebar', function ($rootScope) {
+angular.module('app').factory('appSidebar', function ($rootScope) {
   'use strict';
 
   var header = {};
@@ -967,7 +966,7 @@ angular.module('app').run(function ($rootScope, $location) {
   
   return header;
 });
-;angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope, appSidebar, $location, $document, appAuth, appNotifier, appIdentity) {
+angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope, appSidebar, $location, $document, appAuth, appNotifier, appIdentity) {
   'use strict';
 
   var blackout = angular.element(document.querySelector('.blackout'));
