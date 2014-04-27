@@ -1,9 +1,9 @@
 header.header(ng-controller="appHeaderCtrl")
   .header-sidebar-toggle(ng-click="toggleSidebar(); $event.stopPropagation();" ng-class="{'open': open}")
     span
-  .header-title
+  .header-title(ng-click="toggleSidebar(); $event.stopPropagation();")
     {{title}}
-  a.header-logo.ng-hide(href="/" ng-show="showLogo()")
+  .header-logo.ng-hide(ng-click="toggleSidebar(); $event.stopPropagation();" ng-show="showLogo()")
     img(src="/img/logo.png")
     strong buzzr
 

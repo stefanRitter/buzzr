@@ -656,6 +656,10 @@ angular.module('app').run(function ($rootScope, $location) {
 
   return topics;
 });
+;String.prototype.trunc = function(n) {
+  'use strict';
+  return this.length > n ? this.substr(0, n-1) + '...' : this;
+};
 ;angular.module('app').factory('appFeedback', function ($rootScope) {
   'use strict';
 
@@ -720,7 +724,7 @@ angular.module('app').run(function ($rootScope, $location) {
 
   $scope.$on('$locationChangeSuccess', function() {
     var path = $location.path();
-    $scope.title = path.replace('/', '').replace('account/', '');
+    $scope.title = path.replace('/', '').replace('account/', '').trunc(15);
   });
 
   $scope.showLogo = function() {
