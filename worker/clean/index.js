@@ -16,7 +16,8 @@ Buzzr.find({}, function(err, buzzrs) {
 
 LinkArray.find({}).exec(function(err, linkArrays) {
   linkArrays.forEach(function(arr) {
-    arr.array = [];
+    console.log('CLEAN ARRAY: ' + arr.name);
+    arr.array.length = 0;
     arr.save();
   });
 });
