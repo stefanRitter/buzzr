@@ -12,7 +12,8 @@ module.exports = function (app) {
   /*jshint maxstatements: false */
 
   // APP
-  app.get('/',        pages('index'));
+  app.get('/',        pages('about'));
+  app.get('/search',  pages('index'));
   app.get('/login',   pages('login'));
   app.get('/join',    pages('join'));
   app.get('/about',   pages('about'));
