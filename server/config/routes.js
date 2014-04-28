@@ -15,7 +15,7 @@ module.exports = function (app) {
   app.get('/',        pages('landingpage'));
   app.get('/search',  pages('index'));
   app.get('/login',   pages('login'));
-  app.get('/join',    pages('join'));
+  //app.get('/join',    pages('join'));
   app.get('/about',   pages('about'));
   app.get('/terms',   pages('terms'));
   app.get('/:id',     pages('main'));
