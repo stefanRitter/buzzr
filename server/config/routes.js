@@ -5,6 +5,7 @@ var auth = require('../controllers/auth.js'),
     pages = require('../controllers/pages.js'),
     feedback = require('../controllers/feedback.js'),
     buzzrs = require('../controllers/buzzrs.js'),
+    charge = require('../controllers/charge.js'),
     admin = require('../controllers/admin.js');
 
 
@@ -29,8 +30,8 @@ module.exports = function (app) {
   });
 
   // API
+  app.post('/stripe',          charge);
   app.get( '/api/buzzrs/:id',  buzzrs.getByTopic);
-  app.post('/api/users',       users.createUser);
   app.put( '/api/users',       auth.authorize, users.updateUser);
   app.post('/api/feedback',    feedback.createFeedback);
 
@@ -42,6 +43,7 @@ module.exports = function (app) {
 
   // ADMIN
   app.get('/admin/*',        auth.requiresRole('admin'), admin.get);
+  app.post('/api/users',     auth.requiresRole('admin'), users.createUser);
   app.get('/api/users',      auth.requiresRole('admin'), users.getUser);
   app.get('/api/buzzrs',     auth.requiresRole('admin'), buzzrs.getAdminList);
   app.put('/api/buzzrs/:id', auth.requiresRole('admin'), buzzrs.putAdmin);
