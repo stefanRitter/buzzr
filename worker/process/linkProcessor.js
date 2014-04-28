@@ -3,7 +3,8 @@
 var ent = require('ent'),
     arr = require('../../server/utils/arrays.js'),
     Buzzr = require('mongoose').model('Buzzr'),
-    logger = require('../common/logger.js');
+    logger = require('../common/logger.js'),
+    occurrenceCounter = require('./occurrenceCounter.js');
 
 var excludedDomains = {
   'pinterest.com': true,
@@ -48,10 +49,7 @@ function processLink(link, buzzr, done) {
     return;
   }
 
-  var searchHead = link.headText.search(buzzr.topic),
-      searchBody = link.bodyText.search(buzzr.topic);
-
-  if (searchHead === -1 && searchBody === -1) {
+  if (!occurrenceCounter(link, buzzr.topic)) {
     if (done) { return done(); }
     return;
   }
