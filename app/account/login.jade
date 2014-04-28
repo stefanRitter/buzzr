@@ -3,13 +3,15 @@
 
   form.form.center(name="signinForm")
 
-    a.button-twitter.margin.margin-top-big(href="/auth/twitter", target="_self")
-      .svg
-        include ../../public/img/twitter.svg
-      | Sign in with Twitter
+    //-
+      a.button-twitter.margin.margin-top-big(href="/auth/twitter", target="_self")
+        .svg
+          include ../../public/img/twitter.svg
+        | Sign in with Twitter
 
-    p.italic or
-    
+      p.italic or
+    h1 Login
+
     .form-group
       label Email*
       input(name="email", type="email", placeholder="Email", ng-model="email", required)
@@ -27,5 +29,5 @@
       .error {{notifier.error}}
       .notice {{notifier.notice}}
 
-     .margin-big
-      a.underline(href="/join") New user? Sign up here.
+    .margin-big
+      a.underline(href="http://www.buzzr.io") New user? Sign up here.
