@@ -47,6 +47,7 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
     if !!bootstrappedTopics
       script.
         window.bootstrappedTopics = !{JSON.stringify(bootstrappedTopics)}
+    script(src="https://checkout.stripe.com/checkout.js")
     script(type="text/javascript", src="/js/vendor.js")
     if !!admin
       script(type="text/javascript", src="/js/admin.js")

@@ -1,20 +1,22 @@
-var Customer = require('./models/customer.js');
-var stripeKeys = require('./config.js');
-var stripe = require('stripe')(stripeKeys.secretKey);
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+    config = require('../config/config')[env];
+
+//var Customer = require('./models/customer.js');
+var stripe = require('stripe')(config.secretKey);
 
 module.exports = function(req, res) {
   'use strict';
   // obtain StripeToken
   var transaction = req.body;
   var stripeToken = transaction.stripeToken;
-  var newCustomer = new Customer({token: stripeToken });
+  /*var newCustomer = new Customer({token: stripeToken });
   newCustomer.save(function(err) {
     if (err) {
       console.log(err);
     } else {
       console.log('CHARGE: Success!');
     }
-  });
+  });*/
   
   // create charge
   var charge = {

@@ -6,7 +6,7 @@ module.exports = function(tweet) {
       rank = favs + retweets;
 
   if (!!tweet.in_reply_to_status_id) {
-    rank += 10;
+    rank += 1;
   }
   return rank;
 };

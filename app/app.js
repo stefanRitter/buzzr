@@ -19,8 +19,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/about',   {templateUrl: '/partials/pages/about',    controller: 'appPagesCtrl'})
     .when('/terms',   {templateUrl: '/partials/pages/terms',    controller: 'appPagesCtrl'})
     .when('/login',   {templateUrl: '/partials/account/login',  controller: 'appLoginCtrl'})
+    .when('/join',    {templateUrl: '/partials/account/join',   controller: 'appJoinCtrl'})
     .when('/:id',     {templateUrl: '/partials/main/main',      controller: 'appMainCtrl'});
-    //.when('/join',    {templateUrl: '/partials/account/join',   controller: 'appJoinCtrl'})
   
   $routeProvider
     .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',
