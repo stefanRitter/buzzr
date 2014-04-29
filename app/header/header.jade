@@ -4,5 +4,3 @@ header.header.ng-hide(ng-controller="appHeaderCtrl" ng-show="isLoggedIn()")
   .header-logo.ng-hide(ng-click="toggleSidebar(); $event.stopPropagation();" ng-show="showLogo()")
     img(src="/img/logo.png")
     strong buzzr
-  .header-title.ng-hide(ng-click="toggleSidebar(); $event.stopPropagation();" ng-show="title")
-    | {{title}}

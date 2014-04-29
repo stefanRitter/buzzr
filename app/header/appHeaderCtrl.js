@@ -16,11 +16,6 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, 
     }
   });
 
-  $scope.$on('$locationChangeSuccess', function() {
-    var path = $location.path();
-    $scope.title = path.replace('/', '').replace('account/', '').trunc(15);
-  });
-
   $scope.showLogo = function() {
     var noLogo = ['/', '/login', '/about', '/join', '/terms'];
     return noLogo.indexOf($location.path()) === -1;
