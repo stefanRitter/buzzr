@@ -217,8 +217,10 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
     }
   };
 });
-angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
+angular.module('app').controller('appJoinCtrl', function ($scope, $location, appIdentity, appAuth, appNotifier) {
   'use strict';
+
+  $scope.email = appIdentity.currentUser.email;
 
   $scope.signup = function() {
     var newUserData = {
@@ -227,7 +229,7 @@ angular.module('app').controller('appJoinCtrl', function ($scope, $location, app
     };
 
     appAuth.createUser(newUserData).then(function() {
-      $location.path('/');
+      $location.path('/search');
     }, function(reason) {
       appNotifier.error(reason, $scope);
     });
@@ -928,31 +930,34 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     homeInput.focus();
   }
 });
-angular.module('app').controller('appPagesCtrl', function ($scope, appFeedback, appIdentity) {
+angular.module('app').controller('appPagesCtrl', function ($scope, $http, $location, appFeedback, appIdentity) {
   'use strict';
+  $scope.identity = appIdentity;
 
+  var stripeToken = {};
+  
   var handler = window.StripeCheckout.configure({
     key: 'pk_test_A92gZzXMijuUIYouO3UXkIyB',
     image: '/img/icon.png',
     token: function(token) {
-      // Use the token to create the charge with a server-side script.
-      // You can access the token ID with `token.id`
-      window.alert('callback');
-      var request = new XMLHttpRequest();
-      
-      request.onload = function () {
-        var status = request.status;
-        var data = request.responseText;
-        console.log(status, data);
-        window.alert('back');
-      };
+      stripeToken = token;
+      console.log(token);
 
-      request.open('POST', '/stripe', false);
-      request.send(token);
+      $http
+        .post('/stripe', token)
+        .then(function(res) {
+          if (res.data.success) {
+            appIdentity.currentUser.email = token.email;
+            $location.path('/join');
+          } else {
+            // card declined
+            window.alert(res.data.reason);
+          }
+        }, function() {
+          window.alert('There was a server error, your card was NOT charged! Please contact us for help!');
+        });
     }
   });
-
-  $scope.identity = appIdentity;
 
   $scope.toggleFeedback = function() {
     appFeedback.toggle();

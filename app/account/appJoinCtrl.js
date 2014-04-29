@@ -1,5 +1,7 @@
-angular.module('app').controller('appJoinCtrl', function ($scope, $location, appAuth, appNotifier) {
+angular.module('app').controller('appJoinCtrl', function ($scope, $location, appIdentity, appAuth, appNotifier) {
   'use strict';
+
+  $scope.email = appIdentity.currentUser.email;
 
   $scope.signup = function() {
     var newUserData = {
@@ -8,7 +10,7 @@ angular.module('app').controller('appJoinCtrl', function ($scope, $location, app
     };
 
     appAuth.createUser(newUserData).then(function() {
-      $location.path('/');
+      $location.path('/search');
     }, function(reason) {
       appNotifier.error(reason, $scope);
     });

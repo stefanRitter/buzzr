@@ -2,25 +2,24 @@
   include ../common/buzzr-logo
 
   form.form.center(name="signupForm")
-    p.margin.margin-top-big.italic Join the Buzzr BETA program:
+    p.margin.margin-top-big.italic Choose a password:
 
-    a.button-twitter.margin(href="/auth/twitter", target="_self")
-      .svg
-        include ../../public/img/twitter.svg
-      | Sign in with Twitter
-
-    p.italic or
+    //-
+      a.button-twitter.margin(href="/auth/twitter", target="_self")
+        .svg
+          include ../../public/img/twitter.svg
+        | Sign in with Twitter
+      p.italic or
 
     .form-group
-      label Email*
-      input(name="email", type="email", placeholder="Email", ng-model="email", required)
+      label Email: {{email}}
     
     .form-group
       label Password*
       input(name="password", type="password", placeholder="Password", ng-model="password", required)
     
     .form-group
-      button.button-black.medium(ng-click="signup()", ng-disabled="signupForm.$invalid") Join
+      button.button-black.medium(ng-click="signup()", ng-disabled="signupForm.$invalid") Go
       br
       span.required * required
 

@@ -2,13 +2,14 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     config = require('../config/config')[env];
 
 //var Customer = require('./models/customer.js');
-var stripe = require('stripe')(config.secretKey);
+var stripe = require('stripe')(config.stripeSecret);
 
-module.exports = function(req, res) {
+module.exports = function(req, res, next) {
   'use strict';
   // obtain StripeToken
-  var transaction = req.body;
-  var stripeToken = transaction.stripeToken;
+  var stripeToken = req.body;
+  
+  console.log(req.body.email);
   /*var newCustomer = new Customer({token: stripeToken });
   newCustomer.save(function(err) {
     if (err) {
@@ -22,19 +23,21 @@ module.exports = function(req, res) {
   var charge = {
     amount: 10*100,
     currency: 'USD',
-    card: stripeToken
+    card: stripeToken.id
   };
   
   stripe.charges.create(charge, function(err, charge) {
+    console.log(charge);
     if(err) {
-      console.log(err);
+      console.log('CHARGE ERROR: ', err);
+      if (err.type === 'StripeCardError') {
+        return res.json({success: false, reason: 'Sorry, this card has been declined.'});
+      }
+      next(err);
     }
     else {
-      res.json(charge);
-      console.log('CHARGE:  Successful charge sent to Stripe!');
+      res.json({success: true});
+      console.log('CHARGE: Successful charge sent to Stripe!', charge);
     }
   });
-
-  // render congrats page
-  res.render('congrats', { title: 'Congrats!', charge: charge.amount/100.00});
 };
