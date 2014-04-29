@@ -14,7 +14,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
         .post('/stripe', token)
         .then(function(res) {
           if (res.data.success) {
-            appIdentity.currentUser.email = token.email;
+            appIdentity.email = token.email;
             $location.path('/join');
           } else {
             // card declined

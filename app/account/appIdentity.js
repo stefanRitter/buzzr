@@ -1,7 +1,7 @@
 angular.module('app').factory('appIdentity', function ($window, AppUser) {
   'use strict';
 
-  var currentUser = {};
+  var currentUser;
   
   if (!!$window.bootstrappedUser) {
     currentUser = new AppUser();
@@ -9,6 +9,7 @@ angular.module('app').factory('appIdentity', function ($window, AppUser) {
   }
 
   return {
+    email: '',
     currentUser: currentUser,
     isAuthenticated: function() {
       return !!this.currentUser;

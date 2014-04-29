@@ -1,7 +1,7 @@
 angular.module('app').controller('appJoinCtrl', function ($scope, $location, appIdentity, appAuth, appNotifier) {
   'use strict';
 
-  $scope.email = appIdentity.currentUser.email;
+  $scope.email = appIdentity.email;
   if (!$scope.email) {
     $location.path('/');
   }

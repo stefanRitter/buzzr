@@ -16,9 +16,9 @@ module.exports = function (app) {
   app.get('/',        auth.authorizeRedirect, pages('landingpage'));
   app.get('/login',   auth.authorizeRedirect, pages('login'));
   app.get('/join',    auth.authorizeRedirect, pages('join'));
-  app.get('/search',  pages('index'));
   app.get('/about',   pages('about'));
   app.get('/terms',   pages('terms'));
+  app.get('/search',  pages('main'));
   app.get('/:id',     pages('main'));
 
   app.get('/account/readlater', pages('main'));

@@ -14,15 +14,17 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
-    .when('/',        {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'})
-    .when('/search',  {templateUrl: '/partials/pages/home',     controller: 'appHomeCtrl'})
-    .when('/about',   {templateUrl: '/partials/pages/about',    controller: 'appPagesCtrl'})
-    .when('/terms',   {templateUrl: '/partials/pages/terms',    controller: 'appPagesCtrl'})
-    .when('/login',   {templateUrl: '/partials/account/login',  controller: 'appLoginCtrl'})
-    .when('/join',    {templateUrl: '/partials/account/join',   controller: 'appJoinCtrl'})
-    .when('/:id',     {templateUrl: '/partials/main/main',      controller: 'appMainCtrl'});
+    .when('/',        {templateUrl: '/partials/pages/landingpage',  controller: 'appPagesCtrl'})
+    .when('/about',   {templateUrl: '/partials/pages/about',        controller: 'appPagesCtrl'})
+    .when('/terms',   {templateUrl: '/partials/pages/terms',        controller: 'appPagesCtrl'})
+    .when('/login',   {templateUrl: '/partials/account/login',      controller: 'appLoginCtrl'})
+    .when('/join',    {templateUrl: '/partials/account/join',       controller: 'appJoinCtrl'});
   
   $routeProvider
+    .when('/search',  {templateUrl: '/partials/pages/home',
+      controller: 'appHomeCtrl', resolve: routeRoleChecks.user})
+    .when('/:id',     {templateUrl: '/partials/main/main',
+      controller: 'appMainCtrl', resolve: routeRoleChecks.user})
     .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',
       controller: 'appReadlaterCtrl', resolve: routeRoleChecks.user})
     .when('/account/settings', {templateUrl: '/partials/account/settings',

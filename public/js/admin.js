@@ -200,7 +200,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
 });angular.module('app').factory('appIdentity', function ($window, AppUser) {
   'use strict';
 
-  var currentUser = {};
+  var currentUser;
   
   if (!!$window.bootstrappedUser) {
     currentUser = new AppUser();
@@ -208,6 +208,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
   }
 
   return {
+    email: '',
     currentUser: currentUser,
     isAuthenticated: function() {
       return !!this.currentUser;
@@ -220,7 +221,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
 angular.module('app').controller('appJoinCtrl', function ($scope, $location, appIdentity, appAuth, appNotifier) {
   'use strict';
 
-  $scope.email = appIdentity.currentUser.email;
+  $scope.email = appIdentity.email;
   if (!$scope.email) {
     $location.path('/');
   }
@@ -949,7 +950,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
         .post('/stripe', token)
         .then(function(res) {
           if (res.data.success) {
-            appIdentity.currentUser.email = token.email;
+            appIdentity.email = token.email;
             $location.path('/join');
           } else {
             // card declined
