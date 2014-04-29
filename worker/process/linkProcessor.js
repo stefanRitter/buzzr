@@ -33,7 +33,7 @@ function processLink(link, buzzr, done) {
   /*jshint maxcomplexity: false */
 
   var expandedUrl = link.url,
-      domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase();
+      domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase().replace('www.', '');
   
   if (excludedDomains[domain]) {
     if (done) { return done(); }

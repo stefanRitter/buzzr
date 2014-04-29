@@ -12,6 +12,10 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
     }
   }
 
+  function setDomain(link) {
+    link.domain = link.url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase().replace('www.', '');
+  }
+
   function getDates() {
     var a = [];
     for (var date in uniqDates) {
@@ -38,6 +42,7 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
 
   function processLink(link) {
     setLocalDate(link);
+    setDomain(link);
     checkSaved(link);
     checkRemoved(link);
   }

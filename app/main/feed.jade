@@ -13,6 +13,7 @@
           a.feed-link(ng-click="toggleSidebar(); $event.stopPropagation();") {{link.title.trunc(150)}}
 
         .feed-item-info
+          .feed-item-domain {{link.domain}}
           .feed-item-actions
             .action-readlater(ng-click="saveLink(link)", ng-class="{'saved': link.saved}")
               img(src="/img/heart.svg")
