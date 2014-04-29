@@ -28,4 +28,6 @@
             a.action-share(href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
               img(src="/img/share.svg")
             .action-remove(ng-click="removeLink(link.url)") &times;
-          .feed-item-date {{link.topic}} | {{link.activated}}
+          .feed-item-date
+            span.italic {{link.topic}} 
+            span | {{link.activated | date:'dd/MM/yyyy @ h:mma'}}
