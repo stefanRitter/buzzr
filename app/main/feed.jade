@@ -19,4 +19,6 @@
             a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}")
               img(src="/img/share.svg")
             //-.action-remove(ng-click="removeLink(link)") &times;
-.header-spacer
+  
+  .center.margin-big
+    .button-green(ng-click="loadMore()") load more
