@@ -1,4 +1,4 @@
-angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
+angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, $location, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
   /*jshint maxstatements: false */
   'use strict';
 
@@ -16,9 +16,14 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   };
 
   $scope.encode = function(title) { return encodeURI(title); };
+  $scope.newSearch = function(newSearchTerm) {
+    if (!!newSearchTerm) {
+      var url = newSearchTerm.toLowerCase().trim();
+      $location.path('/' + url);
+    }
+  };
 
   $scope.toggleSidebar = function() { appSidebar.toggle(); };
-
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
 
   $scope.getLang = function(lang) { return $scope.lang === lang; };

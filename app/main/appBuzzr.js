@@ -30,7 +30,7 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
         
         } else {
           if (links.length === 0) {
-            $scope.errorMessage = 'Sorry, Buzzr did not find anything to this topic! Come back later for an update!';
+            $scope.errorMessage = 'Oh no, Buzzr did not find anything recent on this topic :( Please come back later and try again!';
             $scope.status.error = true;
             $scope.status.searching = false;
             return;

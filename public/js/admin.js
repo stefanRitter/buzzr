@@ -768,7 +768,7 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
         
         } else {
           if (links.length === 0) {
-            $scope.errorMessage = 'Sorry, Buzzr did not find anything to this topic! Come back later for an update!';
+            $scope.errorMessage = 'Oh no, Buzzr did not find anything recent on this topic :( Please come back later and try again!';
             $scope.status.error = true;
             $scope.status.searching = false;
             return;
@@ -788,7 +788,7 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
 
   return BuzzrResource;
 });
-angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
+angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, $location, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
   /*jshint maxstatements: false */
   'use strict';
 
@@ -806,9 +806,14 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   };
 
   $scope.encode = function(title) { return encodeURI(title); };
+  $scope.newSearch = function(newSearchTerm) {
+    if (!!newSearchTerm) {
+      var url = newSearchTerm.toLowerCase().trim();
+      $location.path('/' + url);
+    }
+  };
 
   $scope.toggleSidebar = function() { appSidebar.toggle(); };
-
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
 
   $scope.getLang = function(lang) { return $scope.lang === lang; };

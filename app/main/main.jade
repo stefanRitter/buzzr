@@ -1,7 +1,7 @@
 .search-box
-  form.header-form.form(ng-submit="search()")
-    input.header-search(ng-model="newSearch" placeholder="{{searchText}}")
-    button.header-search-icon
+  form.header-form.form(ng-submit="newSearch(newSearchTerm)")
+    input.header-search(ng-model="newSearchTerm" placeholder="{{searchText}}")
+    button(type="submit").header-search-icon
       include ../../public/img/search.svg
     a.header-readlater(href="/account/readlater")
       span.phone-hide saved 
