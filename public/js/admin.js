@@ -732,7 +732,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, 
   });
 
   $scope.showLogo = function() {
-    var noLogo = ['/', '/login', '/about', '/join', '/terms'];
+    var noLogo = ['/', '/search', '/login', '/about', '/join', '/terms'];
     return noLogo.indexOf($location.path()) === -1;
   };
 });
