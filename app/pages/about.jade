@@ -4,34 +4,24 @@
   .filters(style="top: 9px")
     a.filter-input(href="/login" style="padding: 4px 6px; letter-spacing: 1px") Login
 
-  h1.margin-top About
-  p.medium
-    strong Buzzr 
-    | keeps you up-to-date on any given topic.
-    br
-    | It sources from all of the web and continuously pulls together the most recent and popular subject-specific articles.
-
-  p.left.medium.margin-top
-    strong Buzzr 
-    | let's you:
-
-  p.left.medium.margin-top
-    | &gt; Find 
-    | the most talked about articles on your favourite topic.
-  p.left.medium.margin-top
-    | &gt; Discover 
-    | the the best sources around your personal interests.
-  p.left.medium.margin-top
-    | &gt; Follow 
-    | trends in expert communities.
-    
-  p.margin-top-big
-    br
-    | Find out more on our 
-    a.underline(href="http://blog.buzzr.io") blog.
-    br
+  .header-spacer
+  p.margin-top-big.margin-bottom
     | Comments, suggestions, or need help? 
     span.underline.clickable(ng-click="toggleFeedback()") Let us know!
+  
+  h2.margin-top Contact
+  p.medium
+    strong Buzzr 
+    br
+    | 30 Ronalds Road
+    br
+    | N5 1XG, London
+    br
+    | United Kingdom
+
+  p.left.medium.margin-top
+    | Email: 
+    a.underline(href="mailto:admin@buzzr.io") admin@buzzr.io
 
 .footer-spacer
 include ../common/footer

@@ -33,7 +33,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
   $scope.openCheckout = function() {
     handler.open({
       name: 'Buzzr',
-      description: 'Lifetime access ($9.00)',
+      description: 'Lifetime access ($10.00)',
       amount: 900
     });
   };
