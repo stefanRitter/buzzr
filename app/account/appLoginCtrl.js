@@ -7,7 +7,7 @@ angular.module('app').controller('appLoginCtrl', function ($scope, $location, ap
       .authenticateUser($scope.email, $scope.password)
       .then(function(success) {
         if (success) {
-          $location.path('/');
+          $location.path('/search');
         } else {
           appNotifier.error('email/password combination incorrect', $scope);
         }

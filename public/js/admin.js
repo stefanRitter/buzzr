@@ -248,7 +248,7 @@ angular.module('app').controller('appLoginCtrl', function ($scope, $location, ap
       .authenticateUser($scope.email, $scope.password)
       .then(function(success) {
         if (success) {
-          $location.path('/');
+          $location.path('/search');
         } else {
           appNotifier.error('email/password combination incorrect', $scope);
         }
@@ -717,7 +717,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, 
   'use strict';
 
   $scope.isLoggedIn = function() {
-
+    return appIdentity.isAuthenticated();
   };
   
   $scope.toggleSidebar = function() {
