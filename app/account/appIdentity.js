@@ -1,7 +1,7 @@
 angular.module('app').factory('appIdentity', function ($window, AppUser) {
   'use strict';
 
-  var currentUser;
+  var currentUser = {};
   
   if (!!$window.bootstrappedUser) {
     currentUser = new AppUser();

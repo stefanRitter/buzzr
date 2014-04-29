@@ -34,6 +34,13 @@ exports.authorize = function(req, res, next) {
   return res.status(403).json({reason:'not authorized'});
 };
 
+exports.authorizeRedirect = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.redirect('/search');
+  }
+  next();
+};
+
 exports.authenticateTwitter = passport.authenticate('twitter');
 
 exports.twitterCallback = passport.authenticate('twitter', {

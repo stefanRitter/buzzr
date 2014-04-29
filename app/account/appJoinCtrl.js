@@ -2,6 +2,9 @@ angular.module('app').controller('appJoinCtrl', function ($scope, $location, app
   'use strict';
 
   $scope.email = appIdentity.currentUser.email;
+  if (!$scope.email) {
+    $location.path('/');
+  }
 
   $scope.signup = function() {
     var newUserData = {

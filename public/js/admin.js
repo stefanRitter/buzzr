@@ -200,7 +200,7 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
 });angular.module('app').factory('appIdentity', function ($window, AppUser) {
   'use strict';
 
-  var currentUser;
+  var currentUser = {};
   
   if (!!$window.bootstrappedUser) {
     currentUser = new AppUser();
@@ -221,6 +221,9 @@ angular.module('app').controller('appJoinCtrl', function ($scope, $location, app
   'use strict';
 
   $scope.email = appIdentity.currentUser.email;
+  if (!$scope.email) {
+    $location.path('/');
+  }
 
   $scope.signup = function() {
     var newUserData = {
@@ -941,7 +944,6 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
     image: '/img/icon.png',
     token: function(token) {
       stripeToken = token;
-      console.log(token);
 
       $http
         .post('/stripe', token)

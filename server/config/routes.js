@@ -13,10 +13,10 @@ module.exports = function (app) {
   /*jshint maxstatements: false */
 
   // APP
-  app.get('/',        pages('landingpage'));
+  app.get('/',        auth.authorizeRedirect, pages('landingpage'));
+  app.get('/login',   auth.authorizeRedirect, pages('login'));
+  app.get('/join',    auth.authorizeRedirect, pages('join'));
   app.get('/search',  pages('index'));
-  app.get('/login',   pages('login'));
-  app.get('/join',    pages('join'));
   app.get('/about',   pages('about'));
   app.get('/terms',   pages('terms'));
   app.get('/:id',     pages('main'));
@@ -37,13 +37,13 @@ module.exports = function (app) {
 
   // AUTH
   app.post('/login',                  auth.authenticateLocal);
+  app.post('/api/users',              users.createUser);
   app.get( '/auth/twitter',           auth.authenticateTwitter);
   app.get( '/auth/twitter/callback',  auth.twitterCallback);
   app.post('/logout',                 auth.logout);
 
   // ADMIN
   app.get('/admin/*',        auth.requiresRole('admin'), admin.get);
-  app.post('/api/users',     auth.requiresRole('admin'), users.createUser);
   app.get('/api/users',      auth.requiresRole('admin'), users.getUser);
   app.get('/api/buzzrs',     auth.requiresRole('admin'), buzzrs.getAdminList);
   app.put('/api/buzzrs/:id', auth.requiresRole('admin'), buzzrs.putAdmin);

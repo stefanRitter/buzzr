@@ -9,7 +9,6 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
     image: '/img/icon.png',
     token: function(token) {
       stripeToken = token;
-      console.log(token);
 
       $http
         .post('/stripe', token)
