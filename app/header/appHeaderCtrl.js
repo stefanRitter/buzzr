@@ -1,5 +1,9 @@
-angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, $location, appSidebar) {
+angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, $location, appIdentity, appSidebar) {
   'use strict';
+
+  $scope.isLoggedIn = function() {
+
+  };
   
   $scope.toggleSidebar = function() {
     appSidebar.toggle();
