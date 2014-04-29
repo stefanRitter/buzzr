@@ -3,7 +3,8 @@
 var express = require('express'),
     passport = require('passport'),
     mongoose = require('mongoose'),
-    SessionStore = require('connect-mongo')(express);
+    SessionStore = require('connect-mongo')(express),
+    env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 
 module.exports = function(app, config) {
@@ -13,6 +14,16 @@ module.exports = function(app, config) {
     app.set('view engine', 'jade');
 
     app.use(express.logger('dev'));
+
+    // force SSL
+    if (env === 'production') {
+      app.use(function(req, res, next) {
+        if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+          res.redirect('https://' + req.get('Host') + req.url);
+        }
+        else { next(); }
+      });
+    }
 
     app.use(express.compress());
     app.use(express.cookieParser(process.env.COOKIE_SECRET || 'cookie secret'));
