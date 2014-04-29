@@ -789,6 +789,7 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
   return BuzzrResource;
 });
 angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
+  /*jshint maxstatements: false */
   'use strict';
 
   $scope.countDown = 18;
