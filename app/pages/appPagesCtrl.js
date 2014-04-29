@@ -5,7 +5,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
   var stripeToken = {};
   
   var handler = window.StripeCheckout.configure({
-    key: 'pk_test_A92gZzXMijuUIYouO3UXkIyB',
+    key: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG',
     image: '/img/icon.png',
     token: function(token) {
       stripeToken = token;
