@@ -1,8 +1,7 @@
-include ../common/socialHeader
-
 .pages-container(itemprop="mainContentOfPage")
   include ../common/buzzr-logo
-  
+  include ../common/socialHeader
+
   h1.home-heading What are you interested in?
   form.home-form.form(ng-submit="search()")
     input.home-input#focus(ng-model="searchText")
