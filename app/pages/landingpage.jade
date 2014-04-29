@@ -1,18 +1,44 @@
-.pages-container(itemprop="mainContentOfPage")
+.pages-container(itemprop="mainContentOfPage" style="max-width: 900px")
   include ../common/buzzr-logo
   include ../common/socialHeader
   
   .filters(style="top: 9px")
     a.filter-input(href="/login" style="padding: 4px 6px; letter-spacing: 1px") Login
 
-  h1.margin-top
-  p.medium
+  h1.home-pitch
+    | Journalists start their research with Buzzr to find the most talked about content on any subject.
+      
+  img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview")
+
+  .center.big
+    .inline-block.margin.left
+      span.big.green &#10004; 
+      strong Save time
+      .home-indent
+        | Generate a new topic
+        br
+        | feed in one click.
+    .inline-block.margin.left
+      span.big.green &#10004; 
+      strong Discover
+      .home-indent
+        | We do not limit
+        br
+        | our sources.
+    .inline-block.margin.left
+      span.big.green &#10004; 
+      strong Collect
+      .home-indent
+        | Generate a new topic
+        br
+        | feed in one click.
   
-  p.margin-top-big.center
-    button.button-green.big(id="stripeButton" ng-click="openCheckout()") Only $10 and Go!
-  p.center.margin-top-sm
-    strong Limited offer: one-time fee for unlimited access!
-    br
-    | with 30-day "no questions asked" refund policy.
+  .center
+    p.margin-top-big
+      button.button-green.big(id="stripeButton" ng-click="openCheckout()") Only $10 and Go!
+    p.margin-top-sm
+      strong Limited offer: one-time fee for unlimited access!
+      br
+      | with 30-day "no questions asked" refund policy.
 
 include ../common/footer
