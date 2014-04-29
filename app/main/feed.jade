@@ -1,6 +1,7 @@
 .center.margin-top-big(ng-show="status.feeding")
-  .filters
-    input.filter-input(ng-model="filterByText", placeholder="filter")
+  //-
+    .filters
+      input.filter-input(ng-model="filterByText", placeholder="filter")
 
   .feed-container(ng-repeat="date in dates")
     .feed-item(ng-repeat="link in links | filter:filterByText | filter: {activated: date} | orderBy:'rank':'true'")
