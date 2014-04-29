@@ -1,7 +1,8 @@
-form.header-form.form(ng-submit="search()")
-  input.header-search(ng-model="title")
-  .header-search-icon
-    include ../../public/img/search.svg
+.search-box
+  form.header-form.form(ng-submit="search()")
+    input.header-search(ng-model="title")
+    span.header-search-icon
+      include ../../public/img/search.svg
 
 .header-spacer
 

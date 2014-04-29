@@ -11,29 +11,34 @@
 .header-spacer
   height 40px
 
-.header-form.form
+.search-box
   position fixed
-  top 0 
+  top 6px
   left 0
+  width 100%
+
+.header-form.form
+  position relative
   margin 0 auto
   width 100%
   max-width 800px
+  @media phone
+    max-width 200px
   .header-search
-    position relative
-    top 6px
+    display inline-block
     height 25px
     width 100%
-    margin 0 auto
-    max-width 800px
+    margin 0
+    max-width 400px
     font-size 16px
     font-weight 100
     text-transform uppercase
     text-indent 30px
     padding 0
+    @media phone
+      max-width 160px
 .header-search-icon
-  position absolute
-  top 11px
-  left 6px
+  display inline-block
   width 15px
   height 15px
 
@@ -41,7 +46,7 @@
   cursor pointer
   position absolute
   top 0
-  right 40px
+  left 10px
   img
     width 16px
     margin-top 12px
