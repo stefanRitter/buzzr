@@ -31,13 +31,16 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
       .get('/api/buzzrs/refresh/' + $scope.searchText.trim())
       .then(function(res) {
         var links = res.data.links;
+        if (res.data.err) {
+          handleError($scope, res.data.err);
+          return;
+        }
         if (res.data.updating) {
           $scope.status = 'updating';
           startCountdown($scope);
           return;
         }
         if (links.length === 0) { return handleZeroResults($scope); }
-        
         appProcessLinks.process($scope, links);
         $scope.status = 'feeding';
       }, function() {
@@ -50,12 +53,10 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
       .get('/api/buzzrs/' + $scope.searchText.trim())
       .then(function(res) {
         var links = res.data.links;
-
         if (res.data.err) {
           handleError($scope, res.data.err);
           return;
         }
-        
         if (!links) {
           $scope.status = 'creating';
           startCountdown($scope);
