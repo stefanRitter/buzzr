@@ -787,7 +787,7 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
         if (links.length === 0) { return handleZeroResults($scope); }
         
         appProcessLinks.process($scope, links);
-        $scope.status = 'searching';
+        $scope.status = 'feeding';
       }, function() {
         handleError($scope, 'Sorry, something went wrong! Please try again!');
       });

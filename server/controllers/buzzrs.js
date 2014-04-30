@@ -14,7 +14,7 @@ exports.refreshByTopic = function(req, res) {
       buzzrCreator.send({topic: topic});
       return res.json({newBuzzr: true});
     }
-    var lastUpdated = 10000 * 10000;
+    var lastUpdated = 0;
 
     if (lastUpdated < 30000) {
       res.send({
