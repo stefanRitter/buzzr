@@ -5,23 +5,26 @@
     a.filter-input(href="/login" style="padding: 4px 6px; letter-spacing: 1px") Login
 
   .header-spacer
-  p.margin-top-big.margin-bottom
-    | Comments, suggestions, or need help? 
-    span.underline.clickable(ng-click="toggleFeedback()") Let us know!
-  
-  h2.margin-top Contact
-  p.medium
-    strong Buzzr 
-    br
-    | 30 Ronalds Road
-    br
-    | N5 1XG, London
-    br
-    | United Kingdom
+  .center
+    .inline-block
+      p.margin-top-big.margin-bottom
+        | Comments, suggestions, or need help? 
+        span.underline.clickable(ng-click="toggleFeedback()") Let us know!
+      
+      h2.margin-top.left Contact Information:
+      p.medium.left
+        strong Address 
+        br
+        | 30 Ronalds Road
+        br
+        | N5 1XG, London
+        br
+        | United Kingdom
 
-  p.left.medium.margin-top
-    | Email: 
-    a.underline(href="mailto:admin@buzzr.io") admin@buzzr.io
+      p.left.medium.margin-top
+        strong Email:
+        br
+        a.underline(href="mailto:admin@buzzr.io") admin@buzzr.io
 
 .footer-spacer
 include ../common/footer

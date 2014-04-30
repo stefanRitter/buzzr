@@ -59,20 +59,30 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
     }
   };
 
+  UserResource.prototype.indexOfSavedLink = function(url) {
+    var index = -1;
+    this.readlater.forEach(function(l, i) {
+      if (l.url === url) {
+        index = i;
+      }
+    });
+    return index;
+  };
+  
   UserResource.prototype.saveLink = function(newSavedLink) {
+    if (this.indexOfSavedLink(newSavedLink.url) > -1) {
+      this.removeSavedLink(newSavedLink.url);
+      return false;
+    }
     this.recordActivity('saved', newSavedLink.url, newSavedLink.topic);
     this.readlater.push(newSavedLink);
     this.$update();
     $rootScope.$broadcast('readlaterChanged');
+    return true;
   };
 
   UserResource.prototype.removeSavedLink = function(url) {
-    var index = -1;
-    this.readlater.forEach(function(link, i) {
-      if (link.url === url) {
-        index = i;
-      }
-    });
+    var index = this.indexOfSavedLink(url);
 
     if (index > -1) {
       this.readlater.splice(index,1);
@@ -827,7 +837,9 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
 
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-    $scope.saveLink = function(link) { appProcessLinks.saveLink(link, $scope.searchText); };
+    $scope.saveLink = function(link) {
+      appProcessLinks.saveLink(link, $scope.searchText);
+    };
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
     $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };
@@ -910,8 +922,7 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
         topic: topic,
         activated: Date.now()
       };
-      appIdentity.currentUser.saveLink(newSavedLink);
-      link.saved = true;
+      link.saved = appIdentity.currentUser.saveLink(newSavedLink);
     },
     
     removeLink: function(link, topic) {

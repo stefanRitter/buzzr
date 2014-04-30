@@ -73,8 +73,7 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
         topic: topic,
         activated: Date.now()
       };
-      appIdentity.currentUser.saveLink(newSavedLink);
-      link.saved = true;
+      link.saved = appIdentity.currentUser.saveLink(newSavedLink);
     },
     
     removeLink: function(link, topic) {
