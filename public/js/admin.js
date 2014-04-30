@@ -265,7 +265,7 @@ angular.module('app').controller('appLoginCtrl', function ($scope, $location, ap
       });
   };
 });
-angular.module('app').controller('appSettingsCtrl', function ($scope, $location, appAuth, appIdentity, appNotifier) {
+angular.module('app').controller('appSettingsCtrl', function ($scope, $location, $http, appAuth, appIdentity, appNotifier) {
   'use strict';
 
   $scope.currentUser = angular.copy(appIdentity.currentUser);
@@ -285,6 +285,12 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     }, function(reason) {
       appNotifier.error(reason, $scope);
     });
+  };
+
+  $scope.cancelAccount = function() {
+    if (window.confirm('Are you sure you want to cancel your subscription with us?')) {
+      $scope.message = 'Sad to see you go. You will receive an Email to confirming your cancellation.';
+    }
   };
 });
 angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {

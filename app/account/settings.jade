@@ -24,3 +24,7 @@
     .form-group.notifier
       .error {{notifier.error}}
       .notice {{notifier.notice}}
+
+  .center.margin-top-big
+    button.button-white(ng-click="cancelAccount()" ng-hide="message") Close Account
+    h4(ng-show="message") {{message}}
