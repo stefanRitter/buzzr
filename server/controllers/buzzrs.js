@@ -1,7 +1,8 @@
 'use strict';
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    buzzrCreator = require('child_process').fork('server/utils/buzzrCreator.js');
+    buzzrCreator = require('child_process').fork('server/utils/buzzrCreator.js'),
+    buzzrUpdator = require('child_process').fork('server/utils/buzzrUpdator.js');
 
 exports.refreshByTopic = function(req, res) {
   var topic = decodeURI(req.params.id).toLowerCase().trim();
@@ -14,7 +15,8 @@ exports.refreshByTopic = function(req, res) {
       buzzrCreator.send({topic: topic});
       return res.json({newBuzzr: true});
     }
-    var lastUpdated = 0;
+    var now = Date.now(),
+        lastUpdated = buzzr.lastUpdated - now;
 
     if (lastUpdated < 30000) {
       res.send({
@@ -22,7 +24,7 @@ exports.refreshByTopic = function(req, res) {
         lang: buzzr.lang
       });
     } else if (lastUpdated < 3*60000) {
-      // go into past
+      buzzrUpdator.send({topic: topic});
       return res.json({updating: true});
     } else {
       // go into future
