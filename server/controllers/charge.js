@@ -9,25 +9,12 @@ module.exports = function(req, res, next) {
   // obtain StripeToken
   var stripeToken = req.body;
   
-  console.log(req.body.email);
-  /*var newCustomer = new Customer({token: stripeToken });
-  newCustomer.save(function(err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('CHARGE: Success!');
-    }
-  });*/
-  
-  // create charge
-  var charge = {
-    amount: 10*100,
-    currency: 'USD',
-    card: stripeToken.id
-  };
-  
-  stripe.charges.create(charge, function(err, charge) {
-    console.log(charge);
+  stripe.customers.create({
+    card: stripeToken.id,
+    plan: 'buzzrMonthly',
+    email: stripeToken.email
+  }, function(err, customer) {
+    console.log(customer);
     if(err) {
       console.log('CHARGE ERROR: ', err);
       if (err.type === 'StripeCardError') {
@@ -37,7 +24,7 @@ module.exports = function(req, res, next) {
     }
     else {
       res.json({success: true});
-      console.log('CHARGE: Successful charge sent to Stripe!', charge);
+      console.log('CHARGE: Successful plan sent to Stripe!', customer);
     }
   });
 };

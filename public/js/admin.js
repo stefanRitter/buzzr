@@ -990,8 +990,8 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
   $scope.openCheckout = function() {
     handler.open({
       name: 'Buzzr',
-      description: 'Lifetime access ($10.00)',
-      amount: 900
+      description: '14-day free trial, $9.00 monthly',
+      amount: 0
     });
   };
 });
