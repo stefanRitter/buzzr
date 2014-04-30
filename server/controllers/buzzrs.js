@@ -16,7 +16,9 @@ exports.refreshByTopic = function(req, res) {
       return res.json({newBuzzr: true});
     }
     var now = Date.now(),
-        lastUpdated = buzzr.lastUpdated - now;
+        lastUpdated = now - buzzr.lastUpdated;
+
+    console.log(lastUpdated);
 
     if (lastUpdated < 30000) {
       res.send({
@@ -24,10 +26,10 @@ exports.refreshByTopic = function(req, res) {
         lang: buzzr.lang
       });
     } else if (lastUpdated < 3*60000) {
-      buzzrUpdator.send({topic: topic});
+      buzzrUpdator.send({topic: topic, past: true});
       return res.json({updating: true});
     } else {
-      // go into future
+      buzzrUpdator.send({topic: topic, future: true});
       return res.json({updating: true});
     }
   });

@@ -21,7 +21,7 @@ var T = new Twit({
 });
 
 
-function callTwitter(buzzr) {
+function callTwitter(buzzr, lookIntoFuture) {
   var links = [],
       batch = {};
   
@@ -67,8 +67,13 @@ function callTwitter(buzzr) {
     buzzr.twitPoints.maxId = maxId;
     buzzr.save();
 
-    console.log('CREATOR: found ' + tweets.length + ' for ' + buzzr.topic);
+    console.log('UPDATOR: found ' + tweets.length + ' for ' + buzzr.topic);
     tweets.forEach(processTweet);
+
+    if (links.length === 0 && lookIntoFuture) {
+      // start again but go back in time
+      // return callTwitter(buzzr, false);
+    }
 
     batch = new Batch();
     batch.concurrency(10);
@@ -79,7 +84,7 @@ function callTwitter(buzzr) {
     });
     batch.end(function(err) {
       if (err) { throw err; }
-      console.log('CREATOR DONE: ' + buzzr.topic);
+      console.log('UPDATOR DONE: ' + buzzr.topic);
       Buzzr.findOne({topic: buzzr.topic}, function(err, buzzr) {
         buzzr.makeUniq();
       });
@@ -89,12 +94,12 @@ function callTwitter(buzzr) {
 
 process.on('message', function(m) {
   if (!!m.topic) {
-    console.log('CREATOR: ' + m.topic);
+    console.log('UPDATOR: ' + m.topic);
 
     Buzzr.findOneAndUpdate({topic: m.topic}, {topic: m.topic}, {upsert: true},
       function(err, buzzr) {
         if (err) { throw err; }
-        callTwitter(buzzr);
+        callTwitter(buzzr, m.future);
       }
     );
   }
