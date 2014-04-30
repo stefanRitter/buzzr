@@ -3,6 +3,34 @@
 var Buzzr = require('mongoose').model('Buzzr'),
     buzzrCreator = require('child_process').fork('server/utils/buzzrCreator.js');
 
+exports.refreshByTopic = function(req, res) {
+  var topic = decodeURI(req.params.id).toLowerCase().trim();
+  console.log('UPDATE:', topic);
+  
+  Buzzr.findOne({topic: topic}).exec(function(err, buzzr) {
+    if (err) { return res.json({err: err}); }
+    
+    if (!buzzr) {
+      buzzrCreator.send({topic: topic});
+      return res.json({newBuzzr: true});
+    }
+    var lastUpdated = 10000 * 10000;
+
+    if (lastUpdated < 30000) {
+      res.send({
+        links: buzzr.activeLinks,
+        lang: buzzr.lang
+      });
+    } else if (lastUpdated < 3*60000) {
+      // go into past
+      return res.json({updating: true});
+    } else {
+      // go into future
+      return res.json({updating: true});
+    }
+  });
+};
+
 exports.getByTopic = function(req, res) {
   var topic = decodeURI(req.params.id).toLowerCase().trim();
 

@@ -750,6 +750,49 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
   'use strict';
   var BuzzrResource = {};
 
+  function handleZeroResults($scope) {
+    $scope.errorMessage = 'Oh no, Buzzr did not find anything recent on this topic :( Please come back later and try again!';
+    $scope.status = 'error';
+  }
+
+  function startCountdown($scope) {
+    var interv = setInterval(function() {
+      $scope.$apply(function() {
+        $scope.countDown -= 1;
+        if ($scope.countDown <= 0) {
+          $scope.countDown = 0;
+          $route.reload();
+          clearInterval(interv);
+        }
+      });
+    }, 1000);
+  }
+
+  function handleError($scope, msg) {
+    $scope.errorMessage = msg;
+    $scope.links = [];
+    $scope.status = 'error';
+  }
+
+  BuzzrResource.updateFeed = function($scope) {
+    $http
+      .get('/api/buzzrs/refresh/' + $scope.searchText.trim())
+      .then(function(res) {
+        var links = res.data.links;
+        if (res.data.updating) {
+          $scope.status = 'updating';
+          startCountdown($scope);
+          return;
+        }
+        if (links.length === 0) { return handleZeroResults($scope); }
+        
+        appProcessLinks.process($scope, links);
+        $scope.status = 'searching';
+      }, function() {
+        handleError($scope, 'Sorry, something went wrong! Please try again!');
+      });
+  };
+
   BuzzrResource.startFeed = function($scope) {
     $http
       .get('/api/buzzrs/' + $scope.searchText.trim())
@@ -757,42 +800,20 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
         var links = res.data.links;
 
         if (res.data.err) {
-          $scope.errorMessage = res.data.err;
-          $scope.status.error = true;
-          $scope.status.searching = false;
+          handleError($scope, res.data.err);
           return;
         }
         
         if (!links) {
-          $scope.status.creating = true;
-          var interv = setInterval(function() {
-            $scope.$apply(function() {
-              $scope.countDown -= 1;
-              if ($scope.countDown <= 0) {
-                $scope.countDown = 0;
-                $route.reload();
-                clearInterval(interv);
-              }
-            });
-          }, 1000);
-        
+          $scope.status = 'creating';
+          startCountdown($scope);
         } else {
-          if (links.length === 0) {
-            $scope.errorMessage = 'Oh no, Buzzr did not find anything recent on this topic :( Please come back later and try again!';
-            $scope.status.error = true;
-            $scope.status.searching = false;
-            return;
-          }
+          if (links.length === 0) { return handleZeroResults($scope); }
           appProcessLinks.process($scope, links);
-          $scope.status.feeding = true;
+          $scope.status = 'feeding';
         }
-        $scope.status.searching = false;
-      
       }, function() {
-        $scope.errorMessage = 'Sorry, something went wrong! Please try again!';
-        $scope.status.error = true;
-        $scope.status.searching = false;
-        return;
+        handleError($scope, 'Sorry, something went wrong! Please try again!');
       });
   };
 
@@ -808,11 +829,10 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   $scope.lang = '';
   $scope.identity = appIdentity;
   $scope.searchText = decodeURI($routeParams.id).toLowerCase();
-  $scope.status = {
-    searching: true,
-    creating: false,
-    feeding: false,
-    error: false
+  $scope.status = 'searching';
+
+  $scope.checkStatus = function(status) {
+    return $scope.status === status;
   };
 
   $scope.encode = function(title) { return encodeURI(title); };
@@ -829,17 +849,19 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   $scope.getLang = function(lang) { return $scope.lang === lang; };
 
   $scope.triggerSearch = function() { appBuzzr.startFeed($scope); };
+  $scope.loadMore = function() {
+    $scope.status = 'searching';
+    appBuzzr.updateFeed($scope);
+  };
 
   $scope.showLoading = function() {
-    if ($scope.status.searching || $scope.status.creating) { return true; }
+    if ($scope.checkStatus('searching') || $scope.checkStatus('creating') || $scope.checkStatus('updating')) { return true; }
     return false;
   };
 
   if (appIdentity.isAuthenticated()) {
     appIdentity.currentUser.addBuzzr($scope.searchText);
-    $scope.saveLink = function(link) {
-      appProcessLinks.saveLink(link, $scope.searchText);
-    };
+    $scope.saveLink = function(link) { appProcessLinks.saveLink(link, $scope.searchText); };
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
     $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };

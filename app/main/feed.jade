@@ -1,4 +1,4 @@
-.center.margin-top-big(ng-show="status.feeding")
+.center.margin-top-big(ng-show="checkStatus('feeding')")
   //-
     .filters
       input.filter-input(ng-model="filterByText", placeholder="filter")
@@ -22,4 +22,4 @@
             //-.action-remove(ng-click="removeLink(link)") &times;
   
   .center.margin-big
-    .button-green(ng-click="loadMore()") load more
+    .button-green(ng-click="loadMore()") refresh

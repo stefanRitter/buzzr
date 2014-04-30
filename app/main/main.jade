@@ -11,14 +11,14 @@
 .header-spacer
 
 //- searching
-.center(ng-show="status.searching")
+.center(ng-show="checkStatus('searching')")
   h2.margin-top-big
     | buzzing the interweb for 
     strong {{searchText}} 
     | ...
 
 //- unknown error
-.center(ng-show="status.error")
+.center(ng-show="checkStatus('error')")
   h2.margin-top-big
     br
     | {{errorMessage}}
@@ -27,13 +27,22 @@
     a.underline(ng-click="toggleFeedback()") Contact us for help.
 
 //- creating a new feed
-.center(ng-show="status.creating")
+.center(ng-show="checkStatus('creating')")
   h2.margin-top
     | Your topic 
     strong {{searchText}} 
     | is a new one for Buzzr!
   p.margin-top
     | Your new Buzzr will be ready in 
+    strong {{countDown}}
+
+//- updating a feed
+.center(ng-show="checkStatus('updating')")
+  h2.margin-top
+    | Buzzr is updating 
+    strong {{searchText}}
+  p.margin-top
+    | Your new feed will be ready in 
     strong {{countDown}}
 
 //- loading
@@ -43,7 +52,7 @@
       include ../../public/img/logo-anim.svg
 
 //- alternative Buzzrs to watch
-.center(ng-show="status.creating")
+.center(ng-show="checkStatus('creating')")
   include ../common/otherBuzzrs
 
 //- display results
