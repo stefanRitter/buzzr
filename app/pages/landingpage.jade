@@ -9,7 +9,9 @@
     h1.home-pitch
       | The web’s simplest research tool for journalists. Find the most talked about content on any given topic.
       
-    img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview")
+    img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview" ng-click="toggleVideo()")
+    .blackout-video.ng-hide(ng-show="showVideo" ng-click="toggleVideo()")
+      iframe(src="//www.youtube.com/embed/cjQOxiCo2bY?rel=0" frameborder="0" allowfullscreen)
 
     .home-feature.margin-top-big
       span.big.green &#10004; 

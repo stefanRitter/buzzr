@@ -30,6 +30,10 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
     appFeedback.toggle();
   };
 
+  $scope.toggleVideo = function() {
+    $scope.showVideo = !$scope.showVideo;
+  };
+
   $scope.openCheckout = function() {
     handler.open({
       name: 'Buzzr',
