@@ -5,7 +5,6 @@ var stripe = require('stripe')(config.stripeSecret);
 
 module.exports = function(req, res, next) {
   'use strict';
-  // obtain StripeToken
   var stripeToken = req.body.token,
       plan = req.body.plan;
   
