@@ -153,6 +153,3 @@ buzzrSchema.methods.updatePassiveLink = function(data, pI, cb) {
 };
 
 Buzzr = mongoose.model('Buzzr', buzzrSchema);
-Buzzr.findOne({topic: 'sharing economy'}).exec(function(err, buzzr) {
-  if(buzzr) { buzzr.remove(); }
-});
