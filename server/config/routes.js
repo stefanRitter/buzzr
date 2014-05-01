@@ -14,6 +14,7 @@ module.exports = function (app) {
 
   // APP
   app.get('/',        auth.authorizeRedirect, pages('landingpage'));
+  app.get('/scholar', auth.authorizeRedirect, pages('scholar'));
   app.get('/login',   auth.authorizeRedirect, pages('login'));
   app.get('/join',    auth.authorizeRedirect, pages('join'));
   app.get('/about',   pages('about'));
