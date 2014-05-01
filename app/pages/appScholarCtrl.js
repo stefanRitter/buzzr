@@ -11,7 +11,7 @@ angular.module('app').controller('appScholarCtrl', function ($scope, $http, $loc
       stripeToken = token;
 
       $http
-        .post('/stripe', token)
+        .post('/stripe', {token: token, plan: 'scholar'})
         .then(function(res) {
           if (res.data.success) {
             appIdentity.email = token.email;

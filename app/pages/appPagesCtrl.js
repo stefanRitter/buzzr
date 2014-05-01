@@ -11,7 +11,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
       stripeToken = token;
 
       $http
-        .post('/stripe', token)
+        .post('/stripe', {token: token, plan: 'buzzrMonthly'})
         .then(function(res) {
           if (res.data.success) {
             appIdentity.email = token.email;
