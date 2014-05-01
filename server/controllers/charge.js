@@ -1,7 +1,6 @@
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     config = require('../config/config')[env];
 
-//var Customer = require('./models/customer.js');
 var stripe = require('stripe')(config.stripeSecret);
 
 module.exports = function(req, res, next) {
