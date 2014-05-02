@@ -218,7 +218,6 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
   }
 
   return {
-    email: '',
     currentUser: currentUser,
     isAuthenticated: function() {
       return !!this.currentUser;
@@ -230,11 +229,6 @@ angular.module('app').factory('appAuth', function ($http, $q, appIdentity, AppUs
 });
 angular.module('app').controller('appJoinCtrl', function ($scope, $location, appIdentity, appAuth, appNotifier) {
   'use strict';
-
-  $scope.email = appIdentity.email;
-  if (!$scope.email) {
-    $location.path('/');
-  }
 
   $scope.signup = function() {
     var newUserData = {
@@ -285,12 +279,6 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     }, function(reason) {
       appNotifier.error(reason, $scope);
     });
-  };
-
-  $scope.cancelAccount = function() {
-    if (window.confirm('Are you sure you want to cancel your subscription with us?')) {
-      $scope.message = 'Sad to see you go. You will receive an Email to confirming your cancellation.';
-    }
   };
 });
 angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {
@@ -986,10 +974,10 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     homeInput.focus();
   }
 });
-angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback, appIdentity) {
+angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback) {
   'use strict';
+  /*
   $scope.identity = appIdentity;
-
   var stripeToken = {};
   
   var handler = window.StripeCheckout.configure({
@@ -1014,20 +1002,21 @@ angular.module('app').controller('appScholarCtrl', function ($scope, $http, $loc
     }
   });
 
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  $scope.toggleVideo = function() {
-    $scope.showVideo = !$scope.showVideo;
-  };
-
   $scope.openCheckout = function() {
     handler.open({
       name: 'Buzzr',
       description: '14-day free trial, $2.00 monthly',
       amount: 0
     });
+  };
+  */
+
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
+  };
+
+  $scope.toggleVideo = function() {
+    $scope.showVideo = !$scope.showVideo;
   };
 });
 angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback, appIdentity) {

@@ -9,7 +9,6 @@ angular.module('app').factory('appIdentity', function ($window, AppUser) {
   }
 
   return {
-    email: '',
     currentUser: currentUser,
     isAuthenticated: function() {
       return !!this.currentUser;

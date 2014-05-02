@@ -1,7 +1,7 @@
-angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback, appIdentity) {
+angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback) {
   'use strict';
+  /*
   $scope.identity = appIdentity;
-
   var stripeToken = {};
   
   var handler = window.StripeCheckout.configure({
@@ -26,19 +26,20 @@ angular.module('app').controller('appScholarCtrl', function ($scope, $http, $loc
     }
   });
 
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  $scope.toggleVideo = function() {
-    $scope.showVideo = !$scope.showVideo;
-  };
-
   $scope.openCheckout = function() {
     handler.open({
       name: 'Buzzr',
       description: '14-day free trial, $2.00 monthly',
       amount: 0
     });
+  };
+  */
+
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
+  };
+
+  $scope.toggleVideo = function() {
+    $scope.showVideo = !$scope.showVideo;
   };
 });

@@ -19,10 +19,4 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
       appNotifier.error(reason, $scope);
     });
   };
-
-  $scope.cancelAccount = function() {
-    if (window.confirm('Are you sure you want to cancel your subscription with us?')) {
-      $scope.message = 'Sad to see you go. You will receive an Email to confirming your cancellation.';
-    }
-  };
 });
