@@ -15,7 +15,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
 
   $routeProvider
     .when('/',        {templateUrl: '/partials/pages/landingpage',  controller: 'appPagesCtrl'})
-    .when('/about',   {templateUrl: '/partials/pages/about',        controller: 'appPagesCtrl'})
+    .when('/contact', {templateUrl: '/partials/pages/contact',      controller: 'appPagesCtrl'})
     .when('/terms',   {templateUrl: '/partials/pages/terms',        controller: 'appPagesCtrl'})
     .when('/login',   {templateUrl: '/partials/account/login',      controller: 'appLoginCtrl'})
     .when('/join',    {templateUrl: '/partials/account/join',       controller: 'appJoinCtrl'});
