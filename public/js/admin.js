@@ -937,7 +937,9 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
           }
         });
       }
-      
+
+      incomingLinks.splice(5,1);
+
       incomingLinks.forEach(processLink);
       
       $scope.dates = getDates();
@@ -984,7 +986,7 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     homeInput.focus();
   }
 });
-angular.module('app').controller('appPagesCtrl', function ($scope, $http, $location, appFeedback, appIdentity) {
+angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback, appIdentity) {
   'use strict';
   $scope.identity = appIdentity;
 
@@ -997,7 +999,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
       stripeToken = token;
 
       $http
-        .post('/stripe', {token: token, plan: 'buzzrMonthly'})
+        .post('/stripe', {token: token, plan: 'scholar'})
         .then(function(res) {
           if (res.data.success) {
             appIdentity.email = token.email;
@@ -1023,7 +1025,7 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
   $scope.openCheckout = function() {
     handler.open({
       name: 'Buzzr',
-      description: '14-day free trial, $9.00 monthly',
+      description: '14-day free trial, $2.00 monthly',
       amount: 0
     });
   };

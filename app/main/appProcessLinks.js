@@ -59,7 +59,9 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
           }
         });
       }
-      
+
+      incomingLinks.splice(5,1);
+
       incomingLinks.forEach(processLink);
       
       $scope.dates = getDates();

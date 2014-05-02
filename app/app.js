@@ -22,10 +22,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/join',    {templateUrl: '/partials/account/join',       controller: 'appJoinCtrl'});
   
   $routeProvider
-    .when('/search',  {templateUrl: '/partials/pages/home',
-      controller: 'appHomeCtrl', resolve: routeRoleChecks.user})
-    .when('/:id',     {templateUrl: '/partials/main/main',
-      controller: 'appMainCtrl', resolve: routeRoleChecks.user})
+    .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})
+    .when('/:id',     {templateUrl: '/partials/main/main',  controller: 'appMainCtrl'})
     .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',
       controller: 'appReadlaterCtrl', resolve: routeRoleChecks.user})
     .when('/account/settings', {templateUrl: '/partials/account/settings',

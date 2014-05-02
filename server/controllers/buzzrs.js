@@ -51,6 +51,14 @@ exports.getByTopic = function(req, res) {
       links: buzzr.activeLinks,
       lang: buzzr.lang
     });
+    /*if (topic === 'big data') {
+      setTimeout(function() {
+        res.send({
+          links: buzzr.activeLinks,
+          lang: buzzr.lang
+        });
+      }, 3 * 1000);
+    }*/
   });
 };
 
