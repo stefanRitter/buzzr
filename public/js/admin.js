@@ -274,7 +274,7 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
 
   $scope.update = function() {
     appAuth.updateCurrentUser($scope.currentUser).then(function() {
-      if (!$scope.email.valid) { return $location.path('/'); }
+      if (!$scope.email.valid) { return $location.path('/search'); }
       appNotifier.notify('Your account has been updated', $scope);
     }, function(reason) {
       appNotifier.error(reason, $scope);
