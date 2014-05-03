@@ -1,4 +1,4 @@
-angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback) {
+angular.module('app').controller('appPagesCtrl', function ($scope, $http, $location, appFeedback) {
   'use strict';
   /*
   $scope.identity = appIdentity;

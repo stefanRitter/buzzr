@@ -16,7 +16,7 @@ module.exports = function(app, config) {
 
     // force SSL
     /*
-    var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+    var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';g
     if (env === 'production') {
       app.use(function(req, res, next) {
         if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {

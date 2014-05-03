@@ -974,7 +974,7 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     homeInput.focus();
   }
 });
-angular.module('app').controller('appScholarCtrl', function ($scope, $http, $location, appFeedback) {
+angular.module('app').controller('appPagesCtrl', function ($scope, $http, $location, appFeedback) {
   'use strict';
   /*
   $scope.identity = appIdentity;

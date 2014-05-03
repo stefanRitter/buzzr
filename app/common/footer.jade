@@ -7,8 +7,8 @@ footer.pages-footer
         a(href="http://blog.buzzr.io/") Blog
     li
       a(href="/terms") Terms &amp; Privacy
-    li
-      a(href="/contact") Contact
+    li.clickable(ng-click="toggleFeedback()")
+      | Contact
     li.italic
       | Made in London
 .header-spacer
