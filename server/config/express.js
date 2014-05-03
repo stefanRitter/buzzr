@@ -3,8 +3,7 @@
 var express = require('express'),
     passport = require('passport'),
     mongoose = require('mongoose'),
-    SessionStore = require('connect-mongo')(express),
-    env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+    SessionStore = require('connect-mongo')(express);
 
 
 module.exports = function(app, config) {
@@ -16,6 +15,8 @@ module.exports = function(app, config) {
     app.use(express.logger('dev'));
 
     // force SSL
+    /*
+    var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
     if (env === 'production') {
       app.use(function(req, res, next) {
         if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
@@ -23,7 +24,7 @@ module.exports = function(app, config) {
         }
         else { next(); }
       });
-    }
+    }*/
 
     app.use(express.compress());
     app.use(express.cookieParser(process.env.COOKIE_SECRET || 'cookie secret'));
