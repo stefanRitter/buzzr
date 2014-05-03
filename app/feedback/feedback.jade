@@ -5,14 +5,14 @@
     .feedback-form
       .feedback-close(ng-click="toggle()") &times;
       
-      h1 Feedback / Help
+      h1 Contact us!
       form.form(name="feedbackForm", ng-hide="success")
         .form-group
-          label Email*
+          label Your Email Address*
           input(type="email", ng-model="feedback.email", required)
         
         .form-group
-          label Name*
+          label Your Name*
           input(type="text", ng-model="feedback.name", required)
         
         .form-group
