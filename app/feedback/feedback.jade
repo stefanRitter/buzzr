@@ -6,6 +6,10 @@
       .feedback-close(ng-click="toggle()") &times;
       
       h1 Contact us!
+      p
+        a(href="www.twitter.com/buzzrapp")
+          | We are on Twitter: 
+          span.underline @BuzzrApp
       form.form(name="feedbackForm", ng-hide="success")
         .form-group
           label Your Email Address*
