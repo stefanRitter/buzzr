@@ -4,9 +4,11 @@
   .center
     h1.margin-top
       | Introducing Buzzr 
-      strong Tweet4me:
+      strong Tweet4me
+      //-span.action-readlater.saved(style="position: relative; top: -22px")
+        img(src="/img/heart.svg")
 
-    .inline-block.left.margin
+    .tweet4me
       h2
         strong 1. 
         | You tell us what you tweet about.
@@ -16,18 +18,16 @@
       h2
         strong 3. 
         | You make your audience happy 
-        span.action-readlater.saved(style="position: relative; top: -8px")
-          img(src="/img/heart.svg")
 
   form.form.center.margin-top-big(name="signupForm" style="width: 80%; margin: 0 auto; max-width: 400px" ng-hide="success")
     h1.margin-top-sm.bold Let's go:
 
     .form-group
-      label.big Your topic:* 
+      label.big Your tweeting topic:
       input(name="topic", type="text", placeholder="e.g. big data, nyc fashion, startups", ng-model="topic", required, style="width: 100%")
       p.left.italic (please give a few keywords)
     .form-group.padding-top
-      label.big Your Email:*
+      label.big Your Email:
       input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
       p.left.italic (we will email you your daily custom content suggestions)
     
@@ -37,10 +37,8 @@
     .form-group
       br
       button.button-green.big(ng-click="signup()" style="font-size: 26px; padding: 10px 0; width: 100%;" ng-hide="processing") Start 14-day free trial
-      br
-      span.required * required
     
-    p.margin-top.left
+    .inline-block.margin-top.left
       span.big.green &#10004; 
       | Get Buzzr Tweet4me 
       strong risk free 
