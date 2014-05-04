@@ -10,7 +10,7 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
   };
 
   UserResource.prototype.addBuzzr = function(topic) {
-    if (this.buzzrs.indexOf(topic) === -1) {
+    if (!!this.buzzrs && this.buzzrs.indexOf(topic) === -1) {
       this.buzzrs.push(topic);
       this.$update();
       $rootScope.$broadcast('buzzrsChanged');

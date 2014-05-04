@@ -43,7 +43,7 @@ angular.module('app').factory('AppUser', function ($resource, $rootScope) {
   };
 
   UserResource.prototype.addBuzzr = function(topic) {
-    if (this.buzzrs.indexOf(topic) === -1) {
+    if (!!this.buzzrs && this.buzzrs.indexOf(topic) === -1) {
       this.buzzrs.push(topic);
       this.$update();
       $rootScope.$broadcast('buzzrsChanged');
@@ -855,9 +855,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   };
 
   if (appIdentity.isAuthenticated()) {
-    if (appIdentity.currentUser) {
-      appIdentity.currentUser.addBuzzr($scope.searchText);
-    }
+    appIdentity.currentUser.addBuzzr($scope.searchText);
     $scope.saveLink = function(link) { appProcessLinks.saveLink(link, $scope.searchText); };
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
