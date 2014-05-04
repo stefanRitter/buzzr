@@ -915,7 +915,7 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
 
   return {
     process: function($scope, incomingLinks) {
-      if (appIdentity.isAuthenticated()) {
+      if (appIdentity.currentUser && appIdentity.currentUser.readlater) {
         appIdentity.currentUser.readlater.forEach(function(obj) {
           readlater.push(obj.url);
         });
