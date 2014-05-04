@@ -9,7 +9,7 @@ var sendgrid  = require('sendgrid')(
 
 exports.send = function(text) {
   sendgrid.send({
-    to: ['stefan@stefanritter.com', 'jeroen.h.s.roosen@gmail.com'],
+    to: ['stefan@stefanritter.com'],
     from: 'server@buzzr.io',
     subject: 'BUZZR SERVER MESSAGE from ' + env,
     text: text

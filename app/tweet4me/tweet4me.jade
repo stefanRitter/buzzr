@@ -1,0 +1,59 @@
+.pages-container(itemprop="mainContentOfPage" style="max-width: 900px")
+  include ../common/buzzr-logo
+
+  .center
+    h1.margin-top
+      | Introducing Buzzr 
+      strong Tweet4me:
+
+    .inline-block.left.margin
+      h2
+        strong 1. 
+        | You tell us what you tweet about.
+      h2
+        strong 2. 
+        | We find the best, most recent content for you.
+      h2
+        strong 3. 
+        | You make your audience happy!
+
+
+  form.form.center.margin-top-big(name="signupForm" style="width: 80%; margin: 0 auto; max-width: 400px" ng-hide="success")
+    h1.margin-top-sm.bold Let's go:
+
+    .form-group
+      label.big Your topic:* 
+      input(name="topic", type="text", placeholder="e.g. big data, nyc fashion, startups", ng-model="topic", required, style="width: 100%")
+      p.left.italic (please give a few keywords)
+    .form-group.padding-top
+      label.big Your Email:*
+      input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
+      p.left.italic (we will email you your daily custom content suggestions)
+    
+    .form-group.notifier.ng-hide.red(ng-show="error")
+      .error {{error}}
+    
+    .form-group
+      br
+      button.button-green.big(ng-click="signup()" style="font-size: 26px; padding: 10px 0; width: 100%;") Start 14-day free trial
+      br
+      span.required * required
+    
+    p.margin-top.left
+      span.big.green &#10004; 
+      | Get Buzzr Tweet4me 
+      strong risk free 
+      | for 
+      strong only $10 a month.
+      br
+      span.big.green &#10004; 
+      strong Frist 14 days for free - no credit card needed!
+      br
+      span.big.green &#10004; 
+      strong Quit any time - "no questions asked" policy!
+
+  .center.form
+    button.button-green.big.ng-hide(ng-show="success") &#10004;
+
+.header-spacer
+include ../common/footer

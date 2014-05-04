@@ -17,6 +17,7 @@ module.exports = function (app) {
   app.get('/login',   auth.authorizeRedirect, pages('login'));
   app.get('/join',    auth.authorizeRedirect, pages('join'));
   app.get('/terms',   pages('terms'));
+  app.get('/tweet4me',pages('tweet4me'));
   app.get('/search',  pages('main'));
   app.get('/:id',     pages('main'));
 
