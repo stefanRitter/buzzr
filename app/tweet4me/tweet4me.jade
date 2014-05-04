@@ -8,7 +8,7 @@
       //-span.action-readlater.saved(style="position: relative; top: -22px")
         img(src="/img/heart.svg")
 
-    .tweet4me
+    .tweet4me(ng-hide="success")
       h2
         strong 1. 
         | You tell us what you tweet about.
@@ -53,7 +53,7 @@
       strong Quit any time - "no questions asked" policy!
 
   .center.form
-    button.button-green.big.ng-hide(ng-show="success") &#10004; Tweet4me setup
+    button.button-green.big.ng-hide(ng-show="success") &#10004; Your Tweet4me is setup
 
 .header-spacer
 include ../common/footer
