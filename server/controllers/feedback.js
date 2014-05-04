@@ -20,3 +20,22 @@ exports.createFeedback = function(req, res) {
 
   res.json({success: true});
 };
+
+exports.tweet4me = function(req, res) {
+  var t4m = req.body;
+  console.log(t4m);
+
+  sendgrid.send({
+    to: ['stefan@stefanritter.com'],
+    from: t4m.email,
+    subject: 'NEW BUZZR TWEET4ME',
+    text: t4m.topic + ' for ' + t4m.email,
+  }, function(err, json) {
+    if (err) {
+      res.json({error: err.toString()});
+      return console.error(err);
+    }
+    console.log(json);
+    res.json({success: true});
+  });
+};

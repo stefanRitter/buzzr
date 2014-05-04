@@ -31,6 +31,7 @@ module.exports = function (app) {
 
   // API
   app.post('/stripe',                  charge);
+  app.post('/tweet4me',                feedback.tweet4me);
   app.get( '/api/buzzrs/:id',          buzzrs.getByTopic);
   app.get( '/api/buzzrs/refresh/:id',  buzzrs.refreshByTopic);
   app.put( '/api/users',               auth.authorize, users.updateUser);
