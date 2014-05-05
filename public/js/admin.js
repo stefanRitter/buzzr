@@ -1113,7 +1113,7 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
 
   $scope.setBuzzrs();
 });
-angular.module('app').controller('appTweet4MeFeedCtrl', function ($scope, $routeParams, $http) {
+angular.module('app').controller('appTweet4MeFeedCtrl', function ($scope, $routeParams, $http, $location) {
   'use strict';
 
   $scope.email = $routeParams.user;
@@ -1133,10 +1133,15 @@ angular.module('app').controller('appTweet4MeFeedCtrl', function ($scope, $route
       .get('/api/tweet4me/' + $scope.email)
       .then(function(res) {
         $scope.tweets = res.data.tweets;
+        if ($scope.tweets.length === 0) {
+          $location.path('/tweet4me');
+        }
         $scope.status = 'feeding';
       }, function() {
         window.alert('Sorry, something went wrong! Please try again!');
-        $scope.status = 'error';
+        if ($scope.tweets.length === 0) {
+          $location.path('/tweet4me');
+        }
       });
   };
 
