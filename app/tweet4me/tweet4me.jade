@@ -2,24 +2,30 @@
   include ../common/buzzr-logo
 
   .center
-    h1.margin-top
+    //-h1.margin-top
       | Introducing Buzzr 
       strong Tweet4me
       //-span.action-readlater.saved(style="position: relative; top: -22px")
         img(src="/img/heart.svg")
 
+    h1.margin-top.tweet4me-headig
+      | Grow your Twitter audience with great content using  
+      strong tweet4me:
+
     .tweet4me(ng-hide="success")
       h2
         strong 1. 
-        | You tell us what topic you tweet about.
+        | Simply tell us what topic you tweet about.
       h2
         strong 2. 
         | We find the best, most recent content for you.
       h2
         strong 3. 
-        | You make your audience happy!
+        | You make your audience happy 
+        span.action-readlater.saved(style="position: relative; top: -2px")
+          img(src="/img/heart.svg")
 
-  form.form.center.margin-top-big(name="signupForm" style="width: 80%; margin: 0 auto; max-width: 400px" ng-hide="success")
+  form.form.center.margin-top-big(name="signupForm" style="width: 90%; margin: 0 auto; max-width: 400px" ng-hide="success")
     h1.margin-top-sm.bold Let's go:
 
     .form-group
