@@ -654,6 +654,15 @@ angular.module('app').factory('appNotifier', function() {
     }
   };
 });
+angular.module('app').controller('appSocialHeaderCtrl', function ($scope, $location) {
+  'use strict';
+
+  var show = ['/', '/tweet4me', '/tweet4me/pricing', '/terms'];
+
+  $scope.showSocialHeader = function() {
+    return show.indexOf($location.path()) > -1;
+  };
+});
 angular.module('app').factory('appTopics', function ($window) {
   'use strict';
 
@@ -1103,6 +1112,11 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
   });
 
   $scope.setBuzzrs();
+});
+angular.module('app').controller('appTweet4MeFeedCtrl', function ($scope) {
+  'use strict';
+
+  $scope.toggleFeedback = {};
 });
 angular.module('app').controller('appTweet4MeCtrl', function ($scope, $http, $location, appFeedback) {
   'use strict';
