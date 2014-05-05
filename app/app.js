@@ -16,10 +16,13 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/',          {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'})
     .when('/terms',     {templateUrl: '/partials/pages/terms',          controller: 'appPagesCtrl'})
-    .when('/tweet4me',  {templateUrl: '/partials/tweet4me/tweet4me',    controller: 'appTweet4MeCtrl'})
     .when('/login',     {templateUrl: '/partials/account/login',        controller: 'appLoginCtrl'})
     .when('/join',      {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
   
+  $routeProvider
+    .when('/tweet4me',          {templateUrl: '/partials/tweet4me/tweet4me',  controller: 'appTweet4MeCtrl'})
+    .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4MeCtrl'});
+
   $routeProvider
     .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})
     .when('/:id',     {templateUrl: '/partials/main/main',  controller: 'appMainCtrl'})
