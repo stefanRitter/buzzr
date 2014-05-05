@@ -28,6 +28,9 @@ tweet4meSchema.methods.viewed = function() {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
+  collection.forEach(function(model) {
+    model.remove();
+  });
   if (collection.length === 0) {
     Tweet4me.create({
       user: 'anslem92@live.co.uk',
@@ -60,7 +63,7 @@ Tweet4me.find({}).exec(function(err, collection) {
         added: Date.now()
       }, {
         url: 'https://www.youtube.com/watch?v=4WVTG3dXuVM',
-        text: 'Checkout these Geese jogging down the road https://www.youtube.com/watch?v=4WVTG3dXuVM #motivation',
+        text: 'Need #motivation to go running? Check out these Geese jogging down the road https://www.youtube.com/watch?v=4WVTG3dXuVM',
         added: Date.now()
       }]
     });
