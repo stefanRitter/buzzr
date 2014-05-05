@@ -1134,6 +1134,8 @@ angular.module('app').controller('appTweet4MeFeedCtrl', function ($scope, $route
   $scope.email = $routeParams.user;
   $scope.status = 'loading';
 
+  $scope.encode = function(title) { return encodeURI(title); };
+
   $scope.ifStatus = function(status) {
     return $scope.status === status;
   };
@@ -1151,6 +1153,7 @@ angular.module('app').controller('appTweet4MeFeedCtrl', function ($scope, $route
         if ($scope.tweets.length === 0) {
           $location.path('/tweet4me');
         }
+        console.log($scope.tweets);
         $scope.status = 'feeding';
       }, function() {
         window.alert('Sorry, something went wrong! Please try again!');

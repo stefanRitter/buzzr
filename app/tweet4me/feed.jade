@@ -1,18 +1,13 @@
-.center.margin-top-big(ng-show="ifStatus('feeding')")
-
-  .feed-container(ng-repeat="date in dates")
-    .feed-item(ng-repeat="link in links | filter:filterByText | filter: {activated: date} | orderBy:'rank':'true'")
-      .feed-item-body(ng-hide="link.removed")
-        div(ng-show="identity.isAuthenticated()")
-          a.feed-link(href="{{link.url}}", target="_blank", ng-click="trackView(link.url)") {{link.title.trunc(150)}}
-        
-        div(ng-hide="identity.isAuthenticated()")
-          a.feed-link(ng-click="toggleSidebar(); $event.stopPropagation();") {{link.title.trunc(150)}}
+.center.margin-top-big.ng-hide(ng-show="ifStatus('feeding')")
+  h2.margin Suggestions for {{email}}
+  .feed-container
+    .feed-item(ng-repeat="tweet in tweets")
+      .feed-item-body
+        div
+          a.feed-link(href="{{tweet.url}}", target="_blank") {{tweet.text}}
 
         .feed-item-info
-          .feed-item-domain {{link.domain}}
           .feed-item-actions
-            .action-readlater(ng-click="saveLink(link)", ng-class="{'saved': link.saved}")
-              img(src="/img/heart.svg")
-            a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}&via=BuzzrApp")
+            .action-tweet-it tweet it: 
+            a.action-share(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}")
               img(src="/img/share.svg")

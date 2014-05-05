@@ -9,6 +9,7 @@ exports.getByUser = function(req, res) {
     if (err) { return res.send(500); }
     if (!tweet4me) { return res.json({tweets: []}); }
 
+    tweet4me.viewed();
     res.json({tweets: tweet4me.tweets});
   });
 };
