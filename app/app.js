@@ -20,7 +20,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/join',      {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
   
   $routeProvider
-    .when('/tweet4me',          {templateUrl: '/partials/tweet4me/tweet4me',  controller: 'appTweet4MeCtrl'})
+    .when('/tweet4me',          {templateUrl: '/partials/tweet4me/home',      controller: 'appTweet4MeCtrl'})
+    .when('/tweet4me/feed',     {templateUrl: '/partials/tweet4me/feed',      controller: 'appTweet4MeFeedCtrl'})
     .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4MeCtrl'});
 
   $routeProvider

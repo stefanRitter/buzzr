@@ -1,0 +1,22 @@
+.header-spacer
+.center(ng-show="ifStatus('loading')")
+  h2.margin-top.center
+    .loading
+      include ../../public/img/logo-anim.svg
+
+.center.ng-hide(ng-show="ifStatus('login')")
+  h1.margin-top-sm Welcome to Buzzr Tweet4Me
+  p Please login with your email address to continue
+  form.form.center(name="loginForm")
+    .form-group.center-block
+      label Email:*
+      input(name="email", type="email", placeholder="Email", ng-model="email", required)
+
+    .form-group
+      button.button-black.medium(ng-click="login()", ng-disabled="loginForm.$invalid") Go
+      br
+      span.required * required
+
+    .form-group.notifier
+      .error {{notifier.error}}
+      .notice {{notifier.notice}}

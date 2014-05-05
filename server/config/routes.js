@@ -20,6 +20,7 @@ module.exports = function (app) {
   app.get('/search',  pages('main'));
 
   app.get('/tweet4me',          pages('tweet4me'));
+  app.get('/tweet4me/feed',     pages('tweet4meFeed'));
   app.get('/tweet4me/pricing',  pages('tweet4mePricing'));
 
   app.get('/account/readlater', pages('main'));
