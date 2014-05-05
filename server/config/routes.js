@@ -6,6 +6,7 @@ var auth = require('../controllers/auth.js'),
     feedback = require('../controllers/feedback.js'),
     buzzrs = require('../controllers/buzzrs.js'),
     charge = require('../controllers/charge.js'),
+    tweet4me = require('../controllers/tweet4me.js'),
     admin = require('../controllers/admin.js');
 
 
@@ -36,11 +37,12 @@ module.exports = function (app) {
 
   // API
   app.post('/stripe',                  charge);
-  app.post('/tweet4me',                feedback.tweet4me);
   app.get( '/api/buzzrs/:id',          buzzrs.getByTopic);
   app.get( '/api/buzzrs/refresh/:id',  buzzrs.refreshByTopic);
   app.put( '/api/users',               auth.authorize, users.updateUser);
   app.post('/api/feedback',            feedback.createFeedback);
+  app.post('/tweet4me',                feedback.tweet4me);
+  app.get( '/api/tweet4me/:id',        tweet4me.getByUser);
 
   // AUTH
   app.post('/login',                  auth.authenticateLocal);

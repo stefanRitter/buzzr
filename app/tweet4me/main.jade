@@ -1,6 +1,13 @@
-.header-spacer
+.logo-big
+  .logo-link
+    h1
+      img(src="/img/logo.png")
+      strong buzzr
+
 .center(ng-show="ifStatus('loading')")
   h2.margin-top.center
+    | Buzzr is fetching your suggestions...
+    br
     .loading
       include ../../public/img/logo-anim.svg
 
@@ -20,3 +27,5 @@
     .form-group.notifier
       .error {{notifier.error}}
       .notice {{notifier.notice}}
+
+//- include feed
