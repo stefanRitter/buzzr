@@ -22,10 +22,8 @@
       h2
         strong 3. 
         | You make your audience happy 
-        span.action-readlater.saved(style="position: relative; top: -2px")
-          img(src="/img/heart.svg")
 
-  form.form.center.margin-top-big(name="signupForm" style="width: 90%; margin: 0 auto; max-width: 400px" ng-hide="success")
+  form.form.center.margin-top-big(name="signupForm" style="width: 99%; margin: 0 auto; max-width: 400px" ng-hide="success")
     h1.margin-top-sm.bold Let's go:
 
     .form-group
@@ -42,7 +40,10 @@
     
     .form-group
       br
-      button.button-green.big(ng-click="signup()" style="font-size: 26px; padding: 10px 0; width: 100%;" ng-hide="processing") Start 14-day free trial
+      button.button-green.big(ng-click="signup()" style="font-size: 26px; padding: 10px 0; width: 100%;" ng-hide="processing")
+        | Start 14-day free trial 
+        span.action-readlater.saved.tweet4me-heart
+          img(src="/img/heart.svg")
     
     .inline-block.margin-top.left
       span.big.green &#10004; 
