@@ -43,6 +43,7 @@ module.exports = function (app) {
   app.post('/api/feedback',            feedback.createFeedback);
   app.post('/tweet4me',                feedback.tweet4me);
   app.get( '/api/tweet4me/:id',        tweet4me.getByUser);
+  app.post('/api/tweet4me/:id',        tweet4me.addTweet);
 
   // AUTH
   app.post('/login',                  auth.authenticateLocal);

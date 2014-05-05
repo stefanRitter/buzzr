@@ -12,3 +12,8 @@ exports.getByUser = function(req, res) {
     res.json({tweets: tweet4me.tweets});
   });
 };
+
+exports.addTweet = function(req, res) {
+  res.send(500);
+};
+

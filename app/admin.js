@@ -18,6 +18,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/errors', {templateUrl: '/partials/admin/errors',
       controller: 'appAdminErrorsCtrl', resolve: routeRoleChecks.admin})
+    .when('/admin/tweet4me', {templateUrl: '/partials/admin/tweet4me',
+      controller: 'appAdminT4MCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/buzzrs', {templateUrl: '/partials/admin/buzzrs',
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
 });

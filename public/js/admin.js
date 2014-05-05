@@ -18,6 +18,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/errors', {templateUrl: '/partials/admin/errors',
       controller: 'appAdminErrorsCtrl', resolve: routeRoleChecks.admin})
+    .when('/admin/tweet4me', {templateUrl: '/partials/admin/tweet4me',
+      controller: 'appAdminT4MCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/buzzrs', {templateUrl: '/partials/admin/buzzrs',
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
 });
@@ -312,6 +314,19 @@ angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http, 
         $window.alert('$http error');
       }
     });
+});
+angular.module('app').controller('appAdminT4MCtrl', function ($scope, $http) {
+  'use strict';
+  
+  $scope.addTweet = function() {
+    $http
+      .post('/api/tweet4me/' + $scope.email)
+      .then(function() {
+        window.alert('Tweet Added!');
+      }, function() {
+        window.alert('Sorry, something went wrong! Please try again!');
+      });
+  };
 });
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';
