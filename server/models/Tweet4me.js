@@ -34,6 +34,48 @@ Tweet4me.find({}).exec(function(err, collection) {
   });
   if (collection.length === 0) {
     Tweet4me.create({
+      user: 'calebrobbins@att.net',
+      topics: ['skateboarding', 'sports'],
+      tweets: [{
+        topic: '',
+        url: '',
+        text: '',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: '',
+        url: '',
+        text: '',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: '',
+        url: '',
+        text: '',
+        added: new Date(2014, 5, 6)
+      }]
+    });
+    
+    Tweet4me.create({
+      user: 'skythecowRG31@gmail.com',
+      topics: ['minecraft'],
+      tweets: [{
+        topic: 'minecraft',
+        url: '',
+        text: '',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: 'minecraft',
+        url: '',
+        text: '',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: 'minecraft',
+        url: '',
+        text: '',
+        added: new Date(2014, 5, 6)
+      }]
+    });
+
+    Tweet4me.create({
       user: 'anslem92@live.co.uk',
       topics: ['graphic design', 'SEO', 'photography'],
       tweets: [{

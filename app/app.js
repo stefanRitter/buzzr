@@ -20,9 +20,9 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/join',      {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
   
   $routeProvider
-    .when('/tweet4me',          {templateUrl: '/partials/tweet4me/home',      controller: 'appTweet4MeCtrl'})
-    .when('/tweet4me/feed',     {templateUrl: '/partials/tweet4me/main',      controller: 'appTweet4MeFeedCtrl'})
-    .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4MeCtrl'});
+    .when('/tweet4me',          {templateUrl: '/partials/tweet4me/home',      controller: 'appTweet4meCtrl'})
+    .when('/tweet4me/feed',     {templateUrl: '/partials/tweet4me/main',      controller: 'appTweet4meFeedCtrl'})
+    .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4meCtrl'});
 
   $routeProvider
     .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})

@@ -1,4 +1,4 @@
-angular.module('app').controller('appTweet4MeCtrl', function ($scope, $http, $location, appFeedback) {
+angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, $location, appFeedback) {
   'use strict';
 
   $scope.toggleFeedback = function() {
