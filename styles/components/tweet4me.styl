@@ -7,15 +7,27 @@
   border-bottom 1px solid Gray
   padding 2em 5px 5em 5px
   @media phone
-    padding 2em 5px 3em 5px
+    padding 1em 5px 3em 5px
 
 .tweet4me-steps
   display inline-block
-  text-align left
+  text-align center
   h2
     font-size 18px
-    @media phone
+    max-width 180px
+    display inline-block
+    margin 20px
+  @media phone
+    text-align left
+    margin 0 auto
+    display block
+    width 235px
+    h2
+      max-width 235px
       font-size 14px
+      margin 0
+    br
+      display none
 
 .tweet4me-heading
   margin 2.2em 0
@@ -27,7 +39,7 @@
 .tweet4me-form
   text-align center
   margin-top 2em
-  width 95%
+  width 93%
   margin 0 auto
   max-width 400px
 
