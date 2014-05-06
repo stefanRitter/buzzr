@@ -1,13 +1,19 @@
 .center.margin-top-big.ng-hide(ng-show="ifStatus('feeding')")
   h2.margin Your Tweet4Me Suggestions:
-  .feed-container
-    .feed-item(ng-repeat="tweet in tweets")
+  
+  .feed-container(ng-repeat="date in dates")
+    h3.medium.margin-top-big.center {{date}}
+    
+    .feed-item(ng-repeat="tweet in tweets | filter: {added: date}")
       .feed-item-body
         div
           a.feed-link(href="{{tweet.url}}", target="_blank") {{tweet.text}}
 
         .feed-item-info
+          .feed-item-domain {{tweet.topic}}
           .feed-item-actions
             .action-tweet-it tweet it: 
             a.action-share(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}")
               img(src="/img/share.svg")
+  
+  .header-spacer

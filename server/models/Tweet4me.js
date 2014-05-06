@@ -37,19 +37,20 @@ Tweet4me.find({}).exec(function(err, collection) {
       user: 'calebrobbins@att.net',
       topics: ['skateboarding', 'sports'],
       tweets: [{
-        topic: '',
-        url: '',
-        text: '',
+        topic: 'skateboarding',
+        url: 'http://skateboarding.transworld.net/1000197156/videos/skate-cause-video/',
+        text: 'Skate For A Cause Video - Transworld Skateboarding: http://skateboarding.transworld.net/1000197156/videos/skate-cause-video/',
         added: new Date(2014, 5, 6)
       }, {
-        topic: '',
-        url: '',
-        text: '',
+        topic: 'sports',
+        url: 'http://sports.yahoo.com/news/world-cup-security-compared-iraq-afghanistan-184701292--sow.html',
+        text: 'World Cup security compared with Iraq, Afghanistan http://sports.yahoo.com/news/world-cup-security-compared-iraq-afghanistan-184701292--sow.html via @YahooSports',
         added: new Date(2014, 5, 6)
       }, {
-        topic: '',
-        url: '',
-        text: '',
+        topic: 'skateboarding',
+        url: 'http://www.theguardian.com/film/video/2014/may/02/hill-street-dublin-skateboarding-documentary-video',
+        text: 'Hill Street: How Dublin ground out its place in the skateboarding scene - video ' +
+              'http://www.theguardian.com/film/video/2014/may/02/hill-street-dublin-skateboarding-documentary-video via @guardian',
         added: new Date(2014, 5, 6)
       }]
     });
@@ -59,18 +60,18 @@ Tweet4me.find({}).exec(function(err, collection) {
       topics: ['minecraft'],
       tweets: [{
         topic: 'minecraft',
-        url: '',
-        text: '',
+        url: 'http://buswk.co/1san1xb',
+        text: 'To Teach and Delight, Denmark Recreates Itself in Minecraft  http://buswk.co/1san1xb via @BW',
         added: new Date(2014, 5, 6)
       }, {
         topic: 'minecraft',
-        url: '',
-        text: '',
+        url: 'http://l.gamespot.com/1fIBBKL',
+        text: 'This is why we can\'t have nice things: Players destroy Danish government\'s Minecraft model. http://l.gamespot.com/1fIBBKL',
         added: new Date(2014, 5, 6)
       }, {
         topic: 'minecraft',
-        url: '',
-        text: '',
+        url: 'http://aol.it/1mwqq64',
+        text: 'Captive Minecraft world puts baby in a corner  http://aol.it/1mwqq64 via @joystiq',
         added: new Date(2014, 5, 6)
       }]
     });
@@ -93,6 +94,23 @@ Tweet4me.find({}).exec(function(err, collection) {
         url: 'http://www.tocofi.com/is-there-a-wrong-way-to-hold-a-camera/',
         text: 'Is There a Wrong Way to Hold a Camera? http://www.tocofi.com/is-there-a-wrong-way-to-hold-a-camera/',
         added: new Date(2014, 5, 5)
+      },
+
+      {
+        topic: 'photography',
+        url: 'http://www.instructables.com/id/Double-exposure-photography-with-an-iphone/',
+        text: '6 steps to Double exposure photography with an iphone http://www.instructables.com/id/Double-exposure-photography-with-an-iphone/',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: 'photography',
+        url: 'http://www.digitalcameraworld.com/2014/04/30/camera-cleaning-5-ways-to-healthcheck-your-camera-with-confidence/',
+        text: 'Camera cleaning: 5 ways to healthcheck your camera with confidence! http://www.digitalcameraworld.com/2014/04/30/camera-cleaning-5-ways-to-healthcheck-your-camera-with-confidence/',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: 'graphic design',
+        url: 'http://www.creativebloq.com/typography/pro-tips-flawless-typography-5132670',
+        text: '10 pro tips for perfect typography @CreativeBloQ http://www.creativebloq.com/typography/pro-tips-flawless-typography-5132670',
+        added: new Date(2014, 5, 6)
       }]
     });
 
@@ -114,6 +132,24 @@ Tweet4me.find({}).exec(function(err, collection) {
         url: 'https://www.youtube.com/watch?v=4WVTG3dXuVM',
         text: 'Need #motivation to go running? Check out these Geese jogging down the road https://www.youtube.com/watch?v=4WVTG3dXuVM',
         added: new Date(2014, 5, 5)
+      },
+
+      {
+        topic: 'running',
+        url: 'http://www.express.co.uk/life-style/health/474180/Reviews-of-the-latest-trainers-and-running-shoes-from-Adidas-Nike-Puma-and-New-Balance',
+        text: 'Reviews of the latest trainers and running shoes from Adidas, Nike, Puma and New Balance '+
+              'http://www.express.co.uk/life-style/health/474180/Reviews-of-the-latest-trainers-and-running-shoes-from-Adidas-Nike-Puma-and-New-Balance via @daily_express',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: 'running',
+        url: 'http://lissyruns.com/2014/05/06/why-running-a-marathon-isnt-the-hardest-thing-youll-ever-do/',
+        text: 'Why running a marathon isn’t the hardest thing you’ll ever do http://lissyruns.com/2014/05/06/why-running-a-marathon-isnt-the-hardest-thing-youll-ever-do/ via @lissyruns',
+        added: new Date(2014, 5, 6)
+      }, {
+        topic: 'running',
+        url: 'http://po.st/8MZDi4',
+        text: 'Video: Sh*t Barefoot Runners Say http://po.st/8MZDi4 via @runcompetitor',
+        added: new Date(2014, 5, 6)
       }]
     });
   }

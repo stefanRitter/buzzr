@@ -950,8 +950,6 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
         });
       }
 
-      incomingLinks.splice(5,1);
-
       incomingLinks.forEach(processLink);
       
       $scope.dates = getDates();
@@ -1130,7 +1128,34 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
 });
 angular.module('app').factory('appTweet4me', function () {
   'use strict';
-  var Tweet4meResource = {};
+  var Tweet4meResource = {},
+      uniqDates = {};
+
+  function getDates() {
+    var a = [];
+    for (var date in uniqDates) {
+      if(uniqDates.hasOwnProperty(date)) {
+        a.push(date);
+      }
+    }
+    return a.reverse();
+  }
+
+  function setLocalDate(tw) {
+    tw.added = (new Date(tw.added)).toLocaleDateString();
+    uniqDates[tw.added] = true;
+  }
+  
+  function processTweet(tw) {
+    setLocalDate(tw);
+  }
+
+  Tweet4meResource.processTweets = function($scope, tweets) {
+    tweets.forEach(processTweet);
+      
+    $scope.dates = getDates();
+    $scope.tweets = tweets;
+  };
 
   return Tweet4meResource;
 });
@@ -1163,7 +1188,7 @@ angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, $lo
       });
   };
 });
-angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $routeParams, $http) {
+angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $routeParams, $http, appTweet4me) {
   'use strict';
 
   $scope.email = $routeParams.user;
@@ -1184,12 +1209,13 @@ angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $route
     $http
       .get('/api/tweet4me/' + $scope.email)
       .then(function(res) {
-        $scope.tweets = res.data.tweets;
-        if ($scope.tweets.length === 0) {
+        var tweets = res.data.tweets;
+        if (tweets.length === 0) {
           $scope.error = 'Couldn\'t find your Tweet4me. Is your Email correct?';
           $scope.status = 'login';
           return;
         }
+        appTweet4me.processTweets($scope, tweets);
         $scope.status = 'feeding';
       }, function() {
         window.alert('Sorry, something went wrong! Please try again!');

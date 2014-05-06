@@ -1,4 +1,4 @@
-angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $routeParams, $http) {
+angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $routeParams, $http, appTweet4me) {
   'use strict';
 
   $scope.email = $routeParams.user;
@@ -19,12 +19,13 @@ angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $route
     $http
       .get('/api/tweet4me/' + $scope.email)
       .then(function(res) {
-        $scope.tweets = res.data.tweets;
-        if ($scope.tweets.length === 0) {
+        var tweets = res.data.tweets;
+        if (tweets.length === 0) {
           $scope.error = 'Couldn\'t find your Tweet4me. Is your Email correct?';
           $scope.status = 'login';
           return;
         }
+        appTweet4me.processTweets($scope, tweets);
         $scope.status = 'feeding';
       }, function() {
         window.alert('Sorry, something went wrong! Please try again!');
