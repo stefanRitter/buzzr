@@ -42,9 +42,6 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  collection.forEach(function(model) {
-    model.remove();
-  });
   if (collection.length === 0) {
     Tweet4me.create({
       user: 'jenbolan@icloud.com',
