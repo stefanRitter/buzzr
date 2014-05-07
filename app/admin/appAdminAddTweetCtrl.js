@@ -7,6 +7,8 @@ angular.module('app').controller('appAdminAddTweetCtrl', function ($scope, $http
       .post('/api/tweet4me/'+tweet.email+'/addTweet', {tweet: tweet})
       .then(function() {
         window.alert('Tweet Added!');
+        $scope.tweet.url = '';
+        $scope.tweet.text = '';
       }, function() {
         window.alert('Sorry, something went wrong! Please try again!');
       });
