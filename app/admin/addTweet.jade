@@ -1,0 +1,32 @@
+include header
+
+.margin
+  h2.margin.center Add Tweet to a Tweet4me
+
+  form.form.center(name="addTweetForm")
+
+    .form-group
+      label User:*
+      select(ng-model="tweet.email" required)
+        option anslem92@live.co.uk
+        option atmb24601@gmail.com
+        option skythecowRG31@gmail.com
+        option calebrobbins@att.net
+        option jenbolan@icloud.com
+    
+    .form-group
+      label Topic:*
+      input(type="text" ng-model="tweet.topic" required)
+
+    .form-group
+      label URL:*
+      input(type="text", placeholder="Url", ng-model="tweet.url" required)
+
+    .form-group
+      label Text:*
+      textarea(ng-model="tweet.text" style="height: 150px" required)
+    
+    .form-group
+      button.button-black.medium(ng-click="addTweet()" , ng-disabled="addTweetForm.$invalid") Add Tweet
+      br
+      span.required * required

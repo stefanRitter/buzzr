@@ -12,6 +12,9 @@ tweet4meSchema = new Schema({
   topics: [String],
 
   lastViewed: Date,
+
+  plan: {type: String, default: 'startup'},
+  paid: {type: Boolean, default: false},
   
   tweets:  [{
     topic:   String,
@@ -30,10 +33,31 @@ tweet4meSchema.methods.viewed = function() {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  /*collection.forEach(function(model) {
+  collection.forEach(function(model) {
     model.remove();
-  });*/
+  });
   if (collection.length === 0) {
+    Tweet4me.create({
+      user: 'jenbolan@icloud.com',
+      topics: ['forever Living Products', 'aloe vera', 'be your own boss', 'mlm', 'work from home', 'living the dream'],
+      tweets: [{
+        topic: 'aloe vera',
+        url: 'http://wp.me/pE94w-2ih',
+        text: 'Benefits of Aloe Vera Juice http://wp.me/pE94w-2ih via @wordpressdotcom',
+        added: new Date(2014, 5, 7)
+      }, {
+        topic: 'work from home',
+        url: 'http://www.buzzfeed.com/adamdavis/thoughts-you-always-have-when-you-work-from-home',
+        text: '71 Thoughts You Have When You Work From Home http://www.buzzfeed.com/adamdavis/thoughts-you-always-have-when-you-work-from-home via @amdhit @buzzfeed',
+        added: new Date(2014, 5, 7)
+      }, {
+        topic: 'living the dream',
+        url: 'http://www.projecteve.com/living-the-dream/',
+        text: 'Living the dream http://www.projecteve.com/living-the-dream/ via @projecteve1',
+        added: new Date(2014, 5, 7)
+      }]
+    });
+
     Tweet4me.create({
       user: 'calebrobbins@att.net',
       topics: ['skateboarding', 'sports'],

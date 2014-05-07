@@ -1,4 +1,4 @@
-angular.module('app').controller('appAdminT4MCtrl', function ($scope, $http) {
+angular.module('app').controller('appAdminAddTweetCtrl', function ($scope, $http) {
   'use strict';
   
   $scope.addTweet = function() {

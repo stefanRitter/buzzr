@@ -1,4 +1,4 @@
-angular.module('app').factory('appTweet4me', function () {
+angular.module('app').factory('appTweet4me', function ($http) {
   'use strict';
   var Tweet4meResource = {},
       uniqDates = {};
@@ -22,11 +22,19 @@ angular.module('app').factory('appTweet4me', function () {
     setLocalDate(tw);
   }
 
+  
   Tweet4meResource.processTweets = function($scope, tweets) {
     tweets.forEach(processTweet);
       
     $scope.dates = getDates();
     $scope.tweets = tweets;
+  };
+
+  Tweet4meResource.mark = function(email, mark, url) {
+    $http.post(
+      '/api/tweet4me/'+email+'/mark',
+      {mark: mark, url: url}
+    );
   };
 
   return Tweet4meResource;

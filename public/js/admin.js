@@ -18,10 +18,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminUsersCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/errors', {templateUrl: '/partials/admin/errors',
       controller: 'appAdminErrorsCtrl', resolve: routeRoleChecks.admin})
-    .when('/admin/tweet4me', {templateUrl: '/partials/admin/tweet4me',
-      controller: 'appAdminT4MCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/buzzrs', {templateUrl: '/partials/admin/buzzrs',
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
+
+  $routeProvider
+    .when('/admin/addTweet', {templateUrl: '/partials/admin/addTweet',
+      controller: 'appAdminAddTweetCtrl', resolve: routeRoleChecks.admin});
 });
 
 angular.module('app').run(function ($rootScope, $location) {
@@ -283,6 +285,19 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     });
   };
 });
+angular.module('app').controller('appAdminAddTweetCtrl', function ($scope, $http) {
+  'use strict';
+  
+  $scope.addTweet = function() {
+    $http
+      .post('/api/tweet4me/' + $scope.email)
+      .then(function() {
+        window.alert('Tweet Added!');
+      }, function() {
+        window.alert('Sorry, something went wrong! Please try again!');
+      });
+  };
+});
 angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {
   'use strict';
   
@@ -314,19 +329,6 @@ angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http, 
         $window.alert('$http error');
       }
     });
-});
-angular.module('app').controller('appAdminT4MCtrl', function ($scope, $http) {
-  'use strict';
-  
-  $scope.addTweet = function() {
-    $http
-      .post('/api/tweet4me/' + $scope.email)
-      .then(function() {
-        window.alert('Tweet Added!');
-      }, function() {
-        window.alert('Sorry, something went wrong! Please try again!');
-      });
-  };
 });
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';
@@ -1126,7 +1128,7 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
 
   $scope.setBuzzrs();
 });
-angular.module('app').factory('appTweet4me', function () {
+angular.module('app').factory('appTweet4me', function ($http) {
   'use strict';
   var Tweet4meResource = {},
       uniqDates = {};
@@ -1150,11 +1152,19 @@ angular.module('app').factory('appTweet4me', function () {
     setLocalDate(tw);
   }
 
+  
   Tweet4meResource.processTweets = function($scope, tweets) {
     tweets.forEach(processTweet);
       
     $scope.dates = getDates();
     $scope.tweets = tweets;
+  };
+
+  Tweet4meResource.mark = function(email, mark, url) {
+    $http.post(
+      '/api/tweet4me/'+email+'/mark',
+      {mark: mark, url: url}
+    );
   };
 
   return Tweet4meResource;
@@ -1202,6 +1212,11 @@ angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $route
   
   $scope.login = function() {
     $scope.getTweets();
+  };
+
+  $scope.mark = function(mark, tweet) {
+    appTweet4me.mark($scope.email, mark, tweet.url);
+    tweet[mark] = true;
   };
 
   $scope.getTweets = function() {

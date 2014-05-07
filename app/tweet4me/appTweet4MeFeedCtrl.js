@@ -14,6 +14,11 @@ angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $route
     $scope.getTweets();
   };
 
+  $scope.mark = function(mark, tweet) {
+    appTweet4me.mark($scope.email, mark, tweet.url);
+    tweet[mark] = true;
+  };
+
   $scope.getTweets = function() {
     $scope.status = 'loading';
     $http
