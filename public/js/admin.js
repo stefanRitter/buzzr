@@ -1150,7 +1150,7 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
 
   $scope.setBuzzrs();
 });
-angular.module('app').factory('appTweet4me', function ($http) {
+angular.module('app').factory('appTweet4me', function ($http, $filter) {
   'use strict';
   var Tweet4meResource = {},
       uniqDates = {};
@@ -1166,7 +1166,8 @@ angular.module('app').factory('appTweet4me', function ($http) {
   }
 
   function setLocalDate(tw) {
-    tw.added = (new Date(tw.added)).toLocaleDateString();
+    var date = new Date(tw.added);
+    tw.added = $filter('date')(date, 'dd MMM yyyy');
     uniqDates[tw.added] = true;
   }
   
