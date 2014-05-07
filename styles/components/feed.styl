@@ -42,6 +42,7 @@
 .action-readlater
 .action-share
 .action-remove
+.action-tweet
   display inline-block
   margin 0 10px 5px 0
   font-weight 600
@@ -55,6 +56,9 @@
   border-radius 50%
   vertical-align bottom
   background rgba(0,0,0,0.3)
+  transition background 0.3s ease 0s
+  &.saved
+    background Red
 
 .action-remove
   margin-right 1px
@@ -62,6 +66,16 @@
 .action-share img
   width 12px
   margin 0 2px 1px 0
+
+.action-tweet
+  width 30px
+  height 30px
+  img
+    width 18px
+    position relative
+    top 3px
+    left 1px
+
 
 .action-tweet-it
   display inline-block
@@ -71,9 +85,6 @@
   margin-right 5px
 
 .action-readlater
-  transition background 0.3s ease 0s
   img
     width 14px
     margin 0 0 1px 0
-  &.saved
-    background Red

@@ -36,14 +36,15 @@ module.exports = function (app) {
   });
 
   // API
-  app.post('/stripe',                  charge);
-  app.get( '/api/buzzrs/:id',          buzzrs.getByTopic);
-  app.get( '/api/buzzrs/refresh/:id',  buzzrs.refreshByTopic);
-  app.put( '/api/users',               auth.authorize, users.updateUser);
-  app.post('/api/feedback',            feedback.createFeedback);
-  app.post('/tweet4me',                feedback.tweet4me);
-  app.get( '/api/tweet4me/:id',        tweet4me.getByUser);
-  app.post('/api/tweet4me/:id',        tweet4me.addTweet);
+  app.post('/stripe',                     charge);
+  app.get( '/api/buzzrs/:id',             buzzrs.getByTopic);
+  app.get( '/api/buzzrs/refresh/:id',     buzzrs.refreshByTopic);
+  app.put( '/api/users',                  auth.authorize, users.updateUser);
+  app.post('/api/feedback',               feedback.createFeedback);
+  app.post('/tweet4me',                   feedback.tweet4me);
+  app.get( '/api/tweet4me/:id',           tweet4me.getByUser);
+  app.post('/api/tweet4me/:id/addTweet',  tweet4me.addTweet);
+  app.post('/api/tweet4me/:id/mark',      tweet4me.markTweet);
 
   // AUTH
   app.post('/login',                  auth.authenticateLocal);

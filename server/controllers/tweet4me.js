@@ -18,3 +18,7 @@ exports.addTweet = function(req, res) {
   res.send(500);
 };
 
+exports.markTweet = function(req, res) {
+  res.send(500);
+};
+

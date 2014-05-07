@@ -12,8 +12,7 @@
         .feed-item-info
           .feed-item-domain {{tweet.topic}}
           .feed-item-actions
-            .action-tweet-it tweet it: 
-            a.action-share(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}")
-              img(src="/img/share.svg")
+            a.action-tweet(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}")
+              img(src="/img/twitter.svg")
   
   .header-spacer

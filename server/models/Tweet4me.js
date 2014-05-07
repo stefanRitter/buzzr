@@ -14,10 +14,11 @@ tweet4meSchema = new Schema({
   lastViewed: Date,
   
   tweets:  [{
-    topic:  String,
-    url:    String,
-    text:   String,
-    added:  Date
+    topic:   String,
+    url:     String,
+    text:    String,
+    added:   Date,
+    tweeted: Boolean
   }]
 });
 
