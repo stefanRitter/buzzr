@@ -14,7 +14,6 @@ tweet4meSchema = new Schema({
   lastViewed: Date,
 
   plan: {type: String, default: 'startup'},
-  paid: {type: Boolean, default: false},
   
   tweets:  [{
     topic:   String,
@@ -28,6 +27,16 @@ tweet4meSchema = new Schema({
 tweet4meSchema.methods.viewed = function() {
   this.lastViewed = Date.now();
   this.save();
+};
+
+tweet4meSchema.methods.isDublicate = function(url) {
+  var index = -1;
+  this.tweets.forEach(function(tw, i) {
+    if (tw.url === url) {
+      index = i;
+    }
+  });
+  return index !== -1;
 };
 
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);

@@ -15,7 +15,27 @@ exports.getByUser = function(req, res) {
 };
 
 exports.addTweet = function(req, res) {
-  res.send(500);
+  var tweet = req.body.tweet,
+      user = tweet.email;
+
+  if (!tweet.url) { return res.send(500); }
+  if (!tweet.text) { return res.send(500); }
+  if (!tweet.topic) { return res.send(500); }
+
+  Tweet4me.findOne({user: user}).exec(function(err, tweet4me) {
+    if (err) { return res.send(500); }
+    if (!tweet4me) { return res.send(500); }
+    if (tweet4me.isDublicate(tweet.url)) { return res.send(500); }
+
+    tweet4me.tweets.push({
+      topic: tweet.topic,
+      url: tweet.url,
+      text: tweet.text,
+      added: new Date()
+    });
+    tweet4me.save();
+    res.send(200);
+  });
 };
 
 exports.markTweet = function(req, res) {
