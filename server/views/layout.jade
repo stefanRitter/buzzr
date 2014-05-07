@@ -48,6 +48,9 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
     if !!bootstrappedTopics
       script.
         window.bootstrappedTopics = !{JSON.stringify(bootstrappedTopics)}
+    if !!bootstrappedTweet4Mes
+      script.
+        window.bootstrappedTweet4Mes = !{JSON.stringify(bootstrappedTweet4Mes)}
     //-script(src="https://checkout.stripe.com/checkout.js")
     script(type="text/javascript", src="/js/vendor.js")
     if !!admin

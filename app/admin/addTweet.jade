@@ -7,26 +7,25 @@ include header
 
     .form-group
       label User:*
-      select(ng-model="tweet.email" required)
-        option anslem92@live.co.uk
-        option atmb24601@gmail.com
-        option skythecowRG31@gmail.com
-        option calebrobbins@att.net
-        option jenbolan@icloud.com
+      select(ng-model="tweet.email" ng-change="updateTopics()" required)
+        option(ng-repeat="t4m in t4ms" value="{{t4m.user}}") {{t4m.user}}
     
-    .form-group
-      label Topic:*
-      input(type="text" ng-model="tweet.topic" required)
+    .ng-hide(ng-show="showTopic()")
+      .form-group
+        label Topic:*
+        select(ng-model="tweet.topic" required)
+          option(ng-repeat="t in topics" value="{{t}}") {{t}}
 
-    .form-group
-      label URL:*
-      input(type="text", placeholder="Url", ng-model="tweet.url" required)
+    .ng-hide(ng-show="showTweetForm()")
+      .form-group
+        label URL:*
+        input(type="text", placeholder="Url", ng-model="tweet.url" required)
 
-    .form-group
-      label Text:*
-      textarea(ng-model="tweet.text" style="height: 150px" required)
-    
-    .form-group
-      button.button-black.medium(ng-click="addTweet()" , ng-disabled="addTweetForm.$invalid") Add Tweet
-      br
-      span.required * required
+      .form-group
+        label Text:*
+        textarea(ng-model="tweet.text" style="height: 150px" required)
+      
+      .form-group
+        button.button-black.medium(ng-click="addTweet()" , ng-disabled="addTweetForm.$invalid") Add Tweet
+        br
+        span.required * required
