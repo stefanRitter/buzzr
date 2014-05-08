@@ -38,4 +38,13 @@ exports.tweet4me = function(req, res) {
     console.log(json);
     res.json({success: true});
   });
+
+  sendgrid.send({
+    to: [t4m.email],
+    from: 'tweet4me@buzzr.io',
+    subject: 'Welcome to Buzzr Tweet4me!',
+    html: 'Hi there, <br>and thanks for signing up for Buzzr tweet4me! <br>In just a few hours you will recieve your first tweet suggestions. <br>'+
+          'If you have any questions, or this email was sent to you by mistake, please just hit reply and let us know! <br>'+
+          'Happy tweeting, <br>the Buzzr Team'
+  });
 };
