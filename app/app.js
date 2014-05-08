@@ -21,6 +21,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   
   $routeProvider
     .when('/tweet4me',          {templateUrl: '/partials/tweet4me/home',      controller: 'appTweet4meCtrl'})
+    .when('/tweet4me/join',     {templateUrl: '/partials/tweet4me/join',      controller: 'appTweet4meJoinCtrl'})
     .when('/tweet4me/feed',     {templateUrl: '/partials/tweet4me/main',      controller: 'appTweet4meFeedCtrl'})
     .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4meCtrl'});
 

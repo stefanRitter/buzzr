@@ -1,0 +1,43 @@
+.tweet4me-paradise
+  include ../common/buzzr-logo
+
+form.form.tweet4me-form(name="signupForm"  ng-hide="success")
+  h2.margin-top-sm.bold Let's go:
+
+  .form-group
+    label.medium Your tweet topic(s):
+    input(name="topic", type="text", placeholder="e.g. big data, nyc fashion, startups", ng-model="topic", required, style="width: 100%")
+
+  .form-group.padding-top
+    label.medium Your Email:
+    input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
+    p.left.italic (we will email you your daily custom content suggestions)
+  
+  .form-group.notifier.ng-hide.red(ng-show="error")
+    .error {{error}}
+  
+  .form-group
+    br
+    button.button-green.tweet4me-trail-btn(ng-click="signup()" ng-hide="processing")
+      | Start 14-day free trial 
+      span.action-readlater.saved.tweet4me-heart
+        img(src="/img/heart.svg")
+  
+  .inline-block.margin-top.left
+    span.big.green &#10004; 
+    | Frist 14 days for 
+    strong free - no credit card needed!
+    br
+    span.big.green &#10004; 
+    | Get Buzzr Tweet4me 
+    | starting at 
+    strong only $10 a month. 
+    br
+    span.big.green &#10004; 
+    strong Quit any time - "no questions asked" policy!
+  
+  .center.margin-top-sm
+    a.underline(href="/tweet4me/pricing") View pricing
+
+.center.form.margin-top-big
+  button.button-green.big.ng-hide(ng-show="success") &#10004; Your Tweet4me is setup

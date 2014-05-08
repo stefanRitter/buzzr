@@ -29,7 +29,7 @@ exports.tweet4me = function(req, res) {
     to: ['stefan@stefanritter.com'],
     from: t4m.email,
     subject: 'NEW BUZZR TWEET4ME',
-    text: t4m.topic + ' for ' + t4m.email,
+    text: t4m.topic + ' for ' + t4m.email + ' with plan: ' + t4m.plan,
   }, function(err, json) {
     if (err) {
       res.json({error: err.toString()});

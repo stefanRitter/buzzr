@@ -1192,7 +1192,7 @@ angular.module('app').factory('appTweet4me', function ($http, $filter) {
 
   return Tweet4meResource;
 });
-angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, $location, appFeedback) {
+angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, appFeedback) {
   'use strict';
 
   $scope.toggleFeedback = function() {
@@ -1208,7 +1208,7 @@ angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, $lo
 
     $scope.processing = true;
     $http
-      .post('/tweet4me', {email: $scope.email, topic: $scope.topic})
+      .post('/tweet4me', {email: $scope.email, topic: $scope.topic, plan: 'homepage'})
       .then(function(res) {
         if (res.data.success) {
           $scope.success = true;
@@ -1266,4 +1266,29 @@ angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $route
   } else {
     $scope.getTweets();
   }
+});
+angular.module('app').controller('appTweet4meJoinCtrl', function ($scope, $http, $routeParams) {
+  'use strict';
+
+  $scope.signup = function() {
+    if (!$scope.email || !$scope.topic) {
+      $scope.success = false;
+      $scope.error = 'Make sure you filled out both email and topic';
+      return;
+    }
+
+    $scope.processing = true;
+    $http
+      .post('/tweet4me', {email: $scope.email, topic: $scope.topic, plan: $routeParams.plan || 'startup'})
+      .then(function(res) {
+        if (res.data.success) {
+          $scope.success = true;
+          $scope.error = false;
+        } else {
+          $scope.success = false;
+          $scope.error = res.data.error;
+          $scope.processing = false;
+        }
+      });
+  };
 });

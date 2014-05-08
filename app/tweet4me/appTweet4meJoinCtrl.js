@@ -1,9 +1,5 @@
-angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, appFeedback) {
+angular.module('app').controller('appTweet4meJoinCtrl', function ($scope, $http, $routeParams) {
   'use strict';
-
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
 
   $scope.signup = function() {
     if (!$scope.email || !$scope.topic) {
@@ -14,7 +10,7 @@ angular.module('app').controller('appTweet4meCtrl', function ($scope, $http, app
 
     $scope.processing = true;
     $http
-      .post('/tweet4me', {email: $scope.email, topic: $scope.topic, plan: 'homepage'})
+      .post('/tweet4me', {email: $scope.email, topic: $scope.topic, plan: $routeParams.plan || 'startup'})
       .then(function(res) {
         if (res.data.success) {
           $scope.success = true;
