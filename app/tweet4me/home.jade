@@ -22,17 +22,17 @@
 form.form.tweet4me-form(name="signupForm"  ng-hide="success")
   h2.margin-top-sm.bold Let's go:
 
-  .form-group
+  //-.form-group
     label.medium Your tweet topic(s):
     input(name="topic", type="text", placeholder="e.g. big data, nyc fashion, startups", ng-model="topic", required, style="width: 100%")
 
-  .form-group.padding-top
-    label.medium Your Email:
-    input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
-    p.left.italic (we will email you your daily custom content suggestions)
-  
-  .form-group.notifier.ng-hide.red(ng-show="error")
-    .error {{error}}
+    .form-group.padding-top
+      label.medium Your Email:
+      input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
+      p.left.italic (we will email you your daily custom content suggestions)
+    
+    .form-group.notifier.ng-hide.red(ng-show="error")
+      .error {{error}}
   
   .form-group
     br
