@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 
 
 tweet4meSchema = new Schema({
-  user: {type: String},
+  user: {type: String, unique: true},
 
   topics: [String],
 
@@ -42,6 +42,17 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
+  Tweet4me.create({
+    user: 'deanmccarthy91@hotmail.co.uk',
+    topics: ['funny stuff', 'funny facts', 'jokes', 'humour', 'sarcasm', 'celebs'],
+    tweets: []
+  });
+  Tweet4me.create({
+    user: 'essensaemj@icloud.com',
+    topics: ['marijuana'],
+    tweets: []
+  });
+  
   if (collection.length === 0) {
     Tweet4me.create({
       user: 'jenbolan@icloud.com',
