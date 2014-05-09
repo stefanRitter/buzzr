@@ -42,18 +42,19 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  Tweet4me.create({
-    user: 'deanmccarthy91@hotmail.co.uk',
-    topics: ['funny stuff', 'funny facts', 'jokes', 'humour', 'sarcasm', 'celebs'],
-    tweets: []
-  });
-  Tweet4me.create({
-    user: 'essensaemj@icloud.com',
-    topics: ['marijuana'],
-    tweets: []
-  });
-  
   if (collection.length === 0) {
+    Tweet4me.create({
+      user: 'deanmccarthy91@hotmail.co.uk',
+      topics: ['funny stuff', 'funny facts', 'jokes', 'humour', 'sarcasm', 'celebs'],
+      tweets: []
+    });
+    
+    Tweet4me.create({
+      user: 'essensaemj@icloud.com',
+      topics: ['marijuana'],
+      tweets: []
+    });
+    
     Tweet4me.create({
       user: 'jenbolan@icloud.com',
       topics: ['forever Living Products', 'aloe vera', 'be your own boss', 'mlm', 'work from home', 'living the dream'],
