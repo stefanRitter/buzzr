@@ -25,6 +25,11 @@ module.exports = function (app) {
   app.get('/tweet4me/feed',     pages('tweet4meFeed'));
   app.get('/tweet4me/pricing',  pages('tweet4mePricing'));
 
+  app.get('/buffer',          pages('buffer'));
+  app.get('/buffer/join',     pages('bufferJoin'));
+  app.get('/buffer/settings', pages('bufferSettings'));
+  app.get('/buffer/pricing',  pages('bufferPricing'));
+
   app.get('/account/readlater', pages('main'));
   app.get('/account/settings',  pages('main'));
 

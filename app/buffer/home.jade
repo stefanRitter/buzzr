@@ -1,7 +1,7 @@
 .tweet4me-paradise
   include ../common/buzzr-logo
   h1.tweet4me-heading
-    strong.medium Take your Twitter audience to the next level!
+    strong.medium Take your Buffer to the next level!
     br
     | With premium content from Buzzr.
 
@@ -21,22 +21,10 @@
 
 form.form.tweet4me-form(name="signupForm"  ng-hide="success")
   h3.medium.margin-top-sm.bold Let's go:
-
-  //-.form-group
-    label.medium Your tweet topic(s):
-    input(name="topic", type="text", placeholder="e.g. big data, nyc fashion, startups", ng-model="topic", required, style="width: 100%")
-
-    .form-group.padding-top
-      label.medium Your Email:
-      input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
-      p.left.italic (we will email you your daily custom content suggestions)
-    
-    .form-group.notifier.ng-hide.red(ng-show="error")
-      .error {{error}}
   
   .form-group
     button.button-green.tweet4me-trail-btn(ng-click="signup()" ng-hide="processing")
-      | Start 7-day free trial 
+      | Start 5-day free trial 
       span.action-readlater.saved.tweet4me-heart
         img(src="/img/heart.svg")
   
@@ -50,8 +38,7 @@ form.form.tweet4me-form(name="signupForm"  ng-hide="success")
     .clear-both.padding-top.left
       .tweet4me-check &#10004; 
       .tweet4me-check-text
-        | Get Buzzr Tweet4me 
-        | starting at 
+        | Get Buzzr starting at 
         strong only $10/month. 
   
     .clear-both.padding-top.left

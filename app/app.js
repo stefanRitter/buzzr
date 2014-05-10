@@ -26,6 +26,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4meCtrl'});
 
   $routeProvider
+    .when('/buffer',            {templateUrl: '/partials/buffer/home',      controller: 'appBufferCtrl'})
+    .when('/buffer/pricing',    {templateUrl: '/partials/buffer/pricing',   controller: 'appBufferCtrl'})
+    .when('/buffer/join',       {templateUrl: '/partials/buffer/join',      controller: 'appBufferCtrl'})
+    .when('/buffer/settings',   {templateUrl: '/partials/buffer/settings',  controller: 'appBufferCtrl'});
+
+  $routeProvider
     .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})
     .when('/:id',     {templateUrl: '/partials/main/main',  controller: 'appMainCtrl'})
     .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',

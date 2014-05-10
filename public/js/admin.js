@@ -356,7 +356,14 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   'use strict';
   
   $scope.users = AppUser.query();
-});  /*
+});angular.module('app').controller('appBufferCtrl', function ($scope, appFeedback) {
+  'use strict';
+
+  $scope.toggleFeedback = function() {
+    appFeedback.toggle();
+  };
+});
+  /*
    * angular-loading-bar
    *
    * intercepts XHR requests and creates a loading bar.
