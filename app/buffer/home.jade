@@ -1,33 +1,43 @@
-.tweet4me-paradise
+.buffer-top-section
   include ../common/buzzr-logo
   h1.tweet4me-heading
     strong.medium Take your Buffer to the next level!
     br
     | With premium content from Buzzr.
-
-  .tweet4me-steps(ng-hide="success")
-    h2
-      strong 1 
-      br
-      | Simply tell us what you tweet about.
-    h2
-      strong 2 
-      br
-      | We find you the best and newest content.
-    h2
-      strong 3 
-      br
-      | You make your audience happy :)
-
-form.form.tweet4me-form(name="signupForm"  ng-hide="success")
-  h3.medium.margin-top-sm.bold Let's go:
-  
-  .form-group
-    button.button-green.tweet4me-trail-btn(ng-click="signup()" ng-hide="processing")
-      | Start 5-day free trial 
-      span.action-readlater.saved.tweet4me-heart
+  p.medium
+    a.button-green.buffer-btn(href="/buffer/pricing")
+      | Start 7-day free trial &nbsp;
+      span.action-readlater.tweet4me-heart
         img(src="/img/heart.svg")
   
+  p.buffer-top-section-bottom &#8595;
+
+.center
+  .margin-top-big
+  h1 We keep your Buffer full, and your audience enganged:
+  
+  .margin-top-big
+  .tweet4me-price
+    h1 1 
+    h3.margin-top Simply tell us which topics you share about.
+  .tweet4me-price
+    h1 2 
+    h3.margin-top We find you the best and newest content.
+  .tweet4me-price
+    h1 3
+    h3.margin-top You make your audience happy
+
+.center.margin-top-big
+
+  h3.medium.margin-top-sm.bold Let's go:
+  
+  p.medium
+    a.button-green.buffer-btn(href="/buffer/pricing")
+      | Start 7-day free trial &nbsp;
+      span.action-readlater.tweet4me-heart
+        img(src="/img/heart.svg")
+  
+  .margin-top-big
   .inline-block
     .clear-both.padding-top.left
       .tweet4me-check &#10004;
@@ -47,11 +57,7 @@ form.form.tweet4me-form(name="signupForm"  ng-hide="success")
         strong Quit any time - "no questions asked" policy!
   
   .center.margin-top-sm
-    a.underline(href="/tweet4me/pricing") View pricing
-
-.center.form.margin-top-big.ng-hide(ng-show="success")
-  button.button-green.big &#10004; Your Tweet4me is setup
-  p.margin-top-big You will soon receive your first set of tweet suggestions!
+    a.underline(href="/buffer/pricing") View pricing
 
 .header-spacer
 include ../common/footer

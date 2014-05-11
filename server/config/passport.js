@@ -7,7 +7,9 @@ var passport = require('passport'),
     mongoose = require('mongoose'),
     User = mongoose.model('User'),
     users = require('../controllers/users.js'),
-    bufferConfig = require('./config.js').buffer;
+    buffers = require('../controllers/buffers.js'),
+    env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+    bufferConfig = require('./config.js')[env].buffer;
 
 
 module.exports = function () {
@@ -47,17 +49,16 @@ module.exports = function () {
       callbackURL: bufferConfig.callback
     },
     function(token, refreshToken, profile, done) {
-      /*var user = {
+      var user = {
         token: token,
-        secret: tokenSecret,
+        secret: refreshToken,
         profile: profile
       };
-      users.findOrCreate(user, function(err, user) {
+
+      buffers.findOrCreate(user, function(err, user) {
         if (err) { return done(err); }
         done(null, user);
-      });*/
-      console.log(token, refreshToken, profile);
-      done();
+      });
     }
   ));
 
