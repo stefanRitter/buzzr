@@ -41,22 +41,22 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
     include ../../app/sidebar/sidebar
     include ../../app/feedback/feedback
 
-
-    if !!bootstrappedUser
-      script.
-        window.bootstrappedUser = !{JSON.stringify(bootstrappedUser.safe())}
-    if !!bootstrappedTopics
-      script.
-        window.bootstrappedTopics = !{JSON.stringify(bootstrappedTopics)}
-    if !!bootstrappedTweet4Mes
-      script.
-        window.bootstrappedTweet4Mes = !{JSON.stringify(bootstrappedTweet4Mes)}
-    //-script(src="https://checkout.stripe.com/checkout.js")
-    script(type="text/javascript", src="/js/vendor.js")
-    if !!admin
-      script(type="text/javascript", src="/js/admin.js")
-    else
-      script(type="text/javascript", src="/js/application.js")
-    //-script.
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-    //-script(type="text/javascript", src="//platform.twitter.com/widgets.js", async)
+    //-
+      if !!bootstrappedUser
+        script.
+          window.bootstrappedUser = !{JSON.stringify(bootstrappedUser.safe())}
+      if !!bootstrappedTopics
+        script.
+          window.bootstrappedTopics = !{JSON.stringify(bootstrappedTopics)}
+      if !!bootstrappedTweet4Mes
+        script.
+          window.bootstrappedTweet4Mes = !{JSON.stringify(bootstrappedTweet4Mes)}
+      //-script(src="https://checkout.stripe.com/checkout.js")
+      script(type="text/javascript", src="/js/vendor.js")
+      if !!admin
+        script(type="text/javascript", src="/js/admin.js")
+      else
+        script(type="text/javascript", src="/js/application.js")
+      //-script.
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      //-script(type="text/javascript", src="//platform.twitter.com/widgets.js", async)
