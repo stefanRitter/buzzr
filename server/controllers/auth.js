@@ -42,10 +42,15 @@ exports.authorizeRedirect = function(req, res, next) {
 };
 
 exports.authenticateTwitter = passport.authenticate('twitter');
-
 exports.twitterCallback = passport.authenticate('twitter', {
   successRedirect: '/',
   failureRedirect: '/login'
+});
+
+exports.authenticateBuffer = passport.authenticate('bufferapp');
+exports.bufferCallback = passport.authenticate('bufferapp', {
+  successRedirect: '/buffer/settings',
+  failureRedirect: '/buffer/failure'
 });
 
 exports.logout = function(req, res) {

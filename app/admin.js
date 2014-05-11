@@ -22,6 +22,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
 
   $routeProvider
+    .when('/admin/sendTweet4me', {templateUrl: '/partials/admin/sendTweet4me',
+      controller: 'appAdminAddSendTweet4meCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/addTweet', {templateUrl: '/partials/admin/addTweet',
       controller: 'appAdminAddTweetCtrl', resolve: routeRoleChecks.admin});
 });

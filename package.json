@@ -32,7 +32,8 @@
     "twit": "^1.1.12",
     "ent": "^0.1.0",
     "batch": "~0.5.0",
-    "stripe": "~2.5.2"
+    "stripe": "~2.5.2",
+    "passport-bufferapp": "~0.1.1"
   },
   "devDependencies": {
     "bower": "~1.2.8",

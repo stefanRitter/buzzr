@@ -22,6 +22,8 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
 
   $routeProvider
+    .when('/admin/sendTweet4me', {templateUrl: '/partials/admin/sendTweet4me',
+      controller: 'appAdminAddSendTweet4meCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/addTweet', {templateUrl: '/partials/admin/addTweet',
       controller: 'appAdminAddTweetCtrl', resolve: routeRoleChecks.admin});
 });
@@ -351,6 +353,11 @@ angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http, 
         $window.alert('$http error');
       }
     });
+});
+angular.module('app').controller('appAdminSendTweet4meCtrl', function ($scope) {
+  'use strict';
+  $scope.t4ms = window.bootstrappedTweet4Mes;
+
 });
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';

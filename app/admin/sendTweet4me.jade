@@ -1,0 +1,16 @@
+include header
+
+.margin
+  h2.margin.center Send out Tweet4me Emails
+
+  form.form.center(name="sendTweet4meForm")
+
+    .form-group
+      label User:*
+      select(ng-model="email" required)
+        option(ng-repeat="t4m in t4ms" value="{{t4m.user}}") {{t4m.user}}
+      
+    .form-group
+      button.button-black.medium(ng-click="sendEmail()" , ng-disabled="sendTweet4meForm.$invalid") Send Email
+      br
+      span.required * required

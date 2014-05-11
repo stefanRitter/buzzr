@@ -57,6 +57,8 @@ module.exports = function (app) {
   app.post('/api/users',              users.createUser);
   app.get( '/auth/twitter',           auth.authenticateTwitter);
   app.get( '/auth/twitter/callback',  auth.twitterCallback);
+  app.get( '/auth/buffer',            auth.authenticateBuffer);
+  app.get( '/auth/buffer/callback',   auth.bufferCallback);
   app.post('/logout',                 auth.logout);
 
   // ADMIN
