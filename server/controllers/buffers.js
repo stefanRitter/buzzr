@@ -4,40 +4,33 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User');
 
 exports.getBuffer = function (req, res) {
-  User.find().exec(function (err, collection) {
-    res.send(collection);
-  });
+  res.send(500);
 };
 
 exports.updateBuffer = function (req, res) {
   res.send(500);
 };
 
-
 // called from Buffer login
 exports.findOrCreate = function(userData, done) {
-  var profile = userData.profile._json,
-      email = profile.screen_name,
-      newUser = {};
+  var newUser = {};
   
-  User.findOne({email: email}).exec(function (err, foundUser) {
+  User.findOne({email: userData.email}).exec(function (err, foundUser) {
     if (err) { return done(err, null); }
     if (foundUser) { return done(null, foundUser); }
 
-    newUser.provider = {
+    newUser.buffer = {
       token: userData.token,
-      secret: userData.secret,
-      name: userData.profile.provider,
-      providerId: profile.id_str
+      id: userData.id,
+      timezone: userData.timezone,
+      bufferPlan: userData.bufferPlan
     };
-    newUser.name = profile.name;
-    newUser.location = profile.location;
-    newUser.lang = profile.lang;
-    newUser.url = profile.url;
+    
+    newUser.name = userData.name;
+    newUser.email = userData.email;
 
-    newUser.email = email;
-    newUser.salt = 'twitter';
-    newUser.password = 'twitter';
+    newUser.salt = 'buffer';
+    newUser.password = 'buffer';
 
     User.create(newUser, function (err, createdUser) {
       if (err) { return done(err, null); }

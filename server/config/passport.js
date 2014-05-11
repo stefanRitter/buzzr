@@ -51,8 +51,11 @@ module.exports = function () {
     function(token, refreshToken, profile, done) {
       var user = {
         token: token,
-        secret: refreshToken,
-        profile: profile
+        id: profile._json.id,
+        timezone: profile._json.timezone,
+        name: profile._json.name,
+        bufferPlan: profile._json.plan,
+        email: profile._json.secret_email
       };
 
       buffers.findOrCreate(user, function(err, user) {

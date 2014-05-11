@@ -27,7 +27,6 @@ module.exports = function (app) {
 
   app.get('/buffer',          pages('buffer'));
   app.get('/buffer/failure',  pages('buffer'));
-  app.get('/buffer/join',     pages('bufferJoin'));
   app.get('/buffer/settings', pages('bufferSettings'));
   app.get('/buffer/pricing',  pages('bufferPricing'));
 

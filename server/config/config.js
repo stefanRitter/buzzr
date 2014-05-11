@@ -13,7 +13,7 @@ module.exports = {
     buffer: {
       id: '536f41e3bf67f04b36d5a530',
       secret: '59a7e5fa33413a5d1dab36d70704cfc2',
-      callback: 'http://www.buzzr.io/auth/buffer/callback'
+      callback: 'http://localhost:3030/auth/buffer/callback'
     }
   },
   
@@ -26,7 +26,7 @@ module.exports = {
     buffer: {
       id: '536f3ce4bf67f02f07d5a5d5',
       secret: '1027d5a5f63d51746febd38ce35257f3',
-      callback: 'http://localhost:3030/auth/buffer/callback'
+      callback: 'http://www.buzzr.io/auth/buffer/callback'
     }
   }
 };

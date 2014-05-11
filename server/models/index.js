@@ -10,3 +10,4 @@ LinkArray.createArrays();
 
 require('./Buzzr');
 require('./Tweet4me');
+require('./Buffer');
