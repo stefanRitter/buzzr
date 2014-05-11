@@ -1,10 +1,18 @@
-.tweet4me-paradise
+.buffer-top-section
   include ../common/buzzr-logo
   h1.tweet4me-heading
     strong.medium Take your Twitter audience to the next level!
     br
     | With premium content from Buzzr.
+  p.medium
+    a.button-green.buffer-btn(href="/tweet4me/pricing")
+      | Start 7-day free trial &nbsp;
+      span.action-readlater.tweet4me-heart
+        img(src="/img/heart.svg")
+  
+  p.buffer-top-section-bottom &#8595;
 
+.center.margin-top-big
   .tweet4me-steps(ng-hide="success")
     h2
       strong 1 
@@ -19,20 +27,9 @@
       br
       | You make your audience happy :)
 
+.margin-top-big
 form.form.tweet4me-form(name="signupForm"  ng-hide="success")
-  h3.medium.margin-top-sm.bold Let's go:
-
-  //-.form-group
-    label.medium Your tweet topic(s):
-    input(name="topic", type="text", placeholder="e.g. big data, nyc fashion, startups", ng-model="topic", required, style="width: 100%")
-
-    .form-group.padding-top
-      label.medium Your Email:
-      input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
-      p.left.italic (we will email you your daily custom content suggestions)
-    
-    .form-group.notifier.ng-hide.red(ng-show="error")
-      .error {{error}}
+  h2.margin-top-sm.bold Let's go:
   
   .form-group
     button.button-green.tweet4me-trail-btn(ng-click="signup()" ng-hide="processing")
