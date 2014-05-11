@@ -14,10 +14,10 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
     link(rel="apple-touch-icon" href="/img/icon.png")
     link(href="https://plus.google.com/112516726645672953655", rel="publisher")
    
-    //-| <style type='text/css'>
-      include ../../public/css/application.css
-      | </style>
-      link(rel="stylesheet" href="/css/application.css" type="text/css")
+    | <style type='text/css'>
+    include ../../public/css/application.css
+    | </style>
+    //-link(rel="stylesheet" href="/css/application.css" type="text/css")
 
     script.
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -34,12 +34,12 @@ html(lang="en", itemtype="http://schema.org/WebPage", itemscope)
 
   body(ng-app="app")
     //-include ../../app/common/socialHeader
-    include ../../app/header/header
-    .blackout
+    //-include ../../app/header/header
+    //-.blackout
     div.app-view(ng-view)
       block main-content
-    include ../../app/sidebar/sidebar
-    include ../../app/feedback/feedback
+    //-include ../../app/sidebar/sidebar
+    //-include ../../app/feedback/feedback
 
 
     if !!bootstrappedUser
