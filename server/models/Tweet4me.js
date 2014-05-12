@@ -42,37 +42,37 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  Tweet4me.create({
-    user: 'jr.santander.b@hotmail.com',
-    topics: ['rap', 'hiphop', 'reggae'],
-    tweets: []
-  });
-  
-  Tweet4me.create({
-    user: 'sophielapere@hotmail.com',
-    topics: ['funny stuff', 'funny facts', 'jokes', 'humour', 'sarcasm', 'celebs'],
-    tweets: []
-  });
-  
-  Tweet4me.create({
-    user: 'stevelavery118@mail.com',
-    topics: ['pictures'],
-    tweets: []
-  });
-  
-  Tweet4me.create({
-    user: 'maxfaulkner38@gmail.co.uk',
-    topics: ['football', 'funny'],
-    tweets: []
-  });
-
-  Tweet4me.create({
-    user: 'rich_wyn2001@yahoo.co.uk',
-    topics: ['gaa', 'football', 'sport', 'poker', 'business'],
-    tweets: []
-  });
-
   if (collection.length === 0) {
+    Tweet4me.create({
+      user: 'jr.santander.b@hotmail.com',
+      topics: ['rap', 'hiphop', 'reggae'],
+      tweets: []
+    });
+    
+    Tweet4me.create({
+      user: 'sophielapere@hotmail.com',
+      topics: ['funny stuff', 'funny facts', 'jokes', 'humour', 'sarcasm', 'celebs'],
+      tweets: []
+    });
+    
+    Tweet4me.create({
+      user: 'stevelavery118@mail.com',
+      topics: ['pictures'],
+      tweets: []
+    });
+    
+    Tweet4me.create({
+      user: 'maxfaulkner38@gmail.co.uk',
+      topics: ['football', 'funny'],
+      tweets: []
+    });
+
+    Tweet4me.create({
+      user: 'rich_wyn2001@yahoo.co.uk',
+      topics: ['gaa', 'football', 'sport', 'poker', 'business'],
+      tweets: []
+    });
+  
     Tweet4me.create({
       user: 'deanmccarthy91@hotmail.co.uk',
       topics: ['funny stuff', 'funny facts', 'jokes', 'humour', 'sarcasm', 'celebs'],
