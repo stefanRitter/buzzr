@@ -50,19 +50,20 @@ Tweet4me.find({}).exec(function(err, collection) {
       t4m.remove();
     }
   });*/
-  Tweet4me.create({
-    user: 'sophielapere@hotmail.com',
-    topics: ['pictures'],
-    tweets: []
-  });
-  
-  Tweet4me.create({
-    user: 'stevelavery118@mail.com',
-    topics: ['football'],
-    tweets: []
-  });
 
   if (collection.length === 0) {
+    Tweet4me.create({
+      user: 'sophielapere@hotmail.com',
+      topics: ['pictures'],
+      tweets: []
+    });
+    
+    Tweet4me.create({
+      user: 'stevelavery118@mail.com',
+      topics: ['football'],
+      tweets: []
+    });
+
     Tweet4me.create({
       user: 'jr.santander.b@hotmail.com',
       topics: ['rap', 'hiphop', 'reggae'],
