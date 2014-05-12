@@ -1,1 +1,1305 @@
-angular.module("app",["ngResource","ngRoute","angular-loading-bar"]),angular.module("app").config(["$routeProvider","$locationProvider",function(a,b){"use strict";var c={user:{auth:["appAuth",function(a){return a.authorizeLoggedInUserForRoute()}]}};b.html5Mode(!0),a.when("/",{templateUrl:"/partials/pages/landingpage",controller:"appPagesCtrl"}).when("/terms",{templateUrl:"/partials/pages/terms",controller:"appPagesCtrl"}).when("/login",{templateUrl:"/partials/account/login",controller:"appLoginCtrl"}).when("/join",{templateUrl:"/partials/account/join",controller:"appJoinCtrl"}),a.when("/tweet4me",{templateUrl:"/partials/tweet4me/home",controller:"appTweet4meCtrl"}).when("/tweet4me/join",{templateUrl:"/partials/tweet4me/join",controller:"appTweet4meJoinCtrl"}).when("/tweet4me/feed",{templateUrl:"/partials/tweet4me/main",controller:"appTweet4meFeedCtrl"}).when("/tweet4me/pricing",{templateUrl:"/partials/tweet4me/pricing",controller:"appTweet4meCtrl"}),a.when("/buffer",{templateUrl:"/partials/buffer/home",controller:"appBufferCtrl"}).when("/buffer/pricing",{templateUrl:"/partials/buffer/pricing",controller:"appBufferCtrl"}).when("/buffer/failure",{templateUrl:"/partials/buffer/failure",controller:"appBufferCtrl"}).when("/buffer/settings",{templateUrl:"/partials/buffer/settings",controller:"appBufferCtrl"}),a.when("/search",{templateUrl:"/partials/pages/home",controller:"appHomeCtrl"}).when("/:id",{templateUrl:"/partials/main/main",controller:"appMainCtrl"}).when("/account/readlater",{templateUrl:"/partials/readlater/readlater",controller:"appReadlaterCtrl",resolve:c.user}).when("/account/settings",{templateUrl:"/partials/account/settings",controller:"appSettingsCtrl",resolve:c.user})}]),angular.module("app").run(["$rootScope","$location",function(a,b){"use strict";a.$on("$routeChangeSuccess",function(){window.ga("send","pageview",b.path())}),a.$on("$routeChangeError",function(a,c,d,e){"not authorized"===e&&b.path("/")})}]),angular.module("app").factory("AppUser",["$resource","$rootScope",function(a,b){"use strict";var c=a("/api/users/:id",{_id:"@id"},{update:{method:"PUT",isArray:!1}});return c.prototype.isAdmin=function(){return this.roles&&this.roles.indexOf("admin")>-1},c.prototype.addBuzzr=function(a){this.buzzrs&&-1===this.buzzrs.indexOf(a)&&(this.buzzrs.push(a),this.$update(),b.$broadcast("buzzrsChanged"))},c.prototype.removeBuzzr=function(a){var c=this.buzzrs.indexOf(a);c>-1&&(this.buzzrs.splice(c,1),this.$update(),b.$broadcast("buzzrsChanged"))},c.prototype.indexOfSavedLink=function(a){var b=-1;return this.readlater.forEach(function(c,d){c.url===a&&(b=d)}),b},c.prototype.saveLink=function(a){return this.indexOfSavedLink(a.url)>-1?(this.removeSavedLink(a.url),!1):(this.recordActivity("saved",a.url,a.topic),this.readlater.push(a),this.$update(),b.$broadcast("readlaterChanged"),!0)},c.prototype.removeSavedLink=function(a){var c=this.indexOfSavedLink(a);c>-1&&(this.readlater.splice(c,1),this.$update(),b.$broadcast("readlaterChanged"))},c.prototype.removeLink=function(a,c){this.recordActivity("removed",a,c),this.$update(),b.$broadcast("removedLink")},c.prototype.trackView=function(a,b){this.recordActivity("viewed",a,b),this.$update()},c.prototype.trackShare=function(a,b){this.recordActivity("shared",a,b),this.$update()},c.prototype.recordActivity=function(a,b,c){var d=-1;this.activities.forEach(function(a,b){a.topic===c&&(d=b)}),-1===d&&(this.activities.push({topic:c,removed:[],viewed:[],saved:[],shared:[]}),d=0),this.activities[d][a].push(b)},c}]),angular.module("app").factory("appAuth",["$http","$q","appIdentity","AppUser",function(a,b,c,d){"use strict";return{authenticateUser:function(e,f){var g=b.defer();return a.post("/login",{email:e,password:f}).then(function(a){if(a.data.success){var b=new d;angular.extend(b,a.data.user),c.currentUser=b,g.resolve(!0)}else g.resolve(!1)}),g.promise},createUser:function(a){var e=new d(a),f=b.defer();return e.$save().then(function(){c.currentUser=e,f.resolve(!0)},function(a){f.reject(a.data.reason)}),f.promise},updateCurrentUser:function(a){var d=b.defer();return a.$update().then(function(){c.currentUser=a,d.resolve(!0)},function(a){d.reject(a.data.reason)}),d.promise},logoutUser:function(){var d=b.defer();return a.post("/logout",{logout:!0}).then(function(){c.currentUser=void 0,d.resolve(!0)}),d.promise},authorizeCurrentUserForRoute:function(){return c.isAuthorized("admin")?!0:b.reject("not authorized")},authorizeLoggedInUserForRoute:function(){return c.isAuthenticated()?!0:b.reject("not authorized")}}}]),angular.module("app").factory("appIdentity",["$window","AppUser",function(a,b){"use strict";var c;return a.bootstrappedUser&&(c=new b,angular.extend(c,a.bootstrappedUser)),{currentUser:c,isAuthenticated:function(){return!!this.currentUser},isAuthorized:function(a){return!!this.currentUser&&this.currentUser.roles.indexOf(a)>-1}}}]),angular.module("app").controller("appJoinCtrl",["$scope","$location","appIdentity","appAuth","appNotifier",function(a,b,c,d,e){"use strict";a.signup=function(){var c={email:a.email,password:a.password};d.createUser(c).then(function(){b.path("/search")},function(b){e.error(b,a)})}}]),angular.module("app").controller("appLoginCtrl",["$scope","$location","appAuth","appNotifier",function(a,b,c,d){"use strict";a.signin=function(){c.authenticateUser(a.email,a.password).then(function(c){c?b.path("/search"):d.error("email/password combination incorrect",a)})}}]),angular.module("app").controller("appSettingsCtrl",["$scope","$location","$http","appAuth","appIdentity","appNotifier",function(a,b,c,d,e,f){"use strict";a.currentUser=angular.copy(e.currentUser),a.email={valid:e.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)},a.email.valid||(a.currentUser.email=""),a.update=function(){d.updateCurrentUser(a.currentUser).then(function(){return a.email.valid?void f.notify("Your account has been updated",a):b.path("/search")},function(b){f.error(b,a)})}}]),angular.module("app").controller("appAdminAddTweetCtrl",["$scope","$http",function(a,b){"use strict";a.tweet={},a.topics=[],a.t4ms=window.bootstrappedTweet4Mes,a.updateTopics=function(){a.t4ms.forEach(function(b){b.user===a.tweet.email&&(a.topics=b.topics)})},a.showTopic=function(){return!!a.tweet.email},a.showTweetForm=function(){return!!a.tweet.topic},a.addTweet=function(){var c=a.tweet;b.post("/api/tweet4me/"+c.email+"/addTweet",{tweet:c}).then(function(){window.alert("Tweet Added!"),a.tweet.url="",a.tweet.text=""},function(){window.alert("Sorry, something went wrong! Please try again!")})}}]),angular.module("app").controller("appAdminBuzzrsCtrl",["$scope","$http","$window",function(a,b,c){"use strict";a.buzzrs=[],b.get("/api/buzzrs").then(function(b){b.data.buzzrs?a.buzzrs=b.data.buzzrs:c.alert("$http error")})}]),angular.module("app").controller("appAdminErrorsCtrl",["$scope","$http","$window",function(a,b,c){"use strict";a.socketErrors=[],a.titleErrors=[],b.get("/api/errors").then(function(b){b.data.titleErrors?(a.socketErrors=b.data.socketErrors,a.titleErrors=b.data.titleErrors):c.alert("$http error")})}]),angular.module("app").controller("appAdminSendTweet4meCtrl",["$scope",function(a){"use strict";a.t4ms=window.bootstrappedTweet4Mes}]),angular.module("app").controller("appAdminUsersCtrl",["$scope","AppUser",function(a,b){"use strict";a.users=b.query()}]),angular.module("app").controller("appBufferCtrl",["$scope","appFeedback",function(a,b){"use strict";a.toggleFeedback=function(){b.toggle()}}]),function(){"use strict";angular.module("angular-loading-bar",["chieffancypants.loadingBar"]),angular.module("chieffancypants.loadingBar",[]).config(["$httpProvider",function(a){var b=["$q","$cacheFactory","$timeout","$rootScope","cfpLoadingBar",function(b,c,d,e,f){function g(){d.cancel(i),f.complete(),k=0,j=0}function h(b){var d,e=a.defaults;if("GET"!==b.method||b.cache===!1)return b.cached=!1,!1;d=b.cache===!0&&void 0===e.cache?c.get("$http"):void 0!==e.cache?e.cache:b.cache;var f=void 0!==d?void 0!==d.get(b.url):!1;return void 0!==b.cached&&f!==b.cached?b.cached:(b.cached=f,f)}var i,j=0,k=0,l=f.latencyThreshold;return{request:function(a){return a.ignoreLoadingBar||h(a)||(e.$broadcast("cfpLoadingBar:loading",{url:a.url}),0===j&&(i=d(function(){f.start()},l)),j++,f.set(k/j)),a},response:function(a){return h(a.config)||(k++,e.$broadcast("cfpLoadingBar:loaded",{url:a.config.url}),k>=j?g():f.set(k/j)),a},responseError:function(a){return h(a.config)||(k++,e.$broadcast("cfpLoadingBar:loaded",{url:a.config.url}),k>=j?g():f.set(k/j)),b.reject(a)}}}];a.interceptors.push(b)}]).provider("cfpLoadingBar",function(){this.includeSpinner=!0,this.includeBar=!0,this.latencyThreshold=100,this.startSize=.02,this.parentSelector="body",this.$get=["$document","$timeout","$animate","$rootScope",function(a,b,c,d){function e(){b.cancel(k),q||(d.$broadcast("cfpLoadingBar:started"),q=!0,t&&c.enter(n,m),s&&c.enter(p,m),f(u))}function f(a){if(q){var c=100*a+"%";o.css("width",c),r=a,b.cancel(j),j=b(function(){g()},250)}}function g(){if(!(h()>=1)){var a=0,b=h();a=b>=0&&.25>b?(3*Math.random()+3)/100:b>=.25&&.65>b?3*Math.random()/100:b>=.65&&.9>b?2*Math.random()/100:b>=.9&&.99>b?.005:0;var c=h()+a;f(c)}}function h(){return r}function i(){d.$broadcast("cfpLoadingBar:completed"),f(1),k=b(function(){c.leave(n,function(){r=0,q=!1}),c.leave(p)},500)}var j,k,l=this.parentSelector,m=a.find(l),n=angular.element('<div id="loading-bar"><div class="bar"><div class="peg"></div></div></div>'),o=n.find("div").eq(0),p=angular.element('<div id="loading-bar-spinner"><div class="spinner-icon"></div></div>'),q=!1,r=0,s=this.includeSpinner,t=this.includeBar,u=this.startSize;return{start:e,set:f,status:h,inc:g,complete:i,includeSpinner:this.includeSpinner,latencyThreshold:this.latencyThreshold,parentSelector:this.parentSelector,startSize:this.startSize}}]})}(),angular.module("app").factory("appIsMobile",function(){"use strict";var a={Android:function(){return navigator.userAgent.match(/Android/i)?!0:!1},BlackBerry:function(){return navigator.userAgent.match(/BlackBerry/i)?!0:!1},iOS:function(){return navigator.userAgent.match(/iPhone|iPad|iPod/i)?!0:!1},Windows:function(){return navigator.userAgent.match(/IEMobile/i)?!0:!1},any:function(){return a.Android()||a.BlackBerry()||a.iOS()||a.Windows()}};return a}),angular.module("app").factory("appNotifier",function(){"use strict";return{notify:function(a,b){b.notifier={},b.notifier.notice=a,setTimeout(function(){b.notifier.notice="",b.$digest()},4e3)},error:function(a,b){b.notifier={},b.notifier.error=a,setTimeout(function(){b.notifier.error="",b.$digest()},4e3)}}}),angular.module("app").controller("appSocialHeaderCtrl",["$scope","$location",function(a,b){"use strict";var c=["/","/tweet4me","/tweet4me/pricing","/tweet4me/join","/terms"];a.showSocialHeader=function(){return c.indexOf(b.path())>-1}}]),angular.module("app").factory("appTopics",["$window",function(a){"use strict";var b=[];return a.bootstrappedTopics&&(b=a.bootstrappedTopics),b}]),String.prototype.trunc=function(a){"use strict";return this.length>a?this.substr(0,a-1)+"...":this},angular.module("app").factory("appFeedback",["$rootScope",function(a){"use strict";return{toggle:function(){a.$broadcast("toggleFeedback")}}}]),angular.module("app").controller("appFeedbackCtrl",["$scope","$location","$window","$http","appIdentity","appNotifier",function(a,b,c,d,e,f){"use strict";a.success=!1,a.show=!1,a.feedback={},a.feedback.userAgent=c.navigator.userAgent,e.isAuthenticated()&&(a.feedback.name=e.currentUser.name,a.feedback.email=e.currentUser.email),a.send=function(){a.feedback.currentPath=b.path(),d.post("/api/feedback",a.feedback).then(function(b){b.data.success?a.success=!0:f.error(b.data.err||"unknown error",a)},function(b){f.error("error "+b.status+" occurred - please email help@buzzr.io",a)})},a.toggle=function(){a.show=!a.show},a.$on("toggleFeedback",function(){a.toggle()})}]),angular.module("app").controller("appHeaderCtrl",["$scope","$rootScope","$location","appIdentity","appSidebar",function(a,b,c,d,e){"use strict";a.isLoggedIn=function(){return d.isAuthenticated()&&!d.currentUser.bufferUser},a.toggleSidebar=function(){e.toggle()},b.$on("toggleSidebar",function(){a.open=!a.open,a.$$phase||a.$digest()}),a.showLogo=function(){var a=["/","/search","/login","/tweet4me","/about","/join","/terms"];return-1===a.indexOf(c.path())}}]),angular.module("app").factory("appBuzzr",["$http","$route","appProcessLinks",function(a,b,c){"use strict";function d(a){a.errorMessage="Oh no, Buzzr did not find anything recent on this topic :( Please come back later and try again!",a.status="error"}function e(a){var c=setInterval(function(){a.$apply(function(){a.countDown-=1,a.countDown<=0&&(a.countDown=0,b.reload(),clearInterval(c))})},1e3)}function f(a,b){a.errorMessage=b,a.links=[],a.status="error"}var g={};return g.updateFeed=function(b){a.get("/api/buzzrs/refresh/"+b.searchText.trim()).then(function(a){var g=a.data.links;return a.data.err?void f(b,a.data.err):a.data.updating?(b.status="updating",void e(b)):0===g.length?d(b):(c.process(b,g),void(b.status="feeding"))},function(){f(b,"Sorry, something went wrong! Please try again!")})},g.startFeed=function(b){a.get("/api/buzzrs/"+b.searchText.trim()).then(function(a){var g=a.data.links;if(a.data.err)return void f(b,a.data.err);if(g){if(0===g.length)return d(b);c.process(b,g),b.status="feeding"}else b.status="creating",e(b)},function(){f(b,"Sorry, something went wrong! Please try again!")})},g}]),angular.module("app").controller("appMainCtrl",["$scope","$routeParams","$location","appIdentity","appProcessLinks","appSidebar","appFeedback","appBuzzr",function(a,b,c,d,e,f,g,h){"use strict";a.countDown=18,a.links=[],a.dates=[],a.lang="",a.identity=d,a.searchText=decodeURI(b.id).toLowerCase(),a.status="searching",a.checkStatus=function(b){return a.status===b},a.encode=function(a){return encodeURI(a)},a.newSearch=function(a){if(a){var b=a.toLowerCase().trim();c.path("/"+b)}},a.toggleSidebar=function(){f.toggle()},a.toggleFeedback=function(){g.toggle()},a.getLang=function(b){return a.lang===b},a.triggerSearch=function(){h.startFeed(a)},a.loadMore=function(){a.status="searching",h.updateFeed(a)},a.showLoading=function(){return a.checkStatus("searching")||a.checkStatus("creating")||a.checkStatus("updating")?!0:!1},d.isAuthenticated()&&(d.currentUser.addBuzzr(a.searchText),a.saveLink=function(b){e.saveLink(b,a.searchText)},a.removeLink=function(b){e.removeLink(b,a.searchText)},a.trackView=function(b){d.currentUser.trackView(b,a.searchText)},a.trackShare=function(b){d.currentUser.trackShare(b,a.searchText)}),a.triggerSearch()}]),angular.module("app").factory("appProcessLinks",["appIdentity",function(a){"use strict";function b(a){a.activated&&(a.activated=new Date(a.activated).toLocaleDateString(),h[a.activated]=!0)}function c(a){a.domain=a.url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase().replace("www.","")}function d(){var a=[];for(var b in h)h.hasOwnProperty(b)&&a.push(b);return a.reverse()}function e(a){a.removed=!1,i.indexOf(a.url)>-1&&(a.removed=!0)}function f(a){a.saved=!1,j.indexOf(a.url)>-1&&(a.saved=!0)}function g(a){b(a),c(a),f(a),e(a)}var h={},i=[],j=[];return{process:function(b,c){a.currentUser&&a.currentUser.readlater&&(a.currentUser.readlater.forEach(function(a){j.push(a.url)}),a.currentUser.activities.forEach(function(a){a.topic===b.searchText&&(i=a.removed)})),c.forEach(g),b.dates=d(),b.links=c},saveLink:function(b,c){var d={url:b.url,title:b.title,topic:c,activated:Date.now()};b.saved=a.currentUser.saveLink(d)},removeLink:function(b,c){a.currentUser.removeLink(b.url,c),b.removed=!0}}}]),angular.module("app").controller("appHomeCtrl",["$scope","$location","$document","appIdentity","appSidebar","appIsMobile",function(a,b,c,d,e,f){"use strict";if(a.identity=d,a.search=function(){a.searchText&&b.path("/"+a.searchText.trim())},d.isAuthenticated()&&(d.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)||b.path("account/settings")),!f.any()){var g=c[0].getElementById("focus");g.focus()}}]),angular.module("app").controller("appPagesCtrl",["$scope","$http","$location","appFeedback",function(a,b,c,d){"use strict";a.toggleFeedback=function(){d.toggle()},a.toggleVideo=function(){a.showVideo=!a.showVideo}}]),angular.module("app").controller("appReadlaterCtrl",["$scope","appFeedback","appSidebar","appIdentity",function(a,b,c,d){"use strict";a.readlater=d.currentUser.readlater||[],a.empty=function(){return 0===a.readlater.length},a.toggleFeedback=function(){b.toggle()},a.removeLink=function(a){d.currentUser.removeSavedLink(a)},a.$on("readlaterChanged",function(){a.readlater=d.currentUser.readlater})}]),angular.module("app").factory("appSidebar",["$rootScope",function(a){"use strict";var b={};return b.toggle=function(){a.$emit("toggleSidebar")},b}]),angular.module("app").controller("appSidebarCtrl",["$scope","$rootScope","appSidebar","$location","$document","appAuth","appNotifier","appIdentity",function(a,b,c,d,e,f,g,h){"use strict";function i(){a.open&&c.toggle()}var j=angular.element(document.querySelector(".blackout"));a.identity=h,a.setBuzzrs=function(){h.isAuthenticated()&&(a.buzzrs=h.currentUser.buzzrs)},a.encode=function(a){return encodeURI(a)},a.signout=function(){f.logoutUser().then(function(){d.path("/")})},a.removeBuzzr=function(a){h.currentUser.removeBuzzr(a)},a.toggleOpen=function(){j.toggleClass("on"),a.open=!a.open,a.open&&(e.one("click",i),e.one("touch",i)),a.$$phase||a.$digest()},b.$on("toggleSidebar",function(){a.setBuzzrs(),a.toggleOpen()}),a.$on("buzzrsChanged",function(){a.setBuzzrs()}),a.setBuzzrs()}]),angular.module("app").factory("appTweet4me",["$http","$filter",function(a,b){"use strict";function c(){var a=[];for(var b in g)g.hasOwnProperty(b)&&a.push(b);return a.reverse()}function d(a){var c=new Date(a.added);a.added=b("date")(c,"dd MMM yyyy"),g[a.added]=!0}function e(a){d(a)}var f={},g={};return f.processTweets=function(a,b){b.forEach(e),a.dates=c(),a.tweets=b},f.mark=function(b,c,d){a.post("/api/tweet4me/"+b+"/mark",{mark:c,url:d})},f}]),angular.module("app").controller("appTweet4meCtrl",["$scope","$location","appFeedback",function(a,b,c){"use strict";a.toggleFeedback=function(){c.toggle()},a.signup=function(){b.path("/tweet4me/pricing")}}]),angular.module("app").controller("appTweet4meFeedCtrl",["$scope","$routeParams","$http","appTweet4me",function(a,b,c,d){"use strict";a.email=b.user,a.status="loading",a.encode=function(a){return encodeURI(a)},a.ifStatus=function(b){return a.status===b},a.login=function(){a.getTweets()},a.mark=function(b,c){d.mark(a.email,b,c.url),c[b]=!0},a.getTweets=function(){a.status="loading",c.get("/api/tweet4me/"+a.email).then(function(b){var c=b.data.tweets;return 0===c.length?(a.error="Couldn't find your Tweet4me. Is your Email correct?",void(a.status="login")):(d.processTweets(a,c),void(a.status="feeding"))},function(){window.alert("Sorry, something went wrong! Please try again!"),a.status="login"})},a.email?a.getTweets():a.status="login"}]),angular.module("app").controller("appTweet4meJoinCtrl",["$scope","$http","$routeParams",function(a,b,c){"use strict";a.signup=function(){return a.email&&a.topic?(a.processing=!0,void b.post("/tweet4me",{email:a.email,topic:a.topic,plan:c.plan||"startup"}).then(function(b){b.data.success?(a.success=!0,a.error=!1):(a.success=!1,a.error=b.data.error,a.processing=!1)})):(a.success=!1,void(a.error="Make sure you filled out both email and topic"))}}]);
+angular.module('app', [
+  'ngResource',
+  'ngRoute',
+  'angular-loading-bar'
+]);
+angular.module('app').config([
+  '$routeProvider',
+  '$locationProvider',
+  function ($routeProvider, $locationProvider) {
+    'use strict';
+    var routeRoleChecks = {
+        user: {
+          auth: [
+            'appAuth',
+            function (appAuth) {
+              return appAuth.authorizeLoggedInUserForRoute();
+            }
+          ]
+        }
+      };
+    $locationProvider.html5Mode(true);
+    $routeProvider.when('/', {
+      templateUrl: '/partials/pages/landingpage',
+      controller: 'appPagesCtrl'
+    }).when('/terms', {
+      templateUrl: '/partials/pages/terms',
+      controller: 'appPagesCtrl'
+    }).when('/login', {
+      templateUrl: '/partials/account/login',
+      controller: 'appLoginCtrl'
+    }).when('/join', {
+      templateUrl: '/partials/account/join',
+      controller: 'appJoinCtrl'
+    });
+    $routeProvider.when('/tweet4me', {
+      templateUrl: '/partials/tweet4me/home',
+      controller: 'appTweet4meCtrl'
+    }).when('/tweet4me/join', {
+      templateUrl: '/partials/tweet4me/join',
+      controller: 'appTweet4meJoinCtrl'
+    }).when('/tweet4me/feed', {
+      templateUrl: '/partials/tweet4me/main',
+      controller: 'appTweet4meFeedCtrl'
+    }).when('/tweet4me/pricing', {
+      templateUrl: '/partials/tweet4me/pricing',
+      controller: 'appTweet4meCtrl'
+    });
+    $routeProvider.when('/buffer', {
+      templateUrl: '/partials/buffer/home',
+      controller: 'appBufferCtrl'
+    }).when('/buffer/pricing', {
+      templateUrl: '/partials/buffer/pricing',
+      controller: 'appBufferCtrl'
+    }).when('/buffer/failure', {
+      templateUrl: '/partials/buffer/failure',
+      controller: 'appBufferCtrl'
+    }).when('/buffer/settings', {
+      templateUrl: '/partials/buffer/settings',
+      controller: 'appBufferCtrl'
+    });
+    $routeProvider.when('/search', {
+      templateUrl: '/partials/pages/home',
+      controller: 'appHomeCtrl'
+    }).when('/:id', {
+      templateUrl: '/partials/main/main',
+      controller: 'appMainCtrl'
+    }).when('/account/readlater', {
+      templateUrl: '/partials/readlater/readlater',
+      controller: 'appReadlaterCtrl',
+      resolve: routeRoleChecks.user
+    }).when('/account/settings', {
+      templateUrl: '/partials/account/settings',
+      controller: 'appSettingsCtrl',
+      resolve: routeRoleChecks.user
+    });
+  }
+]);
+angular.module('app').run([
+  '$rootScope',
+  '$location',
+  function ($rootScope, $location) {
+    'use strict';
+    $rootScope.$on('$routeChangeSuccess', function () {
+      window.ga('send', 'pageview', $location.path());
+    });
+    $rootScope.$on('$routeChangeError', function (event, current, previous, rejectionReason) {
+      if (rejectionReason === 'not authorized') {
+        $location.path('/');
+      }
+    });
+  }
+]);angular.module('app').factory('AppUser', [
+  '$resource',
+  '$rootScope',
+  function ($resource, $rootScope) {
+    'use strict';
+    var UserResource = $resource('/api/users/:id', { _id: '@id' }, {
+        update: {
+          method: 'PUT',
+          isArray: false
+        }
+      });
+    UserResource.prototype.isAdmin = function () {
+      return this.roles && this.roles.indexOf('admin') > -1;
+    };
+    UserResource.prototype.addBuzzr = function (topic) {
+      if (!!this.buzzrs && this.buzzrs.indexOf(topic) === -1) {
+        this.buzzrs.push(topic);
+        this.$update();
+        $rootScope.$broadcast('buzzrsChanged');
+      }
+    };
+    UserResource.prototype.removeBuzzr = function (topic) {
+      var i = this.buzzrs.indexOf(topic);
+      if (i > -1) {
+        this.buzzrs.splice(i, 1);
+        this.$update();
+        $rootScope.$broadcast('buzzrsChanged');
+      }
+    };
+    UserResource.prototype.indexOfSavedLink = function (url) {
+      var index = -1;
+      this.readlater.forEach(function (l, i) {
+        if (l.url === url) {
+          index = i;
+        }
+      });
+      return index;
+    };
+    UserResource.prototype.saveLink = function (newSavedLink) {
+      if (this.indexOfSavedLink(newSavedLink.url) > -1) {
+        this.removeSavedLink(newSavedLink.url);
+        return false;
+      }
+      this.recordActivity('saved', newSavedLink.url, newSavedLink.topic);
+      this.readlater.push(newSavedLink);
+      this.$update();
+      $rootScope.$broadcast('readlaterChanged');
+      return true;
+    };
+    UserResource.prototype.removeSavedLink = function (url) {
+      var index = this.indexOfSavedLink(url);
+      if (index > -1) {
+        this.readlater.splice(index, 1);
+        this.$update();
+        $rootScope.$broadcast('readlaterChanged');
+      }
+    };
+    UserResource.prototype.removeLink = function (url, topic) {
+      this.recordActivity('removed', url, topic);
+      this.$update();
+      $rootScope.$broadcast('removedLink');
+    };
+    UserResource.prototype.trackView = function (url, topic) {
+      this.recordActivity('viewed', url, topic);
+      this.$update();
+    };
+    UserResource.prototype.trackShare = function (url, topic) {
+      this.recordActivity('shared', url, topic);
+      this.$update();
+    };
+    UserResource.prototype.recordActivity = function (type, url, topic) {
+      var index = -1;
+      this.activities.forEach(function (obj, i) {
+        if (obj.topic === topic) {
+          index = i;
+        }
+      });
+      if (index === -1) {
+        this.activities.push({
+          topic: topic,
+          removed: [],
+          viewed: [],
+          saved: [],
+          shared: []
+        });
+        index = 0;
+      }
+      this.activities[index][type].push(url);
+    };
+    return UserResource;
+  }
+]);angular.module('app').factory('appAuth', [
+  '$http',
+  '$q',
+  'appIdentity',
+  'AppUser',
+  function ($http, $q, appIdentity, AppUser) {
+    'use strict';
+    return {
+      authenticateUser: function (email, password) {
+        var dfd = $q.defer();
+        $http.post('/login', {
+          email: email,
+          password: password
+        }).then(function (res) {
+          if (res.data.success) {
+            var user = new AppUser();
+            angular.extend(user, res.data.user);
+            appIdentity.currentUser = user;
+            dfd.resolve(true);
+          } else {
+            dfd.resolve(false);
+          }
+        });
+        return dfd.promise;
+      },
+      createUser: function (newUserData) {
+        var newUser = new AppUser(newUserData);
+        var dfd = $q.defer();
+        newUser.$save().then(function () {
+          appIdentity.currentUser = newUser;
+          dfd.resolve(true);
+        }, function (response) {
+          dfd.reject(response.data.reason);
+        });
+        return dfd.promise;
+      },
+      updateCurrentUser: function (updatedUser) {
+        var dfd = $q.defer();
+        updatedUser.$update().then(function () {
+          appIdentity.currentUser = updatedUser;
+          dfd.resolve(true);
+        }, function (response) {
+          dfd.reject(response.data.reason);
+        });
+        return dfd.promise;
+      },
+      logoutUser: function () {
+        var dfd = $q.defer();
+        $http.post('/logout', { logout: true }).then(function () {
+          appIdentity.currentUser = undefined;
+          dfd.resolve(true);
+        });
+        return dfd.promise;
+      },
+      authorizeCurrentUserForRoute: function () {
+        if (appIdentity.isAuthorized('admin')) {
+          return true;
+        }
+        return $q.reject('not authorized');
+      },
+      authorizeLoggedInUserForRoute: function () {
+        if (appIdentity.isAuthenticated()) {
+          return true;
+        }
+        return $q.reject('not authorized');
+      }
+    };
+  }
+]);angular.module('app').factory('appIdentity', [
+  '$window',
+  'AppUser',
+  function ($window, AppUser) {
+    'use strict';
+    var currentUser;
+    if (!!$window.bootstrappedUser) {
+      currentUser = new AppUser();
+      angular.extend(currentUser, $window.bootstrappedUser);
+    }
+    return {
+      currentUser: currentUser,
+      isAuthenticated: function () {
+        return !!this.currentUser;
+      },
+      isAuthorized: function (role) {
+        return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
+      }
+    };
+  }
+]);angular.module('app').controller('appJoinCtrl', [
+  '$scope',
+  '$location',
+  'appIdentity',
+  'appAuth',
+  'appNotifier',
+  function ($scope, $location, appIdentity, appAuth, appNotifier) {
+    'use strict';
+    $scope.signup = function () {
+      var newUserData = {
+          email: $scope.email,
+          password: $scope.password
+        };
+      appAuth.createUser(newUserData).then(function () {
+        $location.path('/search');
+      }, function (reason) {
+        appNotifier.error(reason, $scope);
+      });
+    };
+  }
+]);angular.module('app').controller('appLoginCtrl', [
+  '$scope',
+  '$location',
+  'appAuth',
+  'appNotifier',
+  function ($scope, $location, appAuth, appNotifier) {
+    'use strict';
+    $scope.signin = function () {
+      appAuth.authenticateUser($scope.email, $scope.password).then(function (success) {
+        if (success) {
+          $location.path('/search');
+        } else {
+          appNotifier.error('email/password combination incorrect', $scope);
+        }
+      });
+    };
+  }
+]);angular.module('app').controller('appSettingsCtrl', [
+  '$scope',
+  '$location',
+  '$http',
+  'appAuth',
+  'appIdentity',
+  'appNotifier',
+  function ($scope, $location, $http, appAuth, appIdentity, appNotifier) {
+    'use strict';
+    $scope.currentUser = angular.copy(appIdentity.currentUser);
+    $scope.email = { valid: appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/) };
+    // User came from Twitter Auth
+    if (!$scope.email.valid) {
+      $scope.currentUser.email = '';
+    }
+    $scope.update = function () {
+      appAuth.updateCurrentUser($scope.currentUser).then(function () {
+        if (!$scope.email.valid) {
+          return $location.path('/search');
+        }
+        appNotifier.notify('Your account has been updated', $scope);
+      }, function (reason) {
+        appNotifier.error(reason, $scope);
+      });
+    };
+  }
+]);angular.module('app').controller('appAdminAddTweetCtrl', [
+  '$scope',
+  '$http',
+  function ($scope, $http) {
+    'use strict';
+    $scope.tweet = {};
+    $scope.topics = [];
+    $scope.t4ms = window.bootstrappedTweet4Mes;
+    $scope.updateTopics = function () {
+      $scope.t4ms.forEach(function (t4m) {
+        if (t4m.user === $scope.tweet.email) {
+          $scope.topics = t4m.topics;
+        }
+      });
+    };
+    $scope.showTopic = function () {
+      return !!$scope.tweet.email;
+    };
+    $scope.showTweetForm = function () {
+      return !!$scope.tweet.topic;
+    };
+    $scope.addTweet = function () {
+      var tweet = $scope.tweet;
+      $http.post('/api/tweet4me/' + tweet.email + '/addTweet', { tweet: tweet }).then(function () {
+        window.alert('Tweet Added!');
+        $scope.tweet.url = '';
+        $scope.tweet.text = '';
+      }, function () {
+        window.alert('Sorry, something went wrong! Please try again!');
+      });
+    };
+  }
+]);angular.module('app').controller('appAdminBuzzrsCtrl', [
+  '$scope',
+  '$http',
+  '$window',
+  function ($scope, $http, $window) {
+    'use strict';
+    $scope.buzzrs = [];
+    $http.get('/api/buzzrs').then(function (res) {
+      if (res.data.buzzrs) {
+        $scope.buzzrs = res.data.buzzrs;
+      } else {
+        $window.alert('$http error');
+      }
+    });
+  }
+]);angular.module('app').controller('appAdminErrorsCtrl', [
+  '$scope',
+  '$http',
+  '$window',
+  function ($scope, $http, $window) {
+    'use strict';
+    $scope.socketErrors = [];
+    $scope.titleErrors = [];
+    $http.get('/api/errors').then(function (res) {
+      if (!!res.data.titleErrors) {
+        $scope.socketErrors = res.data.socketErrors;
+        $scope.titleErrors = res.data.titleErrors;
+      } else {
+        $window.alert('$http error');
+      }
+    });
+  }
+]);angular.module('app').controller('appAdminSendTweet4meCtrl', [
+  '$scope',
+  function ($scope) {
+    'use strict';
+    $scope.t4ms = window.bootstrappedTweet4Mes;
+  }
+]);angular.module('app').controller('appAdminUsersCtrl', [
+  '$scope',
+  'AppUser',
+  function ($scope, AppUser) {
+    'use strict';
+    $scope.users = AppUser.query();
+  }
+]);angular.module('app').controller('appBufferCtrl', [
+  '$scope',
+  'appFeedback',
+  function ($scope, appFeedback) {
+    'use strict';
+    $scope.toggleFeedback = function () {
+      appFeedback.toggle();
+    };
+  }
+]);/*
+   * angular-loading-bar
+   *
+   * intercepts XHR requests and creates a loading bar.
+   * Based on the excellent nprogress work by rstacruz (more info in readme)
+   *
+   * (c) 2013 Wes Cruver
+   * License: MIT
+   */
+(function () {
+  'use strict';
+  // Alias the loading bar so it can be included using a simpler
+  // (and maybe more professional) module name:
+  angular.module('angular-loading-bar', ['chieffancypants.loadingBar']);
+  /**
+   * loadingBarInterceptor service
+   *
+   * Registers itself as an Angular interceptor and listens for XHR requests.
+   */
+  angular.module('chieffancypants.loadingBar', []).config([
+    '$httpProvider',
+    function ($httpProvider) {
+      var interceptor = [
+          '$q',
+          '$cacheFactory',
+          '$timeout',
+          '$rootScope',
+          'cfpLoadingBar',
+          function ($q, $cacheFactory, $timeout, $rootScope, cfpLoadingBar) {
+            /**
+         * The total number of requests made
+         */
+            var reqsTotal = 0;
+            /**
+         * The number of requests completed (either successfully or not)
+         */
+            var reqsCompleted = 0;
+            /**
+         * The amount of time spent fetching before showing the loading bar
+         */
+            var latencyThreshold = cfpLoadingBar.latencyThreshold;
+            /**
+         * $timeout handle for latencyThreshold
+         */
+            var startTimeout;
+            /**
+         * calls cfpLoadingBar.complete() which removes the
+         * loading bar from the DOM.
+         */
+            function setComplete() {
+              $timeout.cancel(startTimeout);
+              cfpLoadingBar.complete();
+              reqsCompleted = 0;
+              reqsTotal = 0;
+            }
+            /**
+         * Determine if the response has already been cached
+         * @param  {Object}  config the config option from the request
+         * @return {Boolean} retrns true if cached, otherwise false
+         */
+            function isCached(config) {
+              var cache;
+              var defaults = $httpProvider.defaults;
+              if (config.method !== 'GET' || config.cache === false) {
+                config.cached = false;
+                return false;
+              }
+              if (config.cache === true && defaults.cache === undefined) {
+                cache = $cacheFactory.get('$http');
+              } else if (defaults.cache !== undefined) {
+                cache = defaults.cache;
+              } else {
+                cache = config.cache;
+              }
+              var cached = cache !== undefined ? cache.get(config.url) !== undefined : false;
+              if (config.cached !== undefined && cached !== config.cached) {
+                return config.cached;
+              }
+              config.cached = cached;
+              return cached;
+            }
+            return {
+              'request': function (config) {
+                // Check to make sure this request hasn't already been cached and that
+                // the requester didn't explicitly ask us to ignore this request:
+                if (!config.ignoreLoadingBar && !isCached(config)) {
+                  $rootScope.$broadcast('cfpLoadingBar:loading', { url: config.url });
+                  if (reqsTotal === 0) {
+                    startTimeout = $timeout(function () {
+                      cfpLoadingBar.start();
+                    }, latencyThreshold);
+                  }
+                  reqsTotal++;
+                  cfpLoadingBar.set(reqsCompleted / reqsTotal);
+                }
+                return config;
+              },
+              'response': function (response) {
+                if (!isCached(response.config)) {
+                  reqsCompleted++;
+                  $rootScope.$broadcast('cfpLoadingBar:loaded', { url: response.config.url });
+                  if (reqsCompleted >= reqsTotal) {
+                    setComplete();
+                  } else {
+                    cfpLoadingBar.set(reqsCompleted / reqsTotal);
+                  }
+                }
+                return response;
+              },
+              'responseError': function (rejection) {
+                if (!isCached(rejection.config)) {
+                  reqsCompleted++;
+                  $rootScope.$broadcast('cfpLoadingBar:loaded', { url: rejection.config.url });
+                  if (reqsCompleted >= reqsTotal) {
+                    setComplete();
+                  } else {
+                    cfpLoadingBar.set(reqsCompleted / reqsTotal);
+                  }
+                }
+                return $q.reject(rejection);
+              }
+            };
+          }
+        ];
+      $httpProvider.interceptors.push(interceptor);
+    }
+  ]).provider('cfpLoadingBar', function () {
+    this.includeSpinner = true;
+    this.includeBar = true;
+    this.latencyThreshold = 100;
+    this.startSize = 0.02;
+    this.parentSelector = 'body';
+    this.$get = [
+      '$document',
+      '$timeout',
+      '$animate',
+      '$rootScope',
+      function ($document, $timeout, $animate, $rootScope) {
+        var $parentSelector = this.parentSelector, $parent = $document.find($parentSelector), loadingBarContainer = angular.element('<div id="loading-bar"><div class="bar"><div class="peg"></div></div></div>'), loadingBar = loadingBarContainer.find('div').eq(0), spinner = angular.element('<div id="loading-bar-spinner"><div class="spinner-icon"></div></div>');
+        var incTimeout, completeTimeout, started = false, status = 0;
+        var includeSpinner = this.includeSpinner;
+        var includeBar = this.includeBar;
+        var startSize = this.startSize;
+        /**
+         * Inserts the loading bar element into the dom, and sets it to 2%
+         */
+        function _start() {
+          $timeout.cancel(completeTimeout);
+          // do not continually broadcast the started event:
+          if (started) {
+            return;
+          }
+          $rootScope.$broadcast('cfpLoadingBar:started');
+          started = true;
+          if (includeBar) {
+            $animate.enter(loadingBarContainer, $parent);
+          }
+          if (includeSpinner) {
+            $animate.enter(spinner, $parent);
+          }
+          _set(startSize);
+        }
+        /**
+         * Set the loading bar's width to a certain percent.
+         *
+         * @param n any value between 0 and 1
+         */
+        function _set(n) {
+          if (!started) {
+            return;
+          }
+          var pct = n * 100 + '%';
+          loadingBar.css('width', pct);
+          status = n;
+          // increment loadingbar to give the illusion that there is always
+          // progress but make sure to cancel the previous timeouts so we don't
+          // have multiple incs running at the same time.
+          $timeout.cancel(incTimeout);
+          incTimeout = $timeout(function () {
+            _inc();
+          }, 250);
+        }
+        /**
+         * Increments the loading bar by a random amount
+         * but slows down as it progresses
+         */
+        function _inc() {
+          if (_status() >= 1) {
+            return;
+          }
+          var rnd = 0;
+          // TODO: do this mathmatically instead of through conditions
+          var stat = _status();
+          if (stat >= 0 && stat < 0.25) {
+            // Start out between 3 - 6% increments
+            rnd = (Math.random() * (5 - 3 + 1) + 3) / 100;
+          } else if (stat >= 0.25 && stat < 0.65) {
+            // increment between 0 - 3%
+            rnd = Math.random() * 3 / 100;
+          } else if (stat >= 0.65 && stat < 0.9) {
+            // increment between 0 - 2%
+            rnd = Math.random() * 2 / 100;
+          } else if (stat >= 0.9 && stat < 0.99) {
+            // finally, increment it .5 %
+            rnd = 0.005;
+          } else {
+            // after 99%, don't increment:
+            rnd = 0;
+          }
+          var pct = _status() + rnd;
+          _set(pct);
+        }
+        function _status() {
+          return status;
+        }
+        function _complete() {
+          $rootScope.$broadcast('cfpLoadingBar:completed');
+          _set(1);
+          // Attempt to aggregate any start/complete calls within 500ms:
+          completeTimeout = $timeout(function () {
+            $animate.leave(loadingBarContainer, function () {
+              status = 0;
+              started = false;
+            });
+            $animate.leave(spinner);
+          }, 500);
+        }
+        return {
+          start: _start,
+          set: _set,
+          status: _status,
+          inc: _inc,
+          complete: _complete,
+          includeSpinner: this.includeSpinner,
+          latencyThreshold: this.latencyThreshold,
+          parentSelector: this.parentSelector,
+          startSize: this.startSize
+        };
+      }
+    ];
+  });
+}());angular.module('app').factory('appIsMobile', function () {
+  'use strict';
+  var isMobile = {
+      Android: function () {
+        return navigator.userAgent.match(/Android/i) ? true : false;
+      },
+      BlackBerry: function () {
+        return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+      },
+      iOS: function () {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+      },
+      Windows: function () {
+        return navigator.userAgent.match(/IEMobile/i) ? true : false;
+      },
+      any: function () {
+        return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows();
+      }
+    };
+  return isMobile;
+});angular.module('app').factory('appNotifier', function () {
+  'use strict';
+  return {
+    notify: function (msg, scope) {
+      scope.notifier = {};
+      scope.notifier.notice = msg;
+      setTimeout(function () {
+        scope.notifier.notice = '';
+        scope.$digest();
+      }, 4000);
+    },
+    error: function (msg, scope) {
+      scope.notifier = {};
+      scope.notifier.error = msg;
+      setTimeout(function () {
+        scope.notifier.error = '';
+        scope.$digest();
+      }, 4000);
+    }
+  };
+});angular.module('app').controller('appSocialHeaderCtrl', [
+  '$scope',
+  '$location',
+  function ($scope, $location) {
+    'use strict';
+    var show = [
+        '/',
+        '/tweet4me',
+        '/tweet4me/pricing',
+        '/tweet4me/join',
+        '/terms'
+      ];
+    $scope.showSocialHeader = function () {
+      return show.indexOf($location.path()) > -1;
+    };
+  }
+]);angular.module('app').factory('appTopics', [
+  '$window',
+  function ($window) {
+    'use strict';
+    var topics = [];
+    if (!!$window.bootstrappedTopics) {
+      topics = $window.bootstrappedTopics;
+    }
+    return topics;
+  }
+]);String.prototype.trunc = function (n) {
+  'use strict';
+  return this.length > n ? this.substr(0, n - 1) + '...' : this;
+};angular.module('app').factory('appFeedback', [
+  '$rootScope',
+  function ($rootScope) {
+    'use strict';
+    return {
+      toggle: function () {
+        $rootScope.$broadcast('toggleFeedback');
+      }
+    };
+  }
+]);angular.module('app').controller('appFeedbackCtrl', [
+  '$scope',
+  '$location',
+  '$window',
+  '$http',
+  'appIdentity',
+  'appNotifier',
+  function ($scope, $location, $window, $http, appIdentity, appNotifier) {
+    'use strict';
+    $scope.success = false;
+    $scope.show = false;
+    $scope.feedback = {};
+    $scope.feedback.userAgent = $window.navigator.userAgent;
+    if (appIdentity.isAuthenticated()) {
+      $scope.feedback.name = appIdentity.currentUser.name;
+      $scope.feedback.email = appIdentity.currentUser.email;
+    }
+    $scope.send = function () {
+      $scope.feedback.currentPath = $location.path();
+      $http.post('/api/feedback', $scope.feedback).then(function (res) {
+        if (res.data.success) {
+          $scope.success = true;
+        } else {
+          appNotifier.error(res.data.err || 'unknown error', $scope);
+        }
+      }, function (res) {
+        appNotifier.error('error ' + res.status + ' occurred - please email help@buzzr.io', $scope);
+      });
+    };
+    $scope.toggle = function () {
+      $scope.show = !$scope.show;
+    };
+    $scope.$on('toggleFeedback', function () {
+      $scope.toggle();
+    });
+  }
+]);angular.module('app').controller('appHeaderCtrl', [
+  '$scope',
+  '$rootScope',
+  '$location',
+  'appIdentity',
+  'appSidebar',
+  function ($scope, $rootScope, $location, appIdentity, appSidebar) {
+    'use strict';
+    $scope.isLoggedIn = function () {
+      return appIdentity.isAuthenticated() && !appIdentity.currentUser.bufferUser;
+    };
+    $scope.toggleSidebar = function () {
+      appSidebar.toggle();
+    };
+    $rootScope.$on('toggleSidebar', function () {
+      $scope.open = !$scope.open;
+      if (!$scope.$$phase) {
+        $scope.$digest();
+      }
+    });
+    $scope.showLogo = function () {
+      var noLogo = [
+          '/',
+          '/search',
+          '/login',
+          '/tweet4me',
+          '/about',
+          '/join',
+          '/terms'
+        ];
+      return noLogo.indexOf($location.path()) === -1;
+    };
+  }
+]);angular.module('app').factory('appBuzzr', [
+  '$http',
+  '$route',
+  'appProcessLinks',
+  function ($http, $route, appProcessLinks) {
+    'use strict';
+    var BuzzrResource = {};
+    function handleZeroResults($scope) {
+      $scope.errorMessage = 'Oh no, Buzzr did not find anything recent on this topic :( Please come back later and try again!';
+      $scope.status = 'error';
+    }
+    function startCountdown($scope) {
+      var interv = setInterval(function () {
+          $scope.$apply(function () {
+            $scope.countDown -= 1;
+            if ($scope.countDown <= 0) {
+              $scope.countDown = 0;
+              $route.reload();
+              clearInterval(interv);
+            }
+          });
+        }, 1000);
+    }
+    function handleError($scope, msg) {
+      $scope.errorMessage = msg;
+      $scope.links = [];
+      $scope.status = 'error';
+    }
+    BuzzrResource.updateFeed = function ($scope) {
+      $http.get('/api/buzzrs/refresh/' + $scope.searchText.trim()).then(function (res) {
+        var links = res.data.links;
+        if (res.data.err) {
+          handleError($scope, res.data.err);
+          return;
+        }
+        if (res.data.updating) {
+          $scope.status = 'updating';
+          startCountdown($scope);
+          return;
+        }
+        if (links.length === 0) {
+          return handleZeroResults($scope);
+        }
+        appProcessLinks.process($scope, links);
+        $scope.status = 'feeding';
+      }, function () {
+        handleError($scope, 'Sorry, something went wrong! Please try again!');
+      });
+    };
+    BuzzrResource.startFeed = function ($scope) {
+      $http.get('/api/buzzrs/' + $scope.searchText.trim()).then(function (res) {
+        var links = res.data.links;
+        if (res.data.err) {
+          handleError($scope, res.data.err);
+          return;
+        }
+        if (!links) {
+          $scope.status = 'creating';
+          startCountdown($scope);
+        } else {
+          if (links.length === 0) {
+            return handleZeroResults($scope);
+          }
+          appProcessLinks.process($scope, links);
+          $scope.status = 'feeding';
+        }
+      }, function () {
+        handleError($scope, 'Sorry, something went wrong! Please try again!');
+      });
+    };
+    return BuzzrResource;
+  }
+]);angular.module('app').controller('appMainCtrl', [
+  '$scope',
+  '$routeParams',
+  '$location',
+  'appIdentity',
+  'appProcessLinks',
+  'appSidebar',
+  'appFeedback',
+  'appBuzzr',
+  function ($scope, $routeParams, $location, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
+    /*jshint maxstatements: false */
+    'use strict';
+    $scope.countDown = 18;
+    $scope.links = [];
+    $scope.dates = [];
+    $scope.lang = '';
+    $scope.identity = appIdentity;
+    $scope.searchText = decodeURI($routeParams.id).toLowerCase();
+    $scope.status = 'searching';
+    $scope.checkStatus = function (status) {
+      return $scope.status === status;
+    };
+    $scope.encode = function (title) {
+      return encodeURI(title);
+    };
+    $scope.newSearch = function (newSearchTerm) {
+      if (!!newSearchTerm) {
+        var url = newSearchTerm.toLowerCase().trim();
+        $location.path('/' + url);
+      }
+    };
+    $scope.toggleSidebar = function () {
+      appSidebar.toggle();
+    };
+    $scope.toggleFeedback = function () {
+      appFeedback.toggle();
+    };
+    $scope.getLang = function (lang) {
+      return $scope.lang === lang;
+    };
+    $scope.triggerSearch = function () {
+      appBuzzr.startFeed($scope);
+    };
+    $scope.loadMore = function () {
+      $scope.status = 'searching';
+      appBuzzr.updateFeed($scope);
+    };
+    $scope.showLoading = function () {
+      if ($scope.checkStatus('searching') || $scope.checkStatus('creating') || $scope.checkStatus('updating')) {
+        return true;
+      }
+      return false;
+    };
+    if (appIdentity.isAuthenticated()) {
+      appIdentity.currentUser.addBuzzr($scope.searchText);
+      $scope.saveLink = function (link) {
+        appProcessLinks.saveLink(link, $scope.searchText);
+      };
+      $scope.removeLink = function (link) {
+        appProcessLinks.removeLink(link, $scope.searchText);
+      };
+      $scope.trackView = function (url) {
+        appIdentity.currentUser.trackView(url, $scope.searchText);
+      };
+      $scope.trackShare = function (url) {
+        appIdentity.currentUser.trackShare(url, $scope.searchText);
+      };
+    }
+    $scope.triggerSearch();
+  }
+]);angular.module('app').factory('appProcessLinks', [
+  'appIdentity',
+  function (appIdentity) {
+    'use strict';
+    var uniqDates = {}, removedLinks = [], readlater = [];
+    function setLocalDate(link) {
+      if (!!link.activated) {
+        link.activated = new Date(link.activated).toLocaleDateString();
+        uniqDates[link.activated] = true;
+      }
+    }
+    function setDomain(link) {
+      link.domain = link.url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase().replace('www.', '');
+    }
+    function getDates() {
+      var a = [];
+      for (var date in uniqDates) {
+        if (uniqDates.hasOwnProperty(date)) {
+          a.push(date);
+        }
+      }
+      return a.reverse();
+    }
+    function checkRemoved(link) {
+      link.removed = false;
+      if (removedLinks.indexOf(link.url) > -1) {
+        link.removed = true;
+      }
+    }
+    function checkSaved(link) {
+      link.saved = false;
+      if (readlater.indexOf(link.url) > -1) {
+        link.saved = true;
+      }
+    }
+    function processLink(link) {
+      setLocalDate(link);
+      setDomain(link);
+      checkSaved(link);
+      checkRemoved(link);
+    }
+    return {
+      process: function ($scope, incomingLinks) {
+        if (appIdentity.currentUser && appIdentity.currentUser.readlater) {
+          appIdentity.currentUser.readlater.forEach(function (obj) {
+            readlater.push(obj.url);
+          });
+          appIdentity.currentUser.activities.forEach(function (obj) {
+            if (obj.topic === $scope.searchText) {
+              removedLinks = obj.removed;
+            }
+          });
+        }
+        incomingLinks.forEach(processLink);
+        $scope.dates = getDates();
+        $scope.links = incomingLinks;
+      },
+      saveLink: function (link, topic) {
+        var newSavedLink = {
+            url: link.url,
+            title: link.title,
+            topic: topic,
+            activated: Date.now()
+          };
+        link.saved = appIdentity.currentUser.saveLink(newSavedLink);
+      },
+      removeLink: function (link, topic) {
+        appIdentity.currentUser.removeLink(link.url, topic);
+        link.removed = true;
+      }
+    };
+  }
+]);angular.module('app').controller('appHomeCtrl', [
+  '$scope',
+  '$location',
+  '$document',
+  'appIdentity',
+  'appSidebar',
+  'appIsMobile',
+  function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
+    'use strict';
+    $scope.identity = appIdentity;
+    $scope.search = function () {
+      if (!!$scope.searchText) {
+        $location.path('/' + $scope.searchText.trim());
+      }
+    };
+    if (appIdentity.isAuthenticated()) {
+      if (!appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)) {
+        // redirect if email invalid (twitter logins)
+        $location.path('account/settings');
+      }
+    }
+    // auto focus input on desktop
+    if (!appIsMobile.any()) {
+      var homeInput = $document[0].getElementById('focus');
+      homeInput.focus();
+    }
+  }
+]);angular.module('app').controller('appPagesCtrl', [
+  '$scope',
+  '$http',
+  '$location',
+  'appFeedback',
+  function ($scope, $http, $location, appFeedback) {
+    'use strict';
+    /*
+  $scope.identity = appIdentity;
+  var stripeToken = {};
+  
+  var handler = window.StripeCheckout.configure({
+    key: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG',
+    image: '/img/icon.png',
+    token: function(token) {
+      stripeToken = token;
+
+      $http
+        .post('/stripe', {token: token, plan: 'scholar'})
+        .then(function(res) {
+          if (res.data.success) {
+            appIdentity.email = token.email;
+            $location.path('/join');
+          } else {
+            // card declined
+            window.alert(res.data.reason);
+          }
+        }, function() {
+          window.alert('There was a server error, your card was NOT charged! Please contact us for help!');
+        });
+    }
+  });
+
+  $scope.openCheckout = function() {
+    handler.open({
+      name: 'Buzzr',
+      description: '14-day free trial, $2.00 monthly',
+      amount: 0
+    });
+  };
+  */
+    $scope.toggleFeedback = function () {
+      appFeedback.toggle();
+    };
+    $scope.toggleVideo = function () {
+      $scope.showVideo = !$scope.showVideo;
+    };
+  }
+]);angular.module('app').controller('appReadlaterCtrl', [
+  '$scope',
+  'appFeedback',
+  'appSidebar',
+  'appIdentity',
+  function ($scope, appFeedback, appSidebar, appIdentity) {
+    'use strict';
+    $scope.readlater = appIdentity.currentUser.readlater || [];
+    $scope.empty = function () {
+      return $scope.readlater.length === 0;
+    };
+    $scope.toggleFeedback = function () {
+      appFeedback.toggle();
+    };
+    $scope.removeLink = function (url) {
+      appIdentity.currentUser.removeSavedLink(url);
+    };
+    $scope.$on('readlaterChanged', function () {
+      $scope.readlater = appIdentity.currentUser.readlater;
+    });
+  }
+]);angular.module('app').factory('appSidebar', [
+  '$rootScope',
+  function ($rootScope) {
+    'use strict';
+    var header = {};
+    header.toggle = function () {
+      $rootScope.$emit('toggleSidebar');
+    };
+    return header;
+  }
+]);angular.module('app').controller('appSidebarCtrl', [
+  '$scope',
+  '$rootScope',
+  'appSidebar',
+  '$location',
+  '$document',
+  'appAuth',
+  'appNotifier',
+  'appIdentity',
+  function ($scope, $rootScope, appSidebar, $location, $document, appAuth, appNotifier, appIdentity) {
+    'use strict';
+    var blackout = angular.element(document.querySelector('.blackout'));
+    function close() {
+      if ($scope.open) {
+        appSidebar.toggle();
+      }
+    }
+    $scope.identity = appIdentity;
+    $scope.setBuzzrs = function () {
+      if (appIdentity.isAuthenticated()) {
+        $scope.buzzrs = appIdentity.currentUser.buzzrs;
+      }
+    };
+    $scope.encode = function (topic) {
+      return encodeURI(topic);
+    };
+    $scope.signout = function () {
+      appAuth.logoutUser().then(function () {
+        $location.path('/');
+      });
+    };
+    $scope.removeBuzzr = function (topic) {
+      appIdentity.currentUser.removeBuzzr(topic);
+    };
+    $scope.toggleOpen = function () {
+      blackout.toggleClass('on');
+      $scope.open = !$scope.open;
+      if ($scope.open) {
+        $document.one('click', close);
+        $document.one('touch', close);
+      }
+      if (!$scope.$$phase) {
+        $scope.$digest();
+      }
+    };
+    $rootScope.$on('toggleSidebar', function () {
+      $scope.setBuzzrs();
+      $scope.toggleOpen();
+    });
+    $scope.$on('buzzrsChanged', function () {
+      $scope.setBuzzrs();
+    });
+    $scope.setBuzzrs();
+  }
+]);angular.module('app').factory('appTweet4me', [
+  '$http',
+  '$filter',
+  function ($http, $filter) {
+    'use strict';
+    var Tweet4meResource = {}, uniqDates = {};
+    function getDates() {
+      var a = [];
+      for (var date in uniqDates) {
+        if (uniqDates.hasOwnProperty(date)) {
+          a.push(date);
+        }
+      }
+      return a.reverse();
+    }
+    function setLocalDate(tw) {
+      var date = new Date(tw.added);
+      tw.added = $filter('date')(date, 'dd MMM yyyy');
+      uniqDates[tw.added] = true;
+    }
+    function processTweet(tw) {
+      setLocalDate(tw);
+    }
+    Tweet4meResource.processTweets = function ($scope, tweets) {
+      tweets.forEach(processTweet);
+      $scope.dates = getDates();
+      $scope.tweets = tweets;
+    };
+    Tweet4meResource.mark = function (email, mark, url) {
+      $http.post('/api/tweet4me/' + email + '/mark', {
+        mark: mark,
+        url: url
+      });
+    };
+    return Tweet4meResource;
+  }
+]);angular.module('app').controller('appTweet4meCtrl', [
+  '$scope',
+  '$location',
+  'appFeedback',
+  function ($scope, $location, appFeedback) {
+    'use strict';
+    $scope.toggleFeedback = function () {
+      appFeedback.toggle();
+    };
+    $scope.signup = function () {
+      $location.path('/tweet4me/pricing');
+    };
+  }
+]);angular.module('app').controller('appTweet4meFeedCtrl', [
+  '$scope',
+  '$routeParams',
+  '$http',
+  'appTweet4me',
+  function ($scope, $routeParams, $http, appTweet4me) {
+    'use strict';
+    $scope.email = $routeParams.user;
+    $scope.status = 'loading';
+    $scope.encode = function (title) {
+      return encodeURI(title);
+    };
+    $scope.ifStatus = function (status) {
+      return $scope.status === status;
+    };
+    $scope.login = function () {
+      $scope.getTweets();
+    };
+    $scope.mark = function (mark, tweet) {
+      appTweet4me.mark($scope.email, mark, tweet.url);
+      tweet[mark] = true;
+    };
+    $scope.getTweets = function () {
+      $scope.status = 'loading';
+      $http.get('/api/tweet4me/' + $scope.email).then(function (res) {
+        var tweets = res.data.tweets;
+        if (tweets.length === 0) {
+          $scope.error = 'Couldn\'t find your Tweet4me. Is your Email correct?';
+          $scope.status = 'login';
+          return;
+        }
+        appTweet4me.processTweets($scope, tweets);
+        $scope.status = 'feeding';
+      }, function () {
+        window.alert('Sorry, something went wrong! Please try again!');
+        $scope.status = 'login';
+      });
+    };
+    if (!$scope.email) {
+      $scope.status = 'login';
+    } else {
+      $scope.getTweets();
+    }
+  }
+]);angular.module('app').controller('appTweet4meJoinCtrl', [
+  '$scope',
+  '$http',
+  '$routeParams',
+  function ($scope, $http, $routeParams) {
+    'use strict';
+    $scope.signup = function () {
+      if (!$scope.email || !$scope.topic) {
+        $scope.success = false;
+        $scope.error = 'Make sure you filled out both email and topic';
+        return;
+      }
+      $scope.processing = true;
+      $http.post('/tweet4me', {
+        email: $scope.email,
+        topic: $scope.topic,
+        plan: $routeParams.plan || 'startup'
+      }).then(function (res) {
+        if (res.data.success) {
+          $scope.success = true;
+          $scope.error = false;
+        } else {
+          $scope.success = false;
+          $scope.error = res.data.error;
+          $scope.processing = false;
+        }
+      });
+    };
+  }
+]);
