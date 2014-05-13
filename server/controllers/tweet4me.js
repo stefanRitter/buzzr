@@ -77,10 +77,41 @@ exports.sendEmail = function(req, res) {
   Tweet4me.findOne({user: user}).exec(function(err, tweet4me) {
     if (err) { return res.send(500); }
     if (!tweet4me) { return res.send(500); }
-  
+
+    var timestamp = tweet4me._id.toString().substring(0,8),
+        createdAt = new Date(parseInt(timestamp, 16) * 1000);
+
+    if (createdAt.toLocaleDateString() === (new Date()).toLocaleDateString()) {
+      subject = 'Your first tweet suggestions are ready';
+    }
+    
+    message = '<strong>Hurray, a new set of tweet suggestions are baked and ready to go out!</strong>' +
+              '<br><br>' +
+              'Hi,' +
+              '<br><br>' +
+              'You requested tweet suggestions for the topic <strong>' + tweet4me.topics.join(', ') + '</strong>.' +
+              '<br><br>' +
+              
+              '<a href="http://www.buzzr.io/tweet4me/feed?user=' + user + '">'+
+              'Click here to go to your Buzzr feed to review and send your tweets.' +
+              '</a>'+
+              
+              '<br><br>' +
+              'Thanks for tweeting with Buzzr,' +
+              '<br>' +
+              'Love,' +
+              '<br>' +
+              'Buzzr Team'+
+              '<br>' +
+              '<br>' +
+              'PS: We read all our email, simply hit reply and tell us what\'s on your mind!' +
+              '<br>' +
+              'PPS: If you would like to unsubscribe from this service hit reply and let us know.';
+
     sendgrid.send({
       to: [user],
       from: 'tweet4me@buzzr.io',
+      bcc: 'admin@buzzr.io',
       subject: subject,
       html: message
     }, function(err, json) {
