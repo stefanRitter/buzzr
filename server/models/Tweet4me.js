@@ -42,44 +42,44 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  collection.forEach(function(t4m) {
+  /*collection.forEach(function(t4m) {
     if (t4m.user === 'sophielapere@hotmail.com') {
       t4m.remove();
     }
-  });
-  
-  Tweet4me.create({
-    user: 'galilearodrigue123@gmail.com',
-    topics: ['one direction', 'justin beiber', 'janoskians'],
-    tweets: []
-  });
-
-  Tweet4me.create({
-    user: 'akiraism11@icloud.com',
-    topics: ['modeling', 'japanese', 'random tweets'],
-    tweets: []
-  });
-
-  Tweet4me.create({
-    user: 'pee@poopmail.com',
-    topics: ['odd Future'],
-    tweets: []
-  });
-
-  Tweet4me.create({
-    user: 'efrias8900@gmail.com',
-    topics: ['change'],
-    tweets: []
-  });
-
-  Tweet4me.create({
-    user: 'reina.kool@hotmail.com',
-    tweets: [],
-    topics: ['justin bieber', 'love', 'happiness', 'friends'],
-    plan: 'enterprise'
-  });
+  });*/
 
   if (collection.length === 0) {
+    Tweet4me.create({
+      user: 'galilearodrigue123@gmail.com',
+      topics: ['one direction', 'justin beiber', 'janoskians'],
+      tweets: []
+    });
+
+    Tweet4me.create({
+      user: 'akiraism11@icloud.com',
+      topics: ['modeling', 'japanese', 'random tweets'],
+      tweets: []
+    });
+
+    Tweet4me.create({
+      user: 'pee@poopmail.com',
+      topics: ['odd Future'],
+      tweets: []
+    });
+
+    Tweet4me.create({
+      user: 'efrias8900@gmail.com',
+      topics: ['change'],
+      tweets: []
+    });
+
+    Tweet4me.create({
+      user: 'reina.kool@hotmail.com',
+      tweets: [],
+      topics: ['justin bieber', 'love', 'happiness', 'friends'],
+      plan: 'enterprise'
+    });
+
     Tweet4me.create({
       user: 'stefan@stefanritter.com',
       topics: ['HTML5', 'javascript', 'node.js', 'angular.js'],
