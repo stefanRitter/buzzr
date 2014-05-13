@@ -49,7 +49,6 @@ module.exports = function (app) {
   app.post('/api/feedback',               feedback.createFeedback);
   app.post('/tweet4me',                   feedback.tweet4me);
   app.get( '/api/tweet4me/:id',           tweet4me.getByUser);
-  app.post('/api/tweet4me/:id/addTweet',  tweet4me.addTweet);
   app.post('/api/tweet4me/:id/mark',      tweet4me.markTweet);
 
   // AUTH
@@ -60,6 +59,7 @@ module.exports = function (app) {
   app.get( '/auth/buffer',            auth.authenticateBuffer);
   app.get( '/auth/buffer/callback',   auth.bufferCallback);
   app.post('/logout',                 auth.logout);
+  app.get( '/logout',                 auth.logout);
 
   // ADMIN
   app.get('/admin/*',        auth.requiresRole('admin'), admin.get);
@@ -67,6 +67,9 @@ module.exports = function (app) {
   app.get('/api/buzzrs',     auth.requiresRole('admin'), buzzrs.getAdminList);
   app.put('/api/buzzrs/:id', auth.requiresRole('admin'), buzzrs.putAdmin);
   app.get('/api/errors',     auth.requiresRole('admin'), admin.getErrors);
+
+  app.post('/api/tweet4me/:id/addTweet',  auth.requiresRole('admin'), tweet4me.addTweet);
+  app.post('/api/tweet4me/:id/sendEmail', auth.requiresRole('admin'), tweet4me.sendEmail);
   
   // 404
   app.all('/api/*', function (req, res) { res.send(404); });

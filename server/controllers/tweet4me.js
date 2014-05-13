@@ -2,6 +2,11 @@
 
 var Tweet4me = require('mongoose').model('Tweet4me');
 
+var sendgrid  = require('sendgrid')(
+  process.env.SENDGRID_USERNAME,
+  process.env.SENDGRID_PASSWORD
+);
+
 exports.getByUser = function(req, res) {
   var user = req.params.id; //.toLowerCase().trim();
 
@@ -57,3 +62,34 @@ exports.markTweet = function(req, res) {
   });
 };
 
+exports.sendEmail = function(req, res) {
+  var user = req.params.id,
+      subject = 'You have new Tweet4Me suggestions!',
+      message = '',
+      d = new Date();
+
+  if (d.getDay() === 1) {
+    subject = 'Happy Monday: start the week with new Tweet4Me suggestions!';
+  } else if (d.getDay() === 5) {
+    subject = 'Your TGIF Tweets are ready!';
+  }
+
+  Tweet4me.findOne({user: user}).exec(function(err, tweet4me) {
+    if (err) { return res.send(500); }
+    if (!tweet4me) { return res.send(500); }
+  
+    sendgrid.send({
+      to: [user],
+      from: 'tweet4me@buzzr.io',
+      subject: subject,
+      html: message
+    }, function(err, json) {
+      if (err) {
+        console.error(err);
+        return res.send(500);
+      }
+      console.log(json);
+      res.send(200);
+    });
+  });
+};
