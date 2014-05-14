@@ -20,10 +20,12 @@ module.exports = function (app) {
   app.get('/terms',   pages('terms'));
   app.get('/search',  pages('main'));
 
-  app.get('/tweet4me',          pages('tweet4me'));
-  app.get('/tweet4me/join',     pages('tweet4meJoin'));
-  app.get('/tweet4me/feed',     pages('tweet4meFeed'));
-  app.get('/tweet4me/pricing',  pages('tweet4mePricing'));
+  app.get('/tweet4me',                  pages('tweet4me'));
+  app.get('/tweet4me/join-startup',     pages('tweet4meJoin-startup'));
+  app.get('/tweet4me/join-business',    pages('tweet4meJoin-business'));
+  app.get('/tweet4me/join-enterprise',  pages('tweet4meJoin-enterprise'));
+  app.get('/tweet4me/feed',             pages('tweet4meFeed'));
+  app.get('/tweet4me/pricing',          pages('tweet4mePricing'));
 
   app.get('/buffer',          pages('buffer'));
   app.get('/buffer/failure',  pages('buffer'));

@@ -1,24 +1,16 @@
 1. delete tweets in admin
-2. 
-3. 
 4. user able to change the topic
 
 
-4. create an About & Contact page
-5. update homepage to new pitch (a la liz)
-6. remove video from homepage - replace with origin old image
+1. call Twitter API repeatedly
 
+add conversion tracking
 
+higher ad rank
 
 
 2. Buzzr <3 Buffer
+
 3. target buffer users
-
-Buzzr loves buffer:
-/buffer 
-/buffer/settings
-
-10$ for adding 3 buffers per day 
-
 
 > setup google webmaster tools & sitemap

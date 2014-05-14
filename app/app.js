@@ -20,10 +20,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/join',      {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
   
   $routeProvider
-    .when('/tweet4me',          {templateUrl: '/partials/tweet4me/home',      controller: 'appTweet4meCtrl'})
-    .when('/tweet4me/join',     {templateUrl: '/partials/tweet4me/join',      controller: 'appTweet4meJoinCtrl'})
-    .when('/tweet4me/feed',     {templateUrl: '/partials/tweet4me/main',      controller: 'appTweet4meFeedCtrl'})
-    .when('/tweet4me/pricing',  {templateUrl: '/partials/tweet4me/pricing',   controller: 'appTweet4meCtrl'});
+    .when('/tweet4me',                  {templateUrl: '/partials/tweet4me/home',            controller: 'appTweet4meCtrl'})
+    .when('/tweet4me/join-enterprise',  {templateUrl: '/partials/tweet4me/join-enterprise', controller: 'appTweet4meJoinCtrl'})
+    .when('/tweet4me/join-business',    {templateUrl: '/partials/tweet4me/join-business',   controller: 'appTweet4meJoinCtrl'})
+    .when('/tweet4me/join-startup',     {templateUrl: '/partials/tweet4me/join-startup',    controller: 'appTweet4meJoinCtrl'})
+    .when('/tweet4me/feed',             {templateUrl: '/partials/tweet4me/main',            controller: 'appTweet4meFeedCtrl'})
+    .when('/tweet4me/pricing',          {templateUrl: '/partials/tweet4me/pricing',         controller: 'appTweet4meCtrl'});
 
   $routeProvider
     .when('/buffer',            {templateUrl: '/partials/buffer/home',      controller: 'appBufferCtrl'})
