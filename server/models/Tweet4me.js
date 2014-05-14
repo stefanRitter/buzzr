@@ -47,6 +47,11 @@ Tweet4me.find({}).exec(function(err, collection) {
       t4m.remove();
     }
   });*/
+  Tweet4me.create({
+    user: 'vinu@myportableworld.com',
+    topics: ['android', 'iphone', 'windows phone', 'hacking', 'security'],
+    tweets: []
+  });
 
   if (collection.length === 0) {
     Tweet4me.create({
