@@ -32,9 +32,6 @@ module.exports = function (app) {
 
   app.get('/account/readlater', pages('main'));
   app.get('/account/settings',  pages('main'));
-
-  app.get('/:id', pages('main'));
-
   
   // VIEW PARTIALS
   app.get('/partials/*', function (req, res) {
@@ -60,6 +57,9 @@ module.exports = function (app) {
   app.get( '/auth/buffer/callback',   auth.bufferCallback);
   app.post('/logout',                 auth.logout);
   app.get( '/logout',                 auth.logout);
+  
+  // SEARCH
+  app.get('/:id', pages('main'));
 
   // ADMIN
   app.get('/admin/*',        auth.requiresRole('admin'), admin.get);

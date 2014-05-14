@@ -40,6 +40,6 @@ angular.module('app').controller('appPagesCtrl', function ($scope, $http, $locat
   };
 
   $scope.toggleVideo = function() {
-    $scope.showVideo = !$scope.showVideo;
+    //$scope.showVideo = !$scope.showVideo;
   };
 });
