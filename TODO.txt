@@ -2,15 +2,15 @@
 4. user able to change the topic
 
 
+
+5. add contact page for ad rank
+5. setup google webmaster tools & sitemap
+> https://support.google.com/adwords/answer/2404197
+
+
 1. call Twitter API repeatedly
-
-add conversion tracking
-
-higher ad rank
 
 
 2. Buzzr <3 Buffer
 
 3. target buffer users
-
-> setup google webmaster tools & sitemap
