@@ -43,7 +43,7 @@ Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
   collection.forEach(function(t4m) {
-    if (t4m.user === 'maxfaulkner38@gmail.co.uk') {
+    if (t4m.user === 'pee@poopmail.com') {
       t4m.remove();
     }
   });
