@@ -14,7 +14,7 @@ exports.updateBuffer = function (req, res) {
 // called from Buffer login
 exports.findOrCreate = function(userData, done) {
   var newUser = {};
-  
+
   User.findOne({email: userData.email}).exec(function (err, foundUser) {
     if (err) { return done(err, null); }
     if (foundUser) { return done(null, foundUser); }
@@ -22,8 +22,7 @@ exports.findOrCreate = function(userData, done) {
     newUser.buffer = {
       token: userData.token,
       id: userData.id,
-      timezone: userData.timezone,
-      bufferPlan: userData.bufferPlan
+      timezone: userData.timezone
     };
     
     newUser.name = userData.name;

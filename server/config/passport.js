@@ -52,10 +52,9 @@ module.exports = function () {
       var user = {
         token: token,
         id: profile._json.id,
-        timezone: profile._json.timezone,
         name: profile._json.name,
-        bufferPlan: profile._json.plan,
-        email: profile._json.secret_email
+        timezone: profile._json.timezone,
+        email: profile._json.id + '@buffer.com'
       };
 
       buffers.findOrCreate(user, function(err, user) {

@@ -31,7 +31,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/buffer',            {templateUrl: '/partials/buffer/home',      controller: 'appBufferCtrl'})
     .when('/buffer/pricing',    {templateUrl: '/partials/buffer/pricing',   controller: 'appBufferCtrl'})
     .when('/buffer/failure',    {templateUrl: '/partials/buffer/failure',   controller: 'appBufferCtrl'})
-    .when('/buffer/settings',   {templateUrl: '/partials/buffer/settings',  controller: 'appBufferCtrl'});
+    .when('/buffer/settings',   {templateUrl: '/partials/buffer/settings',  controller: 'appBufferSettingsCtrl'});
 
   $routeProvider
     .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})

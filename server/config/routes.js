@@ -47,6 +47,7 @@ module.exports = function (app) {
   app.put( '/api/users',                  auth.authorize, users.updateUser);
   app.post('/api/feedback',               feedback.createFeedback);
   app.post('/tweet4me',                   feedback.tweet4me);
+  app.post('/buffer',                     feedback.buffer);
   app.get( '/api/tweet4me/:id',           tweet4me.getByUser);
   app.post('/api/tweet4me/:id/mark',      tweet4me.markTweet);
 

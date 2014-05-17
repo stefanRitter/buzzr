@@ -54,8 +54,6 @@ userSchema = mongoose.Schema({
     token:        String,
     id:           String,
     timezone:     String,
-    bufferPlan:   String,
-    email:        String,
     topics:      [String]
   }
 });

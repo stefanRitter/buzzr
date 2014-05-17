@@ -1,7 +1,7 @@
 .tweet4me-paradise
   include ../common/buzzr-logo
 
-  h3.margin-top-big Buffer authorized &#10004;
+  h2.margin-top(ng-hide="success") &#10004; Buffer authorized
 
 form.form.tweet4me-form(name="signupForm"  ng-hide="success")
   h2.margin-top-sm.bold Let's go:
@@ -13,6 +13,7 @@ form.form.tweet4me-form(name="signupForm"  ng-hide="success")
   .form-group.padding-top
     label.medium Your Email:
     input(name="email", type="email", placeholder="Your Email", ng-model="email", required, style="width: 100%")
+    p.italic.left We will send you your access codes to this email.
   
   .form-group.notifier.ng-hide.red(ng-show="error")
     .error {{error}}
@@ -25,5 +26,5 @@ form.form.tweet4me-form(name="signupForm"  ng-hide="success")
         img(src="/img/heart.svg")
 
 .center.form.margin-top-big.ng-hide(ng-show="success")
-  button.button-green.big &#10004; Your Tweet4me is setup
-  p.margin-top-big You will soon receive your first set of tweet suggestions!
+  button.button-green.big &#10004; Your Buffer is setup
+  p.margin-top-big You will soon see a fresh set of content in your Buffer.

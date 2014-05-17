@@ -48,3 +48,31 @@ exports.tweet4me = function(req, res) {
           'Happy tweeting, <br>the Buzzr Team'
   });
 };
+
+exports.buffer = function(req, res) {
+  var t4m = req.body;
+  console.log(t4m);
+
+  sendgrid.send({
+    to: ['stefan@stefanritter.com'],
+    from: t4m.email,
+    subject: 'NEW BUZZR TWEET4ME',
+    text: t4m.topic + ' for ' + t4m.email + ' with plan: ' + t4m.plan,
+  }, function(err, json) {
+    if (err) {
+      res.json({error: err.toString()});
+      return console.error(err);
+    }
+    console.log(json);
+    res.json({success: true});
+  });
+
+  sendgrid.send({
+    to: [t4m.email],
+    from: 'admin@buzzr.io',
+    subject: 'Welcome to Buzzr for Buffer!',
+    html: 'Hi there, <br><br>and thanks for signing up for Buzzr for Buffer!<br><br>In just a few hours you will see your first content suggestions appear in your Buffer!<br><br>'+
+          'If you have any questions, or this email was sent to you by mistake, please just hit reply and let us know!<br>'+
+          'Happy buffering, <br>the Buzzr Team'
+  });
+};
