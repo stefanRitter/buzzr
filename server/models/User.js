@@ -68,8 +68,7 @@ userSchema.methods.safe = function() {
     buzzrs: this.buzzrs,
     readlater: this.readlater,
     activities: this.activities,
-    bufferUser: !!this.buffer,
-    bufferMail: !!this.buffer ? this.buffer.email : false
+    bufferUser: !!this.buffer
   };
 };
 

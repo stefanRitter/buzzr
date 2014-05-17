@@ -1048,7 +1048,7 @@ angular.module('app').factory('appProcessLinks', function (appIdentity) {
     }
   };
 });
-angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile, appAuth) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -1058,11 +1058,15 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
       $location.path('/' + $scope.searchText.trim());
     }
   };
-
+  
   if (appIdentity.isAuthenticated()) {
     if (!appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)) {
       // redirect if email invalid (twitter logins)
       $location.path('account/settings');
+    }
+    if (appIdentity.currentUser.bufferUser) {
+      appAuth.logoutUser();
+      $location.path('/');
     }
   }
 
