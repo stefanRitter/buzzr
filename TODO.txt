@@ -20,8 +20,6 @@
 
 6. show status in feed and prompt to upgrade
 
+6. send expired email!
+
 6. see if we can get the first paying costumers
-
-
-
-
