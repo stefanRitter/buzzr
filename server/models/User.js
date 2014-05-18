@@ -95,7 +95,7 @@ User = mongoose.model('User', userSchema);
 
 // seed users
 exports.createDefaultUsers = function() {
-  User.find({}).exec(function(err, collection) {
+  /*User.find({}).exec(function(err, collection) {
     if (collection.length === 0) {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'Buzzr2014');
@@ -115,5 +115,5 @@ exports.createDefaultUsers = function() {
         obj.remove();
       });
     }
-  });
+  });*/
 };
