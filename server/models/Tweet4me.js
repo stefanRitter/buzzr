@@ -14,6 +14,7 @@ tweet4meSchema = new Schema({
   lastViewed: Date,
 
   plan: {type: String, default: 'startup'},
+  status: {type: String, default: 'trial'},
   
   tweets:  [{
     topic:   String,
@@ -42,11 +43,24 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  /*collection.forEach(function(t4m) {
-    if (t4m.user === 'pee@poopmail.com') {
-      t4m.remove();
+  collection.forEach(function(t4m) {
+    if (t4m.user === 'atmb24601@gmail.com') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'anslem92@live.co.uk') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'stevelavery118@mail.com') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'rich_wyn2001@yahoo.co.uk') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'vinu@myportableworld.com') {
+      t4m.status = 'expired';
+      t4m.save();
     }
-  });*/
+  });
 
   if (collection.length === 0) {
     Tweet4me.create({
