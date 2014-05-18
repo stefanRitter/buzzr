@@ -116,7 +116,7 @@ exports.sendEmail = function(req, res) {
                 '<br><br>' +
                 '<a href="https://www.buzzr.io/tweet4me/upgrade">ACTIVATE your paid subscription plan now to continue tweet4me with Buzzr.</a>' +
                 '<br><br>' +
-                'Your account will be fully active again right after you complete the sign-up process. And a new set of fresh tweets is already waiting for!' +
+                'Your account will be fully active again right after you complete the sign-up process. And a new set of fresh tweets is already waiting for you!' +
                 '<br><br>' +
                 '<strong>Need help?</strong>' +
                 '<br>' +
