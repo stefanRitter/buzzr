@@ -1,0 +1,48 @@
+.center(itemprop="mainContentOfPage")
+  include ../common/buzzr-logo
+
+  //-h1.margin-top.center.bold Pricing
+  h3.big.center.margin-top-big Choose a plan:
+  .center.margin-top
+    .tweet4me-price
+      h3 Startup
+      p.bold $10 / MONTH
+      p 3 tweets per business day
+      p -
+      p -
+      p Premium Services
+      p -
+      span.button-green(ng-click="openCheckout('startup')") UPGRADE NOW &gt;
+
+    .tweet4me-price
+      h3 Business
+      p.bold $49 / MONTH
+      p 5 tweets per business day
+      p 2 tweets on weekends
+      p -
+      p Premium Services
+      p -
+      span.button-green(ng-click="openCheckout('business')") UPGRADE NOW &gt;
+
+    .tweet4me-price
+      h3 Enterprise Plus
+      p.bold $99 / MONTH
+      p 10 tweets 24/7
+      p weekends &amp; holidays
+      p Real-time Content
+      p Premium Services
+      p Phone Support
+      span.button-green(ng-click="openCheckout('enterprise')") UPGRADE NOW &gt;
+
+  p.center.margin-top-big
+    span.underline.clickable(ng-click="toggleFeedback()") Questions? Get in touch.
+  
+  .margin-top-big
+    .inline-block
+      .clear-both.padding-top.left
+        .tweet4me-check &#10004;
+        .tweet4me-check-text
+          strong Quit any time - no questions asked!
+
+.header-spacer.margin-top
+include ../common/footer

@@ -26,6 +26,7 @@ module.exports = function (app) {
   app.get('/tweet4me/join-enterprise',  pages('tweet4meJoin-enterprise'));
   app.get('/tweet4me/feed',             pages('tweet4meFeed'));
   app.get('/tweet4me/pricing',          pages('tweet4mePricing'));
+  app.get('/tweet4me/upgrade',          pages('tweet4meUpgrade'));
 
   app.get('/buffer',          pages('buffer'));
   app.get('/buffer/failure',  pages('buffer'));
