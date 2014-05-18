@@ -11,7 +11,7 @@ angular.module('app').controller('appTweet4meUpgradeCtrl', function ($scope, $ht
   $scope.plan = '';
   
   var handler = window.StripeCheckout.configure({
-    key: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG',
+    key: 'pk_test_A92gZzXMijuUIYouO3UXkIyB', //'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG',
     image: '/img/icon.png',
     token: function(token) {
       stripeToken = token;
@@ -20,7 +20,7 @@ angular.module('app').controller('appTweet4meUpgradeCtrl', function ($scope, $ht
         .post('/stripe', {token: token, plan: $scope.plan})
         .then(function(res) {
           if (res.data.success) {
-            
+            window.alert('success');
           } else {
             // card declined
             window.alert(res.data.reason);

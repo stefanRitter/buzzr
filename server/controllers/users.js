@@ -3,7 +3,6 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     encrypt = require('../utils/encryption.js'),
-    sendMail = require('../utils/sendMail.js'),
     _ = require('lodash');
 
 
@@ -31,7 +30,6 @@ exports.createUser = function (req, res, next) {
       return res.send({reason: err.toString()});
     }
 
-    sendMail.send('Hi here, I just created a New User on buzzr.io: ' + userBody.email);
     req.logIn(user, function (err) {
       if (err) { return next(err); }
       res.send();

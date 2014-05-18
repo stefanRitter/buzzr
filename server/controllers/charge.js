@@ -3,6 +3,8 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 
 var stripe = require('stripe')(config.stripeSecret);
 
+var sendMail = require('../utils/sendMail.js');
+
 module.exports = function(req, res, next) {
   'use strict';
   var stripeToken = req.body.token,
@@ -16,14 +18,19 @@ module.exports = function(req, res, next) {
     console.log(customer);
     if(err) {
       console.log('CHARGE ERROR: ', err);
+      
+      sendMail.send('I just failed to create a New STRIPE plan: ' +
+        stripeToken.email + ' ' + plan + ' ' + err.toString());
+      
       if (err.type === 'StripeCardError') {
         return res.json({success: false, reason: 'Sorry, this card has been declined.'});
       }
       next(err);
     }
     else {
-      res.json({success: true});
       console.log('CHARGE: Successful plan sent to Stripe!', customer);
+      res.json({success: true});
+      sendMail.send('I just created a New STRIPE plan: ' + stripeToken.email + ' ' + plan);
     }
   });
 };
