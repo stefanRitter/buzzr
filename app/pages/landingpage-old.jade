@@ -1,0 +1,55 @@
+//-
+  .filters(style="top: 9px")
+    a.filter-input(href="/login" style="padding: 4px 6px; letter-spacing: 1px") Login
+
+.pages-container(itemprop="mainContentOfPage" style="max-width: 900px")
+  include ../common/buzzr-logo
+
+  .center.big
+    h1.home-pitch
+      | Get the newest, most relevant content on your topic.
+      //-| The smarter way to stay up to date: in only 20 seconds find out what's buzzing in your field. 
+      
+    a(href="/join")
+      img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview" ng-click="toggleVideo()")
+    .blackout-video.ng-hide(ng-show="showVideo" ng-click="toggleVideo()")
+      //-iframe(src="//www.youtube.com/embed/cjQOxiCo2bY?rel=0" frameborder="0" allowfullscreen)
+
+    .home-feature.margin-top-big.padding-left
+      span.big.green &#10004; 
+      strong Save Time
+      .home-indent
+        | Content that matters
+        br
+        | right now.
+    .home-feature
+      span.big.green &#10004; 
+      strong Discover Gems
+      .home-indent
+        |  What the community
+        br
+        | is talking about.
+    .home-feature
+      span.big.green &#10004; 
+      strong Read Later
+      .home-indent
+        | Save everything
+        br
+        | you find.
+  
+  .center
+    //-p.margin-top
+      | Get Buzzr for 
+      strong.big only $2 a month
+      | , and try the first 
+      strong.medium 14 days for free
+      br
+    p.margin-top
+      a.button-green.big(href="/join") Join our private BETA today
+    //-p.margin-top
+      strong.medium We won't charge your card unless you stay!
+      br
+      | Quit any time with our "no questions asked" policy.
+
+.header-spacer
+include ../common/footer
