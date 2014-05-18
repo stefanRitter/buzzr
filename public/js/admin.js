@@ -1339,11 +1339,11 @@ angular.module('app').controller('appTweet4meUpgradeCtrl', function ($scope, $ht
       'enterprise': 99*100
     };
 
-
+  $scope.success = false;
   $scope.plan = '';
   
   var handler = window.StripeCheckout.configure({
-    key: 'pk_test_A92gZzXMijuUIYouO3UXkIyB', //'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG',
+    key: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG', //'pk_test_A92gZzXMijuUIYouO3UXkIyB'
     image: '/img/icon.png',
     token: function(token) {
       stripeToken = token;
@@ -1352,9 +1352,8 @@ angular.module('app').controller('appTweet4meUpgradeCtrl', function ($scope, $ht
         .post('/stripe', {token: token, plan: $scope.plan})
         .then(function(res) {
           if (res.data.success) {
-            window.alert('success');
+            $scope.success = true;
           } else {
-            // card declined
             window.alert(res.data.reason);
           }
         }, function() {
