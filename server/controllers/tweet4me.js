@@ -99,14 +99,31 @@ exports.sendEmail = function(req, res) {
               '<br><br>' +
               'Thanks for tweeting with Buzzr,' +
               '<br>' +
-              'Love,' +
-              '<br>' +
-              'Buzzr Team'+
+              'Your Team at Buzzr :)'+
               '<br>' +
               '<br>' +
               'PS: We read all our email, simply hit reply and tell us what\'s on your mind!' +
               '<br>' +
               'PPS: If you would like to unsubscribe from this service hit reply and let us know.';
+
+    if (tweet4me.status === 'expired') {
+      subject = 'Your free trial has expired';
+      message = '<strong>Your free trial has expired act now!</strong>' +
+                '<br><br>' +
+                'Hi,' +
+                '<br><br>' +
+                'Your free trial period is over and you need to activate your paid subscription plan to continue getting tweet suggestions from Buzzr.' +
+                '<br><br>' +
+                '<a href="https://www.buzzr.io/tweet4me/upgrade">ACTIVATE your paid subscription plan now to continue tweet4me with Buzzr.</a>' +
+                '<br><br>' +
+                'Your account will be fully active again right after you complete the sign-up process. And a new set of fresh tweets is already waiting for!' +
+                '<br><br>' +
+                '<strong>Need help?</strong>' +
+                '<br>' +
+                'If you have any questions about activating your paid plan, future payments or billing cycles - get in touch with us by replying to this email.' +
+                '<br><br>' +
+                'Your Team at Buzzr :)';
+    }
 
     sendgrid.send({
       to: [user],

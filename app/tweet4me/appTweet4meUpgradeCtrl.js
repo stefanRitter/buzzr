@@ -21,6 +21,7 @@ angular.module('app').controller('appTweet4meUpgradeCtrl', function ($scope, $ht
         .then(function(res) {
           if (res.data.success) {
             $scope.success = true;
+            $scope.email = token.email;
           } else {
             window.alert(res.data.reason);
           }

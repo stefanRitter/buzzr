@@ -59,10 +59,35 @@ Tweet4me.find({}).exec(function(err, collection) {
     } else if (t4m.user === 'vinu@myportableworld.com') {
       t4m.status = 'expired';
       t4m.save();
+    } else if (t4m.user === 'stefan@stefanritter.com') {
+      t4m.status = 'expired';
+      t4m.save();
     }
   });
 
   if (collection.length === 0) {
+    Tweet4me.create({
+      user: 'stefan@stefanritter.com',
+      topics: ['forever Living Products', 'aloe vera', 'be your own boss', 'mlm', 'work from home', 'living the dream'],
+      status: 'expired',
+      tweets: [{
+        topic: 'aloe vera',
+        url: 'http://wp.me/pE94w-2ih',
+        text: 'Benefits of Aloe Vera Juice http://wp.me/pE94w-2ih via @wordpressdotcom',
+        added: new Date('May 7, 2014')
+      }, {
+        topic: 'work from home',
+        url: 'http://www.buzzfeed.com/adamdavis/thoughts-you-always-have-when-you-work-from-home',
+        text: '71 Thoughts You Have When You Work From Home http://www.buzzfeed.com/adamdavis/thoughts-you-always-have-when-you-work-from-home via @amdhit @buzzfeed',
+        added: new Date('May 7, 2014')
+      }, {
+        topic: 'living the dream',
+        url: 'http://www.projecteve.com/living-the-dream/',
+        text: 'Living the dream http://www.projecteve.com/living-the-dream/ via @projecteve1',
+        added: new Date('May 7, 2014')
+      }]
+    });
+
     Tweet4me.create({
       user: 'vinu@myportableworld.com',
       topics: ['android', 'iphone', 'windows phone', 'hacking', 'security'],
@@ -139,27 +164,6 @@ Tweet4me.find({}).exec(function(err, collection) {
       user: 'essensaemj@icloud.com',
       topics: ['marijuana'],
       tweets: []
-    });
-    
-    Tweet4me.create({
-      user: 'jenbolan@icloud.com',
-      topics: ['forever Living Products', 'aloe vera', 'be your own boss', 'mlm', 'work from home', 'living the dream'],
-      tweets: [{
-        topic: 'aloe vera',
-        url: 'http://wp.me/pE94w-2ih',
-        text: 'Benefits of Aloe Vera Juice http://wp.me/pE94w-2ih via @wordpressdotcom',
-        added: new Date('May 7, 2014')
-      }, {
-        topic: 'work from home',
-        url: 'http://www.buzzfeed.com/adamdavis/thoughts-you-always-have-when-you-work-from-home',
-        text: '71 Thoughts You Have When You Work From Home http://www.buzzfeed.com/adamdavis/thoughts-you-always-have-when-you-work-from-home via @amdhit @buzzfeed',
-        added: new Date('May 7, 2014')
-      }, {
-        topic: 'living the dream',
-        url: 'http://www.projecteve.com/living-the-dream/',
-        text: 'Living the dream http://www.projecteve.com/living-the-dream/ via @projecteve1',
-        added: new Date('May 7, 2014')
-      }]
     });
 
     Tweet4me.create({
