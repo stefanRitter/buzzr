@@ -15,7 +15,7 @@ exports.getByUser = function(req, res) {
     if (!tweet4me) { return res.json({tweets: []}); }
 
     tweet4me.viewed();
-    res.json({tweets: tweet4me.tweets});
+    res.json({tweets: tweet4me.tweets, status: tweet4me.status});
   });
 };
 

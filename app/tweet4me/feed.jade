@@ -1,7 +1,15 @@
 .center.margin-top-big.ng-hide(ng-show="ifStatus('feeding')")
+  
+  .ng-hide(ng-show="t4m.status == 'expired'")
+    h2.margin Your trial has expired
+    a.medium.button-green.buffer-btn(href="/tweet4me/upgrade")
+      | UPGRADE NOW
+      span.action-readlater.tweet4me-heart
+        img(src="/img/heart.svg")
+    .padding.margin-top-big
+
+  //div(ng-hide="t4m.status == 'expired'")
   h2.margin Your Tweet4Me Suggestions:
-  
-  
   
   .feed-container(ng-repeat="date in dates")
     h3.medium.margin-top-big.center {{date}}
@@ -17,5 +25,5 @@
             a.action-tweet(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}"
               ng-class="{'saved': tweet.tweeted}" ng-click="mark('tweeted', tweet)")
               img(src="/img/twitter.svg")
-  
+
   .header-spacer
