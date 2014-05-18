@@ -1,9 +1,9 @@
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
-    config = require('../config/config')[env];
+    config = require('../config/config')[env],
+    stripe = require('stripe')(config.stripeSecret),
+    sendMail = require('../utils/sendMail.js'),
+    Tweet4me = require('mongoose').model('Tweet4me');
 
-var stripe = require('stripe')(config.stripeSecret);
-
-var sendMail = require('../utils/sendMail.js');
 
 module.exports = function(req, res, next) {
   'use strict';
@@ -31,6 +31,14 @@ module.exports = function(req, res, next) {
       console.log('CHARGE: Successful plan sent to Stripe!', customer);
       res.json({success: true});
       sendMail.send('I just created a New STRIPE plan: ' + stripeToken.email + ' ' + plan);
+
+      Tweet4me.findOne({user: stripeToken.email}, function(err, t4m) {
+        if (t4m) {
+          t4m.status = 'active';
+          t4m.plan = plan;
+          t4m.save();
+        }
+      });
     }
   });
 };

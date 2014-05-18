@@ -18,7 +18,8 @@
 
 
 
-6. SETUP TWEET4ME UPGRADE > PAY SITE
+6. show status in feed and prompt to upgrade
+
 6. see if we can get the first paying costumers
 
 
