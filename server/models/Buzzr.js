@@ -153,8 +153,3 @@ buzzrSchema.methods.updatePassiveLink = function(data, pI, cb) {
 };
 
 Buzzr = mongoose.model('Buzzr', buzzrSchema);
-Buzzr.find({}).exec(function(err, collection) {
-  collection.forEach(function(bzr) {
-    bzr.remove();
-  });
-});
