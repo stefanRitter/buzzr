@@ -118,8 +118,8 @@ buzzrSchema.methods.pushNewLink = function(data, cb) {
   if (this.activeLinks.length > 10) {
     this.activeLinks = this.activeLinks.slice(Math.max(this.activeLinks.length - 10, 1));
   }
-  if (this.passiveLinks.length > 1000) {
-    this.passiveLinks = this.passiveLinks.slice(Math.max(this.passiveLinks.length - 1000, 1));
+  if (this.passiveLinks.length > 2000) {
+    this.passiveLinks = this.passiveLinks.slice(Math.max(this.passiveLinks.length - 2000, 1));
   }
   this.saveCb(cb);
 };
@@ -153,3 +153,8 @@ buzzrSchema.methods.updatePassiveLink = function(data, pI, cb) {
 };
 
 Buzzr = mongoose.model('Buzzr', buzzrSchema);
+Buzzr.find({}).exec(function(err, collection) {
+  collection.forEach(function(bzr) {
+    bzr.remove();
+  });
+});
