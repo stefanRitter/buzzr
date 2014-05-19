@@ -1,4 +1,4 @@
-angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile, appAuth) {
+angular.module('app').controller('appHomeCtrl', function ($scope, $location, $document, appIdentity, appSidebar, appIsMobile) {
   'use strict';
 
   $scope.identity = appIdentity;
@@ -9,7 +9,7 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     }
   };
   
-  if (appIdentity.isAuthenticated()) {
+  /*if (appIdentity.isAuthenticated()) {
     if (!appIdentity.currentUser.email.match(/^[\S]+@[\S]+\.[\S]+$/)) {
       // redirect if email invalid (twitter logins)
       $location.path('account/settings');
@@ -18,7 +18,7 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
       appAuth.logoutUser();
       $location.path('/');
     }
-  }
+  }*/
 
   // auto focus input on desktop
   if (!appIsMobile.any()) {
