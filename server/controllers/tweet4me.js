@@ -107,7 +107,7 @@ exports.sendEmail = function(req, res) {
               'PPS: If you would like to unsubscribe from this service hit reply and let us know.';
 
     if (tweet4me.status === 'expired') {
-      subject = 'Your free trial has expired';
+      subject = 'Your Tweet4me trial has expired';
       message = '<strong>Your free trial has expired act now!</strong>' +
                 '<br><br>' +
                 'Hi,' +
