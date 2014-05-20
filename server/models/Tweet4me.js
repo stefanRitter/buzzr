@@ -43,27 +43,28 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  /*collection.forEach(function(t4m) {
-    if (t4m.user === 'atmb24601@gmail.com') {
+  collection.forEach(function(t4m) {
+    if (t4m.user === 'reina.kool@hotmail.com') {
       t4m.status = 'expired';
       t4m.save();
-    } else if (t4m.user === 'anslem92@live.co.uk') {
+    } else if (t4m.user === 'skythecowRG31@gmail.com') {
       t4m.status = 'expired';
       t4m.save();
-    } else if (t4m.user === 'stevelavery118@mail.com') {
+    } else if (t4m.user === 'calebrobbins@att.net') {
       t4m.status = 'expired';
       t4m.save();
-    } else if (t4m.user === 'rich_wyn2001@yahoo.co.uk') {
-      t4m.status = 'expired';
-      t4m.save();
-    } else if (t4m.user === 'vinu@myportableworld.com') {
-      t4m.status = 'expired';
-      t4m.save();
-    } else if (t4m.user === 'stefan@stefanritter.com') {
+    } else if (t4m.user === 'akiraism11@icloud.com') {
       t4m.status = 'expired';
       t4m.save();
     }
-  });*/
+  });
+
+  Tweet4me.create({
+    user: 'itsumo_nemuidesu@yahoo.co.jp',
+    topics: ['fashion', 'modeling', 'models', 'japan', 'new york', 'occult', 'harajuku', 'guiseppe', 'london', 'grunge', 'horror', 'asylum', 'celebrities', 'vocaloid'],
+    plan: 'business',
+    tweets: []
+  });
 
   if (collection.length === 0) {
     Tweet4me.create({
