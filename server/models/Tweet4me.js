@@ -59,17 +59,17 @@ Tweet4me.find({}).exec(function(err, collection) {
     }
   });*/
 
-  Tweet4me.create({
-    user: 'wjsparky+buzzr@gmail.com',
-    topics: ['construction', 'estimating', 'quantity surveying']
-  });
-
   if (collection.length === 0) {
     Tweet4me.create({
       user: 'itsumo_nemuidesu@yahoo.co.jp',
       topics: ['fashion', 'modeling', 'models', 'japan', 'new york', 'occult', 'harajuku', 'guiseppe', 'london', 'grunge', 'horror', 'asylum', 'celebrities', 'vocaloid'],
       plan: 'business',
       tweets: []
+    });
+
+    Tweet4me.create({
+      user: 'wjsparky+buzzr@gmail.com',
+      topics: ['construction', 'estimating', 'quantity surveying']
     });
 
     Tweet4me.create({
