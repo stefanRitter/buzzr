@@ -59,6 +59,11 @@ Tweet4me.find({}).exec(function(err, collection) {
     }
   });*/
 
+  Tweet4me.create({
+    user: 'latoyaglenn@gmail.com',
+    topics: ['small business', 'home business', 'start up']
+  });
+
   if (collection.length === 0) {
     Tweet4me.create({
       user: 'itsumo_nemuidesu@yahoo.co.jp',
