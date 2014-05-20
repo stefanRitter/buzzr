@@ -49,7 +49,7 @@ exports.tweet4me = function(req, res) {
   });
 };
 
-exports.buffer = function(req, res) {
+exports.unsubscribe = function(req, res) {
   var t4m = req.body;
   console.log(t4m);
 

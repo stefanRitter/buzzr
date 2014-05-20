@@ -3,13 +3,9 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
-    BufferAppStrategy = require('passport-bufferapp').Strategy,
     mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    users = require('../controllers/users.js'),
-    buffers = require('../controllers/buffers.js'),
-    env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
-    bufferConfig = require('./config.js')[env].buffer;
+    users = require('../controllers/users.js');
 
 
 module.exports = function () {
@@ -37,27 +33,6 @@ module.exports = function () {
         profile: profile
       };
       users.findOrCreate(user, function(err, user) {
-        if (err) { return done(err); }
-        done(null, user);
-      });
-    }
-  ));
-
-  passport.use(new BufferAppStrategy({
-      clientID: bufferConfig.id,
-      clientSecret: bufferConfig.secret,
-      callbackURL: bufferConfig.callback
-    },
-    function(token, refreshToken, profile, done) {
-      var user = {
-        token: token,
-        id: profile._json.id,
-        name: profile._json.name,
-        timezone: profile._json.timezone,
-        email: profile._json.id + '@buffer.com'
-      };
-
-      buffers.findOrCreate(user, function(err, user) {
         if (err) { return done(err); }
         done(null, user);
       });

@@ -30,12 +30,6 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     .when('/tweet4me/upgrade',          {templateUrl: '/partials/tweet4me/upgrade',         controller: 'appTweet4meUpgradeCtrl'});
 
   $routeProvider
-    .when('/buffer',            {templateUrl: '/partials/buffer/home',      controller: 'appBufferCtrl'})
-    .when('/buffer/pricing',    {templateUrl: '/partials/buffer/pricing',   controller: 'appBufferCtrl'})
-    .when('/buffer/failure',    {templateUrl: '/partials/buffer/failure',   controller: 'appBufferCtrl'})
-    .when('/buffer/settings',   {templateUrl: '/partials/buffer/settings',  controller: 'appBufferSettingsCtrl'});
-
-  $routeProvider
     .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})
     .when('/:id',     {templateUrl: '/partials/main/main',  controller: 'appMainCtrl'})
     .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',

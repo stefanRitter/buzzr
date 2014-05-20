@@ -377,43 +377,7 @@ angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser)
   'use strict';
   
   $scope.users = AppUser.query();
-});angular.module('app').controller('appBufferCtrl', function ($scope, appFeedback) {
-  'use strict';
-
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-});
-angular.module('app').controller('appBufferSettingsCtrl', function ($scope, $http, $location, appIdentity) {
-  'use strict';
-
-  if (!appIdentity.isAuthenticated()) {
-    $location.path('/buffer/pricing');
-  }
-
-  $scope.signup = function() {
-    if (!$scope.email || !$scope.topic) {
-      $scope.success = false;
-      $scope.error = 'Make sure you filled out both email and topic';
-      return;
-    }
-
-    $scope.processing = true;
-    $http
-      .post('/buffer', {email: $scope.email, topic: $scope.topic, plan: appIdentity.currentUser.email})
-      .then(function(res) {
-        if (res.data.success) {
-          $scope.success = true;
-          $scope.error = false;
-        } else {
-          $scope.success = false;
-          $scope.error = res.data.error;
-          $scope.processing = false;
-        }
-      });
-  };
-});
-  /*
+});  /*
    * angular-loading-bar
    *
    * intercepts XHR requests and creates a loading bar.

@@ -48,14 +48,7 @@ userSchema = mongoose.Schema({
     title:      String,
     topic:      String,
     activated:  Date
-  }],
-  
-  buffer: {
-    token:        String,
-    id:           String,
-    timezone:     String,
-    topics:      [String]
-  }
+  }]
 });
 
 // remove sensitive data
@@ -67,8 +60,7 @@ userSchema.methods.safe = function() {
     roles: this.roles,
     buzzrs: this.buzzrs,
     readlater: this.readlater,
-    activities: this.activities,
-    bufferUser: !!this.buffer
+    activities: this.activities
   };
 };
 

@@ -19,7 +19,9 @@ module.exports = function (app) {
   app.get('/join',        auth.authorizeRedirect, pages('join'));
   app.get('/terms',       pages('terms'));
   app.get('/search',      pages('main'));
-  app.get('/unsubscribe', pages('unsubscribe'));
+  app.get('/unsubscribe', feedback.unsubscribe);
+
+  app.get('/buffer', auth.authorizeRedirect, pages('landingpage'));
 
   app.get('/tweet4me',                  pages('tweet4me'));
   app.get('/tweet4me/join-startup',     pages('tweet4meJoin-startup'));
@@ -28,11 +30,6 @@ module.exports = function (app) {
   app.get('/tweet4me/feed',             pages('tweet4meFeed'));
   app.get('/tweet4me/pricing',          pages('tweet4mePricing'));
   app.get('/tweet4me/upgrade',          pages('tweet4meUpgrade'));
-
-  app.get('/buffer',          pages('buffer'));
-  app.get('/buffer/failure',  pages('buffer'));
-  app.get('/buffer/settings', pages('bufferSettings'));
-  app.get('/buffer/pricing',  pages('bufferPricing'));
 
   app.get('/account/readlater', pages('main'));
   app.get('/account/settings',  pages('main'));
@@ -49,7 +46,6 @@ module.exports = function (app) {
   app.put( '/api/users',                  auth.authorize, users.updateUser);
   app.post('/api/feedback',               feedback.createFeedback);
   app.post('/tweet4me',                   feedback.tweet4me);
-  app.post('/buffer',                     feedback.buffer);
   app.get( '/api/tweet4me/:id',           tweet4me.getByUser);
   app.post('/api/tweet4me/:id/mark',      tweet4me.markTweet);
 
@@ -58,8 +54,6 @@ module.exports = function (app) {
   app.post('/api/users',              users.createUser);
   app.get( '/auth/twitter',           auth.authenticateTwitter);
   app.get( '/auth/twitter/callback',  auth.twitterCallback);
-  app.get( '/auth/buffer',            auth.authenticateBuffer);
-  app.get( '/auth/buffer/callback',   auth.bufferCallback);
   app.post('/logout',                 auth.logout);
   app.get( '/logout',                 auth.logout);
   

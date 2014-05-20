@@ -47,12 +47,6 @@ exports.twitterCallback = passport.authenticate('twitter', {
   failureRedirect: '/login'
 });
 
-exports.authenticateBuffer = passport.authenticate('bufferapp');
-exports.bufferCallback = passport.authenticate('bufferapp', {
-  successRedirect: '/buffer/settings',
-  failureRedirect: '/buffer/failure'
-});
-
 exports.logout = function(req, res) {
   req.logout();
   res.end();
