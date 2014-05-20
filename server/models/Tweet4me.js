@@ -59,6 +59,11 @@ Tweet4me.find({}).exec(function(err, collection) {
     }
   });*/
 
+  Tweet4me.create({
+    user: 'wjsparky+buzzr@gmail.com',
+    topics: ['construction', 'estimating', 'quantity surveying']
+  });
+
   if (collection.length === 0) {
     Tweet4me.create({
       user: 'itsumo_nemuidesu@yahoo.co.jp',
