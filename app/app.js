@@ -16,11 +16,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/',            {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'})
     .when('/terms',       {templateUrl: '/partials/pages/terms',          controller: 'appPagesCtrl'})
-    .when('/unsubscribe', {templateUrl: '/partials/account/unsubscribe',  controller: 'appUnsubscribeCtrl'})
     .when('/login',       {templateUrl: '/partials/account/login',        controller: 'appLoginCtrl'})
     .when('/join',        {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
   
   $routeProvider
+    .when('/unsubscribe/:id',           {templateUrl: '/partials/account/unsubscribe',      controller: 'appUnsubscribeCtrl'})
     .when('/tweet4me',                  {templateUrl: '/partials/tweet4me/home',            controller: 'appTweet4meCtrl'})
     .when('/tweet4me/join-enterprise',  {templateUrl: '/partials/tweet4me/join-enterprise', controller: 'appTweet4meJoinCtrl'})
     .when('/tweet4me/join-business',    {templateUrl: '/partials/tweet4me/join-business',   controller: 'appTweet4meJoinCtrl'})

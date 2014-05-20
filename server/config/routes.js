@@ -21,6 +21,8 @@ module.exports = function (app) {
   app.get('/search',      pages('main'));
   app.get('/unsubscribe', feedback.unsubscribe);
 
+  
+  app.get('/unsubscribe/:id',                feedback.unsubscribe);
   app.get('/buffer', auth.authorizeRedirect, pages('landingpage'));
 
   app.get('/tweet4me',                  pages('tweet4me'));

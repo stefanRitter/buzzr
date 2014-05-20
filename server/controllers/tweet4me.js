@@ -102,9 +102,9 @@ exports.sendEmail = function(req, res) {
               'Your Team at Buzzr :)'+
               '<br>' +
               '<br>' +
-              'PS: We read all our email, simply hit reply and tell us what\'s on your mind!' +
-              '<br>' +
-              'PPS: If you would like to unsubscribe from this service hit reply and let us know.';
+              'PS: We read all our email, simply hit reply and tell us what\'s on your mind!'+
+              '<br><br>'+
+              '<a href="https://www.buzzr.io/unsubscribe/'+user+'">unsubscribe</a>';
 
     if (tweet4me.status === 'expired') {
       subject = 'Your Tweet4me trial has expired';
@@ -122,7 +122,9 @@ exports.sendEmail = function(req, res) {
                 '<br>' +
                 'If you have any questions about activating your paid plan, future payments or billing cycles - get in touch with us by replying to this email.' +
                 '<br><br>' +
-                'Your Team at Buzzr :)';
+                'Your Team at Buzzr :)'+
+                '<br><br>'+
+                '<a href="https://www.buzzr.io/unsubscribe/'+user+'">unsubscribe</a>';
     }
 
     sendgrid.send({
