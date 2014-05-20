@@ -13,10 +13,6 @@
 
 
 
-3. target buffer users
-4. evaluate campaign on Tuesday
-
-
 
 6. show status in feed and prompt to upgrade
 

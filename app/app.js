@@ -14,10 +14,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
-    .when('/',          {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'})
-    .when('/terms',     {templateUrl: '/partials/pages/terms',          controller: 'appPagesCtrl'})
-    .when('/login',     {templateUrl: '/partials/account/login',        controller: 'appLoginCtrl'})
-    .when('/join',      {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
+    .when('/',            {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'})
+    .when('/terms',       {templateUrl: '/partials/pages/terms',          controller: 'appPagesCtrl'})
+    .when('/unsubscribe', {templateUrl: '/partials/account/unsubscribe',  controller: 'appUnsubscribeCtrl'})
+    .when('/login',       {templateUrl: '/partials/account/login',        controller: 'appLoginCtrl'})
+    .when('/join',        {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
   
   $routeProvider
     .when('/tweet4me',                  {templateUrl: '/partials/tweet4me/home',            controller: 'appTweet4meCtrl'})

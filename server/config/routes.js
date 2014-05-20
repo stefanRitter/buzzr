@@ -14,11 +14,12 @@ module.exports = function (app) {
   /*jshint maxstatements: false */
 
   // APP
-  app.get('/',        auth.authorizeRedirect, pages('landingpage'));
-  app.get('/login',   auth.authorizeRedirect, pages('login'));
-  app.get('/join',    auth.authorizeRedirect, pages('join'));
-  app.get('/terms',   pages('terms'));
-  app.get('/search',  pages('main'));
+  app.get('/',            auth.authorizeRedirect, pages('landingpage'));
+  app.get('/login',       auth.authorizeRedirect, pages('login'));
+  app.get('/join',        auth.authorizeRedirect, pages('join'));
+  app.get('/terms',       pages('terms'));
+  app.get('/search',      pages('main'));
+  app.get('/unsubscribe', pages('unsubscribe'));
 
   app.get('/tweet4me',                  pages('tweet4me'));
   app.get('/tweet4me/join-startup',     pages('tweet4meJoin-startup'));

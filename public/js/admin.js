@@ -287,6 +287,11 @@ angular.module('app').controller('appSettingsCtrl', function ($scope, $location,
     });
   };
 });
+angular.module('app').controller('appUnsubscribeCtrl', function ($scope) {
+  'use strict';
+
+  $scope.done = true;
+});
 angular.module('app').controller('appAdminAddTweetCtrl', function ($scope, $http) {
   'use strict';
   $scope.tweet = {};
