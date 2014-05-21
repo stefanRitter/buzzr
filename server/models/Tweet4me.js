@@ -43,21 +43,12 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  /*collection.forEach(function(t4m) {
-    if (t4m.user === 'reina.kool@hotmail.com') {
-      t4m.status = 'expired';
-      t4m.save();
-    } else if (t4m.user === 'skythecowRG31@gmail.com') {
-      t4m.status = 'expired';
-      t4m.save();
-    } else if (t4m.user === 'calebrobbins@att.net') {
-      t4m.status = 'expired';
-      t4m.save();
-    } else if (t4m.user === 'akiraism11@icloud.com') {
+  collection.forEach(function(t4m) {
+    if (t4m.user === 'stefan@stefanritter.com') {
       t4m.status = 'expired';
       t4m.save();
     }
-  });*/
+  });
 
   if (collection.length === 0) {
     Tweet4me.create({

@@ -112,7 +112,7 @@ exports.sendEmail = function(req, res) {
                 '<br><br>' +
                 'Hi,' +
                 '<br><br>' +
-                'Your free trial period is over and you need to activate your paid subscription plan to continue getting tweet suggestions from Buzzr.' +
+                'Your free trial period for the topics <strong>'+ tweet4me.topics.join(', ') +'</strong> is over and you need to activate your subscription plan to continue getting tweet suggestions from Buzzr.' +
                 '<br><br>' +
                 '<a href="https://www.buzzr.io/tweet4me/upgrade">ACTIVATE your paid subscription plan now to continue tweet4me with Buzzr.</a>' +
                 '<br><br>' +
