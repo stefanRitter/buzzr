@@ -44,7 +44,13 @@ Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
   collection.forEach(function(t4m) {
-    if (t4m.user === 'stefan@stefanritter.com') {
+    if (t4m.user === 'jenbolan@icloud.com') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'deanmccarthy91@hotmail.co.uk') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'jr.santander.b@hotmail.com') {
       t4m.status = 'expired';
       t4m.save();
     }
