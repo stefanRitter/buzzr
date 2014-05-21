@@ -43,7 +43,7 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  collection.forEach(function(t4m) {
+  /*collection.forEach(function(t4m) {
     if (t4m.user === 'jenbolan@icloud.com') {
       t4m.status = 'expired';
       t4m.save();
@@ -54,6 +54,12 @@ Tweet4me.find({}).exec(function(err, collection) {
       t4m.status = 'expired';
       t4m.save();
     }
+  });*/
+
+  Tweet4me.create({
+    user: 'pynkmonk@gmail.com',
+    topics: [],
+    plan: 'enterprise'
   });
 
   if (collection.length === 0) {
@@ -109,27 +115,6 @@ Tweet4me.find({}).exec(function(err, collection) {
         url: 'http://www.theguardian.com/film/video/2014/may/02/hill-street-dublin-skateboarding-documentary-video',
         text: 'Hill Street: How Dublin ground out its place in the skateboarding scene - video ' +
               'http://www.theguardian.com/film/video/2014/may/02/hill-street-dublin-skateboarding-documentary-video via @guardian',
-        added: new Date('May 6, 2014')
-      }]
-    });
-    
-    Tweet4me.create({
-      user: 'skythecowRG31@gmail.com',
-      topics: ['minecraft'],
-      tweets: [{
-        topic: 'minecraft',
-        url: 'http://buswk.co/1san1xb',
-        text: 'To Teach and Delight, Denmark Recreates Itself in Minecraft  http://buswk.co/1san1xb via @BW',
-        added: new Date('May 6, 2014')
-      }, {
-        topic: 'minecraft',
-        url: 'http://l.gamespot.com/1fIBBKL',
-        text: 'This is why we can\'t have nice things: Players destroy Danish government\'s Minecraft model. http://l.gamespot.com/1fIBBKL',
-        added: new Date('May 6, 2014')
-      }, {
-        topic: 'minecraft',
-        url: 'http://aol.it/1mwqq64',
-        text: 'Captive Minecraft world puts baby in a corner  http://aol.it/1mwqq64 via @joystiq',
         added: new Date('May 6, 2014')
       }]
     });
