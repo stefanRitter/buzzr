@@ -50,13 +50,13 @@ Tweet4me.find({}).exec(function(err, collection) {
     } else if (t4m.user === 'pynkmonk@gmail.com') {
       t4m.remove();
     }
-  });*/
+  });
   
   Tweet4me.create({
     user: 'pynkmonk@gmail.com',
     topics: ['indian politics', 'public relations', 'india', 'brand management', 'narendra modi'],
     plan: 'enterprise'
-  });
+  });*/
 
   if (collection.length === 0) {
     Tweet4me.create({
