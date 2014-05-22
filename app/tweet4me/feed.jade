@@ -22,7 +22,7 @@
         .feed-item-info
           .feed-item-domain {{tweet.topic}}
           .feed-item-actions
-            a.action-tweet(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}"
+            a.action-tweet(href="https://twitter.com/intent/tweet?text={{encode(tweet.text)}}&url={{encodeCom(tweet.url)}}"
               ng-class="{'saved': tweet.tweeted}" ng-click="mark('tweeted', tweet)")
               img(src="/img/twitter.svg")
 

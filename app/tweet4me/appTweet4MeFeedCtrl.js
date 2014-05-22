@@ -6,6 +6,7 @@ angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $route
   $scope.t4m = {};
 
   $scope.encode = function(title) { return encodeURI(title); };
+  $scope.encodeCom = function(title) { return encodeURIComponent(title); };
 
   $scope.ifStatus = function(status) {
     return $scope.status === status;
