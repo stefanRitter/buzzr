@@ -95,6 +95,10 @@ exports.sendEmail = function(req, res) {
               '<a href="http://www.buzzr.io/tweet4me/feed?user=' + user + '">'+
               'Click here to go to your Buzzr feed to review and send your tweets.' +
               '</a>'+
+
+              '<br><br>' +
+              '<strong>Attention: tomorrow will be the end of your free trial.</strong>.' +
+              '<br><br>' +
               
               '<br><br>' +
               'Thanks for tweeting with Buzzr,' +
