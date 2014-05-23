@@ -84,7 +84,7 @@ exports.sendEmail = function(req, res) {
     if (createdAt.toLocaleDateString() === (new Date()).toLocaleDateString()) {
       subject = 'Your first tweet suggestions are ready';
     }
-    
+
     message = '<strong>Hurray, a new set of tweet suggestions are baked and ready to go out!</strong>' +
               '<br><br>' +
               'Hi,' +
@@ -111,7 +111,7 @@ exports.sendEmail = function(req, res) {
               '<a href="https://www.buzzr.io/unsubscribe/'+user+'">unsubscribe</a>';
 
     if (tweet4me.status === 'expired') {
-      subject = 'Your Tweet4me trial has expired';
+      /*subject = 'Your Tweet4me trial has expired';
       message = '<strong>Your free trial has expired act now!</strong>' +
                 '<br><br>' +
                 'Hi,' +
@@ -128,6 +128,33 @@ exports.sendEmail = function(req, res) {
                 'If you have any questions about activating your paid plan, future payments or billing cycles - get in touch with us by replying to this email.' +
                 '<br><br>' +
                 'Your Team at Buzzr :)'+
+                '<br><br>'+
+                '<a href="https://www.buzzr.io/unsubscribe/'+user+'">unsubscribe</a>';*/
+      message = '<strong>Hurray, a new set of tweet suggestions are baked and ready to go out!</strong>' +
+                '<br><br>' +
+                'Hi,' +
+                '<br><br>' +
+                'You requested tweet suggestions for the topic <strong>' + tweet4me.topics.join(', ') + '</strong>.' +
+                '<br><br>' +
+                
+                '<a href="http://www.buzzr.io/tweet4me/feed?user=' + user + '">'+
+                'Click here to go to your Buzzr feed to review and send your tweets.' +
+                '</a>'+
+
+                '<br><br>' +
+                '<strong>Today is the last day of your free trial.'+
+                '<br>'+
+                '<a href="https://www.buzzr.io/tweet4me/upgrade">ACTIVATE your paid subscription plan now to continue tweet4me with Buzzr.</a>' +
+                '</strong>.' +
+                '<br><br>' +
+                'If you would like a little bit more time to try out our service just email me and I can extend it for you!'+
+                '<br><br>' +
+                'Thanks for tweeting with Buzzr,' +
+                '<br>' +
+                'Your Team at Buzzr :)'+
+                '<br>' +
+                '<br>' +
+                'PS: We read all our email, simply hit reply and tell us what\'s on your mind!'+
                 '<br><br>'+
                 '<a href="https://www.buzzr.io/unsubscribe/'+user+'">unsubscribe</a>';
     }

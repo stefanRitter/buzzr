@@ -43,20 +43,21 @@ tweet4meSchema.methods.isDublicate = function(url) {
 Tweet4me = mongoose.model('Tweet4me', tweet4meSchema);
 
 Tweet4me.find({}).exec(function(err, collection) {
-  /*collection.forEach(function(t4m) {
-    if (t4m.user === 'jenbolan@icloud.com') {
+  collection.forEach(function(t4m) {
+    if (t4m.user === 'itsumo_nemuidesu@yahoo.co.jp') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'wjsparky+buzzr@gmail.com') {
+      t4m.status = 'expired';
+      t4m.save();
+    } else if (t4m.user === 'latoyaglenn@gmail.com') {
       t4m.status = 'expired';
       t4m.save();
     } else if (t4m.user === 'pynkmonk@gmail.com') {
-      t4m.remove();
+      t4m.status = 'expired';
+      t4m.save();
     }
   });
-  
-  Tweet4me.create({
-    user: 'pynkmonk@gmail.com',
-    topics: ['indian politics', 'public relations', 'india', 'brand management', 'narendra modi'],
-    plan: 'enterprise'
-  });*/
 
   if (collection.length === 0) {
     Tweet4me.create({
