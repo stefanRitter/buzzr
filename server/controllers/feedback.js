@@ -41,7 +41,7 @@ exports.tweet4me = function(req, res) {
 
   sendgrid.send({
     to: [t4m.email],
-    from: 'tweet4me@buzzr.io',
+    from: 'admin@buzzr.io',
     subject: 'Welcome to Buzzr Tweet4me!',
     html: 'Hi there,'+
           '<br>'+

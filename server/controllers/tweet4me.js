@@ -163,7 +163,7 @@ exports.sendEmail = function(req, res) {
 
     sendgrid.send({
       to: [user],
-      from: 'tweet4me@buzzr.io',
+      from: 'admin@buzzr.io',
       bcc: 'admin@buzzr.io',
       subject: subject,
       html: message
