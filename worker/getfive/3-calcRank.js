@@ -25,18 +25,22 @@ function rankUrl(link) {
       domain = expandedUrl.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1].toLowerCase().replace('www.', '');
   
   if (excludedDomains[domain]) {
+    console.log('RANKER: excluded domain', domain);
     return done();
   }
   
   if (!link.title || link.title === '') {
+    console.log('RANKER: no title', link.url);
     return done();
   }
 
   if (!occurrenceCounter(link, buzzr.topic)) {
-    if (done) { return done(); }
-    return;
+    console.log('RANKER: no occurrence found', link.url);
+    return done();
   }
 
+  delete link.bodyText;
+  delete link.headText;
   link.url = link.url.replace(/[?&]utm_[^&]+/g, '').replace(/^&/, '?');
   link.title = ent.decode(link.title);
   link.domain = domain;

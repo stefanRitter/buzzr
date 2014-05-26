@@ -3,6 +3,7 @@
 var search = require('./1-search.js'),
     request = require('./2-request.js'),
     calcRank = require('./3-calcRank.js'),
+    sort = require('./4-sort.js'),
     _ = require('lodash');
 
 var Buzzr = require('mongoose').model('Buzzr'),
@@ -12,6 +13,7 @@ var Buzzr = require('mongoose').model('Buzzr'),
 // STEP 3
 function processRanked(rankedLinks) {
   console.log('RANKED RESULTS: ', rankedLinks.length);
+  sort(rankedLinks, currentBuzzr);
 }
 
 // STEP 2
