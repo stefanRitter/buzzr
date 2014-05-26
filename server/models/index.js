@@ -9,4 +9,3 @@ StringArray.createArrays();
 LinkArray.createArrays();
 
 require('./Buzzr');
-require('./Tweet4me');

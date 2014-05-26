@@ -20,16 +20,9 @@ buzzrSchema = new Schema({
 
   lastViewed: Date,
   lastUpdated: Date,
-  
-  twitPoints: {
-    maxId:        {type: String, default: '0'},
-    sinceId:      {type: String, default: '0'},
-    nextSinceId:  {type: String, default: '0'}
-  },
-
-  minRank: {type: Number, default: 1},
 
   activeLinks:  [{
+    tweetIds:   [Number],
     url:        String,
     title:      String,
     rank:       Number,
@@ -39,6 +32,17 @@ buzzrSchema = new Schema({
   }],
   
   passiveLinks: [{
+    tweetIds:   [Number],
+    url:        String,
+    title:      String,
+    rank:       Number,
+    activated:  Date,
+    updated:    Date,
+    lang:       String
+  }],
+
+  archivedLinks: [{
+    tweetIds:   [Number],
     url:        String,
     title:      String,
     rank:       Number,
