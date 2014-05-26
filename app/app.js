@@ -14,19 +14,15 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider
-    .when('/',            {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'})
-    .when('/terms',       {templateUrl: '/partials/pages/terms',          controller: 'appPagesCtrl'})
-    .when('/login',       {templateUrl: '/partials/account/login',        controller: 'appLoginCtrl'})
-    .when('/join',        {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'});
-  
-  $routeProvider
-    .when('/unsubscribe/:id', {templateUrl: '/partials/account/unsubscribe', controller: 'appUnsubscribeCtrl'})
-    .when('/search',  {templateUrl: '/partials/pages/home', controller: 'appHomeCtrl'})
-    .when('/:id',     {templateUrl: '/partials/main/main',  controller: 'appMainCtrl'})
-    .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',
-      controller: 'appReadlaterCtrl', resolve: routeRoleChecks.user})
-    .when('/account/settings', {templateUrl: '/partials/account/settings',
-      controller: 'appSettingsCtrl', resolve: routeRoleChecks.user});
+    .when('/',                  {templateUrl: '/partials/pages/landingpage',    controller: 'appPagesCtrl'          })
+    .when('/terms',             {templateUrl: '/partials/pages/terms',          controller: 'appPagesCtrl'          })
+    .when('/login',             {templateUrl: '/partials/account/login',        controller: 'appLoginCtrl'          })
+    .when('/join',              {templateUrl: '/partials/account/join',         controller: 'appJoinCtrl'           })
+    .when('/search',            {templateUrl: '/partials/pages/home',           controller: 'appHomeCtrl'           })
+    .when('/:id',               {templateUrl: '/partials/main/main',            controller: 'appMainCtrl'           })
+    .when('/unsubscribe/:id',   {templateUrl: '/partials/account/unsubscribe',  controller: 'appUnsubscribeCtrl'    })
+    .when('/account/readlater', {templateUrl: '/partials/readlater/readlater',  controller: 'appReadlaterCtrl',     resolve: routeRoleChecks.user})
+    .when('/account/settings',  {templateUrl: '/partials/account/settings',     controller: 'appSettingsCtrl',      resolve: routeRoleChecks.user});
 });
 
 

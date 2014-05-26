@@ -18,13 +18,13 @@ module.exports = function (app) {
   app.get('/join',        auth.authorizeRedirect, pages('join'));
   app.get('/terms',       pages('terms'));
   app.get('/search',      pages('main'));
-  app.get('/unsubscribe', feedback.unsubscribe);
 
-  app.get('/unsubscribe/:id',                     feedback.unsubscribe);
   app.get('/buffer',      auth.authorizeRedirect, pages('landingpage'));
   app.get('/buffer/*',    auth.authorizeRedirect, pages('landingpage'));
   app.get('/tweet4me',    auth.authorizeRedirect, pages('landingpage'));
   app.get('/tweet4me/*',  auth.authorizeRedirect, pages('landingpage'));
+
+  app.get('/unsubscribe/:id', feedback.unsubscribe);
 
   app.get('/account/readlater', pages('main'));
   app.get('/account/settings',  pages('main'));
