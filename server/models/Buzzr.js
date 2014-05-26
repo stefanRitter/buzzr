@@ -20,6 +20,14 @@ buzzrSchema = new Schema({
 
   lastViewed: Date,
   lastUpdated: Date,
+  
+  twitPoints: {
+    maxId:        {type: String, default: '0'},
+    sinceId:      {type: String, default: '0'},
+    nextSinceId:  {type: String, default: '0'}
+  },
+
+  minRank: {type: Number, default: 1},
 
   activeLinks:  [{
     tweetIds:   [Number],
