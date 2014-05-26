@@ -27,8 +27,6 @@ function processTweet(tweet) {
     newLinks.push({
       twtId: tweet.id,
       url: url,
-      topic: currentTopic,
-      provider: 'twitter',
       rank: rank
     });
   }

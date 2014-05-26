@@ -13,7 +13,7 @@ var Buzzr = require('mongoose').model('Buzzr'),
 // STEP 3
 function processRanked(rankedLinks) {
   console.log('RANKED RESULTS: ', rankedLinks.length);
-  sort(rankedLinks, currentBuzzr);
+  sort(_.uniq(rankedLinks, 'url'), currentBuzzr);
 }
 
 // STEP 2
