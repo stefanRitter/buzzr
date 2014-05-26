@@ -13,7 +13,7 @@ var Buzzr = require('mongoose').model('Buzzr'),
 // STEP 3
 function processRanked(rankedLinks) {
   console.log('RANKED RESULTS: ', rankedLinks.length);
-  sort(_.uniq(rankedLinks, 'url'), currentBuzzr);
+  sort(rankedLinks, currentBuzzr);
 }
 
 // STEP 2
@@ -31,6 +31,8 @@ function startSearch() {
   });
 }
 
+// exports: do all
+// exports: do one by topic
 
 Buzzr.findOne({topic: 'javascript'}).exec(function (err, buzzr) {
   if (err) { throw err; }

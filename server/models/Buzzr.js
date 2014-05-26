@@ -98,7 +98,6 @@ buzzrSchema.methods.makeUniq = function() {
 };
 
 buzzrSchema.methods.pushLink = function(data, cb) {
-  // data.url, data.rank, data.title, data.lang
   function checkLinkEquality(link) {
     return link.url === data.url || link.title === data.title;
   }

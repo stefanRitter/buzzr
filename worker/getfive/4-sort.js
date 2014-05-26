@@ -5,6 +5,7 @@ var _ = require('lodash');
 var activeLinks = [],
     passiveLinks = [],
     archivedLinks = [],
+    uniqTweets = [],
     newTweets = [];
 
 
@@ -43,12 +44,17 @@ function sortTweet(tweet) {
   pushNewTweet(tweet);
 }
 
+function makeUniq(tweet) {
+  uniqTweets.push(tweet);
+}
+
 module.exports = function(tweets, buzzr) {
   activeLinks = buzzr.activeLinks;
   passiveLinks = buzzr.passiveLinks;
   archivedLinks = buzzr.archivedLinks;
- 
-  tweets.forEach(sortTweet);
+  
+  tweets.forEach(makeUniq);
+  uniqTweets.forEach(sortTweet);
   newTweets.sort(function(a, b) { return b.rank-a.rank; });
   buzzr.addSortedLinks(newTweets);
 };
