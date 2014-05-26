@@ -28,6 +28,10 @@ setTimeout(function() {
       // clean
       require('./worker/clean/');
       break;
+
+    case 'five':
+      require('./worker/getfive');
+      break;
     
     default:
       // start searcher
