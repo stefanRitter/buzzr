@@ -8,14 +8,20 @@ var activeLinks = [],
     newTweets = [];
 
 
+function pushNewTweet(tweet) {
+  tweet.tweetIds = [tweet.twtId];
+  delete tweet.twtId;
+  newTweets.push(tweet);
+}
+
 function updatePassiveLink(tweet, i) {
   var otherTweet = passiveLinks[i];
-  if (otherTweet.tweetIds.indexOf(tweet.id) === -1) {
+  if (otherTweet.tweetIds.indexOf(tweet.twtId) === -1) {
     tweet.rank += otherTweet.rank;
   }
 
   passiveLinks.splice(i, 1);
-  newTweets.push(tweet);
+  pushNewTweet(tweet);
 }
 
 function sortTweet(tweet) {
@@ -34,7 +40,7 @@ function sortTweet(tweet) {
   i = _.findIndex(archivedLinks, checkLinkEquality);
   if (i > -1) { return; }
 
-  newTweets.push(tweet);
+  pushNewTweet(tweet);
 }
 
 module.exports = function(tweets, buzzr) {
@@ -44,8 +50,5 @@ module.exports = function(tweets, buzzr) {
  
   tweets.forEach(sortTweet);
   newTweets.sort(function(a, b) { return b.rank-a.rank; });
-
-  newTweets.forEach(function(tw) {
-    console.log(tw.rank);
-  });
+  buzzr.addSortedLinks(newTweets);
 };

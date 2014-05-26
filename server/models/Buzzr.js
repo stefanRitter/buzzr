@@ -60,6 +60,10 @@ buzzrSchema = new Schema({
   }]
 });
 
+buzzrSchema.methods.addSortedLinks = function(links) {
+  console.log(links);
+};
+
 buzzrSchema.methods.viewed = function() {
   this.lastViewed = Date.now();
   this.save();
