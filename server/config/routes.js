@@ -6,7 +6,6 @@ var auth = require('../controllers/auth.js'),
     feedback = require('../controllers/feedback.js'),
     buzzrs = require('../controllers/buzzrs.js'),
     charge = require('../controllers/charge.js'),
-    tweet4me = require('../controllers/tweet4me.js'),
     admin = require('../controllers/admin.js');
 
 
@@ -21,17 +20,11 @@ module.exports = function (app) {
   app.get('/search',      pages('main'));
   app.get('/unsubscribe', feedback.unsubscribe);
 
-  
-  app.get('/unsubscribe/:id',                feedback.unsubscribe);
-  app.get('/buffer', auth.authorizeRedirect, pages('landingpage'));
-
-  app.get('/tweet4me',                  pages('tweet4me'));
-  app.get('/tweet4me/join-startup',     pages('tweet4meJoin-startup'));
-  app.get('/tweet4me/join-business',    pages('tweet4meJoin-business'));
-  app.get('/tweet4me/join-enterprise',  pages('tweet4meJoin-enterprise'));
-  app.get('/tweet4me/feed',             pages('tweet4meFeed'));
-  app.get('/tweet4me/pricing',          pages('tweet4mePricing'));
-  app.get('/tweet4me/upgrade',          pages('tweet4meUpgrade'));
+  app.get('/unsubscribe/:id',                     feedback.unsubscribe);
+  app.get('/buffer',      auth.authorizeRedirect, pages('landingpage'));
+  app.get('/buffer/*',    auth.authorizeRedirect, pages('landingpage'));
+  app.get('/tweet4me',    auth.authorizeRedirect, pages('landingpage'));
+  app.get('/tweet4me/*',  auth.authorizeRedirect, pages('landingpage'));
 
   app.get('/account/readlater', pages('main'));
   app.get('/account/settings',  pages('main'));
@@ -47,9 +40,6 @@ module.exports = function (app) {
   app.get( '/api/buzzrs/refresh/:id',     buzzrs.refreshByTopic);
   app.put( '/api/users',                  auth.authorize, users.updateUser);
   app.post('/api/feedback',               feedback.createFeedback);
-  app.post('/tweet4me',                   feedback.tweet4me);
-  app.get( '/api/tweet4me/:id',           tweet4me.getByUser);
-  app.post('/api/tweet4me/:id/mark',      tweet4me.markTweet);
 
   // AUTH
   app.post('/login',                  auth.authenticateLocal);
@@ -68,9 +58,6 @@ module.exports = function (app) {
   app.get('/api/buzzrs',     auth.requiresRole('admin'), buzzrs.getAdminList);
   app.put('/api/buzzrs/:id', auth.requiresRole('admin'), buzzrs.putAdmin);
   app.get('/api/errors',     auth.requiresRole('admin'), admin.getErrors);
-
-  app.post('/api/tweet4me/:id/addTweet',  auth.requiresRole('admin'), tweet4me.addTweet);
-  app.post('/api/tweet4me/:id/sendEmail', auth.requiresRole('admin'), tweet4me.sendEmail);
   
   // 404
   app.all('/api/*', function (req, res) { res.send(404); });
