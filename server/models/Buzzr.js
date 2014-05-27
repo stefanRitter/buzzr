@@ -62,6 +62,13 @@ buzzrSchema = new Schema({
 
 buzzrSchema.methods.addSortedLinks = function(links) {
   console.log(links);
+
+  // 1. add top 5 to active
+  // 2. push too many active into archive
+  // 3. push the rest into passive
+  // 4. if there are not 5 new links, sort passive and take from there
+
+  this.saveCb(function() {console.log('SAVED: ', this.topic);});
 };
 
 buzzrSchema.methods.viewed = function() {

@@ -8,5 +8,5 @@ module.exports = function(tweet) {
   if (!!tweet.in_reply_to_status_id) {
     rank += 1;
   }
-  return rank;
+  return rank || 1;
 };

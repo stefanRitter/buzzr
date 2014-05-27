@@ -3,14 +3,17 @@
 var ent = require('ent'),
     occurrenceCounter = require('../process/occurrenceCounter.js');
 
-var excludedDomains = {},
-    tweets = [],
+var tweets = [],
     newLinks = [],
     doneCount = 0,
     doneAll = 0,
     buzzr,
     cb;
 
+var excludedDomains = {
+  'google.com': true,
+  'google.co.uk': true
+};
 
 function done() {
   doneCount += 1;
