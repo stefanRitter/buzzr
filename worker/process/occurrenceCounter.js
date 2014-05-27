@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function (link, topic) {
-  var searchHead = link.headText.search(topic),
+module.exports = function () { //(link, topic) {
+  /*var searchHead = link.headText.search(topic),
       searchBody = link.bodyText.search(topic),
       found = searchHead !== -1 && searchBody !== -1;
 
@@ -17,6 +17,6 @@ module.exports = function (link, topic) {
 
     found = wordsFound.indexOf(false) === -1;
   }
-  //return found;
+  //return found;*/
   return true;
 };
