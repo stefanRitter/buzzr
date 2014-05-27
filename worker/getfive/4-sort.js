@@ -6,52 +6,70 @@ var activeLinks = [],
     passiveLinks = [],
     archivedLinks = [],
     uniqTweets = [],
-    newTweets = [];
+    newTweets = [],
+    tweets = [];
 
-
-function pushNewTweet(tweet) {
-  tweet.tweetIds = [tweet.twtId];
-  delete tweet.twtId;
-  newTweets.push(tweet);
-}
 
 function updatePassiveLink(tweet, i) {
   var otherTweet = passiveLinks[i];
   if (otherTweet.tweetIds.indexOf(tweet.twtId) === -1) {
-    tweet.rank += otherTweet.rank;
+    tweet.rank += otherTweet.rank || 1;
   }
 
   passiveLinks.splice(i, 1);
-  pushNewTweet(tweet);
+  newTweets.push(tweet);
+}
+
+function checkUrlEquality(tweet) {
+  return function(link) {
+    return link.url === tweet.url || link.title === tweet.title;
+  };
 }
 
 function sortTweet(tweet) {
-  function checkLinkEquality(link) {
-    return link.url === tweet.url || link.title === tweet.title;
-  }
-
-  var i = _.findIndex(passiveLinks, checkLinkEquality);
+  var i = _.findIndex(passiveLinks, checkUrlEquality(tweet));
   if (i > -1) {
     return updatePassiveLink(tweet, i);
   }
 
-  i = _.findIndex(activeLinks, checkLinkEquality);
+  i = _.findIndex(activeLinks, checkUrlEquality(tweet));
   if (i > -1) { return; }
 
-  i = _.findIndex(archivedLinks, checkLinkEquality);
+  i = _.findIndex(archivedLinks, checkUrlEquality(tweet));
   if (i > -1) { return; }
 
-  pushNewTweet(tweet);
+  newTweets.push(tweet);
 }
 
 function makeUniq(tweet) {
-  uniqTweets.push(tweet);
+  var twt = _.clone(tweet),
+      equal = checkUrlEquality(tweet),
+      l = tweets.length,
+      i = _.findIndex(uniqTweets, equal);
+  
+  if (i > -1) { return; } // has been counted already
+
+  twt.tweetIds = [tweet.twtId];
+  delete twt.twtId;
+  
+  for (i = 0; i < l; i++) {
+    var newTwt = tweets[i];
+    if (equal(newTwt) && twt.tweetIds.indexOf(newTwt.twtId) === -1) {
+      twt.tweetIds.push(newTwt.twtId);
+      twt.rank += newTwt.rank || 1;
+    }
+  }
+  
+  uniqTweets.push(twt);
 }
 
-module.exports = function(tweets, buzzr) {
+module.exports = function(_tweets, buzzr) {
   activeLinks = buzzr.activeLinks;
   passiveLinks = buzzr.passiveLinks;
   archivedLinks = buzzr.archivedLinks;
+  tweets = _tweets;
+  uniqTweets = [];
+  newTweets = [];
   
   tweets.forEach(makeUniq);
   uniqTweets.forEach(sortTweet);
