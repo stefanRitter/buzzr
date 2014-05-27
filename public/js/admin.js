@@ -837,28 +837,6 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
     $scope.status = 'error';
   }
 
-  BuzzrResource.updateFeed = function($scope) {
-    $http
-      .get('/api/buzzrs/refresh/' + $scope.searchText.trim())
-      .then(function(res) {
-        var links = res.data.links;
-        if (res.data.err) {
-          handleError($scope, res.data.err);
-          return;
-        }
-        if (res.data.updating) {
-          $scope.status = 'updating';
-          startCountdown($scope);
-          return;
-        }
-        if (links.length === 0) { return handleZeroResults($scope); }
-        appProcessLinks.process($scope, links);
-        $scope.status = 'feeding';
-      }, function() {
-        handleError($scope, 'Sorry, something went wrong! Please try again!');
-      });
-  };
-
   BuzzrResource.startFeed = function($scope) {
     $http
       .get('/api/buzzrs/' + $scope.searchText.trim())
@@ -913,10 +891,6 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   $scope.getLang = function(lang) { return $scope.lang === lang; };
 
   $scope.triggerSearch = function() { appBuzzr.startFeed($scope); };
-  $scope.loadMore = function() {
-    $scope.status = 'searching';
-    appBuzzr.updateFeed($scope);
-  };
 
   $scope.showLoading = function() {
     if ($scope.checkStatus('searching') || $scope.checkStatus('creating') || $scope.checkStatus('updating')) { return true; }

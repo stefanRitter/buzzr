@@ -28,10 +28,6 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   $scope.getLang = function(lang) { return $scope.lang === lang; };
 
   $scope.triggerSearch = function() { appBuzzr.startFeed($scope); };
-  $scope.loadMore = function() {
-    $scope.status = 'searching';
-    appBuzzr.updateFeed($scope);
-  };
 
   $scope.showLoading = function() {
     if ($scope.checkStatus('searching') || $scope.checkStatus('creating') || $scope.checkStatus('updating')) { return true; }

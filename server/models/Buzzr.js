@@ -61,14 +61,25 @@ buzzrSchema = new Schema({
 });
 
 buzzrSchema.methods.addSortedLinks = function(links) {
-  console.log(links);
+  console.log(links.length);
 
-  // 1. add top 5 to active
-  // 2. push too many active into archive
-  // 3. push the rest into passive
-  // 4. if there are not 5 new links, sort passive and take from there
+  this.archivedLinks = this.archivedLinks.concat(this.activeLinks);
+  this.activeLinks = links.splice(0,5);
+  this.passiveLinks = this.passiveLinks.concat(links);
 
-  this.saveCb(function() {console.log('SAVED: ', this.topic);});
+  console.log(links.length);
+
+  if (this.activeLinks.length < 5) {
+    var l = 5 - this.activeLinks.length,
+        moreLinks = [];
+
+    this.passiveLinks.sort(function(a, b) { return b.rank-a.rank; });
+    moreLinks = this.passiveLinks.splice(0,l);
+    this.activeLinks = this.activeLinks.concat(moreLinks);
+  }
+
+  var topic = this.topic;
+  this.saveCb(function() {console.log('SAVED: ', topic);});
 };
 
 buzzrSchema.methods.viewed = function() {

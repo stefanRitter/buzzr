@@ -36,6 +36,9 @@ function startSearch() {
 
 Buzzr.findOne({topic: 'javascript'}).exec(function (err, buzzr) {
   if (err) { throw err; }
+  if (!buzzr) {
+    buzzr = Buzzr.create({topic: 'javascript'});
+  }
   currentBuzzr = buzzr;
   startSearch();
 });

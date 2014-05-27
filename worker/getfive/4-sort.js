@@ -11,9 +11,12 @@ var activeLinks = [],
 
 
 function updatePassiveLink(tweet, i) {
-  var otherTweet = passiveLinks[i];
-  if (otherTweet.tweetIds.indexOf(tweet.twtId) === -1) {
+  var otherTweet = passiveLinks[i],
+      diff = _.difference(otherTweet.tweetIds, tweet.tweetIds).length;
+
+  if (diff > 0) {
     tweet.rank += otherTweet.rank || 1;
+    tweet.tweetIds = _.union(otherTweet.tweetIds, tweet.tweetIds);
   }
 
   passiveLinks.splice(i, 1);
