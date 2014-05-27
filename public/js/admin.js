@@ -20,12 +20,6 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminErrorsCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/buzzrs', {templateUrl: '/partials/admin/buzzrs',
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
-
-  $routeProvider
-    .when('/admin/sendTweet4me', {templateUrl: '/partials/admin/sendTweet4me',
-      controller: 'appAdminSendTweet4meCtrl', resolve: routeRoleChecks.admin})
-    .when('/admin/addTweet', {templateUrl: '/partials/admin/addTweet',
-      controller: 'appAdminAddTweetCtrl', resolve: routeRoleChecks.admin});
 });
 
 angular.module('app').run(function ($rootScope, $location) {
@@ -292,41 +286,6 @@ angular.module('app').controller('appUnsubscribeCtrl', function ($scope) {
 
   $scope.done = true;
 });
-angular.module('app').controller('appAdminAddTweetCtrl', function ($scope, $http) {
-  'use strict';
-  $scope.tweet = {};
-  $scope.topics = [];
-  $scope.t4ms = window.bootstrappedTweet4Mes;
-  
-  $scope.updateTopics = function() {
-    $scope.t4ms.forEach(function(t4m) {
-      if (t4m.user === $scope.tweet.email) {
-        $scope.topics = t4m.topics;
-      }
-    });
-  };
-
-  $scope.showTopic = function() {
-    return !!$scope.tweet.email;
-  };
-
-  $scope.showTweetForm = function() {
-    return !!$scope.tweet.topic;
-  };
-
-  $scope.addTweet = function() {
-    var tweet = $scope.tweet;
-    $http
-      .post('/api/tweet4me/'+tweet.email+'/addTweet', {tweet: tweet})
-      .then(function() {
-        window.alert('Tweet Added!');
-        $scope.tweet.url = '';
-        $scope.tweet.text = '';
-      }, function() {
-        window.alert('Sorry, something went wrong! Please try again!');
-      });
-  };
-});
 angular.module('app').controller('appAdminBuzzrsCtrl', function ($scope, $http, $window) {
   'use strict';
   
@@ -358,20 +317,6 @@ angular.module('app').controller('appAdminErrorsCtrl', function ($scope, $http, 
         $window.alert('$http error');
       }
     });
-});
-angular.module('app').controller('appAdminSendTweet4meCtrl', function ($scope, $http) {
-  'use strict';
-  $scope.t4ms = window.bootstrappedTweet4Mes;
-
-  $scope.sendEmail = function() {
-    $http
-      .post('/api/tweet4me/'+$scope.email+'/sendEmail', {})
-      .then(function() {
-        window.alert('Email sent!');
-      }, function() {
-        window.alert('Sorry, something went wrong! Please try again!');
-      });
-  };
 });
 angular.module('app').controller('appAdminUsersCtrl', function ($scope, AppUser) {
   'use strict';

@@ -20,12 +20,6 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
       controller: 'appAdminErrorsCtrl', resolve: routeRoleChecks.admin})
     .when('/admin/buzzrs', {templateUrl: '/partials/admin/buzzrs',
       controller: 'appAdminBuzzrsCtrl', resolve: routeRoleChecks.admin});
-
-  $routeProvider
-    .when('/admin/sendTweet4me', {templateUrl: '/partials/admin/sendTweet4me',
-      controller: 'appAdminSendTweet4meCtrl', resolve: routeRoleChecks.admin})
-    .when('/admin/addTweet', {templateUrl: '/partials/admin/addTweet',
-      controller: 'appAdminAddTweetCtrl', resolve: routeRoleChecks.admin});
 });
 
 angular.module('app').run(function ($rootScope, $location) {
