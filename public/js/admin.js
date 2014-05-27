@@ -810,7 +810,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   /*jshint maxstatements: false */
   'use strict';
 
-  $scope.countDown = 18;
+  $scope.countDown = 30;
   $scope.links = [];
   $scope.dates = [];
   $scope.lang = '';
