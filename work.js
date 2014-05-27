@@ -30,7 +30,7 @@ setTimeout(function() {
       break;
 
     case 'five':
-      require('./worker/getfive');
+      require('./worker/getfive').updateOne('javascript');
       break;
     
     default:

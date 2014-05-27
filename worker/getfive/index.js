@@ -31,14 +31,13 @@ function startSearch() {
   });
 }
 
-// exports: do all
-// exports: do one by topic
 
-Buzzr.findOne({topic: 'javascript'}).exec(function (err, buzzr) {
-  if (err) { throw err; }
-  if (!buzzr) {
-    buzzr = Buzzr.create({topic: 'javascript'});
-  }
-  currentBuzzr = buzzr;
-  startSearch();
-});
+exports.updateOne = function(topic) {
+  Buzzr.findOneAndUpdate({topic: topic}, {topic: topic}, {upsert: true},
+    function(err, buzzr) {
+      if (err) { throw err; }
+      currentBuzzr = buzzr;
+      startSearch();
+    }
+  );
+};

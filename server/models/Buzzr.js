@@ -61,13 +61,9 @@ buzzrSchema = new Schema({
 });
 
 buzzrSchema.methods.addSortedLinks = function(links) {
-  console.log(links.length);
-
   this.archivedLinks = this.archivedLinks.concat(this.activeLinks);
   this.activeLinks = links.splice(0,5);
   this.passiveLinks = this.passiveLinks.concat(links);
-
-  console.log(links.length);
 
   if (this.activeLinks.length < 5) {
     var l = 5 - this.activeLinks.length,

@@ -22,6 +22,7 @@ function done() {
 function updateUrl(tweet) {
   var shortUrl = googleDecoder(tweet.url);
 
+  // TODO: batch requests!!!
   request(
   {
     method: 'GET',
