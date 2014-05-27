@@ -1,48 +1,30 @@
 .pages-container
   include ../common/buzzr-logo
   
-  h1.margin-top-sm.center Welcome to Buzzr
+  h1.margin-top-sm.center Join
+  form.form.center(name="signupForm")
 
-  h2.margin-top.center
-    | Please email admin@buzzr.io to request access to our private beta program.
-    br
-    span.italic.small or
-
-  .center.margin-top
-    h1.phone-line-height.phone-heading Check out our other products:
-    
-    .margin-top-big
-    a.tweet4me-price(href="/tweet4me")
-      h3 &nbsp;
-      h1 Buzzr for Twitter
-      h3 &nbsp;
-    a.tweet4me-price(href="/buffer")
-      h3 &nbsp;
-      h1 Buzzr for Buffer
-      h3 &nbsp;
-  //-
-    form.form.center(name="signupForm")
-
+    //-
       a.button-twitter.margin(href="/auth/twitter", target="_self")
         .svg
           include ../../public/img/twitter.svg
         | Join with Twitter
       p.italic or
 
-      .form-group
-        label Email:*
-        input(name="email", type="email", placeholder="Email", ng-model="email", required)
+    .form-group
+      label Email:*
+      input(name="email", type="email", placeholder="Email", ng-model="email", required)
 
-      
-      .form-group
-        label Password:*
-        input(name="password", type="password", placeholder="Password", ng-model="password", required)
-      
-      .form-group
-        button.button-black.medium(ng-click="signup()", ng-disabled="signupForm.$invalid") Go
-        br
-        span.required * required
+    
+    .form-group
+      label Password:*
+      input(name="password", type="password", placeholder="Password", ng-model="password", required)
+    
+    .form-group
+      button.button-black.medium(ng-click="signup()", ng-disabled="signupForm.$invalid") Go
+      br
+      span.required * required
 
-      .form-group.notifier
-        .error {{notifier.error}}
-        .notice {{notifier.notice}}
+    .form-group.notifier
+      .error {{notifier.error}}
+      .notice {{notifier.notice}}
