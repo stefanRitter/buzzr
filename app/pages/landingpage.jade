@@ -1,14 +1,12 @@
-//-
-  .filters(style="top: 9px")
-    a.filter-input(href="/login" style="padding: 4px 6px; letter-spacing: 1px") Login
+.filters(style="top: 9px")
+  a.filter-input(href="/login" style="padding: 4px 6px; letter-spacing: 1px") Login
 
 .pages-container(itemprop="mainContentOfPage" style="max-width: 900px")
   include ../common/buzzr-logo
 
   .center.big
     h1.home-pitch
-      | Get the newest, most relevant content on your topic.
-      //-| The smarter way to stay up to date: in only 20 seconds find out what's buzzing in your field. 
+      | The 5 hottest links on your topic - every 24 hours.
       
     a(href="/join")
       img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview" ng-click="toggleVideo()")
@@ -38,18 +36,8 @@
         | you find.
   
   .center
-    //-p.margin-top
-      | Get Buzzr for 
-      strong.big only $2 a month
-      | , and try the first 
-      strong.medium 14 days for free
-      br
     p.margin-top
-      a.button-green.big(href="/join") Join our private BETA today
-    //-p.margin-top
-      strong.medium We won't charge your card unless you stay!
-      br
-      | Quit any time with our "no questions asked" policy.
+      a.button-green.big(href="/join") Join our BETA today
 
 .header-spacer
 include ../common/footer
