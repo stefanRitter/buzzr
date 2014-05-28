@@ -1,7 +1,5 @@
 
-1. BATCH requests and add 500ms delay
 2. use AGENDA to schedule 24hrs updates
 3. show time to next update in feed!
-
 
 7. PhoneGap / Ionic app
