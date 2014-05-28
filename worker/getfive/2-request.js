@@ -2,27 +2,15 @@
 
 var request = require('request'),
     cheerio = require('cheerio'),
+    Batch = require('batch'),
     googleDecoder = require('../process/googleDecoder.js');
 
-var tweets = [],
-    newLinks = [],
-    doneCount = 0,
-    doneAll = 0,
-    cb;
+var newLinks = [];
 
 
-function done() {
-  doneCount += 1;
-  if (doneCount >= doneAll) {
-    cb(newLinks);
-  }
-}
-
-
-function updateUrl(tweet) {
+function updateUrl(tweet, done) {
   var shortUrl = googleDecoder(tweet.url);
 
-  // TODO: batch requests!!!
   request(
   {
     method: 'GET',
@@ -61,12 +49,21 @@ function updateUrl(tweet) {
 }
 
 
-module.exports = function(_tweets, _cb) {
-  tweets = _tweets;
-  cb = _cb;
-  doneCount = 0;
-  doneAll = tweets.length;
+module.exports = function(tweets, cb) {
+  console.log('REQUESTING: ' + tweets.length);
 
-  console.log('REQUESTING: '+doneAll);
-  tweets.forEach(updateUrl);
+  var batch = new Batch();
+  batch.concurrency(5);
+
+  tweets.forEach(function(tweet){
+    batch.push(function(done){
+      updateUrl(tweet, done);
+    });
+  });
+
+  batch.on('progress', function() {});
+  batch.end(function(err) {
+    if (err) { throw err; }
+    cb(newLinks);
+  });
 };
