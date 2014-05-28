@@ -6,13 +6,14 @@
 
   .center.big
     h1.home-pitch
-      | The 5 hottest links on your topic - every 24 hours.
+      | Get the 5 hottest links on your topic - every 24 hours.
       
     a(href="/join")
       img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview" ng-click="toggleVideo()")
+  //-
     .blackout-video.ng-hide(ng-show="showVideo" ng-click="toggleVideo()")
-      //-iframe(src="//www.youtube.com/embed/cjQOxiCo2bY?rel=0" frameborder="0" allowfullscreen)
-
+      iframe(src="//www.youtube.com/embed/cjQOxiCo2bY?rel=0" frameborder="0" allowfullscreen)
+  
     .home-feature.margin-top-big.padding-left
       span.big.green &#10004; 
       strong Save Time
@@ -35,9 +36,10 @@
         br
         | you find.
   
-  .center
-    p.margin-top
-      a.button-green.big(href="/join") Join our BETA program
+  .center.padding-top
+    p.margin-top-big
+      a.button-white.big.margin-sm(href="/search") Try Buzzr now
+      a.button-green.big.margin-sm(href="/join") Join our BETA
 
 .header-spacer
 include ../common/footer
