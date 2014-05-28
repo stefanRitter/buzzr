@@ -1,7 +1,7 @@
 'use strict';
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    buzzrMaker = require('child_process').fork('server/utils/buzzrMaker.js');
+    fork = require('child_process').fork;
 
 //require('../utils/cronjob.js');
 
@@ -13,7 +13,7 @@ exports.getByTopic = function(req, res) {
     if (err) { return res.json({err: err}); }
     
     if (!buzzr) {
-      buzzrMaker.send({topic: topic});
+      fork('server/utils/buzzrMaker.js').send({topic: topic});
       return res.json({newBuzzr: true});
     }
     

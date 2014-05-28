@@ -5,11 +5,11 @@ var Agenda = require('agenda'),
     config = require('../config/config')[env],
     sendMail = require('./sendMail.js'),
     Buzzr = require('mongoose').model('Buzzr'),
+    fork = require('child_process').fork,
     agenda = new Agenda({db: {address: config.datastoreURI}, processEvery: '2 hours'});
 
 
 agenda.define('update all buzzrs', function(job, done) {
-  var buzzrMaker = require('child_process').fork('server/utils/buzzrMaker.js');
   sendMail.send('agenda started');
 
   Buzzr.find({}).exec(function(err, collection) {
@@ -21,7 +21,7 @@ agenda.define('update all buzzrs', function(job, done) {
     var l = collection.length;
     collection.forEach(function(buzzr, i) {
       setTimeout(function() {
-        buzzrMaker.send({topic: buzzr.topic});
+        fork('server/utils/buzzrMaker.js').send({topic: buzzr.topic});
         if (i >= l) {
           sendMail.send('agenda finished!');
           done();
