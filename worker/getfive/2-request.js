@@ -53,11 +53,13 @@ module.exports = function(tweets, cb) {
   console.log('REQUESTING: ' + tweets.length);
 
   var batch = new Batch();
-  batch.concurrency(5);
+  batch.concurrency(4);
 
   tweets.forEach(function(tweet){
     batch.push(function(done){
-      updateUrl(tweet, done);
+      setTimeout(function() {
+        updateUrl(tweet, done);
+      }, 1000);
     });
   });
 
