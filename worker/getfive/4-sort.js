@@ -66,7 +66,7 @@ function makeUniq(tweet) {
   uniqTweets.push(twt);
 }
 
-module.exports = function(_tweets, buzzr) {
+module.exports = function(_tweets, buzzr, cb) {
   activeLinks = buzzr.activeLinks;
   passiveLinks = buzzr.passiveLinks;
   archivedLinks = buzzr.archivedLinks;
@@ -77,5 +77,5 @@ module.exports = function(_tweets, buzzr) {
   tweets.forEach(makeUniq);
   uniqTweets.forEach(sortTweet);
   newTweets.sort(function(a, b) { return b.rank-a.rank; });
-  buzzr.addSortedLinks(newTweets);
+  buzzr.addSortedLinks(newTweets, cb);
 };

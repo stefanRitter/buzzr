@@ -13,6 +13,9 @@ process.on('message', function(m) {
   if (!!m.topic) {
     console.log('MAKE BUZZR: ' + m.topic);
 
-    getFive.updateOne(m.topic);
+    getFive.updateOne(m.topic, function() {
+      console.log('SAVED: ' + m.topic);
+      process.exit(0);
+    });
   }
 });

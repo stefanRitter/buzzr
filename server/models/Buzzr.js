@@ -60,7 +60,7 @@ buzzrSchema = new Schema({
   }]
 });
 
-buzzrSchema.methods.addSortedLinks = function(links) {
+buzzrSchema.methods.addSortedLinks = function(links, cb) {
   this.archivedLinks = this.archivedLinks.concat(this.activeLinks);
   this.activeLinks = links.splice(0,5);
   this.passiveLinks = this.passiveLinks.concat(links);
@@ -74,8 +74,7 @@ buzzrSchema.methods.addSortedLinks = function(links) {
     this.activeLinks = this.activeLinks.concat(moreLinks);
   }
 
-  var topic = this.topic;
-  this.saveCb(function() {console.log('SAVED: ', topic);});
+  this.saveCb(cb);
 };
 
 buzzrSchema.methods.viewed = function() {

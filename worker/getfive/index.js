@@ -7,13 +7,14 @@ var search = require('./1-search.js'),
     _ = require('lodash');
 
 var Buzzr = require('mongoose').model('Buzzr'),
-    currentBuzzr;
+    currentBuzzr,
+    cb;
 
 
 // STEP 3
 function processRanked(rankedLinks) {
   console.log('RANKED RESULTS: ', rankedLinks.length);
-  sort(rankedLinks, currentBuzzr);
+  sort(rankedLinks, currentBuzzr, cb);
 }
 
 // STEP 2
@@ -32,7 +33,8 @@ function startSearch() {
 }
 
 
-exports.updateOne = function(topic) {
+exports.updateOne = function(topic, _cb) {
+  cb = _cb;
   Buzzr.findOneAndUpdate({topic: topic}, {topic: topic}, {upsert: true},
     function(err, buzzr) {
       if (err) { throw err; }
