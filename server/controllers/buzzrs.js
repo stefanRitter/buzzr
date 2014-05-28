@@ -3,7 +3,7 @@
 var Buzzr = require('mongoose').model('Buzzr'),
     fork = require('child_process').fork;
 
-//require('../utils/cronjob.js');
+require('../utils/cronjob.js');
 
 
 exports.getByTopic = function(req, res) {

@@ -12,7 +12,8 @@ var tweets = [],
 
 var excludedDomains = {
   'google.com': true,
-  'google.co.uk': true
+  'google.co.uk': true,
+  'instagram.com': true
 };
 
 function done() {
