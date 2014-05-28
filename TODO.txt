@@ -1,5 +1,7 @@
 
-2. use AGENDA to schedule 24hrs updates
+1. get rid of job ads
+2. import from google news 
+
 3. show time to next update in feed!
 
 7. PhoneGap / Ionic app

@@ -1,6 +1,6 @@
 'use strict';
 
-var Agenda = require('Agenda'),
+var Agenda = require('agenda'),
     env = process.env.NODE_ENV || 'development',
     config = require('../config/config')[env],
     sendMail = require('./sendMail.js'),
