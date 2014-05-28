@@ -19,6 +19,11 @@ agenda.define('update all buzzrs', function(job, done) {
     }
 
     var l = collection.length;
+    if(l === 0) {
+      sendMail.send('agenda finished!');
+      return done();
+    }
+
     collection.forEach(function(buzzr, i) {
       setTimeout(function() {
         fork('server/utils/buzzrMaker.js').send({topic: buzzr.topic});
