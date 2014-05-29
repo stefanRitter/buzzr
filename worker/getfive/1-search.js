@@ -63,7 +63,7 @@ function getTweets() {
     tweets.forEach(processTweet);
 
     callsCount += 1;
-    if (callsCount >= maxCalls) {
+    if (callsCount >= maxCalls || tweets.length === 0) {
       cb(newLinks);
     } else {
       getTweets();
@@ -75,7 +75,6 @@ function getTweets() {
 module.exports = function(topic, _cb) {
   currentTopic = topic;
   callsCount = 0;
-  maxCalls = 10;
   cb = _cb;
 
   console.log('SEARCH: updating: ' + currentTopic);
