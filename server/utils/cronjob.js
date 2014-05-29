@@ -36,7 +36,3 @@ setInterval(function() {
     run();
   }
 }, 60000*40);
-
-setTimeout(function() {
-  run();
-}, 5000);
