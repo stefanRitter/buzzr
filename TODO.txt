@@ -5,4 +5,6 @@
 4. test occurence counter
 3. show time to next update in feed!
 
+8. mark link as irrelevant
+
 7. PhoneGap / Ionic app

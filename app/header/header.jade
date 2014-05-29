@@ -1,6 +1,6 @@
 header.header.ng-hide(ng-controller="appHeaderCtrl" ng-show="isLoggedIn()")
-  a.header-logo.ng-hide(href="/search" ng-show="showLogo()")
+  a.header-logo.phone-hide.ng-hide(href="/search" ng-show="showLogo()")
     img(src="/img/logo.png")
-    strong.phone-hide buzzr
+    strong buzzr
   .header-sidebar-toggle(ng-click="toggleSidebar(); $event.stopPropagation();" ng-class="{'open': open}")
     span
