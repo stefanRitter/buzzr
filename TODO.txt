@@ -1,6 +1,7 @@
 
 1. get rid of job ads
 2. import from google news 
+
 4. test occurence counter
 3. show time to next update in feed!
 
