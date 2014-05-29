@@ -1,15 +1,13 @@
 'use strict';
 
-var Agenda = require('agenda'),
-    env = process.env.NODE_ENV || 'development',
-    config = require('../config/config')[env],
-    sendMail = require('./sendMail.js'),
+var sendMail = require('./sendMail.js'),
     Buzzr = require('mongoose').model('Buzzr'),
-    fork = require('child_process').fork,
-    agenda = new Agenda({db: {address: config.datastoreURI}, processEvery: '2 hours'});
+    fork = require('child_process').fork;
 
+var running = false;
 
-agenda.define('update all buzzrs', function(job, done) {
+function run() {
+  running = true;
   sendMail.send('agenda started');
 
   Buzzr.find({}).exec(function(err, collection) {
@@ -19,22 +17,22 @@ agenda.define('update all buzzrs', function(job, done) {
     }
 
     var l = collection.length;
-    if(l === 0) {
-      sendMail.send('agenda finished!');
-      return done();
-    }
-
     collection.forEach(function(buzzr, i) {
       setTimeout(function() {
         fork('server/utils/buzzrMaker.js').send({topic: buzzr.topic});
-        if (i >= l) {
+        
+        if (i >= l-1) {
           sendMail.send('agenda finished!');
-          done();
+          running = false;
         }
-      }, 60000);
+      }, 60000*i);
     });
   });
-});
+}
 
-agenda.every('24 hours', 'update all buzzrs');
-agenda.start();
+setInterval(function() {
+  var h = (new Date()).getHours();
+  if (h >= 4 && h <= 5 && !running) {
+    run();
+  }
+}, 60000*40);
