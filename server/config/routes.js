@@ -20,9 +20,7 @@ module.exports = function (app) {
   app.get('/search',      pages('main'));
 
   app.get('/buffer',      auth.authorizeRedirect, pages('landingpage'));
-  app.get('/buffer/*',    auth.authorizeRedirect, pages('landingpage'));
   app.get('/tweet4me',    auth.authorizeRedirect, pages('landingpage'));
-  app.get('/tweet4me/*',  auth.authorizeRedirect, pages('landingpage'));
 
   app.get('/unsubscribe/:id', feedback.unsubscribe);
 
