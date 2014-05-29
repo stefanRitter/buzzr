@@ -17,6 +17,29 @@ var excludedDomains = {
   'q.gs': true
 };
 
+/*
+var excludedDomains = {
+  'pinterest.com': true,
+  'instagram.com': true,
+  'ask.fm': true,
+  'vine.co': true,
+  'amazon.com': true,
+  'amazon.fr': true,
+  'amazon.de': true,
+  'amazon.co.uk': true,
+  'adf.ly': true,
+  'q.gs': true,
+  'buzzr.io': true,
+  'dailymail.co.uk': true,
+  'stackoverflow.com': true,
+  'newsnow.co.uk': true,
+  'findmydreamjob.co.uk': true,
+  'twitlonger.com': true,
+  'facebook.com': true,
+  'donotlink.com': true
+};
+*/
+
 function done() {
   doneCount += 1;
   if (doneCount >= doneAll) {
