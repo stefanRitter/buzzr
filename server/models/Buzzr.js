@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    _ = require('lodash'),
     buzzrSchema,
     Buzzr;
 
@@ -60,23 +59,6 @@ buzzrSchema = new Schema({
   }]
 });
 
-buzzrSchema.methods.addSortedLinks = function(links, cb) {
-  this.archivedLinks = this.archivedLinks.concat(this.activeLinks);
-  this.activeLinks = links.splice(0,5);
-  this.passiveLinks = this.passiveLinks.concat(links);
-
-  if (this.activeLinks.length < 5) {
-    var l = 5 - this.activeLinks.length,
-        moreLinks = [];
-
-    this.passiveLinks.sort(function(a, b) { return b.rank-a.rank; });
-    moreLinks = this.passiveLinks.splice(0,l);
-    this.activeLinks = this.activeLinks.concat(moreLinks);
-  }
-
-  this.saveCb(cb);
-};
-
 buzzrSchema.methods.viewed = function() {
   this.lastViewed = Date.now();
   this.save();
@@ -98,85 +80,34 @@ buzzrSchema.methods.saveCb = function(cb) {
   });
 };
 
-buzzrSchema.methods.makeUniq = function() {
-  var tempA = _.uniq(this.activeLinks, 'title'),
-      tempP = _.uniq(this.passiveLinks, 'title');
+buzzrSchema.methods.addSortedLinks = function(links, cb) {
   
-  tempA = _.uniq(tempA, 'url');
-  tempP = _.uniq(tempP, 'url');
-
-  this.activeLinks = tempA;
-  this.passiveLinks = tempP;
-  this.save();
-};
-
-buzzrSchema.methods.pushLink = function(data, cb) {
-  function checkLinkEquality(link) {
-    return link.url === data.url || link.title === data.title;
-  }
-
-  var pI = _.findIndex(this.passiveLinks, checkLinkEquality);
-  if (pI > -1) {
-    return this.updatePassiveLink(data, pI, cb);
-  }
-
-  var aI = _.findIndex(this.activeLinks, checkLinkEquality);
-  if (aI > -1) {
-    return this.updateActiveLink(data, aI, cb);
-  }
-
-  this.pushNewLink(data, cb);
-};
-
-buzzrSchema.methods.pushNewLink = function(data, cb) {
-  var newLink = {
-    url: data.url,
-    title: data.title,
-    rank: data.rank,
-    updated: Date.now(),
-    lang: data.lang
-  };
-  if (newLink.rank >= this.minRank) {
-    newLink.activated = Date.now();
-    this.activeLinks.push(newLink);
+  if (links.length >= 5 && links[4].rank > 3) {
+    // we have 5 good links
+    this.archivedLinks = this.archivedLinks.concat(this.activeLinks);
+    this.activeLinks = links.splice(0,5);
+    this.passiveLinks = this.passiveLinks.concat(links);
+  
   } else {
-    this.passiveLinks.push(newLink);
+    // we need to take from the passive links
+    var moreLinks = [],
+        archivLinks = [];
+    
+    this.passiveLinks = this.passiveLinks.concat(links);
+    this.passiveLinks.sort(function(a, b) { return b.rank-a.rank; });
+
+    for (var i = 0; i < 5; i++) {
+      var newLink = this.passiveLinks[i];
+      if (newLink.rank > 2) {
+        moreLinks.push(newLink);
+      }
+    }
+
+    archivLinks = this.activeLinks.splice(0, moreLinks.length);
+    this.archivedLinks = this.archivedLinks.concat(archivLinks);
+    this.activeLinks = this.activeLinks.concat(moreLinks);
   }
 
-  if (this.activeLinks.length > 10) {
-    this.activeLinks = this.activeLinks.slice(Math.max(this.activeLinks.length - 10, 1));
-  }
-  if (this.passiveLinks.length > 2000) {
-    this.passiveLinks = this.passiveLinks.slice(Math.max(this.passiveLinks.length - 2000, 1));
-  }
-  this.saveCb(cb);
-};
-
-buzzrSchema.methods.updateActiveLink = function(data, aI, cb) {
-  this.activeLinks[aI].rank += data.rank === 0 ? 1 : data.rank;
-  this.activeLinks[aI].updated = Date.now();
-  this.saveCb(cb);
-};
-
-buzzrSchema.methods.updatePassiveLink = function(data, pI, cb) {
-  var newRank = this.passiveLinks[pI].rank;
-  newRank += data.rank === 0 ? 1 : data.rank;
-
-  if (newRank >= this.minRank) {
-    this.activeLinks.push({
-      url: data.url,
-      title: data.title,
-      rank: newRank,
-      activated: Date.now(),
-      updated: Date.now(),
-      lang: data.lang
-    });
-
-    this.passiveLinks.splice(pI, 1);
-  } else {
-    this.passiveLinks[pI].rank = newRank;
-    this.passiveLinks[pI].updated = Date.now();
-  }
   this.saveCb(cb);
 };
 

@@ -8,7 +8,6 @@ Buzzr.find({}, function(err, buzzrs) {
 
   buzzrs.forEach(function(buzzr) {
     console.log('CLEAN: ' + buzzr.topic);
-    buzzr.makeUniq();
     buzzr.twitPoints.sinceId = '0';
     buzzr.save();
   });
