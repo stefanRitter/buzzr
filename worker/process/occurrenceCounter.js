@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = function(link, topic) {
+module.exports = function() {return true;};
+/*function(link, topic) {
   if (!link.bodyText) { return false; }
 
   var searchBody = link.bodyText.search(topic),
@@ -20,3 +21,4 @@ module.exports = function(link, topic) {
   
   return found;
 };
+*/

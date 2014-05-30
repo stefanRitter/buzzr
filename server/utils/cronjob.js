@@ -8,7 +8,6 @@ var running = false;
 
 function run() {
   running = true;
-  sendMail.send('agenda started');
 
   Buzzr.find({}).exec(function(err, collection) {
     if (err) {
@@ -33,6 +32,7 @@ function run() {
 setInterval(function() {
   var h = (new Date()).getHours();
   if (h >= 4 && h <= 5 && !running) {
+    sendMail.send('agenda started');
     run();
   }
 }, 60000*40);

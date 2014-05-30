@@ -1,12 +1,11 @@
 
 
 3. show time to next update in feed!
-7. PhoneGap / Ionic app
+7. PhoneGap app
 
 
 
 0. get images
-1. get rid of job ads
 2. import from google news 
 
 4. test occurence counter
