@@ -2,7 +2,6 @@
   //-
     .filters
       input.filter-input(ng-model="filterByText", placeholder="filter")
-
   .feed-container
     .feed-item(ng-repeat="link in links | filter:filterByText | orderBy:'rank':'true'")
       .feed-item-body(ng-hide="link.removed")
@@ -20,3 +19,5 @@
             a.action-share(ng-click="trackShare(link.url)", href="https://twitter.com/intent/tweet?url={{link.url}}&text={{encode(link.title)}}&via=BuzzrApp")
               img(src="/img/share.svg")
             //-.action-remove(ng-click="removeLink(link)") &times;
+  
+  p.margin.italic {{ updateStatus }}

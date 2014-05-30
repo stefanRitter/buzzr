@@ -1,8 +1,6 @@
 
 
-3. show time to next update in feed!
 7. PhoneGap app
-
 
 
 0. get images
@@ -11,5 +9,3 @@
 4. test occurence counter
 
 8. mark link as irrelevant
-
-9. guard against Twitter api overkill when updating

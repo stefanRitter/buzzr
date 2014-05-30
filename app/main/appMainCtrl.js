@@ -37,6 +37,18 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
     $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
     $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };
   }
+
+  var d = new Date(),
+      h = d.getUTCHours(),
+      m = d.getUTCMinutes();
+
+  if (h > 4) {
+    $scope.updateStatus = 'Next update in '+ (27-h) +'hrs and '+(60-m)+'min';
+  } else if (h < 4) {
+    $scope.updateStatus = 'Next update in '+ (4-h) +'hrs and '+(60-m)+'min';
+  } else {
+    $scope.updateStatus = 'Buzzr is looking for new links, stay tuned...';
+  }
   
   $scope.triggerSearch();
 });
