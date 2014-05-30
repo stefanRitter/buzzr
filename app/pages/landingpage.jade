@@ -4,38 +4,13 @@
 .pages-container(itemprop="mainContentOfPage" style="max-width: 900px")
   include ../common/buzzr-logo
 
-  .center.big
+  .center
     h1.home-pitch
       | Get the 5 hottest links on your topic - every 24 hours.
-      
+
     a(href="/join")
-      img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview" ng-click="toggleVideo()")
-  //-
-    .blackout-video.ng-hide(ng-show="showVideo" ng-click="toggleVideo()")
-      iframe(src="//www.youtube.com/embed/cjQOxiCo2bY?rel=0" frameborder="0" allowfullscreen)
-  
-    .home-feature.margin-top-big.padding-left
-      span.big.green &#10004; 
-      strong Save Time
-      .home-indent
-        | Content that matters
-        br
-        | right now.
-    .home-feature
-      span.big.green &#10004; 
-      strong Discover Gems
-      .home-indent
-        |  What the community
-        br
-        | is talking about.
-    .home-feature
-      span.big.green &#10004; 
-      strong Read Later
-      .home-indent
-        | Save everything
-        br
-        | you find.
-  
+      img.home-pitch-shot(src="/img/shot.png" alt="Buzzr preview")
+    
   .center.padding-top
     p.margin-top-big
       a.button-white.big.margin-sm(href="/search") Try Buzzr now

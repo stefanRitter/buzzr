@@ -710,6 +710,30 @@ angular.module('app').controller('appSocialHeaderCtrl', function ($scope, $locat
     return show.indexOf($location.path()) > -1;
   };
 });
+angular.module('app').factory('appTimeToUpdate', function() {
+  'use strict';
+
+  var timeLeft = {
+    timeLeft: function() {
+      var d = new Date(),
+          h = d.getUTCHours(),
+          m = d.getUTCMinutes(),
+          updateStatus = '';
+
+      if (h > 4) {
+        updateStatus = 'Next update in '+ (27-h) +'hrs and '+(60-m)+'min';
+      } else if (h < 4) {
+        updateStatus = 'Next update in '+ (4-h) +'hrs and '+(60-m)+'min';
+      } else {
+        updateStatus = 'Buzzr is looking for new links, stay tuned...';
+      }
+
+      return updateStatus;
+    }
+  };
+
+  return timeLeft;
+});
 angular.module('app').factory('appTopics', function ($window) {
   'use strict';
 
@@ -848,7 +872,7 @@ angular.module('app').factory('appBuzzr', function ($http, $route, appProcessLin
 
   return BuzzrResource;
 });
-angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, $location, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
+angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, $location, appTimeToUpdate, appIdentity, appProcessLinks, appSidebar, appFeedback, appBuzzr) {
   /*jshint maxstatements: false */
   'use strict';
 
@@ -858,6 +882,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   $scope.identity = appIdentity;
   $scope.searchText = decodeURI($routeParams.id).toLowerCase();
   $scope.status = 'searching';
+  $scope.updateStatus = appTimeToUpdate.timeLeft();
 
   $scope.checkStatus = function(status) { return $scope.status === status; };
   $scope.encode = function(title) { return encodeURI(title); };
@@ -886,18 +911,6 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
     $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };
-  }
-
-  var d = new Date(),
-      h = d.getUTCHours(),
-      m = d.getUTCMinutes();
-
-  if (h > 4) {
-    $scope.updateStatus = 'Next update in '+ (27-h) +'hrs and '+(60-m)+'min';
-  } else if (h < 4) {
-    $scope.updateStatus = 'Next update in '+ (4-h) +'hrs and '+(60-m)+'min';
-  } else {
-    $scope.updateStatus = 'Buzzr is looking for new links, stay tuned...';
   }
   
   $scope.triggerSearch();
@@ -1014,49 +1027,13 @@ angular.module('app').controller('appHomeCtrl', function ($scope, $location, $do
     homeInput.focus();
   }
 });
-angular.module('app').controller('appPagesCtrl', function ($scope, $http, $location, appFeedback) {
+angular.module('app').controller('appPagesCtrl', function ($scope, appTimeToUpdate, appFeedback) {
   'use strict';
-  /*
-  $scope.identity = appIdentity;
-  var stripeToken = {};
-  
-  var handler = window.StripeCheckout.configure({
-    key: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG',
-    image: '/img/icon.png',
-    token: function(token) {
-      stripeToken = token;
 
-      $http
-        .post('/stripe', {token: token, plan: 'scholar'})
-        .then(function(res) {
-          if (res.data.success) {
-            appIdentity.email = token.email;
-            $location.path('/join');
-          } else {
-            // card declined
-            window.alert(res.data.reason);
-          }
-        }, function() {
-          window.alert('There was a server error, your card was NOT charged! Please contact us for help!');
-        });
-    }
-  });
-
-  $scope.openCheckout = function() {
-    handler.open({
-      name: 'Buzzr',
-      description: '14-day free trial, $2.00 monthly',
-      amount: 0
-    });
-  };
-  */
+  $scope.updateStatus = appTimeToUpdate.timeLeft();
 
   $scope.toggleFeedback = function() {
     appFeedback.toggle();
-  };
-
-  $scope.toggleVideo = function() {
-    //$scope.showVideo = !$scope.showVideo;
   };
 });
 angular.module('app').controller('appReadlaterCtrl', function ($scope, appFeedback, appSidebar, appIdentity) {
@@ -1143,173 +1120,4 @@ angular.module('app').controller('appSidebarCtrl', function ($scope, $rootScope,
   });
 
   $scope.setBuzzrs();
-});
-angular.module('app').factory('appTweet4me', function ($http, $filter) {
-  'use strict';
-  var Tweet4meResource = {},
-      uniqDates = {};
-
-  function getDates() {
-    var a = [];
-    for (var date in uniqDates) {
-      if(uniqDates.hasOwnProperty(date)) {
-        a.push(date);
-      }
-    }
-    return a.reverse();
-  }
-
-  function setLocalDate(tw) {
-    var date = new Date(tw.added);
-    tw.added = $filter('date')(date, 'dd MMM yyyy');
-    uniqDates[tw.added] = true;
-  }
-  
-  function processTweet(tw) {
-    setLocalDate(tw);
-  }
-
-  
-  Tweet4meResource.processTweets = function($scope, tweets) {
-    tweets.forEach(processTweet);
-      
-    $scope.dates = getDates();
-    $scope.tweets = tweets;
-  };
-
-  Tweet4meResource.mark = function(email, mark, url) {
-    $http.post(
-      '/api/tweet4me/'+email+'/mark',
-      {mark: mark, url: url}
-    );
-  };
-
-  return Tweet4meResource;
-});
-angular.module('app').controller('appTweet4meCtrl', function ($scope, $location, appFeedback) {
-  'use strict';
-
-  $scope.toggleFeedback = function() {
-    appFeedback.toggle();
-  };
-
-  $scope.signup = function() {
-    $location.path('/tweet4me/pricing');
-  };
-});
-angular.module('app').controller('appTweet4meFeedCtrl', function ($scope, $routeParams, $http, appTweet4me) {
-  'use strict';
-
-  $scope.email = $routeParams.user;
-  $scope.status = 'loading';
-  $scope.t4m = {};
-
-  $scope.encode = function(title) { return encodeURI(title); };
-  $scope.encodeCom = function(title) { return encodeURIComponent(title); };
-
-  $scope.ifStatus = function(status) {
-    return $scope.status === status;
-  };
-  
-  $scope.login = function() {
-    $scope.getTweets();
-  };
-
-  $scope.mark = function(mark, tweet) {
-    appTweet4me.mark($scope.email, mark, tweet.url);
-    tweet[mark] = true;
-  };
-
-  $scope.getTweets = function() {
-    $scope.status = 'loading';
-    $http
-      .get('/api/tweet4me/' + $scope.email)
-      .then(function(res) {
-        var tweets = res.data.tweets;
-        if (tweets.length === 0) {
-          $scope.error = 'Couldn\'t find your Tweet4me. Is your Email correct?';
-          $scope.status = 'login';
-          return;
-        }
-        appTweet4me.processTweets($scope, tweets);
-        $scope.status = 'feeding';
-        $scope.t4m.status = res.data.status;
-      }, function() {
-        window.alert('Sorry, something went wrong! Please try again!');
-        $scope.status = 'login';
-      });
-  };
-
-  if (!$scope.email) {
-    $scope.status = 'login';
-  } else {
-    $scope.getTweets();
-  }
-});
-angular.module('app').controller('appTweet4meJoinCtrl', function ($scope, $http, $routeParams) {
-  'use strict';
-
-  $scope.signup = function() {
-    if (!$scope.email || !$scope.topic) {
-      $scope.success = false;
-      $scope.error = 'Make sure you filled out both email and topic';
-      return;
-    }
-
-    $scope.processing = true;
-    $http
-      .post('/tweet4me', {email: $scope.email, topic: $scope.topic, plan: $routeParams.plan || 'startup'})
-      .then(function(res) {
-        if (res.data.success) {
-          $scope.success = true;
-          $scope.error = false;
-        } else {
-          $scope.success = false;
-          $scope.error = res.data.error;
-          $scope.processing = false;
-        }
-      });
-  };
-});
-angular.module('app').controller('appTweet4meUpgradeCtrl', function ($scope, $http) {
-  'use strict';
-  var stripeToken = {};
-  var planAmounts = {
-      'startup': 10*100,
-      'business': 49*100,
-      'enterprise': 99*100
-    };
-
-  $scope.success = false;
-  $scope.plan = '';
-  
-  var handler = window.StripeCheckout.configure({
-    key: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG', //'pk_test_A92gZzXMijuUIYouO3UXkIyB'
-    image: '/img/icon.png',
-    token: function(token) {
-      stripeToken = token;
-
-      $http
-        .post('/stripe', {token: token, plan: $scope.plan})
-        .then(function(res) {
-          if (res.data.success) {
-            $scope.success = true;
-            $scope.email = token.email;
-          } else {
-            window.alert(res.data.reason);
-          }
-        }, function() {
-          window.alert('There was a server error, your card was NOT charged! Please contact us for help!');
-        });
-    }
-  });
-
-  $scope.openCheckout = function(plan) {
-    $scope.plan = plan;
-    handler.open({
-      name: 'Buzzr',
-      description: 'Upgrade: ' + plan,
-      amount: planAmounts[plan]
-    });
-  };
 });
