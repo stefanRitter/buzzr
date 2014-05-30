@@ -63,7 +63,7 @@ function getTweets() {
     tweets.forEach(processTweet);
 
     callsCount += 1;
-    if (callsCount >= maxCalls || tweets.length === 0) {
+    if (callsCount >= maxCalls || (tweets.length === 0 && callsCount > 1)) {
       cb(newLinks);
     } else {
       getTweets();
