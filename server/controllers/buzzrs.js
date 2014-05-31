@@ -3,8 +3,6 @@
 var Buzzr = require('mongoose').model('Buzzr'),
     fork = require('child_process').fork;
 
-require('../utils/cronjob.js');
-
 
 exports.getByTopic = function(req, res) {
   var topic = decodeURI(req.params.id).toLowerCase().trim();
