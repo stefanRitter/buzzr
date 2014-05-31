@@ -4,8 +4,13 @@
 
 
 0. get images
-2. import from google news 
+
+
+8. mark link as irrelevant
+
+
+
+2. import from google news / reddit / google alerts / linkedin 
 
 4. test occurence counter
 
-8. mark link as irrelevant
