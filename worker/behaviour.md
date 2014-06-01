@@ -1,15 +1,9 @@
 // 'https://www.googleapis.com/language/translate/v2/detect?q=' +
 // req.params.id + '&key=' + process.env.GOGL_API_KEY
 
-cleanup
-=======
-- top ten
-- if more than 100 links in active, retire oldest 10 links > part of the update routine
-
 
 sources
 =======
-- twitter
 - google+
 - newspapers...
 - delicious
@@ -43,8 +37,3 @@ job offers?
 'akamai error'
 'for sale', 'to rent', 'to let' => unless in buzzr topic?
 '50% sale' => get rid of offers and promotions?
-
-
-pro version: realtime
-=====================
-- socket.io: send link by link

@@ -43,11 +43,12 @@ exports.createCronJobs = function() {
     }
   });
 
+  var rand = Math.floor(Math.random() * (40 - 35 + 1)) + 35;
   setInterval(function() {
     CronJob.find({}).exec(function(err, collection) {
       collection.forEach(function(cronJob) {
         cronJob.run();
       });
     });
-  }, 60000*40);
+  }, 60000*rand);
 };
