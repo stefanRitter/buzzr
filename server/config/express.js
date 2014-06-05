@@ -1,52 +1,55 @@
 'use strict';
 
-var express = require('express'),
-    passport = require('passport'),
-    mongoose = require('mongoose'),
-    SessionStore = require('connect-mongo')(express);
+var express       = require('express'),
+    compress      = require('compression'),
+    session       = require('express-session'),
+    cookieParser  = require('cookie-parser'),
+    bodyParser    = require('body-parser'),
+    csrf          = require('csurf'),
+    logger        = require('morgan'),
+    passport      = require('passport'),
+    mongoose      = require('mongoose'),
+    SessionStore  = require('connect-mongo')(session);
 
 
 module.exports = function(app, config) {
 
-  app.configure(function() {
-    app.set('views', config.rootPath + '/server/views');
-    app.set('view engine', 'jade');
+  app.set('views', config.rootPath + '/server/views');
+  app.set('view engine', 'jade');
 
-    app.use(express.logger('dev'));
+  app.use(logger('dev'));
 
-    // force SSL
-    /*var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-    if (env === 'production') {
-      app.use(function(req, res, next) {
-        if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
-          res.redirect('https://' + req.get('Host') + req.url);
-        }
-        else { next(); }
-      });
-    }*/
-
-    app.use(express.compress());
-    app.use(express.cookieParser(process.env.COOKIE_SECRET || 'cookie secret'));
-    app.use(express.json());
-    app.use(express.urlencoded());
-    
-    app.use(express.session({
-      secret: process.env.SESSION_SECRET || 'session secret',
-      store: new SessionStore({ mongoose_connection: mongoose.connection})
-    }));
-    
-    // setup csrf for angular
-    app.use(express.csrf({value: function(req) {
-      return req.headers['x-xsrf-token'];
-    }}));
+  // force SSL
+  /*var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+  if (env === 'production') {
     app.use(function(req, res, next) {
-      res.cookie('XSRF-TOKEN', req.csrfToken());
-      next();
+      if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+        res.redirect('https://' + req.get('Host') + req.url);
+      }
+      else { next(); }
     });
+  }*/
 
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    app.use(express.static(config.rootPath + '/public'));
+  app.use(compress());
+  app.use(cookieParser(process.env.COOKIE_SECRET || 'cookie secret'));
+  app.use(bodyParser()); // json + urlencoded
+  
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'session secret',
+    store: new SessionStore({ mongoose_connection: mongoose.connection})
+  }));
+  
+  // setup csrf for angular
+  app.use(csrf({value: function(req) {
+    return req.headers['x-xsrf-token'];
+  }}));
+  app.use(function(req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    next();
   });
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(express.static(config.rootPath + '/public'));
 };

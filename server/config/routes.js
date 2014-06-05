@@ -1,12 +1,12 @@
 'use strict';
 
-var auth = require('../controllers/auth.js'),
-    users = require('../controllers/users.js'),
-    pages = require('../controllers/pages.js'),
-    feedback = require('../controllers/feedback.js'),
-    buzzrs = require('../controllers/buzzrs.js'),
-    charge = require('../controllers/charge.js'),
-    admin = require('../controllers/admin.js');
+var auth      = require('../controllers/auth.js'),
+    users     = require('../controllers/users.js'),
+    pages     = require('../controllers/pages.js'),
+    feedback  = require('../controllers/feedback.js'),
+    buzzrs    = require('../controllers/buzzrs.js'),
+    charge    = require('../controllers/charge.js'),
+    admin     = require('../controllers/admin.js');
 
 
 module.exports = function (app) {
@@ -29,7 +29,7 @@ module.exports = function (app) {
   
   // VIEW PARTIALS
   app.get('/partials/*', function (req, res) {
-    res.render('../../app/' + req.params);
+    res.render('../../app/' + req.params[0]);
   });
 
   // API
