@@ -1,5 +1,8 @@
 'use strict';
 
+var dotenv = require('dotenv');
+dotenv.load();
+
 var express = require('express');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
