@@ -28,15 +28,32 @@ sudo service nginx start
 update-rc.d nginx defaults
 
 # config nginx
-nano /etc/nginx/conf.d/fitguru.org.conf
+nano /etc/nginx/conf.d/buzzr.io.conf
 
+server {
+    listen 80;
+
+    server_name buzzr.io;
+
+    location / {
+        proxy_pass http://localhost:3030;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+
+nano /etc/nginx/conf.d/fitguru.org.conf
 server {
     listen 80;
 
     server_name fitguru.org;
 
     location / {
-        proxy_pass http://localhost:3030;
+        proxy_pass http://localhost:3040;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
