@@ -1,7 +1,7 @@
 'use strict';
 
 var express       = require('express'),
-    compress      = require('compression'),
+    // compress      = require('compression'), // nginx takes care of zipping
     session       = require('express-session'),
     cookieParser  = require('cookie-parser'),
     bodyParser    = require('body-parser'),
@@ -30,7 +30,7 @@ module.exports = function(app, config) {
     });
   }*/
 
-  app.use(compress());
+  // app.use(compress());
   app.use(cookieParser(process.env.COOKIE_SECRET || 'cookie secret'));
   app.use(bodyParser()); // json + urlencoded
   

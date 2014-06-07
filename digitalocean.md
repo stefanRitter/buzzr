@@ -30,6 +30,11 @@ update-rc.d nginx defaults
 # config nginx
 nano /etc/nginx/conf.d/buzzr.io.conf
 
+server { 
+    server_name www.buzzr.io; 
+    rewrite ^(.*) http://buzzr.io$1 permanent; 
+} 
+
 server {
     listen 80;
 
