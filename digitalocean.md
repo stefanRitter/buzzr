@@ -52,6 +52,11 @@ server {
 
 
 nano /etc/nginx/conf.d/fitguru.org.conf
+server { 
+    server_name www.fitguru.org; 
+    rewrite ^(.*) http://fitguru.org$1 permanent; 
+} 
+
 server {
     listen 80;
 
