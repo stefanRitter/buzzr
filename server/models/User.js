@@ -87,7 +87,7 @@ User = mongoose.model('User', userSchema);
 
 // seed users
 exports.createDefaultUsers = function() {
-  /*User.find({}).exec(function(err, collection) {
+  User.find({}).exec(function(err, collection) {
     if (collection.length === 0) {
       var salt = encrypt.createSalt();
       var pwd = encrypt.hashPwd(salt, 'Buzzr2014');
@@ -101,11 +101,6 @@ exports.createDefaultUsers = function() {
         password: pwd, roles: ['admin']}, {upsert: true}, function(err) {
         if (err) { throw err; }
       });
-    } else {
-      User.findOne({email: 'buffer-f9cfe5511e2bab07f0db@to.bufferapp.com'}, function(err, obj) {
-        if (err) { throw err; }
-        obj.remove();
-      });
     }
-  });*/
+  });
 };

@@ -9,6 +9,9 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     config = require('./server/config/config')[env],
     app = express();
 
+console.log(config);
+console.log(process.env);
+
 // setup datastore
 require('./server/config/mongoose.js')(config);
 
