@@ -27,6 +27,13 @@ sudo apt-get install -y nginx
 sudo service nginx start
 update-rc.d nginx defaults
 
+
+# restart nginx
+nginx -t
+nginx -s reload
+/etc/init.d/nginx restart
+
+
 # config nginx
 nano /etc/nginx/conf.d/buzzr.io.conf
 
