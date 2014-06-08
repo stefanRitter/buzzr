@@ -1,7 +1,7 @@
 'use strict';
 
-var dotenv = require('dotenv');
-dotenv.load();
+var env = require('node-env-file');
+env('.env');
 
 function start() {
   var express = require('express');
@@ -10,7 +10,7 @@ function start() {
       config = require('./server/config/config')[env],
       app = express();
 
-  console.log(config);
+  console.log(process.env);
 
   // setup datastore
   require('./server/config/mongoose.js')(config);
