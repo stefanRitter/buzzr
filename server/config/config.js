@@ -14,8 +14,8 @@ module.exports = {
   
   production: {
     datastoreURI: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL,
-    rootPath: rootPath || 3030,
-    port: process.env.PORT,
+    rootPath: rootPath,
+    port: process.env.PORT || 3030,
     stripeSecret: 'sk_live_OJInktE9Nc0sjoSfNddg10De',
     stripeKey: 'pk_live_xGJ0UWxpKbFmhRVaXUcMDuIG'
   }
