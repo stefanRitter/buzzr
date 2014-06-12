@@ -1,6 +1,8 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+    sendMail = require('../../server/utils/sendMail.js');
+
 
 var activeLinks = [],
     passiveLinks = [],
@@ -77,5 +79,7 @@ module.exports = function(_tweets, buzzr, cb) {
   tweets.forEach(makeUniq);
   uniqTweets.forEach(sortTweet);
   newTweets.sort(function(a, b) { return b.rank-a.rank; });
+  
+  sendMail.send(buzzr.topic + ': tweets:'+ tweets.length +' uniqTweets:'+ uniqTweets.length +' newTweets:'+newTweets.length);
   buzzr.addSortedLinks(newTweets, cb);
 };
