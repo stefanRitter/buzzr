@@ -42,7 +42,7 @@ exports.createCronJobs = function() {
       });
     }
   });
-  /*
+  
   var rand = Math.floor(Math.random() * (40 - 35 + 1)) + 35;
   setInterval(function() {
     CronJob.find({}).exec(function(err, collection) {
@@ -50,5 +50,5 @@ exports.createCronJobs = function() {
         cronJob.run();
       });
     });
-  }, 60000*rand);*/
+  }, 60000*rand);
 };
