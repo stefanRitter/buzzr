@@ -26,5 +26,10 @@ setTimeout(function() {
         console.log('WORKER: buzzr updated');
       });
       break;
+
+    case 'updateall':
+      console.log('update all started');
+      require('./worker/cronJobs/updateAll');
+      break;
   }
 }, 3000);
