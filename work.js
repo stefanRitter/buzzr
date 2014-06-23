@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-require('dotenv').load();
+var env = require('node-env-file');
+env('.env');
 
 var args = process.argv.slice(2),
     env = process.env.NODE_ENV || 'development',
