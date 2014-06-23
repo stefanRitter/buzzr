@@ -29,7 +29,7 @@ setTimeout(function() {
 
     case 'updateall':
       console.log('update all started');
-      require('./worker/cronJobs/updateAll');
+      require('./worker/cronjobs/updateAll');
       break;
   }
 }, 3000);
