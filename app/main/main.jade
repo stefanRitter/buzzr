@@ -3,7 +3,7 @@
     input.header-search(ng-model="newSearchTerm" placeholder="{{searchText}}")
     button(type="submit").header-search-icon
       include ../../public/img/search.svg
-    a.header-readlater.phone-hide(href="/account/readlater")
+    a.header-readlater.phone-hide(href="{{savedLink}}")
       span.phablet-hide saved 
       .action-readlater.saved
         img(src="/img/heart.svg")

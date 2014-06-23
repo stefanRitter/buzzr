@@ -2,7 +2,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, 
   'use strict';
 
   $scope.isLoggedIn = function() {
-    return appIdentity.isAuthenticated() && !appIdentity.currentUser.bufferUser;
+    return true;
   };
   
   $scope.toggleSidebar = function() {

@@ -801,7 +801,7 @@ angular.module('app').controller('appHeaderCtrl', function ($scope, $rootScope, 
   'use strict';
 
   $scope.isLoggedIn = function() {
-    return appIdentity.isAuthenticated() && !appIdentity.currentUser.bufferUser;
+    return true;
   };
   
   $scope.toggleSidebar = function() {
@@ -911,6 +911,10 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
     $scope.removeLink = function(link) { appProcessLinks.removeLink(link, $scope.searchText); };
     $scope.trackView = function(url) { appIdentity.currentUser.trackView(url, $scope.searchText); };
     $scope.trackShare = function(url) { appIdentity.currentUser.trackShare(url, $scope.searchText); };
+    $scope.savedLink = '/account/readlater';
+  } else {
+    $scope.saveLink = function() { $location.path('/join'); };
+    $scope.savedLink = '/join';
   }
   
   $scope.triggerSearch();

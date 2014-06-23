@@ -5,12 +5,9 @@
   .feed-container
     .feed-item(ng-repeat="link in links | filter:filterByText | orderBy:'rank':'true'")
       .feed-item-body(ng-hide="link.removed")
-        div(ng-show="identity.isAuthenticated()")
+        div
           a.feed-link(href="{{link.url}}", target="_blank", ng-click="trackView(link.url)") {{link.title.trunc(150)}}
         
-        div(ng-hide="identity.isAuthenticated()")
-          a.feed-link(ng-click="toggleSidebar(); $event.stopPropagation();") {{link.title.trunc(150)}}
-
         .feed-item-info
           .feed-item-domain {{link.domain}}
           .feed-item-actions

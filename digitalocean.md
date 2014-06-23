@@ -1,3 +1,7 @@
+7165.pts-0.stefanritr       >>> staticshare
+2764.pts-0.stefanritr       >>> FG
+2401.pts-0.stefanritr       >>> Buzzr
+
 # create ssh keys
 ssh-keygen -t rsa -C "stefan@stefanritter.com"
 cat ~/.ssh/id_rsa.pub

@@ -35,7 +35,7 @@ angular.module('app').run(function ($rootScope, $location) {
   
   $rootScope.$on('$routeChangeError', function (event, current, previous, rejectionReason) {
     if (rejectionReason === 'not authorized') {
-      $location.path('/');
+      $location.path('/join');
     }
   });
 });
