@@ -4,10 +4,10 @@ var Buzzr = require('mongoose').model('Buzzr'),
     fork = require('child_process').fork;
 
 
-exports.getByTopic = function(req, res) {
+exports.getByTopic = function (req, res) {
   var topic = decodeURI(req.params.id).toLowerCase().trim();
 
-  Buzzr.findOne({topic: topic}).exec(function(err, buzzr) {
+  Buzzr.findOne({topic: topic}).exec(function (err, buzzr) {
     if (err) { return res.json({err: err}); }
     
     if (!buzzr) {
@@ -23,13 +23,13 @@ exports.getByTopic = function(req, res) {
   });
 };
 
-exports.getAdminList = function(req, res) {
+exports.getAdminList = function (req, res) {
   Buzzr.find({}, function(err, collection) {
     if (err) { return res.json({err: err}); }
 
     var buzzrs = [];
 
-    collection.forEach(function(buzzr){
+    collection.forEach(function (buzzr){
       buzzrs.push({
         topic: buzzr.topic,
         lastViewed: buzzr.lastViewed,
@@ -44,5 +44,17 @@ exports.getAdminList = function(req, res) {
   });
 };
 
-exports.putAdmin = function() {
+exports.putAdmin = function () {
+};
+
+exports.deleteAdmin = function (req, res) {
+  var topic = decodeURI(req.params.id).toLowerCase().trim();
+
+  Buzzr.findOne({topic: topic}).exec(function (err, buzzr) {
+    if (err) { return res.json({err: err}); }
+    if (!buzzr) { return res.json({err: err}); }
+    
+    buzzr.remove();
+    res.send({refresh: true});
+  });
 };
