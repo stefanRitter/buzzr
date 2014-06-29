@@ -1,11 +1,13 @@
 'use strict';
 
-var env = require('node-env-file');
-env('.env');
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var express = require('express');
+if (env === 'development') {
+  var dotenv = require('node-env-file');
+  dotenv('.env');
+}
 
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+var express = require('express'),
     config = require('./server/config/config')[env],
     app = express();
 
