@@ -5,7 +5,6 @@ var auth      = require('../controllers/auth.js'),
     pages     = require('../controllers/pages.js'),
     feedback  = require('../controllers/feedback.js'),
     buzzrs    = require('../controllers/buzzrs.js'),
-    charge    = require('../controllers/charge.js'),
     admin     = require('../controllers/admin.js');
 
 
@@ -33,7 +32,6 @@ module.exports = function (app) {
   });
 
   // API
-  app.post('/stripe',                     charge);
   app.get( '/api/buzzrs/:id',             buzzrs.getByTopic);
   app.post('/api/buzzrs/:id',             buzzrs.update);
   app.put( '/api/users',                  auth.authorize, users.updateUser);
