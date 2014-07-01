@@ -49,11 +49,11 @@ module.exports = function (grunt) {
         dest: 'public/js/vendor.js',
       },
       application: {
-        src: ['app/app.js', 'app/*/*.js'],
+        src: ['public/js/vendor.js', 'app/app.js', 'app/*/*.js'],
         dest: 'public/js/application.js'
       },
       admin: {
-        src: ['app/admin.js', 'app/*/*.js'],
+        src: ['public/js/vendor.js', 'app/admin.js', 'app/*/*.js'],
         dest: 'public/js/admin.js'
       }
     },
@@ -83,7 +83,7 @@ module.exports = function (grunt) {
           'test/**/*.js',
           'app/**/*.js'
         ],
-        tasks: ['jshint:all', 'ngmin:app', 'uglify:app', 'concat:admin']
+        tasks: ['jshint:all', 'ngmin:app', 'uglify:app', 'concat:admin', 'concat:application']
       },
       styles: {
         files: [
