@@ -2,7 +2,7 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   /*jshint maxstatements: false */
   'use strict';
 
-  $scope.countDown = 60;
+  $scope.countDown = 70;
   $scope.links = [];
   $scope.dates = [];
   $scope.identity = appIdentity;
