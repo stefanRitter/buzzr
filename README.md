@@ -6,7 +6,7 @@ work in progress
 
 WORKER
 ======
-ssh -i london-macbookair.pem ubuntu@54.186.188.188
+ssh -i london-macbookair.pem ubuntu@{{{IP}}}}
 screen
 forever --stack-size=32000 work.js
 CTRL+A .. D
