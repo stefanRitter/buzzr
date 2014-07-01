@@ -24,6 +24,10 @@ module.exports = function (grunt) {
       app: {
         src: ['app/app.js', 'app/*/*.js'],
         dest: 'public/js/application.js'
+      },
+      admin: {
+        src: ['app/app.js', 'app/*/*.js'],
+        dest: 'public/js/admin.js'
       }
     },
 
@@ -31,6 +35,11 @@ module.exports = function (grunt) {
       app: {
         files: {
           'public/js/application.js': ['public/js/application.js']
+        }
+      },
+      admin: {
+        files: {
+          'public/js/admin.js': ['public/js/admin.js']
         }
       }
     },
@@ -49,11 +58,11 @@ module.exports = function (grunt) {
         dest: 'public/js/vendor.js',
       },
       application: {
-        src: ['public/js/vendor.js', 'app/app.js', 'app/*/*.js'],
+        src: ['public/js/vendor.js', 'public/js/application.js'],
         dest: 'public/js/application.js'
       },
       admin: {
-        src: ['public/js/vendor.js', 'app/admin.js', 'app/*/*.js'],
+        src: ['public/js/vendor.js', 'public/js/admin.js'],
         dest: 'public/js/admin.js'
       }
     },
@@ -83,7 +92,7 @@ module.exports = function (grunt) {
           'test/**/*.js',
           'app/**/*.js'
         ],
-        tasks: ['jshint:all', 'ngmin:app', 'uglify:app', 'concat:admin', 'concat:application']
+        tasks: ['jshint:all', 'ngmin:app', 'ngmin:admin', 'uglify:app', 'uglify:admin', 'concat:admin', 'concat:application']
       },
       styles: {
         files: [
