@@ -15,6 +15,8 @@ angular.module('app').controller('appMainCtrl', function ($scope, $routeParams, 
   $scope.toggleSidebar = function() { appSidebar.toggle(); };
   $scope.toggleFeedback = function() { appFeedback.toggle(); };
   $scope.triggerSearch = function() { appBuzzr.startFeed($scope); };
+  $scope.showUpdate = function() { return $scope.lastUpdated !== (new Date()).toLocaleDateString(); };
+  $scope.updateNow = function() { appBuzzr.update($scope); };
 
   $scope.showLoading = function() {
     if ($scope.checkStatus('searching') || $scope.checkStatus('creating') ||

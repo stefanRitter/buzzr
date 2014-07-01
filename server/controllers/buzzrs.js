@@ -44,6 +44,17 @@ exports.getAdminList = function (req, res) {
   });
 };
 
+exports.update = function (req, res) {
+  var topic = decodeURI(req.params.id).toLowerCase().trim();
+  
+  Buzzr.findOne({topic: topic}).exec(function (err) {
+    if (err) { return res.json({err: err}); }
+
+    fork('server/utils/buzzrMaker.js').send({topic: topic});
+    res.send(200);
+  });
+};
+
 exports.putAdmin = function () {
 };
 

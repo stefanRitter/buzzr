@@ -2,6 +2,7 @@
   //-
     .filters
       input.filter-input(ng-model="filterByText", placeholder="filter")
+  
   .feed-container
     .feed-item(ng-repeat="link in links | filter:filterByText | orderBy:'rank':'true'")
       .feed-item-body(ng-hide="link.removed")
@@ -17,4 +18,6 @@
               img(src="/img/share.svg")
             //-.action-remove(ng-click="removeLink(link)") &times;
   
-  p.margin.italic {{ updateStatus }}
+  p.margin
+    span.italic Last updated: {{ lastUpdated }} 
+    span.button-green.margin.bold(ng-show="showUpdate()" ng-click="updateNow()") Update now
