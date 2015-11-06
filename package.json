@@ -10,8 +10,8 @@
   "author": "",
   "license": "private",
   "engines": {
-    "node": "0.10.x",
-    "npm": "1.4.x"
+    "node": "0.12.7",
+    "npm": "2.11.3"
   },
   "repository": {
     "type": "git",
